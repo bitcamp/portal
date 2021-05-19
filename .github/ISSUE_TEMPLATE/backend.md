@@ -7,12 +7,12 @@ assignees: ''
 
 ---
 
-# Objective
+## Objective
 
-# External services
+
+## External services
 - 
 
-# Acceptance criteria
+## Acceptance criteria
 1. 
-2. 
-3.
+2.

@@ -7,12 +7,12 @@ assignees: ''
 
 ---
 
-# Objective
+## Objective
 
-# Figma link:
+
+## Figma link:
 https://www.figma.com/file/PvYZUuhw3CF59ZXJCB5P8z/Early-Registration-2021?node-id=1%3A3
 
-# Acceptance criteria
+## Acceptance criteria
 1. 
-2. 
-3.
+2.
