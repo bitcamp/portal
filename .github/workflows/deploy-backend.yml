@@ -1,0 +1,45 @@
+name: Deploy backend service
+
+# Controls when the action will run. Triggers the workflow on a push event in
+# the master branch, when there's a chage in backend/teams
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - backend
+
+# Specify working directory to use for the whole job
+defaults:
+  run:
+    working-directory: backend
+
+# Job instructions
+jobs:
+  deploy:
+    name: Deploy backend service
+    runs-on: ubuntu-latest
+    env:
+      SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+
+    steps:
+    # Check out the repository
+    - uses: actions/checkout@v2
+
+    # Install node
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    
+    # Install serverless
+    - name: Install Serverless Framework
+      run: npm install -g serverless@2.22.0
+    
+    # Install all NPM packages
+    - name: Install NPM dependencies
+      run: npm ci
+    
+    # Finally, deploy the service to AWS
+    - name: Deploy Lambda function in stage
+      run: sls deploy -s stage
