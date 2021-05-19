@@ -1,0 +1,8 @@
+body {
+  background-image: url("./hero-clouds.png");
+  background-size: cover;
+  /*centered on x, starting 40px lower than top for y so that the navbar doesn't cover image*/
+  background-position: center 40px;
+  background-repeat: no-repeat;
+  height: 100vh;
+}

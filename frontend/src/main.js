@@ -4,6 +4,7 @@ import App from './App.vue';
 import router from './router';
 
 import './app.scss';
+import './assets/global.css' //import global css file
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
