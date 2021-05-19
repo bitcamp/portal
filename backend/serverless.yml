@@ -5,15 +5,15 @@ service: portal
 provider:
   name: aws
   region: us-east-1
-  runtime: nodejs14.x
+  runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   deploymentBucket:
     name: portal-${self:provider.stage}-layers-deploymentbucket
   environment:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
-    REFERRALS_TABLE: ${file(./config/${self:provider.stage}.json):REFERRALS_TABLE}
-    TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
+    # REFERRALS_TABLE: ${file(./config/${self:provider.stage}.json):REFERRALS_TABLE}
+    # TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -32,14 +32,31 @@ provider:
       Resource: "arn:aws:secretsmanager:us-east-1:*"
 
 functions:
-  # get_schedule:
-  #   handler: handler.get_schedule
-  #   description: Retrieves all schedule data from database
-  #   events:
-  #     - http: 
-  #         path: schedule
-  #         method: get
-  #         cors: true
+  register:
+    handler: handler.register
+    description: Receives registration information from a user
+    events:
+      - http: 
+          path: register
+          method: post
+          cors: true
+
+resources: # define DynamoDB tables within serverless
+  Resources:
+    registrationTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
 package:
   exclude:
     node_modules/**
