@@ -1,0 +1,10 @@
+org: technica
+app: portal
+service: portal-frontend
+name: portal-frontend
+component: website
+inputs:
+  src:
+    src: ./src
+    hook: npm run build
+    dist: ./dist
