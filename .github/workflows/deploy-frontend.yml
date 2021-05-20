@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-      - frontend
+      - 'frontend/*'
 
 # Specify working directory to use for the whole job
 defaults:
