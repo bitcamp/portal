@@ -1,6 +1,8 @@
 <template>
   <b-navbar toggleable="lg" type="light" variant="light" class="px-4">
-    <b-navbar-brand href="#">Technica</b-navbar-brand>
+    <b-navbar-brand href="https://gotechnica.org">
+      <img src="../assets/technica-logo.png" alt="Technica 2021!" width="170" class="pl-2">
+    </b-navbar-brand>
   </b-navbar>
 </template>
 
