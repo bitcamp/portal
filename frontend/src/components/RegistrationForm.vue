@@ -1,5 +1,8 @@
 <template>
   <b-form @submit="registerUser" class="registration-form">
+    <h1 style="text-align: center">Register</h1>
+    <h4>Hi there!</h4>
+    <h4>Please fill out the following</h4>
 
     <!-- Name -->
     <b-form-group id="input-group-1" label="Full Name" label-for="input-1">
@@ -7,6 +10,7 @@
         id="input-1"
         v-model="form.name"
         placeholder="Sophie Wilson"
+        class="form-input"
         required
       ></b-form-input>
     </b-form-group>
@@ -18,6 +22,7 @@
         v-model="form.email"
         type="email"
         placeholder="Enter email"
+        class="form-input"
         required
       ></b-form-input>
     </b-form-group>
@@ -28,6 +33,7 @@
         id="input-3"
         v-model="form.school"
         placeholder="Enter your school's name"
+        class="form-input"
         required
       ></b-form-input>
     </b-form-group>
@@ -35,7 +41,7 @@
     <!-- TODO: How did you hear about us? -->
 
     <!-- Submit -->
-    <b-button type="submit" variant="primary" class="m-1 align-right">Submit</b-button>
+    <b-button type="submit" variant="purple" class="m-1">Submit</b-button>
 
   </b-form>
 </template>
@@ -70,10 +76,34 @@ export default {
 
 .registration-form {
   text-align: left;
+  padding-left: 5rem;
+  padding-right: 5rem;
 }
 
 .form-group {
   padding-bottom: 1.25rem;
+}
+
+.form-input {
+  border-color: var(--lavender);
+  border-radius: 0.6rem;
+}
+
+
+.btn-purple {
+  background-color: var(--light-lavender);
+  color: var(--white);
+  border-radius: 0.6rem;
+  border-color: var(--light-lavender);
+  float: right;
+}
+
+.btn-purple:hover {
+  background-color: var(--lavender);
+  color: var(--white);
+  border-radius: 0.6rem;
+  border-color: var(--lavender);
+  float: right;
 }
 
 </style>

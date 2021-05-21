@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <b-container class="mt-4">
-      <b-card>
+      <b-card style="border-radius: 1rem">
         <registration-form/>
       </b-card>
     </b-container>
