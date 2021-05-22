@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about center">
     <b-container class="mt-4">
       <b-card>
         <h1>Thanks for registering!</h1>

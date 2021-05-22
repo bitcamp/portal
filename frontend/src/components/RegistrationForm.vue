@@ -48,7 +48,6 @@
 
 <script>
 import generalMixin from '../mixins/general';
-
 export default {
   name: 'RegistrationForm',
   mixins: [generalMixin],
@@ -73,23 +72,18 @@ export default {
 </script>
 
 <style scoped>
-
 .registration-form {
   text-align: left;
   padding-left: 5rem;
   padding-right: 5rem;
 }
-
 .form-group {
   padding-bottom: 1.25rem;
 }
-
 .form-input {
   border-color: var(--lavender);
   border-radius: 0.6rem;
 }
-
-
 .btn-purple {
   background-color: var(--light-lavender);
   color: var(--white);
@@ -97,7 +91,6 @@ export default {
   border-color: var(--light-lavender);
   float: right;
 }
-
 .btn-purple:hover {
   background-color: var(--lavender);
   color: var(--white);
@@ -105,5 +98,4 @@ export default {
   border-color: var(--lavender);
   float: right;
 }
-
 </style>

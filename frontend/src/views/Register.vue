@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home center">
     <b-container class="mt-4">
       <b-card style="border-radius: 1rem">
         <registration-form/>
