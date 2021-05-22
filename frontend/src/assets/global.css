@@ -13,6 +13,7 @@ body {
 /* COLORS */
 :root {
   --cyan: #00ffff;
+  --muted-cyan: #82ecec;
   --lavender: #b6a1c4;
   --light-lavender: #ded2e5;
   --rose: #ff7bac;
