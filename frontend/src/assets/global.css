@@ -1,3 +1,6 @@
+@import url('https://fonts.cdnfonts.com/css/din-pro'); /* DINpro */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap'); /* Noto Sans */
+
 body {
   background-image: url("./hero-clouds.png");
   background-size: cover;
@@ -19,9 +22,32 @@ body {
   --charcoal-grey: #464343;
 }
 
+h1, h2, h3, h4, h5 {
+  font-family: 'DIN Pro', sans-serif;
+  font-weight: bold;
+}
+
+/* Header 4 */
 h4 {
+  /* Positioning */
   text-align: center;
   margin: 0px;
+  /* Font Styling */
+  font-weight: bold;
+  font-style: normal;
+  font-size: 36px;
+  line-height: 46px;
+
+  color: var(--black);
+}
+
+/* Body 2 */
+.body-2 {
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
 }
 
 .navbar {
