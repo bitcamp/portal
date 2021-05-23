@@ -4,8 +4,8 @@
 body {
   background-image: url("./hero-clouds.png");
   background-size: cover;
-  /*centered on x, starting 40px lower than top for y so that the navbar doesn't cover image*/
-  background-position: center 40px;
+  /*centered on x, starting 56px lower than top for y so that the navbar doesn't cover image*/
+  background-position: center 56px;
   background-repeat: no-repeat;
   height: 100vh;
 }
@@ -32,6 +32,13 @@ h5 {
   font-weight: bold;
 }
 
+/* Header 1 */
+h1 {
+  line-height: 1.5;
+  font-size: 3em;
+  color: var(--black);
+}
+
 /* Header 4 */
 h4 {
   /* Positioning */
@@ -40,8 +47,8 @@ h4 {
   /* Font Styling */
   font-weight: bold;
   font-style: normal;
-  font-size: 36px;
-  line-height: 46px;
+  font-size: 1.5em;
+  padding-bottom: 1em;
 
   color: var(--black);
 }

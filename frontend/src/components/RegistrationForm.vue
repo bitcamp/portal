@@ -1,8 +1,7 @@
 <template>
   <b-form @submit="registerUser" class="registration-form">
     <h1 style="text-align: center">Register</h1>
-    <h4>Hi there!</h4>
-    <h4>Please fill out the following</h4>
+    <h4>Hi there! <br> Please fill out the following</h4>
 
     <!-- Name -->
     <b-form-group id="input-group-1" label="Full Name" label-for="input-1">
@@ -78,7 +77,7 @@ export default {
   padding-right: 5rem;
 }
 .form-group {
-  padding-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
 }
 .form-input {
   border-color: var(--lavender);
