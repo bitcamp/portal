@@ -11,6 +11,8 @@
           <b-form-input
             id="input-1"
             v-model="form.name"
+            name="name"
+            autocomplete="name"
             placeholder="Sophie Wilson"
             class="form-input"
             required
@@ -23,6 +25,8 @@
             id="input-2"
             v-model="form.email"
             type="email"
+            name="email"
+            autocomplete="email"
             placeholder="Enter email"
             class="form-input"
             required
@@ -34,6 +38,8 @@
           <b-form-input
             id="input-3"
             v-model="form.school"
+            name="school"
+            autocomplete="off"
             placeholder="Enter your school's name"
             class="form-input"
             required
