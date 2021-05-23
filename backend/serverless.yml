@@ -1,6 +1,6 @@
 org: technica
 app: portal
-service: portal
+service: portal-backend
 
 provider:
   name: aws
@@ -8,7 +8,7 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   deploymentBucket:
-    name: portal-${self:provider.stage}-layers-deploymentbucket
+    name: portal-backend-${self:provider.stage}-layers-deploymentbucket
   environment:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}

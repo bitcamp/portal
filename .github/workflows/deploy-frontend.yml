@@ -1,7 +1,7 @@
 name: Deploy frontend
 
 # Controls when the action will run. Triggers the workflow on a push event in
-# the master branch, when there's a chage in backend/teams
+# the master branch, when there's a chage in frontend/
 on:
   push:
     branches:
@@ -17,7 +17,7 @@ defaults:
 # Job instructions
 jobs:
   deploy:
-    name: Deploy backend service
+    name: Deploy frontend
     runs-on: ubuntu-latest
     env:
       SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}

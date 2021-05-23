@@ -25,10 +25,10 @@ export default {
     },
     getCurrentEnvironment() {
       if (window.location.hostname === 'register.gotechnica.org') {
-        return 'prod';
+        return 'prd';
       }
       if (window.location.hostname === 'register-staging.gotechnica.org') {
-        return 'stage';
+        return 'stg';
       }
       return 'dev';
     },
