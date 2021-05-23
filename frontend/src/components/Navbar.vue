@@ -7,9 +7,13 @@
 </template>
 
 <script>
-
 export default {
   name: 'Navbar',
 };
-
 </script>
+
+<style scoped>
+.navbar {
+  box-shadow: 0 4px 4px -5px rgba(0, 0, 0, 0.5);
+}
+</style>

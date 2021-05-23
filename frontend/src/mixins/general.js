@@ -27,7 +27,7 @@ export default {
       if (window.location.hostname === 'register.gotechnica.org') {
         return 'prd';
       }
-      if (window.location.hostname === 'register-staging.gotechnica.org') {
+      if (window.location.hostname === 'register.beta.gotechnica.org') {
         return 'stg';
       }
       return 'dev';

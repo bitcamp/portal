@@ -1,6 +1,6 @@
 <template>
   <div class="home center">
-    <b-container class="mt-4">
+    <b-container>
       <b-card style="border-radius: 1rem">
         <registration-form/>
       </b-card>
