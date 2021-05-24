@@ -1,6 +1,6 @@
 org: technica
 app: portal
-service: portal-frontend
+service: frontend
 name: portal-frontend
 component: website
 inputs:

@@ -1,54 +1,64 @@
 <template>
-  <b-form @submit="registerUser" class="registration-form">
-    <h1 style="text-align: center">Register</h1>
-    <h4>Hi there!</h4>
-    <h4>Please fill out the following</h4>
+  <b-row>
+    <b-col md="1"></b-col>
+    <b-col>
+      <b-form @submit="registerUser" class="registration-form">
+        <h1 style="text-align: center">Register</h1>
+        <h4>Hi there! <br> Please fill out the following</h4>
 
-    <!-- Name -->
-    <b-form-group id="input-group-1" label="Full Name" label-for="input-1">
-      <b-form-input
-        id="input-1"
-        v-model="form.name"
-        placeholder="Sophie Wilson"
-        class="form-input"
-        required
-      ></b-form-input>
-    </b-form-group>
+        <!-- Name -->
+        <b-form-group id="input-group-1" label="Full Name" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="form.name"
+            name="name"
+            autocomplete="name"
+            placeholder="Sophie Wilson"
+            class="form-input"
+            required
+          ></b-form-input>
+        </b-form-group>
 
-    <!-- Email -->
-    <b-form-group id="input-group-2" label="Email" label-for="input-2">
-      <b-form-input
-        id="input-2"
-        v-model="form.email"
-        type="email"
-        placeholder="Enter email"
-        class="form-input"
-        required
-      ></b-form-input>
-    </b-form-group>
+        <!-- Email -->
+        <b-form-group id="input-group-2" label="Email" label-for="input-2">
+          <b-form-input
+            id="input-2"
+            v-model="form.email"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="Enter email"
+            class="form-input"
+            required
+          ></b-form-input>
+        </b-form-group>
 
-    <!-- School --> <!-- TODO: replace with typable dropdown -->
-    <b-form-group id="input-group-2" label="School" label-for="input-3">
-      <b-form-input
-        id="input-3"
-        v-model="form.school"
-        placeholder="Enter your school's name"
-        class="form-input"
-        required
-      ></b-form-input>
-    </b-form-group>
+        <!-- School --> <!-- TODO: replace with typable dropdown -->
+        <b-form-group id="input-group-2" label="School" label-for="input-3">
+          <b-form-input
+            id="input-3"
+            v-model="form.school"
+            name="school"
+            autocomplete="off"
+            placeholder="Enter your school's name"
+            class="form-input"
+            required
+          ></b-form-input>
+        </b-form-group>
 
-    <!-- TODO: How did you hear about us? -->
+        <!-- TODO: How did you hear about us? -->
 
-    <!-- Submit -->
-    <b-button type="submit" variant="purple" class="m-1">Submit</b-button>
+        <!-- Submit -->
+        <b-button type="submit" variant="purple" class="m-1">Submit</b-button>
 
-  </b-form>
+      </b-form>
+    </b-col>
+    <b-col md="1"></b-col>
+  </b-row>
 </template>
 
 <script>
 import generalMixin from '../mixins/general';
-
 export default {
   name: 'RegistrationForm',
   mixins: [generalMixin],
@@ -73,22 +83,18 @@ export default {
 </script>
 
 <style scoped>
-
 .registration-form {
   text-align: left;
-  padding-left: 5rem;
-  padding-right: 5rem;
 }
 
 .form-group {
-  padding-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
 }
 
 .form-input {
   border-color: var(--lavender);
   border-radius: 0.6rem;
 }
-
 
 .btn-purple {
   background-color: var(--light-lavender);
@@ -105,5 +111,4 @@ export default {
   border-color: var(--lavender);
   float: right;
 }
-
 </style>
