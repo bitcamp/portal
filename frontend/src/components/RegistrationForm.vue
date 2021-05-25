@@ -46,6 +46,17 @@
           ></b-form-input>
         </b-form-group>
 
+        <!-- School Type -->
+        <b-form-group id="input-group-4" label="School Type" label-for="input-4">
+          <b-form-select
+            id="input-4"
+            v-model="form.school_type"
+            class="form-input"
+            :options="options"
+            required
+          ></b-form-select>
+        </b-form-group>
+
         <!-- TODO: How did you hear about us? -->
 
         <!-- Submit -->
@@ -68,8 +79,15 @@ export default {
         email: '',
         name: '',
         school: '',
+        school_type: '',
         heard_from: '',
       },
+      options: [
+        { value: "middle school", text: "Middle School" },
+        { value: "high school", text: "High School" },
+        { value: "college", text: "College" },
+        { value: "graduated", text: "Graduated" }
+      ]
     };
   },
   methods: {
