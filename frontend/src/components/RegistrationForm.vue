@@ -15,8 +15,11 @@
             autocomplete="name"
             placeholder="Sophie Wilson"
             class="form-input"
-            required
+            :state="name_check"
           ></b-form-input>
+          <b-form-invalid-feedback :state="name_check">
+            Please enter your name
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Email -->
@@ -24,13 +27,15 @@
           <b-form-input
             id="input-2"
             v-model="form.email"
-            type="email"
             name="email"
             autocomplete="email"
             placeholder="Enter email"
             class="form-input"
-            required
+            :state="email_check"
           ></b-form-input>
+          <b-form-invalid-feedback :state="email_check">
+            Please enter a valid email address
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- School --> <!-- TODO: replace with typable dropdown -->
@@ -53,8 +58,11 @@
             v-model="form.school_type"
             class="form-input"
             :options="options"
-            required
+            :state="school_type_check"
           ></b-form-select>
+          <b-form-invalid-feedback :state="school_type_check">
+            Please select a school type
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- TODO: How did you hear about us? -->
@@ -82,20 +90,65 @@ export default {
         school_type: '',
         heard_from: '',
       },
+
+      valid_name: null,
+      valid_email: null,
+      valid_school_type: null,
+
       options: [
         { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
         { value: "college", text: "College" },
         { value: "graduated", text: "Graduated" }
       ]
+
     };
+  },
+  computed: {
+    name_check() {
+      return this.valid_name
+    },
+    email_check() {
+      return this.valid_email
+    },
+    school_type_check() {
+      return this.valid_school_type
+    }
   },
   methods: {
     registerUser(event) {
       event.preventDefault();
-      this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
-      this.$router.push('/thanks');
+      if (this.formCheck()) {
+        this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
+        this.$router.push('/thanks');
+      }
     },
+
+    // logic goes here instead of in computed so feedback is only shown after
+    // submission
+    formCheck() {
+      let valid_form = true
+      if (this.form.name.length === 0)  {
+        this.valid_name = false
+        valid_form = false
+      } else
+        this.valid_name = null
+      
+      //maybe include an email regex
+      if (!this.form.email.includes("@")) {
+        this.valid_email = false
+        valid_form = false
+      } else
+        this.valid_email = null
+
+      if (this.form.school_type.length === 0) {
+        this.valid_school_type = false
+        valid_form = false
+      } else
+        this.valid_school_type = null
+
+      return valid_form
+    }
   },
 };
 </script>
