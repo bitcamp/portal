@@ -15,9 +15,9 @@
             autocomplete="name"
             placeholder="Sophie Wilson"
             class="form-input"
-            :state="name_check"
+            :state="valid_name"
           ></b-form-input>
-          <b-form-invalid-feedback :state="name_check">
+          <b-form-invalid-feedback :state="valid_name">
             Please enter your name
           </b-form-invalid-feedback>
         </b-form-group>
@@ -31,14 +31,14 @@
             autocomplete="email"
             placeholder="Enter email"
             class="form-input"
-            :state="email_check"
+            :state="valid_email"
           ></b-form-input>
-          <b-form-invalid-feedback :state="email_check">
+          <b-form-invalid-feedback :state="valid_email">
             Please enter a valid email address
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <!-- School --> <!-- TODO: replace with typable dropdown -->
+        <!-- School -->
         <b-form-group id="input-group-2" label="School" label-for="input-3">
           <b-form-input
             id="input-3"
@@ -46,9 +46,12 @@
             name="school"
             autocomplete="off"
             placeholder="Enter your school's name"
+            :state="valid_school"
             class="form-input"
-            required
           ></b-form-input>
+          <b-form-invalid-feedback :state="valid_school">
+            Please enter a school name
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- School Type -->
@@ -58,10 +61,26 @@
             v-model="form.school_type"
             class="form-input"
             :options="options"
-            :state="school_type_check"
+            :state="valid_school_type"
           ></b-form-select>
-          <b-form-invalid-feedback :state="school_type_check">
+          <b-form-invalid-feedback :state="valid_school_type">
             Please select a school type
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <!-- Current City -->
+        <b-form-group id="input-group-5" label="City" label-for="input-5">
+          <b-form-input
+            id="input-5"
+            v-model="form.city"
+            name="city"
+            autocomplete="off"
+            placeholder="Where will you be hacking from?"
+            class="form-input"
+            :state="valid_city"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="valid_city">
+            Please enter a city
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -89,11 +108,14 @@ export default {
         school: '',
         school_type: '',
         heard_from: '',
+        city: '',
       },
 
       valid_name: null,
       valid_email: null,
+      valid_school: null,
       valid_school_type: null,
+      valid_city: null,
 
       options: [
         { value: "middle school", text: "Middle School" },
@@ -104,17 +126,24 @@ export default {
 
     };
   },
-  computed: {
-    name_check() {
-      return this.valid_name
-    },
-    email_check() {
-      return this.valid_email
-    },
-    school_type_check() {
-      return this.valid_school_type
-    }
+
+  mounted() {
+    document.addEventListener('DOMContentLoaded', () => {
+      const autocomplete = new google.maps.places.Autocomplete(
+        (document.getElementById('input-5')),
+        {types: ['(cities)']}
+      )
+      
+      autocomplete.addListener("place_changed", () => {
+        let place = autocomplete.getPlace()
+
+        //updates v-model value
+        document.getElementById('input-5').value = place.formatted_address
+        document.getElementById('input-5').dispatchEvent(new Event('input'))
+      })
+    })  
   },
+
   methods: {
     registerUser(event) {
       event.preventDefault();
@@ -124,8 +153,7 @@ export default {
       }
     },
 
-    // logic goes here instead of in computed so feedback is only shown after
-    // submission
+    // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true
       if (this.form.name.length === 0)  {
@@ -134,19 +162,31 @@ export default {
       } else
         this.valid_name = null
       
-      //maybe include an email regex
+      // TODO: maybe include an email regex
       if (!this.form.email.includes("@")) {
         this.valid_email = false
         valid_form = false
       } else
         this.valid_email = null
 
+      if (this.form.school.length === 0) {
+        this.valid_school = false
+        valid_form = false
+      } else
+        this.valid_school = null
+        
       if (this.form.school_type.length === 0) {
         this.valid_school_type = false
         valid_form = false
       } else
         this.valid_school_type = null
 
+      if (this.form.city.length === 0) {
+        this.valid_city = false
+        valid_form = false
+      } else
+        this.valid_city = null
+        
       return valid_form
     }
   },
