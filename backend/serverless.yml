@@ -50,12 +50,26 @@ resources: # define DynamoDB tables within serverless
         AttributeDefinitions:
           - AttributeName: email
             AttributeType: S
+          - AttributeName: referral_id
+            AttributeType: S
         KeySchema:
           - AttributeName: email
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:  # we want to be able to get users by referral_id
+        - IndexName: referralsIndex
+          KeySchema:
+          - AttributeName: referral_id
+            KeyType: HASH
+          Projection:
+            NonKeyAttributes:
+            - name
+            ProjectionType: INCLUDE
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
 
 package:
   exclude:
