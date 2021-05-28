@@ -1,7 +1,0 @@
-{
-    "SENTRY_DSN": "https://474121de6dfb4ea7973f677619e38b2d@o414418.ingest.sentry.io/5776787",
-    "PLATFORM_BASE_URL": "localhost:8080",
-    "REGISTRATION_TABLE": "portal-stage-registration",
-    "REFERRALS_TABLE": "portal-stage-user-referrals",
-    "TRACKING_TABLE": "portal-stage-tracking"
-}
