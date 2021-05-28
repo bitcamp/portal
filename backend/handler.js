@@ -49,6 +49,42 @@ module.exports.register = withSentry(async (event) => {
   // Call DynamoDB to add the item to the table
   await ddb.put(params).promise();
 
+  if (process.env.STAGE !== TESTING_STAGE) {
+    const ses = new AWS.SES();
+    // Create referral link
+    const referralLink = "https://register.gotechnica.org/" + referralID;
+
+    const params = {
+      Destination: {
+        ToAddresses: [
+          body.email,
+        ],
+      },
+      Message: {
+        Body: {
+          Html: {
+            Data: 
+                `Hey ${body.name}, <br />
+                    Thanks for registering for Technica 2021! <br /><br />
+
+                    Here's your custom referral link - you can win prizes and swag by having your friends use it to register for Technica as well! <br/ > <br />
+
+                    <a href="${referralLink}">${referralLink}</a>
+
+                    <br /><br />Best,
+                    <br /><br /> The Technica Organizing Team`,
+          },
+        },
+        Subject: {
+          Data: "You're registered for Technica 2021! Now refer your friends!",
+        },
+      },
+      Source: 'tech@gotechnica.org',
+      ConfigurationSetName: 'platform_prod'
+    };
+    await ses.sendEmail(params).promise();
+  }
+
   // Returns status code 200 and JSON string of 'result'
   return {
     statusCode: 200,

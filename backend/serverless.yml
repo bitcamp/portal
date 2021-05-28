@@ -30,6 +30,11 @@ provider:
         - secretsmanager:DescribeSecret
         - secretsmanager:GetSecretValue
       Resource: "arn:aws:secretsmanager:us-east-1:*"
+    - Effect: "Allow"
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+      Resource: "arn:aws:ses:us-east-1:*"
 
 functions:
   register:
