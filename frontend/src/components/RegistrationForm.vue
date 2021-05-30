@@ -107,7 +107,6 @@ export default {
         name: '',
         school: '',
         school_type: '',
-        heard_from: '',
         city: '',
       },
 

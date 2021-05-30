@@ -18,17 +18,6 @@ module.exports.register = withSentry(async (event) => {
     };
   }
 
-  const params = {
-    TableName: process.env.REGISTRATION_TABLE,
-    Item: {},
-  };
-
-  // TODO: maybe do it manually instead of dynamically
-  // Dynamically add post request body params to document
-  Object.keys(body).forEach((k) => {
-    params.Item[k] = body[k];
-  });
-
   // Generate referral ID
   const referralBase = body.name.split(" ")[0].toLowerCase();
   var referralID;
@@ -43,8 +32,17 @@ module.exports.register = withSentry(async (event) => {
     var resp = await ddb.query(referralQuery).promise();
   } while (resp.Count != 0);
 
-  // Add referral id to user
-  params.Item["referral_id"] = referralID;
+  const params = {
+    TableName: process.env.REGISTRATION_TABLE,
+    Item: {
+      timestamp: new Date().toISOString(),
+      email: body.email,
+      name: body.name,
+      school: body.school,
+      school_type: body.school_type,
+      referral_id: referralID,
+    },
+  };
 
   // Call DynamoDB to add the item to the table
   await ddb.put(params).promise();
