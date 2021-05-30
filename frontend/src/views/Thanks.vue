@@ -1,7 +1,7 @@
 <template>
-  <div class="about center">
+  <div class="about">
     <b-container>
-      <b-card style="border-radius: 1rem">
+      <b-card class="main-card mt-3 mt-md-5">
         <h1>Thanks for registering!</h1>
         <p class= "purple-text" > <!-- making paragraphs have larger margins than header -->
           You will be sent a confirmation email for your registration. Keep in touch with Technica by following us on social media or joining our Community listerv!

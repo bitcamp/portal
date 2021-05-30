@@ -1,7 +1,7 @@
 <template>
-  <div class="home center">
+  <div class="home">
     <b-container>
-      <b-card style="border-radius: 1rem">
+      <b-card class="main-card mt-3 mt-md-5">
         <registration-form/>
       </b-card>
     </b-container>

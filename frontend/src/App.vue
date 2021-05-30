@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <navbar :displayRouteList="displayRouteList" :userIsMemberOfTeam="userIsMemberOfTeam"/>
-    <router-view/>
+    <navbar />
+    <router-view />
   </div>
 </template>
 
