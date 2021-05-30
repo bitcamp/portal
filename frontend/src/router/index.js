@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Register from '../views/Register.vue';
+import RegisterGoogle from '../views/RegisterGoogle.vue';
 
 Vue.use(VueRouter);
 
@@ -9,6 +10,11 @@ const routes = [
     path: '/',
     name: 'Register',
     component: Register,
+  },
+  {
+    path: '/google',
+    name: 'Register',
+    component: RegisterGoogle,
   },
   {
     path: '/thanks',
