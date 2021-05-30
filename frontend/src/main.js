@@ -1,5 +1,15 @@
 import Vue from 'vue';
-import { BootstrapVue } from 'bootstrap-vue';
+import {
+  ButtonPlugin,
+  CardPlugin,
+  FormGroupPlugin,
+  FormInputPlugin,
+  FormPlugin,
+  FormSelectPlugin,
+  LayoutPlugin,
+  NavbarPlugin,
+  NavPlugin,
+} from 'bootstrap-vue';
 import App from './App.vue';
 import router from './router';
 
@@ -7,7 +17,17 @@ import './app.scss';
 import './assets/global.css' //import global css file
 
 Vue.config.productionTip = false;
-Vue.use(BootstrapVue);
+
+[ ButtonPlugin,
+  CardPlugin,
+  FormGroupPlugin,
+  FormInputPlugin,
+  FormPlugin,
+  FormSelectPlugin,
+  LayoutPlugin,
+  NavbarPlugin,
+  NavPlugin,
+].forEach(comp => { Vue.use(comp); });
 
 new Vue({
   router,
