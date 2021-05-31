@@ -9,6 +9,8 @@ import {
   LayoutPlugin,
   NavbarPlugin,
   NavPlugin,
+  InputGroupPlugin,
+  ToastPlugin,
 } from 'bootstrap-vue';
 import App from './App.vue';
 import router from './router';
@@ -27,6 +29,8 @@ Vue.config.productionTip = false;
   LayoutPlugin,
   NavbarPlugin,
   NavPlugin,
+  InputGroupPlugin,
+  ToastPlugin,
 ].forEach(comp => { Vue.use(comp); });
 
 new Vue({

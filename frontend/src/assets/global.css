@@ -1,4 +1,10 @@
-@import url("https://fonts.cdnfonts.com/css/din-pro"); /* DINpro */
+@font-face {
+  font-family: 'DIN Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-display: auto;
+  src: local('DIN Pro'), url('./DINPro.woff') format('woff');
+}
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"); /* Noto Sans */
 
 body {
@@ -23,6 +29,10 @@ body {
   --charcoal-grey: #464343;
 }
 
+body {
+  font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
+}
+
 h1,
 h2,
 h3,
@@ -39,6 +49,10 @@ h1 {
   color: var(--black);
 }
 
+p {
+  color: var(--asphalt-grey);
+}
+
 /* Body 2 */
 .body-2 {
   font-family: Noto Sans;
@@ -48,11 +62,6 @@ h1 {
   line-height: 16px;
 }
 
-.purple-text {
-  color: var(--lavender);
-  padding-left: 5rem;
-  padding-right: 5rem;
-}
 
 .main-card {
   border-radius: 1rem;

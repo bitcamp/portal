@@ -20,10 +20,11 @@ const routes = [
     path: '/thanks',
     name: 'Thanks',
     component: () => import('../views/Thanks.vue'),
+    props: (route) => ({ referralID: route.query.r })  
   },
   {
     path: '/:referral',
-    component: () => import('../views/Register.vue'),
+    component: RegisterGoogle,
   },
 ];
 

@@ -157,14 +157,31 @@ export default {
   },
 
   methods: {
-    registerUser(event) {
+    showErrorToast() {
+      this.$bvToast.toast(`Something went wrong. Are you sure you filled everything out?`, {
+        toaster: 'b-toaster-top-center',
+        solid: true,
+        appendToast: false,
+        noCloseButton: true,
+        variant: 'danger',
+      })
+    },
+    async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
-        this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
-        this.$router.push('/thanks');
+        if (this.$route.params.referral) {
+          this.form.reffered_by = this.$route.params.referral
+        }
+
+        const resp = await this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
+
+        if (resp.referral_id) {
+          this.$router.push({ path: 'thanks', query: { r: resp.referral_id } });
+        } else {
+          this.showErrorToast();
+        }
       }
     },
-
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true
