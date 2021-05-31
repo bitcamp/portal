@@ -29,10 +29,10 @@
             name="pronouns"
             autocomplete="off"
             placeholder="she/her"
-            :state="valid_name"
+            :state="valid_pronouns"
           ></b-form-input>
-          <b-form-invalid-feedback :state="valid_name">
-            Please enter your name
+          <b-form-invalid-feedback :state="valid_pronouns">
+            Please enter your pronouns
           </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
@@ -232,6 +232,12 @@ export default {
       } else
         this.valid_name = null
       
+      if (this.form.pronouns.length === 0) {
+        this.valid_pronouns = false
+        valid_form = false
+      } else 
+        this.valid_pronouns = null
+
       // TODO: maybe include an email regex
       if (!this.form.email.includes("@")) {
         this.valid_email = false
