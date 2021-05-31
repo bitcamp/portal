@@ -11,7 +11,7 @@ module.exports.register = withSentry(async (event) => {
   // Checks if any field is missing
   if (!body.email
    || !body.name
-   || !body.school) {
+   || !body.school_type) {
     return {
       statusCode: 500,
       body: '/register is missing a field',
