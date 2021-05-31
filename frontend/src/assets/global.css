@@ -35,21 +35,7 @@ h5 {
 /* Header 1 */
 h1 {
   line-height: 1.5;
-  font-size: 3em;
-  color: var(--black);
-}
-
-/* Header 4 */
-h4 {
-  /* Positioning */
-  text-align: center;
-  margin: 0px;
-  /* Font Styling */
-  font-weight: bold;
-  font-style: normal;
-  font-size: 1.5em;
-  padding-bottom: 1em;
-
+  font-size: 2.5em;
   color: var(--black);
 }
 
@@ -70,4 +56,9 @@ h4 {
 
 .main-card {
   border-radius: 1rem;
+}
+
+/* Google autocomplete styles */
+.pac-container {
+  font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
 }

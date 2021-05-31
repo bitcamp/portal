@@ -9,17 +9,21 @@ const routes = [
   {
     path: '/',
     name: 'Register',
-    component: Register,
+    component: RegisterGoogle,
   },
   {
-    path: '/google',
+    path: '/manual',
     name: 'Register',
-    component: RegisterGoogle,
+    component: () => import('../views/Register.vue'),
   },
   {
     path: '/thanks',
     name: 'Thanks',
     component: () => import('../views/Thanks.vue'),
+  },
+  {
+    path: '/:referral',
+    component: () => import('../views/Register.vue'),
   },
 ];
 

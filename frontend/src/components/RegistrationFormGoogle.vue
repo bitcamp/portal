@@ -3,8 +3,10 @@
     <b-col md="1"></b-col>
     <b-col>
       <b-form @submit="registerUser" class="registration-form">
-        <h1 style="text-align: center">Register</h1>
-        <h4>Hi there! <br> Please fill out the following</h4>
+        <h1 style="text-align: center">Register for Technica 2021</h1>
+
+        <p>We've made our new registration process easier and faster!</p>
+        <hr>
 
         <!-- Name and Pronouns -->
         <b-form-row>
@@ -44,7 +46,7 @@
             v-model="form.email"
             name="email"
             autocomplete="email"
-            placeholder="Enter email"
+            placeholder="hello@gotechnica.org"
             :state="valid_email"
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_email">
@@ -65,8 +67,11 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <hr/>
+        <p>Give us your shipping address so you can get Technica swag!</p>
+
         <!-- Shipping Address -->
-        <b-form-group id="input-group-5" label="Address" label-for="input-5">
+        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
           <b-form-input
             id="input-5"
             v-model="form.address"
@@ -79,6 +84,17 @@
           <b-form-invalid-feedback :state="valid_address">
             Please your shipping address
           </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group id="input-group-6" label="Address line 2" label-for="input-6">
+          <b-form-input
+            id="input-6"
+            v-model="form.address2"
+            name="address"
+            autocomplete="address-line2"
+            placeholder="Apartment or unit number (optional)"
+            class="form-input"
+          ></b-form-input>
         </b-form-group>
 
         <!-- Submit -->
@@ -104,6 +120,7 @@ export default {
         school_type: '',
         address: '',
         gmaps_place_id: '',
+        referred_by: this.$route.params.shortlink,
       },
 
       valid_name: null,
@@ -183,12 +200,17 @@ export default {
 </script>
 
 <style scoped>
+
+p {
+  text-align: center;
+}
+
 .registration-form {
   text-align: left;
 }
 
 .form-group {
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
 }
 
 .form-control, .custom-select {
@@ -196,19 +218,25 @@ export default {
   border-radius: 0.6rem;
 }
 
-.btn-purple {
+/* .btn-purple {
   background-color: var(--light-lavender);
   color: var(--white);
   border-radius: 0.6rem;
   border-color: var(--light-lavender);
   float: right;
-}
+} */
 
-.btn-purple:hover {
+.btn-purple {
   background-color: var(--lavender);
   color: var(--white);
   border-radius: 0.6rem;
   border-color: var(--lavender);
   float: right;
 }
+
+.btn-purple:hover {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0px 0px 16px 0px var(--lavender)
+}
+
 </style>
