@@ -123,7 +123,7 @@ export default {
         referred_by: '',
       },
 
-      form_start: Date().now,
+      form_start: Date.now(),
       valid_name: null,
       valid_pronouns: null,
       valid_email: null,
