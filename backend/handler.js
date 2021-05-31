@@ -38,6 +38,7 @@ module.exports.register = withSentry(async (event) => {
       timestamp: new Date().toISOString(),
       email: body.email,
       name: body.name,
+      pronouns: body.pronouns,
       school_type: body.school_type,
       address: body.address,
       gmaps_place_id: body.gmaps_place_id,
@@ -47,6 +48,7 @@ module.exports.register = withSentry(async (event) => {
       state: body.state,
       zip: body.zip,
       country: body.country,
+      referred_by: body.referred_by,
       referral_id: referralID,
     },
   };
@@ -107,7 +109,7 @@ const sendConfirmationEmail = async (fullName, email, referralID) => {
         Data: "You're registered for Technica 2021! Now refer your friends!",
       },
     },
-    Source: 'hello@gotechnica.org',
+    Source: 'Technica <hello@gotechnica.org>',
     ConfigurationSetName: 'registration-2021'
   };
   return await ses.sendEmail(params).promise();

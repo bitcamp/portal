@@ -14,6 +14,7 @@ import {
 } from 'bootstrap-vue';
 import App from './App.vue';
 import router from './router';
+import VueGtag from "vue-gtag";
 
 import './app.scss';
 import './assets/global.css' //import global css file
@@ -32,6 +33,10 @@ Vue.config.productionTip = false;
   InputGroupPlugin,
   ToastPlugin,
 ].forEach(comp => { Vue.use(comp); });
+
+Vue.use(VueGtag, {
+  config: { id: "G-04DTKN4MJH" }
+});
 
 new Vue({
   router,

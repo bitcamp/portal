@@ -39,7 +39,8 @@ h3,
 h4,
 h5 {
   font-family: "DIN Pro", sans-serif;
-  font-weight: bold;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Header 1 */

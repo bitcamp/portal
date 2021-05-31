@@ -108,6 +108,7 @@ export default {
       // https://stackoverflow.com/questions/4067469/selecting-all-text-in-html-text-input-when-clicked
       const input = event.currentTarget;
       input.setSelectionRange(0, input.value.length);
+      this.$gtag.event('copied-referral-link', { method: 'Google' })
     },
   },
 };

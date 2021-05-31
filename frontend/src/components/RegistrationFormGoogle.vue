@@ -120,9 +120,10 @@ export default {
         school_type: '',
         address: '',
         gmaps_place_id: '',
-        referred_by: this.$route.params.shortlink,
+        referred_by: '',
       },
 
+      form_start: Date().now,
       valid_name: null,
       valid_email: null,
       valid_school_type: null,
@@ -139,6 +140,9 @@ export default {
   },
 
   mounted() {
+    // log registration in google analytics
+    this.$gtag.event('open-registration', { method: 'Google' })
+
     document.addEventListener('DOMContentLoaded', () => {
       const autocomplete = new google.maps.places.Autocomplete(
         (document.getElementById('input-5')),
@@ -169,12 +173,20 @@ export default {
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
+        this.form.time_taken = Date.now() - this.form_start; // time taken to fill out form
         if (this.$route.params.referral) {
-          this.form.reffered_by = this.$route.params.referral
+          this.$gtag.event('got-referred', { method: 'Google' })
+          this.form.referred_by = this.$route.params.referral
         }
 
-        const resp = await this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
+        this.$gtag.event('submit-registration', { method: 'Google' })
+        this.$gtag.time({
+          'name' : 'completion-time',
+          'value' : this.form.time_taken,
+          'event_category' : 'Form completion duration'
+        })
 
+        const resp = await this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
         if (resp.referral_id) {
           this.$router.push({ path: 'thanks', query: { r: resp.referral_id } });
         } else {
