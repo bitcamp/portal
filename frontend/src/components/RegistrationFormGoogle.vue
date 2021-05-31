@@ -149,12 +149,12 @@ export default {
         {types: ['address']}
       )
       
-      autocomplete.addListener("place_changed", () => {
+      google.maps.event.addListener(autocomplete, "place_changed", () => {
         let place = autocomplete.getPlace()
 
         //updates v-model value
         document.getElementById('input-5').value = place.formatted_address
-        document.getElementById('input-5').dispatchEvent(new Event('input'))
+        this.form.address = place.formatted_address
         this.form.gmaps_place_id = place.place_id;
       })
     })  

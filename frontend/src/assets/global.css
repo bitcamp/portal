@@ -51,6 +51,14 @@ h1 {
 
 p {
   color: var(--asphalt-grey);
+  font-size: 1.1rem;
+}
+
+label {
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+  margin-left: 0.5rem;
+  color: var(--charcoal-grey);
 }
 
 /* Body 2 */
