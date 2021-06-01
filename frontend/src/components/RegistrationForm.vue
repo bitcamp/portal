@@ -95,7 +95,7 @@
         </b-form-group>
 
         <!-- Submit -->
-        <b-button type="submit" variant="purple" class="m-1">Submit</b-button>
+        <b-button type="submit" variant="purple" class="submit-btn m-1">Submit</b-button>
 
       </b-form>
     </b-col>
@@ -163,7 +163,11 @@ export default {
         this.form.address = place.formatted_address
         this.form.gmaps_place_id = place.place_id;
       })
-    })  
+    });
+
+    container = document.getElementsByClassName('pac-container');
+    container.setAttribute('data-tap-disabled', 'true');
+
   },
 
   methods: {
@@ -175,6 +179,10 @@ export default {
         noCloseButton: true,
         variant: 'danger',
       })
+    },
+    disableTap() {
+      container = document.getElementsByClassName('pac-container');
+      container.setAttribute('data-tap-disabled', 'true');
     },
     async registerUser(event) {
       event.preventDefault();
@@ -271,7 +279,7 @@ p {
   border-radius: 0.6rem;
 }
 
-/* .btn-purple {
+/* .btn-purple {mt-lg-3
   background-color: var(--light-lavender);
   color: var(--white);
   border-radius: 0.6rem;
@@ -290,6 +298,18 @@ p {
 .btn-purple:hover {
   color: rgba(255, 255, 255, 1);
   box-shadow: 0px 0px 16px 0px var(--lavender)
+}
+
+.submit-btn {
+  display: block;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .submit-btn {
+    display: unset;
+    width: unset;
+  }
 }
 
 </style>
