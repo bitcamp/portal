@@ -2,7 +2,7 @@
   <b-row>
     <b-col md="1"></b-col>
     <b-col>
-      <b-form @submit="registerUser" class="registration-form">
+      <b-form @submit="registerUser" class="registration-form" autocomplete="on">
         <h1 style="text-align: center">Register for Technica 2021</h1>
 
         <p>We've made our new registration process easier and faster!</p>
@@ -95,7 +95,7 @@
         </b-form-group>
 
         <!-- Submit -->
-        <b-button type="submit" variant="purple" class="submit-btn m-1">Submit</b-button>
+        <b-button type="submit" variant="purple" class="submit-btn m-1" :disabled="isSending">Submit</b-button>
 
       </b-form>
     </b-col>
@@ -122,6 +122,7 @@ export default {
         referred_by: '',
       },
 
+      isSending: false,
       random_id: uuid(),
       form_start: Date.now(),
       valid_name: null,
@@ -150,20 +151,25 @@ export default {
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-      const autocomplete = new google.maps.places.Autocomplete(
-        (document.getElementById('input-5')),
-        {types: ['address']}
-      )
+      const input = document.getElementById('input-5');
+      const autocomplete = new google.maps.places.Autocomplete((input), {types: ['address']})
       
       google.maps.event.addListener(autocomplete, "place_changed", () => {
         let place = autocomplete.getPlace()
 
         //updates v-model value
-        document.getElementById('input-5').value = place.formatted_address
+        input.value = place.formatted_address
         this.form.address = place.formatted_address
         this.form.gmaps_place_id = place.place_id;
       })
   
+      google.maps.event.addDomListener(input, 'keydown', function(event) { 
+        if (event.keyCode === 13) { 
+            event.preventDefault(); 
+            this.form.gmaps_place_id = place.place_id;
+        }
+      });
+
       document.getElementsByClassName('pac-container')[0].setAttribute('data-tap-disabled', 'true');
     });
   },
@@ -183,6 +189,8 @@ export default {
       if (this.formCheck()) {
         // time taken to fill out form in seconds
         this.form.time_taken = (Date.now() - this.form_start)/1000;
+
+        this.isSending = true; // block double submits
         
         if (this.$route.params.referral) {
           this.$gtag.event('got-referred', { method: 'Google' })
@@ -207,7 +215,10 @@ export default {
         });
 
         const resp = await this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
-        if (resp.referral_id) {
+
+        this.isSending = false; // done submitting
+
+        if (resp && resp.referral_id) {
           this.$router.push({ path: 'thanks', query: { r: resp.referral_id } });
           this.track({
             random_id: this.random_id,
@@ -235,8 +246,7 @@ export default {
       } else 
         this.valid_pronouns = null
 
-      // TODO: maybe include an email regex
-      if (!this.form.email.includes("@")) {
+      if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email))) {
         this.valid_email = false
         valid_form = false
       } else
