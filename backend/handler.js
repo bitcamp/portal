@@ -108,6 +108,10 @@ module.exports.track = withSentry(async (event) => {
     };
   }
 
+  // Log user's ip
+  if (body.key === "open-registration") {
+    body.value == event.identity.sourceIP;
+  }
 
   // Find user's random id from referral id
   if (!body.random_id) {
