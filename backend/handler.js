@@ -92,3 +92,52 @@ const sendConfirmationEmail = async (fullName, email, referralID) => {
 
   return await ses.sendTemplatedEmail(params).promise();
 }
+
+// =============================================================================
+
+// POST /track - Keeps track of various user actions
+module.exports.track = withSentry(async (event) => {
+  const body = JSON.parse(event.body);
+  const ddb = new AWS.DynamoDB.DocumentClient();
+
+  // Checks if any field is missing
+  if (!body.random_id && !body.referral_id) {
+    return {
+      statusCode: 500,
+      body: '/track is missing a field',
+    };
+  }
+
+
+  // Find user's random id from referral id
+  if (!body.random_id) {
+    var resp = await ddb.query({
+      TableName: process.env.TRACKING_TABLE,
+      IndexName: "referralsIndex",
+      KeyConditionExpression: "referral_id = :v_refer",
+      ExpressionAttributeValues: { ":v_refer": body.referral_id }
+    }).promise();
+
+    body.random_id = resp.Items[0].random_id;
+  }
+
+  // Append key:value pair to the user's row
+  await ddb.update({
+    TableName: process.env.TRACKING_TABLE,
+    Key: { random_id: body.random_id },
+    ReturnValues: 'ALL_NEW',
+    UpdateExpression: 'set #key = :value',
+    ExpressionAttributeNames: { '#key': body.key },
+    ExpressionAttributeValues: { ':value': body.value, }
+  }).promise()
+
+  // Return success
+  return {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
+  };
+});
+

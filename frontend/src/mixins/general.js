@@ -26,6 +26,9 @@ export default {
         return null;
       }
     },
+    async track(event) {
+      return this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'track', event);
+    },
     getCurrentEnvironment() {
       if (window.location.hostname === 'register.gotechnica.org') {
         return 'prd';

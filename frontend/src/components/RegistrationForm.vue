@@ -81,9 +81,6 @@
             placeholder="8125 Paint Branch Dr, College Park, MD 20740, USA"
             class="form-input"
           ></b-form-input>
-          <b-form-invalid-feedback :state="valid_address">
-            Please enter your shipping address
-          </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group id="input-group-6" label="Shipping address line 2" label-for="input-6">
@@ -108,6 +105,8 @@
 
 <script>
 import generalMixin from '../mixins/general';
+import { v4 as uuid } from 'uuid';
+
 export default {
   name: 'RegistrationForm',
   mixins: [generalMixin],
@@ -123,6 +122,7 @@ export default {
         referred_by: '',
       },
 
+      random_id: uuid(),
       form_start: Date.now(),
       valid_name: null,
       valid_pronouns: null,
@@ -143,6 +143,11 @@ export default {
   mounted() {
     // log registration in google analytics
     this.$gtag.event('open-registration', { method: 'Google' })
+    this.track({
+      random_id: this.random_id,
+      key: "open-registration",
+      value: true
+    });
 
     document.addEventListener('DOMContentLoaded', () => {
       const autocomplete = new google.maps.places.Autocomplete(
@@ -174,10 +179,17 @@ export default {
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
-        this.form.time_taken = Date.now() - this.form_start; // time taken to fill out form
+        // time taken to fill out form in seconds
+        this.form.time_taken = (Date.now() - this.form_start)/1000;
+        
         if (this.$route.params.referral) {
           this.$gtag.event('got-referred', { method: 'Google' })
           this.form.referred_by = this.$route.params.referral
+          this.track({
+            random_id: this.random_id,
+            key: "got-referred",
+            value: this.$route.params.referral
+          });
         }
 
         this.$gtag.event('submit-registration', { method: 'Google' })
@@ -186,10 +198,21 @@ export default {
           'value' : this.form.time_taken,
           'event_category' : 'Form completion duration'
         })
+        this.track({
+          random_id: this.random_id,
+          key: "form-submitted",
+          value: this.form.time_taken
+        });
 
         const resp = await this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
         if (resp.referral_id) {
           this.$router.push({ path: 'thanks', query: { r: resp.referral_id } });
+          this.track({
+            random_id: this.random_id,
+            key: "referral_id",
+            value: resp.referral_id
+          });
+
         } else {
           this.showErrorToast();
         }

@@ -104,6 +104,11 @@ export default {
       this.sleep(1000).then( () => {
         this.copyBtnText = "Copy Link";
         this.$gtag.event('copied-referral-link', { method: 'Google' })
+        this.track({
+          referral_id: this.referralID,
+          key: "copied-referral",
+          value: true
+        });
       })
     },
     // Select the entire input value on click

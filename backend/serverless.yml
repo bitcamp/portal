@@ -12,8 +12,7 @@ provider:
   environment:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
-    # REFERRALS_TABLE: ${file(./config/${self:provider.stage}.json):REFERRALS_TABLE}
-    # TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
+    TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -32,8 +31,7 @@ provider:
       Resource: "arn:aws:secretsmanager:us-east-1:*"
     - Effect: "Allow"
       Action:
-        - ses:SendEmail
-        - ses:SendRawEmail
+        - ses:SendTemplatedEmail
       Resource: "arn:aws:ses:us-east-1:*"
 
 functions:
@@ -48,9 +46,45 @@ functions:
     memorySize: 256
     timeout: 15
     provisionedConcurrency: 1
+  track:
+    handler: handler.track
+    description: Receives registration information from a user
+    events:
+      - http: 
+          path: track
+          method: post
+          cors: true
+    memorySize: 128
 
 resources: # define DynamoDB tables within serverless
   Resources:
+    trackingTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
+        AttributeDefinitions:
+          - AttributeName: random_id
+            AttributeType: S
+          - AttributeName: referral_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: random_id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:  # we want to be able to link tracking with referral id
+        - IndexName: referralsIndex
+          KeySchema:
+          - AttributeName: referral_id
+            KeyType: HASH
+          Projection:
+            NonKeyAttributes:
+            - name
+            ProjectionType: INCLUDE
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
     registrationTable:
       Type: AWS::DynamoDB::Table
       Properties:
