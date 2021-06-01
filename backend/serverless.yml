@@ -45,6 +45,9 @@ functions:
           path: register
           method: post
           cors: true
+    memorySize: 256
+    timeout: 15
+    provisionedConcurrency: 1
 
 resources: # define DynamoDB tables within serverless
   Resources:

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Register from '../views/Register.vue';
-import RegisterGoogle from '../views/RegisterGoogle.vue';
 
 Vue.use(VueRouter);
 
@@ -9,12 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Register',
-    component: RegisterGoogle,
-  },
-  {
-    path: '/manual',
-    name: 'Register',
-    component: () => import('../views/Register.vue'),
+    component: Register,
   },
   {
     path: '/thanks',
@@ -24,7 +18,7 @@ const routes = [
   },
   {
     path: '/:referral',
-    component: RegisterGoogle,
+    component: Register,
   },
 ];
 

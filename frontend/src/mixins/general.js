@@ -3,6 +3,9 @@ import Config from '../config/general';
 
 export default {
   methods: {
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
     async performGetRequest(baseUrl, endpoint) {
       const stage = this.getCurrentEnvironment();
       try {

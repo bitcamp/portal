@@ -36,18 +36,13 @@ module.exports.register = withSentry(async (event) => {
     TableName: process.env.REGISTRATION_TABLE,
     Item: {
       timestamp: new Date().toISOString(),
-      email: body.email,
+      email: body.email.toLowerCase(),
       name: body.name,
       pronouns: body.pronouns,
       school_type: body.school_type,
       address: body.address,
       gmaps_place_id: body.gmaps_place_id,
-      address1: body.address1,
       address2: body.address2,
-      city: body.city,
-      state: body.state,
-      zip: body.zip,
-      country: body.country,
       referred_by: body.referred_by,
       referral_id: referralID,
     },
@@ -83,34 +78,17 @@ const makeAddon = (length) => {
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
 const sendConfirmationEmail = async (fullName, email, referralID) => {
   const ses = new AWS.SES();
-  // Create referral link
+  
   const referralLink = "https://register.gotechnica.org/" + referralID;
-
+  const firstName = fullName.split(" ")[0];
+  
   const params = {
-    Destination: {
-      ToAddresses: [ email ],
-    },
-    Message: {
-      Body: {
-        Html: {
-          Data: 
-              `Hello ${fullName}, <br />
-              Thanks for registering for Technica 2021! <br /><br />
-
-              Here's your custom referral link - you can win prizes and swag by having your friends use it to register for Technica as well! <br/ > <br />
-
-              <a href="${referralLink}">${referralLink}</a>
-
-              <br /><br />Best,
-              <br /><br /> The Technica Organizing Team`,
-        },
-      },
-      Subject: {
-        Data: "You're registered for Technica 2021! Now refer your friends!",
-      },
-    },
+    Destination: { ToAddresses: [ email ] },
     Source: 'Technica <hello@gotechnica.org>',
-    ConfigurationSetName: 'registration-2021'
+    ConfigurationSetName: 'registration-2021',
+    Template: 'HackerRegistrationConfirmation',
+    TemplateData: `{ \"firstName\":\"${firstName}\", \"referralLink\": \"${referralLink}" }`,
   };
-  return await ses.sendEmail(params).promise();
+
+  return await ses.sendTemplatedEmail(params).promise();
 }
