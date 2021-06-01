@@ -163,11 +163,9 @@ export default {
         this.form.address = place.formatted_address
         this.form.gmaps_place_id = place.place_id;
       })
+  
+      document.getElementsByClassName('pac-container')[0].setAttribute('data-tap-disabled', 'true');
     });
-
-    container = document.getElementsByClassName('pac-container');
-    container.setAttribute('data-tap-disabled', 'true');
-
   },
 
   methods: {
@@ -179,10 +177,6 @@ export default {
         noCloseButton: true,
         variant: 'danger',
       })
-    },
-    disableTap() {
-      container = document.getElementsByClassName('pac-container');
-      container.setAttribute('data-tap-disabled', 'true');
     },
     async registerUser(event) {
       event.preventDefault();
