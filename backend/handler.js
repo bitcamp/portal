@@ -48,11 +48,21 @@ module.exports.register = withSentry(async (event) => {
     },
   };
 
-  // Call DynamoDB to add the item to the table
-  await ddb.put(params).promise();
+  let promises = [];
+  if (body.referred_by) {
+    promises = [
+      logStatistic(ddb, "user-was-referred", 1),
+      logReferral(ddb, body.referred_by)
+    ]
+  }
 
-  // Send confirmation email
-  await sendConfirmationEmail(body.name, body.email, referralID)
+  await Promise.all(promises.concat([
+    logStatistic(ddb, "registrations", 1),
+    // Call DynamoDB to add the item to the table
+    ddb.put(params).promise(),
+    // Send confirmation email
+    sendConfirmationEmail(body.name, body.email, referralID),
+  ]));
 
   // Returns status code 200 and JSON string of 'result'
   return {
@@ -99,7 +109,6 @@ const sendConfirmationEmail = async (fullName, email, referralID) => {
 module.exports.track = withSentry(async (event) => {
   const body = JSON.parse(event.body);
   const ddb = new AWS.DynamoDB.DocumentClient();
-
   // Checks if any field is missing
   if (!body.random_id && !body.referral_id) {
     return {
@@ -110,7 +119,8 @@ module.exports.track = withSentry(async (event) => {
 
   // Log user's ip
   if (body.key === "open-registration") {
-    body.value == event.identity.sourceIP;
+    body.value = event.requestContext.identity.sourceIP;
+    await logStatistic(ddb, "page-view", 1);
   }
 
   // Find user's random id from referral id
@@ -145,3 +155,32 @@ module.exports.track = withSentry(async (event) => {
   };
 });
 
+const logStatistic = (ddb, stat) => {
+  return ddb.update({
+    TableName: process.env.STATISTICS_TABLE,
+    Key: { statistic: stat },
+    ReturnValues: 'NONE',
+    UpdateExpression: 'add #key :value',
+    ExpressionAttributeNames: { '#key': "value" },
+    ExpressionAttributeValues: { ':value': 1 }
+  }).promise();
+}
+
+const logReferral = (ddb, referred_by) => {
+  var referralQuery = {
+    TableName: process.env.REGISTRATION_TABLE,
+    IndexName: "referralsIndex",
+    KeyConditionExpression: "referral_id = :v_refer",
+    ExpressionAttributeValues: { ":v_refer": referred_by }
+  };
+  return ddb.query(referralQuery, (err, data) => { if (!err) {
+    ddb.update({
+      TableName: process.env.REGISTRATION_TABLE,
+      Key: { email: data.Items[0].email },
+      ReturnValues: 'NONE',
+      UpdateExpression: 'add #key :value',
+      ExpressionAttributeNames: { '#key': "referral_count" },
+      ExpressionAttributeValues: { ':value': 1 }
+      });
+  }}).promise();
+}

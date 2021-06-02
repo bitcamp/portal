@@ -1,7 +1,7 @@
 {
     "SENTRY_DSN": "https://0e393a6ba49641debefd3774cb69ed2c@o414418.ingest.sentry.io/5303942",
-    "PLATFORM_BASE_URL": "localhost:8080",
+    "PLATFORM_BASE_URL": "register.beta.gotechnica.org",
     "REGISTRATION_TABLE": "portal-stg-registration",
-    "REFERRALS_TABLE": "portal-stg-user-referrals",
+    "STATISTICS_TABLE": "portal-stg-statistics",
     "TRACKING_TABLE": "portal-stg-tracking"
 }
