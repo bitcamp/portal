@@ -48,21 +48,20 @@ module.exports.register = withSentry(async (event) => {
     },
   };
 
-  let promises = [];
   if (body.referred_by) {
-    promises = [
+    await Promise.all([
       logStatistic(ddb, "user-was-referred", 1),
       logReferral(ddb, body.referred_by)
-    ]
+    ]);
   }
 
-  await Promise.all(promises.concat([
+  await Promise.all([
     logStatistic(ddb, "registrations", 1),
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
     sendConfirmationEmail(body.name, body.email, referralID),
-  ]));
+  ]);
 
   // Returns status code 200 and JSON string of 'result'
   return {
@@ -119,7 +118,7 @@ module.exports.track = withSentry(async (event) => {
 
   // Log user's ip
   if (body.key === "open-registration") {
-    body.value = event.requestContext.identity.sourceIP;
+    body.value = event.requestContext.identity.sourceIp;
     await logStatistic(ddb, "page-view", 1);
   }
 
@@ -166,21 +165,20 @@ const logStatistic = (ddb, stat) => {
   }).promise();
 }
 
-const logReferral = (ddb, referred_by) => {
+const logReferral = async (ddb, referred_by) => {
   var referralQuery = {
     TableName: process.env.REGISTRATION_TABLE,
     IndexName: "referralsIndex",
     KeyConditionExpression: "referral_id = :v_refer",
     ExpressionAttributeValues: { ":v_refer": referred_by }
   };
-  return ddb.query(referralQuery, (err, data) => { if (!err) {
-    ddb.update({
-      TableName: process.env.REGISTRATION_TABLE,
-      Key: { email: data.Items[0].email },
-      ReturnValues: 'NONE',
-      UpdateExpression: 'add #key :value',
-      ExpressionAttributeNames: { '#key': "referral_count" },
-      ExpressionAttributeValues: { ':value': 1 }
-      });
-  }}).promise();
+  const resp = await ddb.query(referralQuery).promise();
+  return ddb.update({
+    TableName: process.env.REGISTRATION_TABLE,
+    Key: { email: resp.Items[0].email },
+    ReturnValues: 'NONE',
+    UpdateExpression: 'add #key :value',
+    ExpressionAttributeNames: { '#key': "referral_count" },
+    ExpressionAttributeValues: { ':value': 1 }
+  }).promise();
 }
