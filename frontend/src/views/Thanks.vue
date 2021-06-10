@@ -73,10 +73,12 @@
 <script>
 import Vue from 'vue';
 import VueClipboard from 'vue-clipboard2';
+import VueConfetti from 'vue-confetti';
 import generalMixin from '../mixins/general';
 import SocialLinks from '../components/SocialLinks.vue';
 
 Vue.use(VueClipboard);
+Vue.use(VueConfetti);
 
 export default {
   name: 'Team',
@@ -87,6 +89,25 @@ export default {
       copyBtnText: "Copy Link"
     }
   },
+
+  mounted() {
+    this.$confetti.start({
+      defaultType: 'rect',
+      particlesPerFrame: 0.25,
+      defaultColors: [
+        '#00ffff',
+        '#82ecec',
+        '#b6a1c4',
+        '#ded2e5',
+        '#ff7bac'
+      ]
+    });
+
+    this.sleep(3000).then(() => {
+      this.$confetti.stop();
+    });
+  },
+
   computed: {
     referralLink() {
       return `${document.location.origin}/${this.referralID}`;
