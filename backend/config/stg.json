@@ -3,5 +3,6 @@
     "PLATFORM_BASE_URL": "register.beta.gotechnica.org",
     "REGISTRATION_TABLE": "portal-stg-registration",
     "STATISTICS_TABLE": "portal-stg-statistics",
-    "TRACKING_TABLE": "portal-stg-tracking"
+    "TRACKING_TABLE": "portal-stg-tracking",
+    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot"
 }

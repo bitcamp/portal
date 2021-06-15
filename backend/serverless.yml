@@ -14,6 +14,7 @@ provider:
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
+    SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME: ${file(./config/${self:provider.stage}.json):SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -56,6 +57,13 @@ functions:
           method: post
           cors: true
     memorySize: 128
+  update:
+    handler: handler.update
+    description: Sends a stat update to Slack
+    events:
+      - schedule:
+         rate: rate(6 hours)
+         enabled: ${self:custom.updateEnabled.${opt:stage}, self.updateEnabled.other}
 
 resources: # define DynamoDB tables within serverless
   Resources:
@@ -139,6 +147,9 @@ custom:
   provisionedConcurrency:
     prd: 1
     other: 0
+  updateEnabled:
+    prd: true
+    other: false
   sentry:
     dsn: ${file(./config/${self:provider.stage}.json):SENTRY_DSN}
   serverless-layers:

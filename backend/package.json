@@ -5,6 +5,7 @@
   "main": "handler.js",
   "dependencies": {
     "@sentry/node": "^6.4.0",
+    "@slack/webhook": "^6.0.0",
     "aws-sdk": "^2.909.0",
     "serverless-layers": "^2.3.3",
     "serverless-sentry": "^2.0.2",

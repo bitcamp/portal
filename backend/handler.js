@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const withSentry = require('serverless-sentry-lib');
+const { IncomingWebhook } = require('@slack/webhook');
 
 AWS.config.update({ region: 'us-east-1' });
 
@@ -182,3 +183,32 @@ const logReferral = async (ddb, referred_by) => {
     ExpressionAttributeValues: { ':value': 1 }
   }).promise();
 }
+
+// /update - Sends an update to slack
+module.exports.update = withSentry(async () => {
+    const ddb = new AWS.DynamoDB.DocumentClient();
+    const statsTable = process.env.STATISTICS_TABLE;
+    const params = {
+	TableName: statsTable,
+	Select: "ALL_ATTRIBUTES"
+    };
+
+    // Prepare the slack webhook
+    const SecretsManager = new AWS.SecretsManager({ region: 'us-east-1' });
+    const SecretsManagerSlackKey = await SecretsManager.getSecretValue(
+	{ SecretId: process.env.SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME },
+    ).promise();
+    const webhookJSON = JSON.parse(SecretsManagerSlackKey.SecretString);
+    const webhookUrl = webhookJSON.tech_bots_SLACK_WEBHOOK;
+    const webhook = new IncomingWebhook(webhookUrl);
+
+    // Send the statistic update to slack
+    var statArr = []
+    const stats = await ddb.scan(params).promise();
+    stats.Items.forEach((stat) => statArr.push(stat.statistic + ":\t" + stat.value));
+    await webhook.send({
+	text: `Technica 2021 Registration update for ` +
+	    `${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET:\n\n` +
+	    `${Array.from(statArr).join('\n')}`,
+    });
+});

@@ -3,5 +3,6 @@
     "PLATFORM_BASE_URL": "register.gotechnica.org",
     "REGISTRATION_TABLE": "portal-prd-registration",
     "STATISTICS_TABLE": "portal-prd-statistics",
-    "TRACKING_TABLE": "portal-prd-tracking"
+    "TRACKING_TABLE": "portal-prd-tracking",
+    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot"
 }
