@@ -6,6 +6,10 @@
         <h1 style="text-align: center">Register for Technica 2021</h1>
 
         <p>We've made our new registration process easier and faster!</p>
+        <p style="font-size: 0.9rem; opacity:95%">
+          If you have any questions about the registration process,
+          please chat with us in the bottom right hand corner or reach out to <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
+        </p>
         <hr>
 
         <!-- Name and Pronouns -->
@@ -30,7 +34,7 @@
               v-model="form.pronouns"
               name="pronouns"
               autocomplete="off"
-              placeholder="she/her"
+              placeholder="they/them"
               :state="valid_pronouns"
             ></b-form-input>
             <b-form-invalid-feedback :state="valid_pronouns">
@@ -48,6 +52,7 @@
             autocomplete="email"
             placeholder="hello@gotechnica.org"
             :state="valid_email"
+            @blur="this.emailFilledOut"
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_email">
             Please enter a valid email address
@@ -75,17 +80,17 @@
         <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
           <b-form-input
             id="input-5"
-            v-model="form.address"
+            v-model="form.address1"
             name="address"
             autocomplete="off"
-            placeholder="8125 Paint Branch Dr, College Park, MD 20740, USA"
+            placeholder="8125 Paint Branch Drive"
             class="form-input"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-6" label="Shipping address line 2" label-for="input-6">
+        <b-form-group id="input-group-address-line2" label="Shipping address line 2" label-for="input-address-line2">
           <b-form-input
-            id="input-6"
+            id="input-address-line2"
             v-model="form.address2"
             name="address-line2"
             autocomplete="address-line2"
@@ -93,6 +98,50 @@
             class="form-input"
           ></b-form-input>
         </b-form-group>
+
+        <b-form-row>
+          <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-md-5">
+            <b-form-input
+              id="input-city"
+              v-model="form.city"
+              name="city"
+              autocomplete="off"
+              placeholder="College Park"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="input-group-state" label="State" label-for="input-state" class="col-md-2">
+            <b-form-input
+              id="input-state"
+              v-model="form.state"
+              name="state"
+              autocomplete="off"
+              placeholder="MD"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="input-group-zip" label="Zip Code" label-for="input-zip" class="col-md-3">
+            <b-form-input
+              id="input-zip"
+              v-model="form.zip"
+              name="zip"
+              autocomplete="off"
+              placeholder="20740"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="input-group-country" label="Country" label-for="input-country" class="col-md-2">
+            <b-form-input
+              id="input-country"
+              v-model="form.country"
+              name="country"
+              autocomplete="off"
+              placeholder="USA"
+            ></b-form-input>
+          </b-form-group>
+
+        </b-form-row>
+
 
         <!-- Submit -->
         <b-button type="submit" variant="purple" class="submit-btn m-1" :disabled="isSending">Submit</b-button>
@@ -118,6 +167,12 @@ export default {
         pronouns: '',
         school_type: '',
         address: '',
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        country: '',
+        zip: '',
         gmaps_place_id: '',
         referred_by: '',
       },
@@ -158,9 +213,9 @@ export default {
         let place = autocomplete.getPlace()
 
         //updates v-model value
-        input.value = place.formatted_address
-        this.form.address = place.formatted_address
         this.form.gmaps_place_id = place.place_id;
+        this.form.address = place.formatted_address
+        this.fillInAddress(place);
       })
   
       google.maps.event.addDomListener(input, 'keydown', function(event) { 
@@ -175,6 +230,64 @@ export default {
   },
 
   methods: {
+    fillInAddress(place) {
+      let address1 = "";
+      let postcode = "";
+
+      // Get each component of the address from the place details,
+      // and then fill-in the corresponding field on the form.
+      // place.address_components are google.maps.GeocoderAddressComponent objects
+      // which are documented at http://goo.gle/3l5i5Mr
+      for (const component of place.address_components) {
+        const componentType = component.types[0];
+
+        switch (componentType) {
+          case "street_number": {
+            address1 = `${component.long_name} ${address1}`;
+            break;
+          }
+
+          case "route": {
+            address1 += component.short_name;
+            break;
+          }
+
+          case "postal_code": {
+            postcode = `${component.long_name}${postcode}`;
+            break;
+          }
+
+          case "postal_code_suffix": {
+            postcode = `${postcode}-${component.long_name}`;
+            break;
+          }
+          case "locality":
+            this.form.city = document.getElementById("input-city").value = component.long_name;
+            break;
+
+          case "administrative_area_level_1": {
+            this.form.state = document.getElementById("input-state").value = component.short_name;
+            break;
+          }
+          case "country":
+            this.form.country = document.getElementById("input-country").value = component.short_name;
+            break;
+        }
+      }
+      this.form.address1 = document.getElementById("input-5").value = address1;
+      this.form.zip = document.getElementById("input-zip").value = postcode;
+      // After filling the form with address components from the Autocomplete
+      // prediction, set cursor focus on the second address line to encourage
+      // entry of subpremise information such as apartment, unit, or floor number.
+      document.getElementById("input-address-line2").focus();
+    },
+    emailFilledOut() {
+      this.track({
+        random_id: this.random_id,
+        key: "filled-email",
+        value: this.form.email
+      });
+    },
     showErrorToast() {
       this.$bvToast.toast(`Something went wrong. Are you sure you filled everything out?`, {
         toaster: 'b-toaster-top-center',
