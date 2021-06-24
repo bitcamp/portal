@@ -11,6 +11,7 @@ import {
   NavPlugin,
   InputGroupPlugin,
   ToastPlugin,
+  FormCheckboxPlugin,
 } from 'bootstrap-vue';
 import App from './App.vue';
 import router from './router';
@@ -21,7 +22,7 @@ import './assets/global.css' //import global css file
 
 Vue.config.productionTip = false;
 
-[ ButtonPlugin,
+[ButtonPlugin,
   CardPlugin,
   FormGroupPlugin,
   FormInputPlugin,
@@ -32,6 +33,7 @@ Vue.config.productionTip = false;
   NavPlugin,
   InputGroupPlugin,
   ToastPlugin,
+  FormCheckboxPlugin,
 ].forEach(comp => { Vue.use(comp); });
 
 Vue.use(VueGtag, {

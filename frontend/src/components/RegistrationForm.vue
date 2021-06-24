@@ -2,19 +2,29 @@
   <b-row>
     <b-col md="1"></b-col>
     <b-col>
-      <b-form @submit="registerUser" class="registration-form" autocomplete="on">
+      <b-form
+        @submit="registerUser"
+        class="registration-form"
+        autocomplete="on"
+      >
         <h1 style="text-align: center">Register for Technica 2021</h1>
 
         <p>We've made our new registration process easier and faster!</p>
-        <p style="font-size: 0.9rem; opacity:95%">
-          If you have any questions about the registration process,
-          please chat with us in the bottom right hand corner or reach out to <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
+        <p style="font-size: 0.9rem; opacity: 95%">
+          If you have any questions about the registration process, please chat
+          with us in the bottom right hand corner or reach out to
+          <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
         </p>
-        <hr>
+        <hr />
 
         <!-- Name and Pronouns -->
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-md-8">
+          <b-form-group
+            id="input-group-1"
+            label="Full Name*"
+            label-for="input-1"
+            class="col-md-8"
+          >
             <b-form-input
               id="input-1"
               v-model="form.name"
@@ -28,7 +38,12 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
-          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-md-4">
+          <b-form-group
+            id="input-group-p"
+            label="Pronouns*"
+            label-for="input-p"
+            class="col-md-4"
+          >
             <b-form-input
               id="input-p"
               v-model="form.pronouns"
@@ -59,8 +74,24 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="form.MLH_emails"
+          name="checkbox-1"
+          value="true"
+          unchecked-value="false"
+          style="padding-bottom: 1rem"
+        >
+          I authorize MLH to send me pre- and post-event informational emails,
+          which contain free credit and opportunities from their partners.
+        </b-form-checkbox>
+
         <!-- School Type -->
-        <b-form-group id="input-group-4" label="School Level*" label-for="input-4">
+        <b-form-group
+          id="input-group-4"
+          label="School Level*"
+          label-for="input-4"
+        >
           <b-form-select
             id="input-4"
             v-model="form.school_type"
@@ -72,7 +103,6 @@
             Please select a school level
           </b-form-invalid-feedback>
         </b-form-group>
-
         <b-form-group id="input-group-school" label="School Name*" label-for="input-school">
           <b-form-input
             id="input-school"
@@ -88,10 +118,15 @@
         </b-form-group>
 
         <hr/>
+        
         <p>Give us your shipping address so you can get Technica swag!</p>
 
         <!-- Shipping Address -->
-        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
+        <b-form-group
+          id="input-group-5"
+          label="Shipping address"
+          label-for="input-5"
+        >
           <b-form-input
             id="input-5"
             v-model="form.address1"
@@ -102,7 +137,11 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-address-line2" label="Shipping address line 2" label-for="input-address-line2">
+        <b-form-group
+          id="input-group-address-line2"
+          label="Shipping address line 2"
+          label-for="input-address-line2"
+        >
           <b-form-input
             id="input-address-line2"
             v-model="form.address2"
@@ -114,7 +153,12 @@
         </b-form-group>
 
         <b-form-row>
-          <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-md-5">
+          <b-form-group
+            id="input-group-city"
+            label="City"
+            label-for="input-city"
+            class="col-md-5"
+          >
             <b-form-input
               id="input-city"
               v-model="form.city"
@@ -124,7 +168,12 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-state" label="State" label-for="input-state" class="col-md-2">
+          <b-form-group
+            id="input-group-state"
+            label="State"
+            label-for="input-state"
+            class="col-md-2"
+          >
             <b-form-input
               id="input-state"
               v-model="form.state"
@@ -134,7 +183,12 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-zip" label="Zip Code" label-for="input-zip" class="col-md-3">
+          <b-form-group
+            id="input-group-zip"
+            label="Zip Code"
+            label-for="input-zip"
+            class="col-md-3"
+          >
             <b-form-input
               id="input-zip"
               v-model="form.zip"
@@ -144,7 +198,12 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-country" label="Country" label-for="input-country" class="col-md-2">
+          <b-form-group
+            id="input-group-country"
+            label="Country"
+            label-for="input-country"
+            class="col-md-2"
+          >
             <b-form-input
               id="input-country"
               v-model="form.country"
@@ -153,13 +212,16 @@
               placeholder="USA"
             ></b-form-input>
           </b-form-group>
-
         </b-form-row>
 
-
         <!-- Submit -->
-        <b-button type="submit" variant="purple" class="submit-btn m-1" :disabled="isSending">Submit</b-button>
-
+        <b-button
+          type="submit"
+          variant="purple"
+          class="submit-btn m-1"
+          :disabled="isSending"
+          >Submit</b-button
+        >
       </b-form>
     </b-col>
     <b-col md="1"></b-col>
@@ -167,29 +229,30 @@
 </template>
 
 <script>
-import generalMixin from '../mixins/general';
-import { v4 as uuid } from 'uuid';
+import generalMixin from "../mixins/general";
+import { v4 as uuid } from "uuid";
 
 export default {
-  name: 'RegistrationForm',
+  name: "RegistrationForm",
   mixins: [generalMixin],
   data() {
     return {
       form: {
-        email: '',
-        name: '',
-        pronouns: '',
-        school_type: '',
+        email: "",
+        MLH_emails: "",
+        name: "",
+        pronouns: "",
+        school_type: "",
         school: '',
-        address: '',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        country: '',
-        zip: '',
-        gmaps_place_id: '',
-        referred_by: '',
+        address: "",
+        address1: "",
+        address2: "",
+        city: "",
+        state: "",
+        country: "",
+        zip: "",
+        gmaps_place_id: "",
+        referred_by: "",
       },
 
       isSending: false,
@@ -206,42 +269,45 @@ export default {
         { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
         { value: "college", text: "College" },
-        { value: "graduated", text: "Graduated" }
-      ]
-
+        { value: "graduated", text: "Graduated" },
+      ],
     };
   },
 
   mounted() {
     // log registration in google analytics
-    this.$gtag.event('open-registration', { method: 'Google' })
+    this.$gtag.event("open-registration", { method: "Google" });
     this.track({
       random_id: this.random_id,
       key: "open-registration",
-      value: true
+      value: true,
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const input = document.getElementById('input-5');
-      const autocomplete = new google.maps.places.Autocomplete((input), {types: ['address']})
-      
+    document.addEventListener("DOMContentLoaded", () => {
+      const input = document.getElementById("input-5");
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["address"],
+      });
+
       google.maps.event.addListener(autocomplete, "place_changed", () => {
-        let place = autocomplete.getPlace()
+        let place = autocomplete.getPlace();
 
         //updates v-model value
         this.form.gmaps_place_id = place.place_id;
-        this.form.address = place.formatted_address
+        this.form.address = place.formatted_address;
         this.fillInAddress(place);
-      })
-  
-      google.maps.event.addDomListener(input, 'keydown', function(event) { 
-        if (event.keyCode === 13) { 
-            event.preventDefault(); 
-            this.form.gmaps_place_id = place.place_id;
+      });
+
+      google.maps.event.addDomListener(input, "keydown", function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          this.form.gmaps_place_id = place.place_id;
         }
       });
 
-      document.getElementsByClassName('pac-container')[0].setAttribute('data-tap-disabled', 'true');
+      document
+        .getElementsByClassName("pac-container")[0]
+        .setAttribute("data-tap-disabled", "true");
     });
   },
 
@@ -278,15 +344,18 @@ export default {
             break;
           }
           case "locality":
-            this.form.city = document.getElementById("input-city").value = component.long_name;
+            this.form.city = document.getElementById("input-city").value =
+              component.long_name;
             break;
 
           case "administrative_area_level_1": {
-            this.form.state = document.getElementById("input-state").value = component.short_name;
+            this.form.state = document.getElementById("input-state").value =
+              component.short_name;
             break;
           }
           case "country":
-            this.form.country = document.getElementById("input-country").value = component.short_name;
+            this.form.country = document.getElementById("input-country").value =
+              component.short_name;
             break;
         }
       }
@@ -301,60 +370,66 @@ export default {
       this.track({
         random_id: this.random_id,
         key: "filled-email",
-        value: this.form.email
+        value: this.form.email,
       });
     },
     showErrorToast() {
-      this.$bvToast.toast(`Something went wrong. Are you sure you filled everything out?`, {
-        toaster: 'b-toaster-top-center',
-        solid: true,
-        appendToast: false,
-        noCloseButton: true,
-        variant: 'danger',
-      })
+      this.$bvToast.toast(
+        `Something went wrong. Are you sure you filled everything out?`,
+        {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        }
+      );
     },
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
         // time taken to fill out form in seconds
-        this.form.time_taken = (Date.now() - this.form_start)/1000;
+        this.form.time_taken = (Date.now() - this.form_start) / 1000;
 
         this.isSending = true; // block double submits
-        
+
         if (this.$route.params.referral) {
-          this.$gtag.event('got-referred', { method: 'Google' })
-          this.form.referred_by = this.$route.params.referral
+          this.$gtag.event("got-referred", { method: "Google" });
+          this.form.referred_by = this.$route.params.referral;
           this.track({
             random_id: this.random_id,
             key: "got-referred",
-            value: this.$route.params.referral
+            value: this.$route.params.referral,
           });
         }
 
-        this.$gtag.event('submit-registration', { method: 'Google' })
+        this.$gtag.event("submit-registration", { method: "Google" });
         this.$gtag.time({
-          'name' : 'completion-time',
-          'value' : this.form.time_taken,
-          'event_category' : 'Form completion duration'
-        })
+          name: "completion-time",
+          value: this.form.time_taken,
+          event_category: "Form completion duration",
+        });
         this.track({
           random_id: this.random_id,
           key: "form-submitted",
-          value: this.form.time_taken
+          value: this.form.time_taken,
         });
 
-        const resp = await this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'register', this.form);
+        const resp = await this.performPostRequest(
+          this.getEnvVariable("BACKEND_ENDPOINT"),
+          "register",
+          this.form
+        );
 
         this.isSending = false; // done submitting
 
         if (resp && resp.referral_id) {
-          this.$router.push({ path: 'thanks', query: { r: resp.referral_id } });
+          this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
           this.track({
             random_id: this.random_id,
             key: "referral_id",
-            value: resp.referral_id
+            value: resp.referral_id,
           });
-
         } else {
           this.showErrorToast();
         }
@@ -362,24 +437,23 @@ export default {
     },
     // logic goes here so feedback is only shown after submission
     formCheck() {
-      let valid_form = true
-      if (this.form.name.length === 0)  {
-        this.valid_name = false
-        valid_form = false
-      } else
-        this.valid_name = null
-      
-      if (this.form.pronouns.length === 0) {
-        this.valid_pronouns = false
-        valid_form = false
-      } else 
-        this.valid_pronouns = null
+      let valid_form = true;
+      if (this.form.name.length === 0) {
+        this.valid_name = false;
+        valid_form = false;
+      } else this.valid_name = null;
 
-      if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email))) {
-        this.valid_email = false
-        valid_form = false
-      } else
-        this.valid_email = null
+      if (this.form.pronouns.length === 0) {
+        this.valid_pronouns = false;
+        valid_form = false;
+      } else this.valid_pronouns = null;
+
+      if (
+        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email)
+      ) {
+        this.valid_email = false;
+        valid_form = false;
+      } else this.valid_email = null;
 
       if (this.form.school_type.length === 0) {
         this.valid_school_type = false
@@ -400,7 +474,6 @@ export default {
 </script>
 
 <style scoped>
-
 p {
   text-align: center;
 }
@@ -413,7 +486,8 @@ p {
   padding-bottom: 0.3rem;
 }
 
-.form-control, .custom-select {
+.form-control,
+.custom-select {
   border-color: var(--lavender);
   border-radius: 0.6rem;
 }
@@ -436,7 +510,7 @@ p {
 
 .btn-purple:hover {
   color: rgba(255, 255, 255, 1);
-  box-shadow: 0px 0px 16px 0px var(--lavender)
+  box-shadow: 0px 0px 16px 0px var(--lavender);
 }
 
 .submit-btn {
@@ -450,5 +524,4 @@ p {
     width: unset;
   }
 }
-
 </style>
