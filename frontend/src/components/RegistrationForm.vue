@@ -73,6 +73,20 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <b-form-group id="input-group-school" label="School Name*" label-for="input-school">
+          <b-form-input
+            id="input-school"
+            v-model="form.school"
+            name="school"
+            autocomplete="off"
+            placeholder="University of Maryland, College Park"
+            :state="valid_school"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="valid_school">
+            Please enter your school name
+          </b-form-invalid-feedback>
+        </b-form-group>
+
         <hr/>
         <p>Give us your shipping address so you can get Technica swag!</p>
 
@@ -166,6 +180,7 @@ export default {
         name: '',
         pronouns: '',
         school_type: '',
+        school: '',
         address: '',
         address1: '',
         address2: '',
@@ -184,6 +199,7 @@ export default {
       valid_pronouns: null,
       valid_email: null,
       valid_school_type: null,
+      valid_school: null,
 
       options: [
         { value: "", text: "Choose your school level...", disabled: true },
@@ -370,6 +386,12 @@ export default {
         valid_form = false
       } else
         this.valid_school_type = null
+      
+      if (this.form.school.length === 0) {
+        this.valid_school = false
+        valid_form = false
+      } else 
+        this.valid_school = null
         
       return valid_form
     }
