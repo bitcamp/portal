@@ -110,8 +110,6 @@
           id="checkbox-2"
           v-model="form.MLH_privacy"
           name="checkbox-2"
-          value=true
-          unchecked-value=false
           class="checkbox"
           :state="valid_mlh_privacy"
         >
@@ -126,11 +124,23 @@
         </b-form-checkbox>
 
         <b-form-checkbox
+          id="checkbox-3"
+          v-model="form.code_of_conduct"
+          name="checkbox-3"
+          :state="valid_code_of_conduct"
+          class="checkbox"
+          style="padding-bottom: 1rem"
+        >
+          I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.*
+          <b-form-invalid-feedback :state="valid_code_of_conduct">
+          Please agree to MLH's code of conduct
+        </b-form-invalid-feedback>
+        </b-form-checkbox>
+
+        <b-form-checkbox
           id="checkbox-1"
           v-model="form.MLH_emails"
           name="checkbox-1"
-          value=true
-          unchecked-value=false
           class="checkbox"
         >
           I authorize MLH to send me pre- and post-event informational emails,
@@ -233,7 +243,7 @@
             ></b-form-input>
           </b-form-group>
         </b-form-row>
-
+        
         <!-- Submit -->
         <b-button
           type="submit"
@@ -260,6 +270,7 @@ export default {
       form: {
         email: "",
         MLH_emails: false,
+        code_of_conduct: false,
         MLH_privacy: false,
         name: "",
         pronouns: "",
@@ -275,7 +286,7 @@ export default {
         gmaps_place_id: "",
         referred_by: "",
       },
-
+    
       isSending: false,
       random_id: uuid(),
       form_start: Date.now(),
@@ -284,6 +295,8 @@ export default {
       valid_email: null,
       valid_school_type: null,
       valid_school: null,
+      valid_code_of_conduct: null,
+      valid_mlh_privacy: null,
 
       options: [
         { value: "", text: "Choose your school level...", disabled: true },
@@ -303,7 +316,7 @@ export default {
       key: "open-registration",
       value: true,
     });
-
+    
     document.addEventListener("DOMContentLoaded", () => {
       const input = document.getElementById("input-5");
       const autocomplete = new google.maps.places.Autocomplete(input, {
@@ -459,6 +472,7 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
+      console.log(this.form.code_of_conduct)
       if (this.form.name.length === 0) {
         this.valid_name = false;
         valid_form = false;
@@ -483,8 +497,13 @@ export default {
         this.valid_school = false
         valid_form = false
       } else this.valid_school = null
+      
+      if (!this.form.code_of_conduct) {
+        this.valid_code_of_conduct = false
+        valid_form = false
+      } else this.valid_code_of_conduct = null
 
-      if (this.form.MLH_privacy === false) {
+      if (!this.form.MLH_privacy) {
         this.valid_mlh_privacy = false
         valid_form = false
       } else this.valid_mlh_privacy = null
