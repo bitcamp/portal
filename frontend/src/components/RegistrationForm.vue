@@ -132,7 +132,7 @@
           style="padding-bottom: 1rem"
         >
           I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.*
-          <b-form-invalid-feedback :state="valid_code_of_conduct">
+        <b-form-invalid-feedback :state="valid_code_of_conduct">
           Please agree to MLH's code of conduct
         </b-form-invalid-feedback>
         </b-form-checkbox>
@@ -472,7 +472,6 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
-      console.log(this.form.code_of_conduct)
       if (this.form.name.length === 0) {
         this.valid_name = false;
         valid_form = false;
