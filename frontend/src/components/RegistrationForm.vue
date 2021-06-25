@@ -74,18 +74,6 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-checkbox
-          id="checkbox-1"
-          v-model="form.MLH_emails"
-          name="checkbox-1"
-          value="true"
-          unchecked-value="false"
-          style="padding-bottom: 1rem"
-        >
-          I authorize MLH to send me pre- and post-event informational emails,
-          which contain free credit and opportunities from their partners.
-        </b-form-checkbox>
-
         <!-- School Type -->
         <b-form-group
           id="input-group-4"
@@ -116,6 +104,38 @@
             Please enter your school name
           </b-form-invalid-feedback>
         </b-form-group>
+
+        <!-- MLH Stuff -->
+        <b-form-checkbox
+          id="checkbox-2"
+          v-model="form.MLH_privacy"
+          name="checkbox-2"
+          value=true
+          unchecked-value=false
+          class="checkbox"
+          :state="valid_mlh_privacy"
+        >
+          I authorize you to share my application/registration information with 
+          Major League Hacking for event administration, ranking, and MLH administration 
+          in-line with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
+          I further agree to the terms of both the <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank">MLH Contest Terms and Conditions</a>
+          and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
+          <b-form-invalid-feedback :state="valid_mlh_privacy">
+            Please agree to MLH's privacy policy and terms
+          </b-form-invalid-feedback>
+        </b-form-checkbox>
+
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="form.MLH_emails"
+          name="checkbox-1"
+          value=true
+          unchecked-value=false
+          class="checkbox"
+        >
+          I authorize MLH to send me pre- and post-event informational emails,
+          which contain free credit and opportunities from their partners.
+        </b-form-checkbox>
 
         <hr/>
         
@@ -239,7 +259,8 @@ export default {
     return {
       form: {
         email: "",
-        MLH_emails: "",
+        MLH_emails: false,
+        MLH_privacy: false,
         name: "",
         pronouns: "",
         school_type: "",
@@ -448,9 +469,7 @@ export default {
         valid_form = false;
       } else this.valid_pronouns = null;
 
-      if (
-        !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email)
-      ) {
+      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email)) {
         this.valid_email = false;
         valid_form = false;
       } else this.valid_email = null;
@@ -458,15 +477,18 @@ export default {
       if (this.form.school_type.length === 0) {
         this.valid_school_type = false
         valid_form = false
-      } else
-        this.valid_school_type = null
+      } else this.valid_school_type = null
       
       if (this.form.school.length === 0) {
         this.valid_school = false
         valid_form = false
-      } else 
-        this.valid_school = null
-        
+      } else this.valid_school = null
+
+      if (this.form.MLH_privacy === false) {
+        this.valid_mlh_privacy = false
+        valid_form = false
+      } else this.valid_mlh_privacy = null
+
       return valid_form
     }
   },
@@ -480,6 +502,12 @@ p {
 
 .registration-form {
   text-align: left;
+}
+
+.form-control:focus, .form-control:active {
+  border-color: var(--lavender) !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.2rem rgba(182, 161, 196, 0.5) !important;
 }
 
 .form-group {
@@ -511,6 +539,10 @@ p {
 .btn-purple:hover {
   color: rgba(255, 255, 255, 1);
   box-shadow: 0px 0px 16px 0px var(--lavender);
+}
+
+.checkbox {
+  padding-bottom: 1rem;
 }
 
 .submit-btn {

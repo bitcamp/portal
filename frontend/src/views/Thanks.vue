@@ -150,7 +150,7 @@ p {
 }
 
 .btn-cyan {
-  background-color: var(--muted-cyan);
+  background-color: var(--dirty-cyan);
   color: var(--white);
   border-radius: 0.6rem;
   border-color: var(--cyan);
