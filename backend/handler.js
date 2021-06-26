@@ -39,6 +39,8 @@ module.exports.register = withSentry(async (event) => {
       timestamp: new Date().toISOString(),
       email: body.email.toLowerCase(),
       name: body.name,
+      referred_by: body.referred_by,
+      referral_id: referralID,
       pronouns: body.pronouns,
       school_type: body.school_type,
       school: body.school,
@@ -50,8 +52,10 @@ module.exports.register = withSentry(async (event) => {
       state: body.state,
       zip: body.zip,
       country: body.country,
-      referred_by: body.referred_by,
-      referral_id: referralID,
+      phone: body.phone,
+      MLH_emails: body.MLH_emails,
+      code_of_conduct: body.code_of_conduct,
+      MLH_privacy: body.MLH_privacy,
     },
   };
 
