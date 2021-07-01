@@ -1,8 +1,8 @@
-const AWS = require('aws-sdk');
-const withSentry = require('serverless-sentry-lib');
-const { IncomingWebhook } = require('@slack/webhook');
+const AWS = require("aws-sdk");
+const withSentry = require("serverless-sentry-lib");
+const { IncomingWebhook } = require("@slack/webhook");
 
-AWS.config.update({ region: 'us-east-1' });
+AWS.config.update({ region: "us-east-1" });
 
 // POST /register - Adds a new registration to the database
 module.exports.register = withSentry(async (event) => {
@@ -10,12 +10,10 @@ module.exports.register = withSentry(async (event) => {
   const ddb = new AWS.DynamoDB.DocumentClient();
 
   // Checks if any field is missing
-  if (!body.email
-   || !body.name
-   || !body.school_type) {
+  if (!body.email || !body.name || !body.phone || !body.school_type) {
     return {
       statusCode: 500,
-      body: '/register is missing a field',
+      body: "/register is missing a field",
     };
   }
 
@@ -28,8 +26,8 @@ module.exports.register = withSentry(async (event) => {
       TableName: process.env.REGISTRATION_TABLE,
       IndexName: "referralsIndex",
       KeyConditionExpression: "referral_id = :v_refer",
-      ExpressionAttributeValues: { ":v_refer": referralID }
-  };
+      ExpressionAttributeValues: { ":v_refer": referralID },
+    };
     var resp = await ddb.query(referralQuery).promise();
   } while (resp.Count != 0);
 
@@ -38,6 +36,7 @@ module.exports.register = withSentry(async (event) => {
     Item: {
       timestamp: new Date().toISOString(),
       email: body.email.toLowerCase(),
+      phone: body.phone,
       name: body.name,
       referred_by: body.referred_by,
       referral_id: referralID,
@@ -62,7 +61,7 @@ module.exports.register = withSentry(async (event) => {
   if (body.referred_by) {
     await Promise.all([
       logStatistic(ddb, "user-was-referred", 1),
-      logReferral(ddb, body.referred_by)
+      logReferral(ddb, body.referred_by),
     ]);
   }
 
@@ -79,8 +78,8 @@ module.exports.register = withSentry(async (event) => {
     statusCode: 200,
     body: JSON.stringify(params.Item),
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
     },
   };
 });
@@ -88,30 +87,30 @@ module.exports.register = withSentry(async (event) => {
 // makeAddon generates a random string of `length`
 const makeAddon = (length) => {
   var result = [];
-  var chars = 'abcdefghjkmnpqrstuvwxyz23456789'; // avoid i, l , o, 0, 1
-  for ( var i = 0; i < length; i++ ) {
+  var chars = "abcdefghjkmnpqrstuvwxyz23456789"; // avoid i, l , o, 0, 1
+  for (var i = 0; i < length; i++) {
     result.push(chars.charAt(Math.floor(Math.random() * chars.length)));
   }
-  return result.join('');
-}
+  return result.join("");
+};
 
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
 const sendConfirmationEmail = async (fullName, email, referralID) => {
   const ses = new AWS.SES();
-  
+
   const referralLink = "https://register.gotechnica.org/" + referralID;
   const firstName = fullName.split(" ")[0];
-  
+
   const params = {
-    Destination: { ToAddresses: [ email ] },
-    Source: 'Technica <hello@gotechnica.org>',
-    ConfigurationSetName: 'registration-2021',
-    Template: 'HackerRegistrationConfirmation',
+    Destination: { ToAddresses: [email] },
+    Source: "Technica <hello@gotechnica.org>",
+    ConfigurationSetName: "registration-2021",
+    Template: "HackerRegistrationConfirmation",
     TemplateData: `{ \"firstName\":\"${firstName}\", \"referralLink\": \"${referralLink}" }`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
-}
+};
 
 // =============================================================================
 
@@ -123,7 +122,7 @@ module.exports.track = withSentry(async (event) => {
   if (!body.random_id && !body.referral_id) {
     return {
       statusCode: 500,
-      body: '/track is missing a field',
+      body: "/track is missing a field",
     };
   }
 
@@ -135,90 +134,103 @@ module.exports.track = withSentry(async (event) => {
 
   // Find user's random id from referral id
   if (!body.random_id) {
-    var resp = await ddb.query({
-      TableName: process.env.TRACKING_TABLE,
-      IndexName: "referralsIndex",
-      KeyConditionExpression: "referral_id = :v_refer",
-      ExpressionAttributeValues: { ":v_refer": body.referral_id }
-    }).promise();
+    var resp = await ddb
+      .query({
+        TableName: process.env.TRACKING_TABLE,
+        IndexName: "referralsIndex",
+        KeyConditionExpression: "referral_id = :v_refer",
+        ExpressionAttributeValues: { ":v_refer": body.referral_id },
+      })
+      .promise();
 
     body.random_id = resp.Items[0].random_id;
   }
 
   // Append key:value pair to the user's row
-  await ddb.update({
-    TableName: process.env.TRACKING_TABLE,
-    Key: { random_id: body.random_id },
-    ReturnValues: 'ALL_NEW',
-    UpdateExpression: 'set #key = :value',
-    ExpressionAttributeNames: { '#key': body.key },
-    ExpressionAttributeValues: { ':value': body.value, }
-  }).promise()
+  await ddb
+    .update({
+      TableName: process.env.TRACKING_TABLE,
+      Key: { random_id: body.random_id },
+      ReturnValues: "ALL_NEW",
+      UpdateExpression: "set #key = :value",
+      ExpressionAttributeNames: { "#key": body.key },
+      ExpressionAttributeValues: { ":value": body.value },
+    })
+    .promise();
 
   // Return success
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
     },
   };
 });
 
 const logStatistic = (ddb, stat) => {
-  return ddb.update({
-    TableName: process.env.STATISTICS_TABLE,
-    Key: { statistic: stat },
-    ReturnValues: 'NONE',
-    UpdateExpression: 'add #key :value',
-    ExpressionAttributeNames: { '#key': "value" },
-    ExpressionAttributeValues: { ':value': 1 }
-  }).promise();
-}
+  return ddb
+    .update({
+      TableName: process.env.STATISTICS_TABLE,
+      Key: { statistic: stat },
+      ReturnValues: "NONE",
+      UpdateExpression: "add #key :value",
+      ExpressionAttributeNames: { "#key": "value" },
+      ExpressionAttributeValues: { ":value": 1 },
+    })
+    .promise();
+};
 
 const logReferral = async (ddb, referred_by) => {
   var referralQuery = {
     TableName: process.env.REGISTRATION_TABLE,
     IndexName: "referralsIndex",
     KeyConditionExpression: "referral_id = :v_refer",
-    ExpressionAttributeValues: { ":v_refer": referred_by }
+    ExpressionAttributeValues: { ":v_refer": referred_by },
   };
   const resp = await ddb.query(referralQuery).promise();
-  return ddb.update({
-    TableName: process.env.REGISTRATION_TABLE,
-    Key: { email: resp.Items[0].email },
-    ReturnValues: 'NONE',
-    UpdateExpression: 'add #key :value',
-    ExpressionAttributeNames: { '#key': "referral_count" },
-    ExpressionAttributeValues: { ':value': 1 }
-  }).promise();
-}
+  return ddb
+    .update({
+      TableName: process.env.REGISTRATION_TABLE,
+      Key: { email: resp.Items[0].email },
+      ReturnValues: "NONE",
+      UpdateExpression: "add #key :value",
+      ExpressionAttributeNames: { "#key": "referral_count" },
+      ExpressionAttributeValues: { ":value": 1 },
+    })
+    .promise();
+};
 
 // /update - Sends an update to slack
 module.exports.update = withSentry(async () => {
-    const ddb = new AWS.DynamoDB.DocumentClient();
-    const statsTable = process.env.STATISTICS_TABLE;
-    const params = {
-	TableName: statsTable,
-	Select: "ALL_ATTRIBUTES"
-    };
+  const ddb = new AWS.DynamoDB.DocumentClient();
+  const statsTable = process.env.STATISTICS_TABLE;
+  const params = {
+    TableName: statsTable,
+    Select: "ALL_ATTRIBUTES",
+  };
 
-    // Prepare the slack webhook
-    const SecretsManager = new AWS.SecretsManager({ region: 'us-east-1' });
-    const SecretsManagerSlackKey = await SecretsManager.getSecretValue(
-	{ SecretId: process.env.SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME },
-    ).promise();
-    const webhookJSON = JSON.parse(SecretsManagerSlackKey.SecretString);
-    const webhookUrl = webhookJSON.tech_bots_SLACK_WEBHOOK;
-    const webhook = new IncomingWebhook(webhookUrl);
+  // Prepare the slack webhook
+  const SecretsManager = new AWS.SecretsManager({ region: "us-east-1" });
+  const SecretsManagerSlackKey = await SecretsManager.getSecretValue({
+    SecretId: process.env.SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME,
+  }).promise();
+  const webhookJSON = JSON.parse(SecretsManagerSlackKey.SecretString);
+  const webhookUrl = webhookJSON.tech_bots_SLACK_WEBHOOK;
+  const webhook = new IncomingWebhook(webhookUrl);
 
-    // Send the statistic update to slack
-    var statArr = []
-    const stats = await ddb.scan(params).promise();
-    stats.Items.forEach((stat) => statArr.push(stat.statistic + ":\t" + stat.value));
-    await webhook.send({
-	text: `Technica 2021 Registration update for ` +
-	    `${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET:\n\n` +
-	    `${Array.from(statArr).join('\n')}`,
-    });
+  // Send the statistic update to slack
+  var statArr = [];
+  const stats = await ddb.scan(params).promise();
+  stats.Items.forEach((stat) =>
+    statArr.push(stat.statistic + ":\t" + stat.value)
+  );
+  await webhook.send({
+    text:
+      `Technica 2021 Registration update for ` +
+      `${new Date().toLocaleString("en-US", {
+        timeZone: "America/New_York",
+      })} ET:\n\n` +
+      `${Array.from(statArr).join("\n")}`,
+  });
 });

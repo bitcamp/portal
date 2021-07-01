@@ -74,6 +74,21 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <!-- Phone Number -->
+        <b-form-group id="input-group-9" label="Phone*" label-for="input-9">
+          <b-form-input
+            id="input-9"
+            v-model="form.phone"
+            name="phone"
+            autocomplete="tel"
+            placeholder="555-555-5555"
+            :state="valid_phone"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="valid_phone">
+            Please enter a valid phone number
+          </b-form-invalid-feedback>
+        </b-form-group>
+
         <!-- School Type -->
         <b-form-group
           id="input-group-4"
@@ -269,6 +284,7 @@ export default {
     return {
       form: {
         email: "",
+        phone: "",
         MLH_emails: false,
         code_of_conduct: false,
         MLH_privacy: false,
@@ -293,6 +309,7 @@ export default {
       valid_name: null,
       valid_pronouns: null,
       valid_email: null,
+      valid_phone: null,
       valid_school_type: null,
       valid_school: null,
       valid_code_of_conduct: null,
@@ -487,6 +504,13 @@ export default {
         valid_form = false;
       } else this.valid_email = null;
 
+      if(
+        !/[^a-zA-Z]/.test(this.form.phone) || (this.form.phone.length < 2)
+      ) {
+        this.valid_phone = false;
+        valid_form = false;
+      } else this.valid_phone = null;
+      
       if (this.form.school_type.length === 0) {
         this.valid_school_type = false
         valid_form = false
