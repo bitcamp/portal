@@ -16,4 +16,11 @@ export default {
 .navbar {
   box-shadow: 0 4px 4px -5px rgba(0, 0, 0, 0.5);
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+}
+
 </style>

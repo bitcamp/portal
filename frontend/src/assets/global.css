@@ -17,6 +17,12 @@ body {
   height: 100vh;
 }
 
+@media (max-width: 768px) {
+  body {
+    background-position: center;
+  }
+}
+
 /* COLORS */
 :root {
   --cyan: #00ffff;
@@ -45,7 +51,6 @@ h5 {
 
 /* Header 1 */
 h1 {
-  line-height: 1.5;
   font-size: 2.5em;
   color: var(--black);
 }
@@ -87,7 +92,7 @@ label {
 
 @media (min-width: 992px) {
   .main-card {
-    margin-bottom: 0.25rem !important;
+    margin-bottom: 1.5rem !important;
   }
 }
 

@@ -53,14 +53,14 @@ module.exports.register = withSentry(async (event) => {
       country: body.country,
       phone: body.phone,
       MLH_emails: body.MLH_emails,
-      code_of_conduct: body.code_of_conduct,
+      MLH_conduct: body.MLH_conduct,
       MLH_privacy: body.MLH_privacy,
     },
   };
 
   if (body.referred_by) {
     await Promise.all([
-      logStatistic(ddb, "user-was-referred", 1),
+      logStatistic(ddb, "referrals", 1),
       logReferral(ddb, body.referred_by),
     ]);
   }
@@ -223,13 +223,15 @@ module.exports.update = withSentry(async () => {
   var statArr = [];
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) =>
-    statArr.push(stat.statistic + ":\t" + stat.value)
+    statArr.push(stat.value + " " + stat.statistic)
   );
   await webhook.send({
     text:
-      `Technica 2021 Registration update for ` +
+      `Registration update for ` +
       `${new Date().toLocaleString("en-US", {
         timeZone: "America/New_York",
+        dateStyle: "short",
+        timeStyle: "short"
       })} ET:\n\n` +
       `${Array.from(statArr).join("\n")}`,
   });

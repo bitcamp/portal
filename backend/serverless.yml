@@ -62,8 +62,8 @@ functions:
     description: Sends a stat update to Slack
     events:
       - schedule:
-         rate: rate(6 hours)
-         enabled: ${self:custom.updateEnabled.${opt:stage}, self.updateEnabled.other}
+         rate: rate(8 hours)
+         enabled: ${self:custom.updateEnabled.${opt:stage}, self:custom.updateEnabled.other}
 
 resources: # define DynamoDB tables within serverless
   Resources:
@@ -71,6 +71,7 @@ resources: # define DynamoDB tables within serverless
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
+        BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: random_id
             AttributeType: S
@@ -79,9 +80,6 @@ resources: # define DynamoDB tables within serverless
         KeySchema:
           - AttributeName: random_id
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
         GlobalSecondaryIndexes:  # we want to be able to link tracking with referral id
         - IndexName: referralsIndex
           KeySchema:
@@ -91,13 +89,11 @@ resources: # define DynamoDB tables within serverless
             NonKeyAttributes:
             - name
             ProjectionType: INCLUDE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
     registrationTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
+        BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: email
             AttributeType: S
@@ -106,9 +102,6 @@ resources: # define DynamoDB tables within serverless
         KeySchema:
           - AttributeName: email
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
         GlobalSecondaryIndexes:  # we want to be able to get users by referral_id
         - IndexName: referralsIndex
           KeySchema:
@@ -118,22 +111,17 @@ resources: # define DynamoDB tables within serverless
             NonKeyAttributes:
             - name
             ProjectionType: INCLUDE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
     statisticsTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
+        BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: statistic
             AttributeType: S
         KeySchema:
           - AttributeName: statistic
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
 
 package:
   exclude:

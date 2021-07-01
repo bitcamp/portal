@@ -140,7 +140,7 @@
 
         <b-form-checkbox
           id="checkbox-3"
-          v-model="form.code_of_conduct"
+          v-model="form.MLH_conduct"
           name="checkbox-3"
           :state="valid_code_of_conduct"
           class="checkbox"
@@ -263,9 +263,9 @@
         <b-button
           type="submit"
           variant="purple"
-          class="submit-btn m-1"
+          class="submit-btn m-1 mx-auto"
           :disabled="isSending"
-          >Submit</b-button
+          >Register for Technica!</b-button
         >
       </b-form>
     </b-col>
@@ -286,7 +286,7 @@ export default {
         email: "",
         phone: "",
         MLH_emails: false,
-        code_of_conduct: false,
+        MLH_conduct: false,
         MLH_privacy: false,
         name: "",
         pronouns: "",
@@ -521,7 +521,7 @@ export default {
         valid_form = false
       } else this.valid_school = null
       
-      if (!this.form.code_of_conduct) {
+      if (!this.form.MLH_conduct) {
         this.valid_code_of_conduct = false
         valid_form = false
       } else this.valid_code_of_conduct = null
@@ -575,7 +575,7 @@ p {
   color: var(--white);
   border-radius: 0.6rem;
   border-color: var(--lavender);
-  float: right;
+  align-self: center;
 }
 
 .btn-purple:hover {
@@ -594,8 +594,8 @@ p {
 
 @media (min-width: 992px) {
   .submit-btn {
-    display: unset;
-    width: unset;
+    display: block;
+    width: 50%;
   }
 }
 </style>

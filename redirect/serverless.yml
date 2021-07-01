@@ -1,0 +1,9 @@
+component: website
+name: portal-redirects
+org: technica
+app: portal
+service: redirects
+stage: prd
+
+inputs:
+  src: ./
