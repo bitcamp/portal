@@ -547,7 +547,7 @@ p {
 }
 
 .form-control:focus, .form-control:active {
-  border-color: var(--lavender) !important;
+  border-color: var(--dark-lavender) !important;
   outline: 0 !important;
   box-shadow: 0 0 0 0.2rem rgba(182, 161, 196, 0.5) !important;
 }
@@ -558,7 +558,7 @@ p {
 
 .form-control,
 .custom-select {
-  border-color: var(--lavender);
+  border-color: var(--dark-lavender);
   border-radius: 0.6rem;
 }
 
@@ -571,16 +571,16 @@ p {
 } */
 
 .btn-purple {
-  background-color: var(--lavender);
+  background-color: var(--dark-lavender);
   color: var(--white);
   border-radius: 0.6rem;
-  border-color: var(--lavender);
+  border-color: var(--darker-lavender);
   align-self: center;
 }
 
 .btn-purple:hover {
   color: rgba(255, 255, 255, 1);
-  box-shadow: 0px 0px 16px 0px var(--lavender);
+  box-shadow: 0px 0px 16px 0px var(--dark-lavender);
 }
 
 .checkbox {

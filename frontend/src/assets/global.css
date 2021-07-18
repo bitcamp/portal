@@ -29,11 +29,14 @@ body {
   --dirty-cyan: rgb(0, 200, 200);
   --lavender: #b6a1c4;
   --light-lavender: #ded2e5;
+  --dark-lavender: #8D7C98;
+  --darker-lavender: #82708F;
   --rose: #ff7bac;
   --white: #ffffff;
   --black: #000000;
   --asphalt-grey: #2d2d2d;
   --charcoal-grey: #464343;
+  --dark-hero-blue:#087F8A;
 }
 
 body {
@@ -61,11 +64,11 @@ p {
 }
 
 a {
-  color: var(--dirty-cyan);
+  color: var(--dark-hero-blue);
 }
 
 a:hover {
-  color: var(--cyan);
+  color: var(--dark-hero-blue);
 }
 
 label {
