@@ -1,5 +1,7 @@
 export default {
-  shared: {},
+  shared: {
+    ANALYTICS_ENDPOINT: 'https://hugoburbelo.builtwithdark.com/track_visit'
+  },
   dev: {
     BACKEND_ENDPOINT: 'https://7a55navjb9.execute-api.us-east-1.amazonaws.com',
   },

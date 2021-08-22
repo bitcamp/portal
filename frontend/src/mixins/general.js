@@ -29,6 +29,11 @@ export default {
     async track(event) {
       return this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'track', event);
     },
+    async sendAnalyticsEvent(eventType) {
+      if (this.getCurrentEnvironment() === 'prd') {
+        return await Axios.post(this.getEnvVariable('ANALYTICS_ENDPOINT'), {type: eventType, "date": (new Date().toLocaleDateString())});
+      }
+    },
     getCurrentEnvironment() {
       if (window.location.hostname === 'register.gotechnica.org') {
         return 'prd';

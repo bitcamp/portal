@@ -333,6 +333,7 @@ export default {
       key: "open-registration",
       value: true,
     });
+    this.sendAnalyticsEvent('registration_page_visit');
     
     document.addEventListener("DOMContentLoaded", () => {
       const input = document.getElementById("input-5");

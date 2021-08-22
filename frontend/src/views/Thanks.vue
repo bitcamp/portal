@@ -106,6 +106,7 @@ export default {
     this.sleep(3000).then(() => {
       this.$confetti.stop();
     });
+    this.sendAnalyticsEvent('completed_registration');
   },
 
   computed: {
