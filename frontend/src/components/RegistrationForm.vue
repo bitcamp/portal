@@ -1,30 +1,24 @@
 <template>
   <b-row>
-    <b-col md="1"></b-col>
-    <b-col>
-      <b-form
-        @submit="registerUser"
-        class="registration-form"
-        autocomplete="on"
-      >
+    <b-row align-h="center">
+      <b-col md="10">
         <h1 style="text-align: center">Register for Technica 2021</h1>
 
         <p>We've made our new registration process easier and faster!</p>
         <p style="font-size: 0.9rem; opacity: 95%">
-          If you have any questions about the registration process, please chat
-          with us in the bottom right hand corner or reach out to
+          If you have any questions about the registration process, please chat with us in the
+          bottom right hand corner or reach out to
           <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
         </p>
         <hr />
-
+      </b-col>
+    </b-row>
+    <b-col md="1"></b-col>
+    <b-col md="7">
+      <b-form @submit="registerUser" class="registration-form" autocomplete="on">
         <!-- Name and Pronouns -->
         <b-form-row>
-          <b-form-group
-            id="input-group-1"
-            label="Full Name*"
-            label-for="input-1"
-            class="col-md-8"
-          >
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-md-8">
             <b-form-input
               id="input-1"
               v-model="form.name"
@@ -38,12 +32,7 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
-          <b-form-group
-            id="input-group-p"
-            label="Pronouns*"
-            label-for="input-p"
-            class="col-md-4"
-          >
+          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-md-4">
             <b-form-input
               id="input-p"
               v-model="form.pronouns"
@@ -90,11 +79,7 @@
         </b-form-group>
 
         <!-- School Type -->
-        <b-form-group
-          id="input-group-4"
-          label="School Level*"
-          label-for="input-4"
-        >
+        <b-form-group id="input-group-4" label="School Level*" label-for="input-4">
           <b-form-select
             id="input-4"
             v-model="form.school_type"
@@ -128,10 +113,15 @@
           class="checkbox"
           :state="valid_mlh_privacy"
         >
-          I authorize you to share my application/registration information with 
-          Major League Hacking for event administration, ranking, and MLH administration 
-          in-line with the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
-          I further agree to the terms of both the <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank">MLH Contest Terms and Conditions</a>
+          I authorize you to share my application/registration information with Major League Hacking
+          for event administration, ranking, and MLH administration in-line with the
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
+          to the terms of both the
+          <a
+            href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions"
+            target="_blank"
+            >MLH Contest Terms and Conditions</a
+          >
           and the <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
           <b-form-invalid-feedback :state="valid_mlh_privacy">
             Please agree to MLH's privacy policy and terms
@@ -146,10 +136,13 @@
           class="checkbox"
           style="padding-bottom: 1rem"
         >
-          I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.*
-        <b-form-invalid-feedback :state="valid_code_of_conduct">
-          Please agree to MLH's code of conduct
-        </b-form-invalid-feedback>
+          I have read and agree to the
+          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank"
+            >MLH Code of Conduct</a
+          >.*
+          <b-form-invalid-feedback :state="valid_code_of_conduct">
+            Please agree to MLH's code of conduct
+          </b-form-invalid-feedback>
         </b-form-checkbox>
 
         <b-form-checkbox
@@ -158,20 +151,16 @@
           name="checkbox-1"
           class="checkbox"
         >
-          I authorize MLH to send me pre- and post-event informational emails,
-          which contain free credit and opportunities from their partners.
+          I authorize MLH to send me pre- and post-event informational emails, which contain free
+          credit and opportunities from their partners.
         </b-form-checkbox>
 
-        <hr/>
-        
+        <hr />
+
         <p>Give us your shipping address so you can get Technica swag!</p>
 
         <!-- Shipping Address -->
-        <b-form-group
-          id="input-group-5"
-          label="Shipping address"
-          label-for="input-5"
-        >
+        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
           <b-form-input
             id="input-5"
             v-model="form.address1"
@@ -198,12 +187,7 @@
         </b-form-group>
 
         <b-form-row>
-          <b-form-group
-            id="input-group-city"
-            label="City"
-            label-for="input-city"
-            class="col-md-5"
-          >
+          <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-md-5">
             <b-form-input
               id="input-city"
               v-model="form.city"
@@ -258,24 +242,79 @@
             ></b-form-input>
           </b-form-group>
         </b-form-row>
-        
-        <!-- Submit -->
-        <b-button
-          type="submit"
-          variant="purple"
-          class="submit-btn m-1 mx-auto"
-          :disabled="isSending"
-          >Register for Technica!</b-button
-        >
       </b-form>
     </b-col>
+    <b-col md="3">
+      <!-- Track selection column -->
+      <b-form-group id="input-group-tracks" label="Select a track!*" label-for="input-tracks">
+        <b-form-radio-group
+          style="width:100%; background-color:white;"
+          name="radio-btn-stacked"
+          button-variant="track"
+          v-model="form.track_selected"
+          :state="valid_track_selected"
+          stacked
+          buttons
+        >
+          <b-form-radio id="input-4" style="border-radius:5px" class="mb-2 " value="general">
+            <div style="" class="track-card">
+              <b-row class="ml-1 mt-1"
+                ><b-icon class="mr-2" icon="gear-fill"></b-icon>
+                <h5>General</h5>
+              </b-row>
+              <span class="track-desc">This is the general track.</span>
+            </div>
+          </b-form-radio>
+          <b-form-radio class="mb-2 " style="border-radius:5px" name="some-radios" value="hardware">
+            <div style="" class="track-card">
+              <b-row class="ml-1 mt-1"
+                ><b-icon class="mr-2" icon="tools"></b-icon>
+                <h5>Hardware</h5>
+              </b-row>
+              <span class="track-desc">This is the hardware track.</span>
+            </div>
+          </b-form-radio>
+          <b-form-radio style="border-radius:5px" class="mb-2 " name="some-radios" value="beginner">
+            <div style="" class="track-card">
+              <b-row class="ml-1 mt-1"
+                ><b-icon class="mr-2" icon="person-circle"></b-icon>
+                <h5>Beginner's</h5>
+              </b-row>
+              <span class="track-desc">This is a description of the beginner's track.</span>
+            </div>
+          </b-form-radio>
+          <b-form-radio style="border-radius:5px" class="mb-2 " name="some-radios" value="research">
+            <div style="" class="track-card">
+              <b-row class="ml-1 mt-1"
+                ><b-icon class="mr-2" icon="file-earmark-text-fill"></b-icon>
+                <h5>Research</h5>
+              </b-row>
+              <span class="track-desc">This track is for research.</span>
+            </div>
+          </b-form-radio>
+          <b-form-invalid-feedback :state="valid_track_selected">
+            Please select a track.
+          </b-form-invalid-feedback>
+        </b-form-radio-group>
+      </b-form-group>
+
+      <hr />
+    </b-col>
+    <!-- Submit -->
     <b-col md="1"></b-col>
+    <b-button type="submit" variant="purple" class="submit-btn m-1 mx-auto" :disabled="isSending"
+      >Register for Technica!</b-button
+    >
   </b-row>
 </template>
 
 <script>
 import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
+import Vue from "vue";
+import { FormRadioPlugin, IconsPlugin } from "bootstrap-vue";
+Vue.use(FormRadioPlugin);
+Vue.use(IconsPlugin);
 
 export default {
   name: "RegistrationForm",
@@ -291,7 +330,7 @@ export default {
         name: "",
         pronouns: "",
         school_type: "",
-        school: '',
+        school: "",
         address: "",
         address1: "",
         address2: "",
@@ -301,8 +340,9 @@ export default {
         zip: "",
         gmaps_place_id: "",
         referred_by: "",
+        track_selected: ""
       },
-    
+
       isSending: false,
       random_id: uuid(),
       form_start: Date.now(),
@@ -314,14 +354,15 @@ export default {
       valid_school: null,
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
+      valid_track_selected: null,
 
       options: [
         { value: "", text: "Choose your school level...", disabled: true },
         { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
         { value: "college", text: "College" },
-        { value: "graduated", text: "Graduated" },
-      ],
+        { value: "graduated", text: "Graduated" }
+      ]
     };
   },
 
@@ -331,14 +372,13 @@ export default {
     this.track({
       random_id: this.random_id,
       key: "open-registration",
-      value: true,
+      value: true
     });
     this.sendAnalyticsEvent('registration_page_visit');
-    
     document.addEventListener("DOMContentLoaded", () => {
       const input = document.getElementById("input-5");
       const autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ["address"],
+        types: ["address"]
       });
 
       google.maps.event.addListener(autocomplete, "place_changed", () => {
@@ -350,16 +390,14 @@ export default {
         this.fillInAddress(place);
       });
 
-      google.maps.event.addDomListener(input, "keydown", function (event) {
+      google.maps.event.addDomListener(input, "keydown", function(event) {
         if (event.keyCode === 13) {
           event.preventDefault();
           this.form.gmaps_place_id = place.place_id;
         }
       });
 
-      document
-        .getElementsByClassName("pac-container")[0]
-        .setAttribute("data-tap-disabled", "true");
+      document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
     });
   },
 
@@ -396,13 +434,11 @@ export default {
             break;
           }
           case "locality":
-            this.form.city = document.getElementById("input-city").value =
-              component.long_name;
+            this.form.city = document.getElementById("input-city").value = component.long_name;
             break;
 
           case "administrative_area_level_1": {
-            this.form.state = document.getElementById("input-state").value =
-              component.short_name;
+            this.form.state = document.getElementById("input-state").value = component.short_name;
             break;
           }
           case "country":
@@ -422,20 +458,17 @@ export default {
       this.track({
         random_id: this.random_id,
         key: "filled-email",
-        value: this.form.email,
+        value: this.form.email
       });
     },
     showErrorToast() {
-      this.$bvToast.toast(
-        `Something went wrong. Are you sure you filled everything out?`,
-        {
-          toaster: "b-toaster-top-center",
-          solid: true,
-          appendToast: false,
-          noCloseButton: true,
-          variant: "danger",
-        }
-      );
+      this.$bvToast.toast(`Something went wrong. Are you sure you filled everything out?`, {
+        toaster: "b-toaster-top-center",
+        solid: true,
+        appendToast: false,
+        noCloseButton: true,
+        variant: "danger"
+      });
     },
     async registerUser(event) {
       event.preventDefault();
@@ -451,7 +484,7 @@ export default {
           this.track({
             random_id: this.random_id,
             key: "got-referred",
-            value: this.$route.params.referral,
+            value: this.$route.params.referral
           });
         }
 
@@ -459,12 +492,12 @@ export default {
         this.$gtag.time({
           name: "completion-time",
           value: this.form.time_taken,
-          event_category: "Form completion duration",
+          event_category: "Form completion duration"
         });
         this.track({
           random_id: this.random_id,
           key: "form-submitted",
-          value: this.form.time_taken,
+          value: this.form.time_taken
         });
 
         const resp = await this.performPostRequest(
@@ -480,7 +513,7 @@ export default {
           this.track({
             random_id: this.random_id,
             key: "referral_id",
-            value: resp.referral_id,
+            value: resp.referral_id
           });
         } else {
           this.showErrorToast();
@@ -505,36 +538,39 @@ export default {
         valid_form = false;
       } else this.valid_email = null;
 
-      if(
-        !/[^a-zA-Z]/.test(this.form.phone) || (this.form.phone.length < 2)
-      ) {
+      if (!/[^a-zA-Z]/.test(this.form.phone) || this.form.phone.length < 2) {
         this.valid_phone = false;
         valid_form = false;
       } else this.valid_phone = null;
-      
+
       if (this.form.school_type.length === 0) {
-        this.valid_school_type = false
-        valid_form = false
-      } else this.valid_school_type = null
-      
+        this.valid_school_type = false;
+        valid_form = false;
+      } else this.valid_school_type = null;
+
       if (this.form.school.length === 0) {
-        this.valid_school = false
-        valid_form = false
-      } else this.valid_school = null
-      
+        this.valid_school = false;
+        valid_form = false;
+      } else this.valid_school = null;
+
       if (!this.form.MLH_conduct) {
-        this.valid_code_of_conduct = false
-        valid_form = false
-      } else this.valid_code_of_conduct = null
+        this.valid_code_of_conduct = false;
+        valid_form = false;
+      } else this.valid_code_of_conduct = null;
 
       if (!this.form.MLH_privacy) {
-        this.valid_mlh_privacy = false
-        valid_form = false
-      } else this.valid_mlh_privacy = null
+        this.valid_mlh_privacy = false;
+        valid_form = false;
+      } else this.valid_mlh_privacy = null;
 
-      return valid_form
+      if (this.form.track_selected.length === 0) {
+        this.valid_track_selected = false;
+        valid_form = false;
+      } else this.valid_track_selected = null;
+
+      return valid_form;
     }
-  },
+  }
 };
 </script>
 
@@ -547,7 +583,8 @@ p {
   text-align: left;
 }
 
-.form-control:focus, .form-control:active {
+.form-control:focus,
+.form-control:active {
   border-color: var(--dark-lavender) !important;
   outline: 0 !important;
   box-shadow: 0 0 0 0.2rem rgba(182, 161, 196, 0.5) !important;
@@ -598,5 +635,43 @@ p {
     display: block;
     width: 50%;
   }
+}
+
+/* Track selection */
+.btn-track {
+  background-color: var(--white);
+  color: var(--dark-lavender);
+  border-radius: 0.6rem;
+  border-color: var(--dark-lavender);
+
+  align-self: center;
+  text-align: left;
+}
+.btn-track:hover {
+  border-color: var(--dark-lavender);
+  background-color: var(--dark-lavender);
+  color: var(--white);
+}
+.btn-track:active {
+  border-color: var(--charcoal-grey);
+  background-color: var(--dark-lavender);
+  color: var(--white);
+}
+.active {
+  border-color: var(--charcoal-grey);
+  background-color: var(--dark-lavender);
+  color: var(--white);
+}
+.form-control:focus,
+.form-control:active,
+.form-control:target {
+  border-color: var(--charcoal-grey) !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.2rem rgba(182, 161, 196, 0.5) !important;
+}
+.track-desc {
+  font-size: 0.9em;
+  text-align: left;
+  justify-content: left;
 }
 </style>
