@@ -9,8 +9,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"); /* Noto Sans */
 
 body {
-  background-image: url("./hero-clouds.png");
-  background-size: cover;
+  background-color: var(--green);
+  /* background-image: url("./hero-clouds.png");
+  background-size: cover; */
   /*centered on x, starting 56px lower than top for y so that the navbar doesn't cover image*/
   background-position: center 56px;
   background-repeat: no-repeat;
@@ -25,6 +26,8 @@ body {
 
 /* COLORS */
 :root {
+  --green: #b5d5b2;
+  --dark-green: #90aa8e;
   --cyan: #00ffff;
   --dirty-cyan: rgb(0, 200, 200);
   --lavender: #b6a1c4;
@@ -91,6 +94,13 @@ label {
 .main-card {
   border-radius: 1rem;
   margin-bottom: 5.5rem !important;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.125);
+}
+
+hr {
+  border-color: rgba(181, 213, 178, 0.75);
 }
 
 @media (min-width: 992px) {
@@ -99,6 +109,9 @@ label {
   }
 }
 
+@media (hover: none) {
+  label:hover { color: inherit; }
+}
 
 /* Google autocomplete styles */
 .pac-container {

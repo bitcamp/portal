@@ -1,24 +1,21 @@
 <template>
   <b-row>
-    <b-row align-h="center">
-      <b-col md="10">
-        <h1 style="text-align: center">Register for Technica 2021</h1>
-
-        <p>We've made our new registration process easier and faster!</p>
-        <p style="font-size: 0.9rem; opacity: 95%">
-          If you have any questions about the registration process, please chat with us in the
-          bottom right hand corner or reach out to
-          <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
-        </p>
-        <hr />
-      </b-col>
-    </b-row>
     <b-col md="1"></b-col>
-    <b-col md="7">
+    <b-col md="10">
+      <h1 style="text-align: center">Register for Technica 2021</h1>
+
+      <p style="font-size: 0.9rem; opacity: 95%">
+        Questions? Chat with us in the bottom right hand corner or email
+        <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
+        <br> You can also learn more at <a href="https://gotechnica.org">gotechnica.org</a>!
+      </p>
+      <hr />
       <b-form @submit="registerUser" class="registration-form" autocomplete="on">
         <!-- Name and Pronouns -->
+        <h4>Tell us about yourself!</h4>
+        <p class="info">Once you register, you'll recive more info about Technica 2021 at the email you provide.</p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-md-8">
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-7 col-md-8">
             <b-form-input
               id="input-1"
               v-model="form.name"
@@ -32,13 +29,13 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
-          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-md-4">
+          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-5 col-md-4">
             <b-form-input
               id="input-p"
               v-model="form.pronouns"
               name="pronouns"
               autocomplete="off"
-              placeholder="they/them"
+              placeholder="e.g. she/her"
               :state="valid_pronouns"
             ></b-form-input>
             <b-form-invalid-feedback :state="valid_pronouns">
@@ -48,7 +45,8 @@
         </b-form-row>
 
         <!-- Email -->
-        <b-form-group id="input-group-2" label="Email*" label-for="input-2">
+        <b-form-row>
+        <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-6">
           <b-form-input
             id="input-2"
             v-model="form.email"
@@ -64,7 +62,7 @@
         </b-form-group>
 
         <!-- Phone Number -->
-        <b-form-group id="input-group-9" label="Phone*" label-for="input-9">
+        <b-form-group id="input-group-9" label="Phone*" label-for="input-9" class="col-5 col-md-6">
           <b-form-input
             id="input-9"
             v-model="form.phone"
@@ -77,13 +75,15 @@
             Please enter a valid phone number
           </b-form-invalid-feedback>
         </b-form-group>
+        </b-form-row>
 
         <!-- School Type -->
-        <b-form-group id="input-group-4" label="School Level*" label-for="input-4">
+        <b-form-row>
+        <b-form-group id="input-group-4" label="School Level*" label-for="input-4" class="col-md-3">
           <b-form-select
             id="input-4"
             v-model="form.school_type"
-            placeholder="Choose your school level..."
+            placeholder="Choose a level"
             :options="options"
             :state="valid_school_type"
           ></b-form-select>
@@ -91,7 +91,7 @@
             Please select a school level
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group id="input-group-school" label="School Name*" label-for="input-school">
+        <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-9">
           <b-form-input
             id="input-school"
             v-model="form.school"
@@ -104,8 +104,115 @@
             Please enter your school name
           </b-form-invalid-feedback>
         </b-form-group>
+        </b-form-row>
 
+        <!-- Track selection -->
+        <hr />
+        <h4>Choose a track!</h4>
+        <p class="info">Learn more about our tracks at <a href="https://gotechnica.org#tracks">gotechnica.org</a>! All hackers are admitted to the general track by default.</p>
+        <track-selection v-bind:default="this.default_track" @picked="updateTrack" />
+
+        <!-- Shipping Address -->
+        <hr />
+        <h4>Want to give us a shipping address?</h4>
+        <p class="info">If you do, we'll try to send you some swag! If you choose the hardware track, this is where we'll send your hardware kit.</p>
+        <b-form-group>
+        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
+          <b-form-input
+            id="input-5"
+            v-model="form.address1"
+            name="address"
+            autocomplete="off"
+            placeholder="8125 Paint Branch Drive"
+            class="form-input"
+            :state="valid_address"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          id="input-group-address-line2"
+          label="Shipping address line 2"
+          label-for="input-address-line2"
+        >
+          <b-form-input
+            id="input-address-line2"
+            v-model="form.address2"
+            name="address-line2"
+            autocomplete="address-line2"
+            placeholder="Apartment or unit number (optional)"
+            class="form-input"
+            :state="valid_address"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-row>
+          <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-8 col-md-5">
+            <b-form-input
+              id="input-city"
+              v-model="form.city"
+              name="city"
+              autocomplete="off"
+              placeholder="College Park"
+              :state="valid_address"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-state"
+            label="State"
+            label-for="input-state"
+            class="col-4 col-md-2"
+          >
+            <b-form-input
+              id="input-state"
+              v-model="form.state"
+              name="state"
+              autocomplete="off"
+              placeholder="MD"
+              :state="valid_address"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-zip"
+            label="Zip Code"
+            label-for="input-zip"
+            class="col-4 col-md-3"
+          >
+            <b-form-input
+              id="input-zip"
+              v-model="form.zip"
+              name="zip"
+              autocomplete="off"
+              placeholder="20740"
+              :state="valid_address"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-country"
+            label="Country"
+            label-for="input-country"
+            class="col-8 col-md-2"
+          >
+            <b-form-input
+              id="input-country"
+              v-model="form.country"
+              name="country"
+              autocomplete="off"
+              placeholder="USA"
+              :state="valid_address"
+            ></b-form-input>
+          </b-form-group>
+        </b-form-row>
+          <b-form-invalid-feedback :state="valid_address" style="margin: 0">
+            Please provide a valid shipping address to apply for the hardware track.
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <hr />
         <!-- MLH Stuff -->
+        <h4 class="mb-2">Rules and privacy policies</h4>
         <b-form-checkbox
           id="checkbox-2"
           v-model="form.MLH_privacy"
@@ -155,156 +262,13 @@
           credit and opportunities from their partners.
         </b-form-checkbox>
 
-        <hr />
-
-        <p>Give us your shipping address so you can get Technica swag!</p>
-
-        <!-- Shipping Address -->
-        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
-          <b-form-input
-            id="input-5"
-            v-model="form.address1"
-            name="address"
-            autocomplete="off"
-            placeholder="8125 Paint Branch Drive"
-            class="form-input"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-address-line2"
-          label="Shipping address line 2"
-          label-for="input-address-line2"
-        >
-          <b-form-input
-            id="input-address-line2"
-            v-model="form.address2"
-            name="address-line2"
-            autocomplete="address-line2"
-            placeholder="Apartment or unit number (optional)"
-            class="form-input"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-row>
-          <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-md-5">
-            <b-form-input
-              id="input-city"
-              v-model="form.city"
-              name="city"
-              autocomplete="off"
-              placeholder="College Park"
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group
-            id="input-group-state"
-            label="State"
-            label-for="input-state"
-            class="col-md-2"
-          >
-            <b-form-input
-              id="input-state"
-              v-model="form.state"
-              name="state"
-              autocomplete="off"
-              placeholder="MD"
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group
-            id="input-group-zip"
-            label="Zip Code"
-            label-for="input-zip"
-            class="col-md-3"
-          >
-            <b-form-input
-              id="input-zip"
-              v-model="form.zip"
-              name="zip"
-              autocomplete="off"
-              placeholder="20740"
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group
-            id="input-group-country"
-            label="Country"
-            label-for="input-country"
-            class="col-md-2"
-          >
-            <b-form-input
-              id="input-country"
-              v-model="form.country"
-              name="country"
-              autocomplete="off"
-              placeholder="USA"
-            ></b-form-input>
-          </b-form-group>
-        </b-form-row>
+      <!-- Submit -->
+      <b-button type="submit" variant="purple" class="submit-btn m-1 mx-auto" :disabled="isSending">
+        <h5 class="m-1">Register for Technica!</h5>
+      </b-button>
       </b-form>
     </b-col>
-    <b-col md="3">
-      <!-- Track selection column -->
-      <b-form-group id="input-group-tracks" label="Select a track!*" label-for="input-tracks">
-        <b-form-radio-group
-          style="width:100%; background-color:white;"
-          name="radio-btn-stacked"
-          button-variant="track"
-          v-model="form.track_selected"
-          :state="valid_track_selected"
-          stacked
-          buttons
-        >
-          <b-form-radio id="input-4" style="border-radius:5px" class="mb-2 " value="general">
-            <div style="" class="track-card">
-              <b-row class="ml-1 mt-1"
-                ><b-icon class="mr-2" icon="gear-fill"></b-icon>
-                <h5>General</h5>
-              </b-row>
-              <span class="track-desc">This is the general track.</span>
-            </div>
-          </b-form-radio>
-          <b-form-radio class="mb-2 " style="border-radius:5px" name="some-radios" value="hardware">
-            <div style="" class="track-card">
-              <b-row class="ml-1 mt-1"
-                ><b-icon class="mr-2" icon="tools"></b-icon>
-                <h5>Hardware</h5>
-              </b-row>
-              <span class="track-desc">This is the hardware track.</span>
-            </div>
-          </b-form-radio>
-          <b-form-radio style="border-radius:5px" class="mb-2 " name="some-radios" value="beginner">
-            <div style="" class="track-card">
-              <b-row class="ml-1 mt-1"
-                ><b-icon class="mr-2" icon="person-circle"></b-icon>
-                <h5>Beginner's</h5>
-              </b-row>
-              <span class="track-desc">This is a description of the beginner's track.</span>
-            </div>
-          </b-form-radio>
-          <b-form-radio style="border-radius:5px" class="mb-2 " name="some-radios" value="research">
-            <div style="" class="track-card">
-              <b-row class="ml-1 mt-1"
-                ><b-icon class="mr-2" icon="file-earmark-text-fill"></b-icon>
-                <h5>Research</h5>
-              </b-row>
-              <span class="track-desc">This track is for research.</span>
-            </div>
-          </b-form-radio>
-          <b-form-invalid-feedback :state="valid_track_selected">
-            Please select a track.
-          </b-form-invalid-feedback>
-        </b-form-radio-group>
-      </b-form-group>
-
-      <hr />
-    </b-col>
-    <!-- Submit -->
     <b-col md="1"></b-col>
-    <b-button type="submit" variant="purple" class="submit-btn m-1 mx-auto" :disabled="isSending"
-      >Register for Technica!</b-button
-    >
   </b-row>
 </template>
 
@@ -313,12 +277,21 @@ import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
 import Vue from "vue";
 import { FormRadioPlugin, IconsPlugin } from "bootstrap-vue";
+import TrackSelection from "./TrackSelection.vue";
 Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 
 export default {
   name: "RegistrationForm",
   mixins: [generalMixin],
+  components: { TrackSelection },
+  props: {
+    default_track: {
+        type: String,
+        default: "general"
+    }
+  },
+
   data() {
     return {
       form: {
@@ -340,7 +313,7 @@ export default {
         zip: "",
         gmaps_place_id: "",
         referred_by: "",
-        track_selected: ""
+        track_selected: "general"
       },
 
       isSending: false,
@@ -355,12 +328,14 @@ export default {
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
       valid_track_selected: null,
+      valid_address: null,
 
       options: [
-        { value: "", text: "Choose your school level...", disabled: true },
+        { value: "", text: "Select one...", disabled: true },
         { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
-        { value: "college", text: "College" },
+        { value: "undergrad", text: "Undergraduate" },
+        { value: "graduate", text: "Graduate School" },
         { value: "graduated", text: "Graduated" }
       ]
     };
@@ -397,11 +372,15 @@ export default {
         }
       });
 
-      document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
+      // document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
     });
   },
 
   methods: {
+    updateTrack (value) {
+      this.form.track_selected = value;
+      console.log(value)
+    },
     fillInAddress(place) {
       let address1 = "";
       let postcode = "";
@@ -568,6 +547,17 @@ export default {
         valid_form = false;
       } else this.valid_track_selected = null;
 
+      if (this.form.track_selected === "hardware"
+       && this.form.address1.length === 0
+       && this.form.address2.length === 0
+       && this.form.city.length === 0
+       && this.form.state.length === 0
+       && this.form.zip.length === 0
+       && this.form.country.length === 0) {
+        this.valid_address = false;
+        valid_form = false;
+      } else this.valid_address = null;
+
       return valid_form;
     }
   }
@@ -575,8 +565,31 @@ export default {
 </script>
 
 <style scoped>
+
+h4 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
 p {
   text-align: center;
+}
+
+.info {
+  font-size: 1rem;
+  text-align: left !important;
+  margin-bottom: 1.25rem;
+}
+
+.row {
+  overflow: hidden;
+}
+
+hr {
+  position: relative;
+  left: -50%;
+  width: 200%;
+  border-width: 0.125rem;
 }
 
 .registration-form {
@@ -584,41 +597,31 @@ p {
 }
 
 .form-control:focus,
-.form-control:active {
-  border-color: var(--dark-lavender) !important;
+.form-control:active,
+.custom-select:focus,
+.custom-select:active {
+  border-color: var(--dark-green) !important;
   outline: 0 !important;
-  box-shadow: 0 0 0 0.2rem rgba(182, 161, 196, 0.5) !important;
-}
-
-.form-group {
-  padding-bottom: 0.3rem;
+  box-shadow: 0 0 0 0.15rem var(--green) !important;
 }
 
 .form-control,
 .custom-select {
-  border-color: var(--dark-lavender);
+  border-color: var(--dark-green);
   border-radius: 0.6rem;
 }
 
-/* .btn-purple {mt-lg-3
-  background-color: var(--light-lavender);
-  color: var(--white);
-  border-radius: 0.6rem;
-  border-color: var(--light-lavender);
-  float: right;
-} */
-
 .btn-purple {
-  background-color: var(--dark-lavender);
+  background-color: #ed648d;
   color: var(--white);
   border-radius: 0.6rem;
-  border-color: var(--darker-lavender);
+  border-color: #dd5e84;
   align-self: center;
 }
 
 .btn-purple:hover {
   color: rgba(255, 255, 255, 1);
-  box-shadow: 0px 0px 16px 0px var(--dark-lavender);
+  box-shadow: 0px 0px 16px 0px #ed648d;
 }
 
 .checkbox {
@@ -637,41 +640,25 @@ p {
   }
 }
 
-/* Track selection */
-.btn-track {
-  background-color: var(--white);
-  color: var(--dark-lavender);
-  border-radius: 0.6rem;
-  border-color: var(--dark-lavender);
+.submit-btn:disabled {
+  animation: pulse 2s infinite;
+}
 
-  align-self: center;
-  text-align: left;
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
 }
-.btn-track:hover {
-  border-color: var(--dark-lavender);
-  background-color: var(--dark-lavender);
-  color: var(--white);
-}
-.btn-track:active {
-  border-color: var(--charcoal-grey);
-  background-color: var(--dark-lavender);
-  color: var(--white);
-}
-.active {
-  border-color: var(--charcoal-grey);
-  background-color: var(--dark-lavender);
-  color: var(--white);
-}
-.form-control:focus,
-.form-control:active,
-.form-control:target {
-  border-color: var(--charcoal-grey) !important;
-  outline: 0 !important;
-  box-shadow: 0 0 0 0.2rem rgba(182, 161, 196, 0.5) !important;
-}
-.track-desc {
-  font-size: 0.9em;
-  text-align: left;
-  justify-content: left;
-}
+
 </style>

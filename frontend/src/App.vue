@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar />
+    <!-- <navbar /> -->
     <keep-alive>
       <router-view />
     </keep-alive>
@@ -12,9 +12,9 @@ import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'App',
-  components: {
-    Navbar,
-  },
+  // components: {
+  //   Navbar,
+  // },
 };
 </script>
 

@@ -36,6 +36,7 @@ module.exports.register = withSentry(async (event) => {
     Item: {
       timestamp: new Date().toISOString(),
       email: body.email.toLowerCase(),
+      track: body.track_selected,
       phone: body.phone,
       name: body.name,
       referred_by: body.referred_by,
