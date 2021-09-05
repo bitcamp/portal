@@ -1,6 +1,7 @@
 export default {
   shared: {
-    ANALYTICS_ENDPOINT: 'https://hugoburbelo.builtwithdark.com/track_visit'
+    ANALYTICS_ENDPOINT: 'https://hugoburbelo.builtwithdark.com/track_visit',
+    GOOGLE_AD_ANALYTICS_ID: 'AW-306690382/Y7leCKuer_ECEM7ynpIB'
   },
   dev: {
     BACKEND_ENDPOINT: 'https://7a55navjb9.execute-api.us-east-1.amazonaws.com',
