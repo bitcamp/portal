@@ -127,6 +127,12 @@ module.exports.track = withSentry(async (event) => {
     };
   }
 
+  // Handle "how i found out about technica"
+  if (body.key.startsWith("hf")) {
+    body.value = event.requestContext.identity.sourceIp;
+    await logStatistic(ddb, body.key, 1);
+  }
+
   // Log user's ip
   if (body.key === "open-registration") {
     body.value = event.requestContext.identity.sourceIp;

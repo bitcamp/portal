@@ -9,10 +9,9 @@
 
             <div class="py-3">
               <p class="mb-4">
-                You will be sent a confirmation email for your registration.
-                If you have any questions, be sure to reach out to <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
+                You'll get a confirmation email for registering. Get ready for the best weekend ever!
                 <br/>
-                Get ready for the best weekend you've ever had!
+                If you have any questions, be sure to reach out to <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.                
               </p>
 
               <p class="mb-1">
@@ -52,6 +51,42 @@
                 <b-col md=1></b-col>
               </b-row>
 
+              <p class="mb-1">
+                Where did you hear about us? Letting us know helps us reach more people!
+              </p>
+
+              <!-- Heard from -->
+              <b-row class="mb-5">
+                <b-col md=1></b-col>
+                <b-col>
+
+                  <!-- <b-input-group> -->
+                    <b-form-select
+                      class="flex-0"
+                      v-model="heardFrom"
+                      @change="handleHeardFrom"
+                      :options="options"
+                    />
+                    <!-- <b-input-group-append>
+                      <b-button
+                        v-clipboard:copy="referralLink"
+                        v-clipboard:success="changeCopyText"
+                        size="sm"
+                        variant="cyan"
+                        class="copy-button"
+                      >
+                        <img
+                          class="btn-icon btn-icon-left"
+                          src="../assets/copy-icon.svg"
+                        >
+                        <span class="ml-1" v-html="copyBtnText"></span>
+                      </b-button>
+                    </b-input-group-append>
+                  </b-input-group> -->
+                </b-col>
+                <b-col md=1></b-col>
+              </b-row>
+
               <p>
                 Follow us on social media to make sure you don't miss any updates from Technica.
               </p>
@@ -86,7 +121,22 @@ export default {
   mixins: [generalMixin],
   data () {
     return {
-      copyBtnText: "Copy Link"
+      copyBtnText: "Copy Link",
+
+      heardFrom : "",
+      options: [
+        { value: "", text: "How did you find out about us?", disabled: true },
+        { value: "hf-instagram", text: "Instagram" },
+        { value: "hf-facebook", text: "Facebook" },
+        { value: "hf-tiktok", text: "TikTok" },
+        { value: "hf-email", text: "Email list-serv" },
+        { value: "hf-google", text: "Google" },
+        { value: "hf-friend", text: "A friend" },
+        { value: "hf-ambassador", text: "A Technica ambassador" },
+        { value: "hf-mlh", text: "Major League Hacking" },
+        { value: "hf-other", text: "Other" },
+      ]
+
     }
   },
 
@@ -140,6 +190,13 @@ export default {
       // https://stackoverflow.com/questions/4067469/selecting-all-text-in-html-text-input-when-clicked
       const input = event.currentTarget;
       input.setSelectionRange(0, input.value.length);
+    },
+    handleHeardFrom(event) {
+      this.track({
+        referral_id: this.referralID,
+        key: this.heardFrom,
+        value: 1
+      });
     },
   },
 };
