@@ -228,10 +228,22 @@ module.exports.update = withSentry(async () => {
 
   // Send the statistic update to slack
   var statArr = [];
+  var hfArr = [];
+  let registrations = 0;
   const stats = await ddb.scan(params).promise();
-  stats.Items.forEach((stat) =>
-    statArr.push(stat.value + " " + stat.statistic)
-  );
+  stats.Items.forEach((stat) => {
+    if (stat.statistic.startsWith("hf")) {
+      hfArr.push(stat.value + " " + stat.statistic)
+    } else if (stat.statistic === "registrations") { // save for later
+      registrations = stat.value;
+    } else {
+      statArr.push(stat.value + " " + stat.statistic);
+    }
+  });
+  statArr.unshift("~~~~~~~~~~~");
+  statArr.unshift("*" + registrations + " registrations*");
+  statArr = statArr.concat("~~~~~~~~~~~", hfArr.sort())
+
   await webhook.send({
     text:
       `Registration update for ` +
