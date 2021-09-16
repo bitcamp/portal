@@ -13,7 +13,7 @@
       <b-form @submit="registerUser" class="registration-form" autocomplete="on">
         <!-- Name and Pronouns -->
         <h4>Tell us about yourself!</h4>
-        <p class="info">Once you register, you'll recive more info about Technica 2021 at the email you provide.</p>
+        <p class="info">Once you register, you'll receive more info about Technica 2021 at the email you provide.</p>
         <b-form-row>
           <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-7 col-md-8">
             <b-form-input
@@ -102,6 +102,23 @@
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_school">
             Please enter your school name
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
+        <!-- Date of Birth -->
+        <b-form-row>
+        <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-5 col-md-4">
+          <b-form-input
+            id="input-birthday"
+            v-model="form.birthday"
+            name="birthday"
+            autocomplete="off"
+            placeholder="12/31/2000"
+            :state="valid_birthday"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="valid_birthday">
+            Please enter your birthday
           </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
@@ -304,6 +321,7 @@ export default {
         pronouns: "",
         school_type: "",
         school: "",
+        birthday: "",
         address: "",
         address1: "",
         address2: "",
@@ -325,6 +343,7 @@ export default {
       valid_phone: null,
       valid_school_type: null,
       valid_school: null,
+      valid_birthday: null,
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
       valid_track_selected: null,
@@ -334,8 +353,9 @@ export default {
         { value: "", text: "Select one...", disabled: true },
         { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
-        { value: "undergrad", text: "Undergraduate" },
-        { value: "graduate", text: "Graduate School" },
+        { value: "undergrad", text: "Undergraduate / Bachelors" },
+        { value: "graduate", text: "Graduate School / Masters" },
+        { value: "phd", text: "PhD / Doctorate" },
         { value: "graduated", text: "Graduated" }
       ]
     };
@@ -531,6 +551,11 @@ export default {
         this.valid_school = false;
         valid_form = false;
       } else this.valid_school = null;
+
+      if (this.form.birthday.length === 0) {
+        this.valid_birthday = false;
+        valid_form = false;
+      } else this.valid_birthday = null;
 
       if (!this.form.MLH_conduct) {
         this.valid_code_of_conduct = false;
