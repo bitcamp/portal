@@ -15,7 +15,7 @@
         <h4>Tell us about yourself!</h4>
         <p class="info">Once you register, you'll receive more info about Technica 2021 at the email you provide.</p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-7 col-md-8">
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-6">
             <b-form-input
               id="input-1"
               v-model="form.name"
@@ -29,7 +29,7 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
-          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-5 col-md-4">
+          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-6 col-md-3">
             <b-form-input
               id="input-p"
               v-model="form.pronouns"
@@ -42,6 +42,22 @@
               Please enter your pronouns
             </b-form-invalid-feedback>
           </b-form-group>
+
+          <!-- Date of Birth -->
+          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-6 col-md-3">
+            <b-form-input
+              id="input-birthday"
+              v-model="form.birthday"
+              name="birthday"
+              autocomplete="bday"
+              placeholder="mm/dd/yyyy"
+              :state="valid_birthday"
+            ></b-form-input>
+            <b-form-invalid-feedback :state="valid_birthday">
+              Please enter your birthday
+            </b-form-invalid-feedback>
+          </b-form-group>
+
         </b-form-row>
 
         <!-- Email -->
@@ -102,23 +118,6 @@
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_school">
             Please enter your school name
-          </b-form-invalid-feedback>
-        </b-form-group>
-        </b-form-row>
-
-        <!-- Date of Birth -->
-        <b-form-row>
-        <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-5 col-md-4">
-          <b-form-input
-            id="input-birthday"
-            v-model="form.birthday"
-            name="birthday"
-            autocomplete="off"
-            placeholder="12/31/2000"
-            :state="valid_birthday"
-          ></b-form-input>
-          <b-form-invalid-feedback :state="valid_birthday">
-            Please enter your birthday
           </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
