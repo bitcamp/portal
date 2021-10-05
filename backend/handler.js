@@ -17,21 +17,31 @@ module.exports.register = withSentry(async (event) => {
     };
   }
 
-  // Generate referral ID
-  const referralBase = body.name.split(" ")[0].toLowerCase();
-  var referralID;
-  do {
-    referralID = referralBase + "-" + makeAddon(3);
-    var referralQuery = {
-      TableName: process.env.REGISTRATION_TABLE,
-      IndexName: "referralsIndex",
-      KeyConditionExpression: "referral_id = :v_refer",
-      ExpressionAttributeValues: { ":v_refer": referralID },
-    };
-    var resp = await ddb.query(referralQuery).promise();
-  } while (resp.Count != 0);
+  const existingReg = await ddb.get({
+    TableName: process.env.REGISTRATION_TABLE,
+    Key: {email: body.email.toLowerCase()}
+  }).promise()
+  console.log(existingReg.Item)
 
-  const params = {
+  // Generate referral ID
+  var referralID;
+  if (existingReg.Item != null) {
+    referralID = existingReg.Item.referral_id
+  } else {
+    const referralBase = body.name.split(" ")[0].toLowerCase();
+    do {
+      referralID = referralBase + "-" + makeAddon(3);
+      var referralQuery = {
+        TableName: process.env.REGISTRATION_TABLE,
+        IndexName: "referralsIndex",
+        KeyConditionExpression: "referral_id = :v_refer",
+        ExpressionAttributeValues: { ":v_refer": referralID },
+      };
+      var resp = await ddb.query(referralQuery).promise();
+    } while (resp.Count != 0);
+  }
+
+  var params = {
     TableName: process.env.REGISTRATION_TABLE,
     Item: {
       timestamp: new Date().toISOString(),
@@ -59,6 +69,14 @@ module.exports.register = withSentry(async (event) => {
       MLH_privacy: body.MLH_privacy,
     },
   };
+
+  if (existingReg.Item != null && existingReg.Item.referred_by !== "") {
+    params.Item.referred_by = existingReg.Item.referred_by
+  }
+
+  if (existingReg.Item != null) {
+    params.Item.referral_count = existingReg.Item.referral_count
+  }
 
   if (body.referred_by) {
     await Promise.all([
