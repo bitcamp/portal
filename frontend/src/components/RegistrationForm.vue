@@ -311,7 +311,7 @@ export default {
   data() {
     return {
       form: {
-        email: "",
+        email: (this.$route.query.redo != null)? this.$route.query.redo : "",
         phone: "",
         MLH_emails: false,
         MLH_conduct: false,

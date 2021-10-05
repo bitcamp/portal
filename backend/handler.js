@@ -21,7 +21,6 @@ module.exports.register = withSentry(async (event) => {
     TableName: process.env.REGISTRATION_TABLE,
     Key: {email: body.email.toLowerCase()}
   }).promise()
-  console.log(existingReg.Item)
 
   // Generate referral ID
   var referralID;
@@ -46,9 +45,8 @@ module.exports.register = withSentry(async (event) => {
     Item: {
       timestamp: new Date().toISOString(),
       email: body.email.toLowerCase(),
-      track: body.track_selected,
-      phone: body.phone,
       name: body.name,
+      track: body.track_selected,
       referred_by: body.referred_by,
       referral_id: referralID,
       pronouns: body.pronouns,
@@ -90,7 +88,7 @@ module.exports.register = withSentry(async (event) => {
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
-    sendConfirmationEmail(body.name, body.email, referralID),
+    sendConfirmationEmail(body.name, body.email, referralID, params.Item),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
@@ -115,18 +113,19 @@ const makeAddon = (length) => {
 };
 
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
-const sendConfirmationEmail = async (fullName, email, referralID) => {
+const sendConfirmationEmail = async (fullName, email, referralID, user) => {
   const ses = new AWS.SES();
 
   const referralLink = "https://register.gotechnica.org/" + referralID;
+  const reregisterLink = "https://register.gotechnica.org?redo=" + email
   const firstName = fullName.split(" ")[0];
 
   const params = {
     Destination: { ToAddresses: [email] },
     Source: "Technica <hello@gotechnica.org>",
     ConfigurationSetName: "registration-2021",
-    Template: "HackerRegistrationConfirmation",
-    TemplateData: `{ \"firstName\":\"${firstName}\", \"referralLink\": \"${referralLink}" }`,
+    Template: "DetailedHackerRegistrationConfirmation",
+    TemplateData: `{\"firstName\":\"${firstName}\",\"referralLink\":\"${referralLink}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_type}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
