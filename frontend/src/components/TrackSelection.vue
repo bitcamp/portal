@@ -13,8 +13,8 @@
 
   <b-col md="3" class="p-1 d-flex align-items-stretch">
   <label>
-    <input type="radio" v-model="card" value="beginner" @click="onClickCard('beginner')">
-    <b-card class="h-100 w-100 beginner" :class="{ 'active': card === 'beginner'}">
+    <input type="radio" v-model="card" value="beginner" @click="onClickCard('beginner')" :disabled="true">
+    <b-card class="h-100 w-100 beginner disabled" :class="{ 'active': card === 'beginner'}" >
       <h4>Beginner</h4>
       <p>New to hackathons? Get extra resources and workshops!</p>
     </b-card>
@@ -23,8 +23,8 @@
   
   <b-col md="3" class="p-1 d-flex align-items-stretch">
   <label>
-    <input type="radio" v-model="card" value="hardware" @click="onClickCard('hardware')">
-    <b-card class="h-100 w-100 hardware" :class="{ 'active': card === 'hardware'}">
+    <input type="radio" v-model="card" value="hardware" @click="onClickCard('hardware')" :disabled="true">
+    <b-card class="h-100 w-100 hardware disabled" :class="{ 'active': card === 'hardware'}">
       <h4>Hardware</h4>
       <p>Using hardware in your hack? Get some resources from us!</p>
     </b-card>
@@ -114,6 +114,13 @@ input {
 .hardware:hover, .hardware.active {
   border-color: rgb(160, 214, 180);
   background-color: rgba(160, 214, 180, 0.75);
+}
+
+.disabled {
+  opacity: 50%;
+  border-color: rgb(170, 167, 167, 0.5);
+  background-color: rgb(150, 148, 148, 0.25);
+  pointer-events: none;
 }
 
 h4 {

@@ -17,6 +17,14 @@ module.exports.register = withSentry(async (event) => {
     };
   }
 
+  // Reject disabled tracks
+  if (body.track_selected == "beginner" || body.track_selected == "hardware") {
+    return {
+      statusCode: 500,
+      body: "/register has invalid track selected"
+    };
+  }
+
   const existingReg = await ddb.get({
     TableName: process.env.REGISTRATION_TABLE,
     Key: {email: body.email.toLowerCase()}
