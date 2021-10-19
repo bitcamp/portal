@@ -125,7 +125,7 @@
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
-        <p class="info">Learn more about our tracks at <a href="https://gotechnica.org#tracks">gotechnica.org</a>! All hackers are admitted to the general track by default.</p>
+        <p class="info">Unfortunately, we've closed our other track registrations. Not to worry, you can still join us in the general track!</p>
         <track-selection v-bind:default="this.default_track" @picked="updateTrack" />
 
         <!-- Shipping Address -->

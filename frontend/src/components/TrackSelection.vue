@@ -1,22 +1,32 @@
 <template>
 <b-row class="m-n1">
 
-  <b-col md="3" class="p-1 d-flex align-items-stretch">
+  <b-col md="12" class="p-1 d-flex align-items-stretch">
   <label>
-      <input type="radio" v-model="card" value="general" @click="onClickCard('general')">
+      <input type="radio" v-model="card" value="general">
       <b-card class="h-100 w-100 general" :class="{ 'active': card === 'general'}">
         <h4>General</h4>
-        <p>For any and all hackers! All skill levels welcome.</p>
+        <p>For any and all hackers! All skill levels welcome. The full technica experience!</p>
       </b-card>
   </label>
   </b-col>
 
+  <!-- <b-col md="3" class="p-1 d-flex align-items-stretch">
+  <label>
+    <input type="radio" v-model="card" value="research" @click="onClickCard('research')">
+    <b-card class="h-100 w-100 research" :class="{ 'active': card === 'research'}">
+      <h4>Research</h4>
+      <p>Unfortunately, this track is closed. Beginners are still welcome in the General track!</p>
+    </b-card>
+  </label>
+  </b-col>
+  
   <b-col md="3" class="p-1 d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="beginner" @click="onClickCard('beginner')" :disabled="true">
-    <b-card class="h-100 w-100 beginner disabled" :class="{ 'active': card === 'beginner'}" >
+    <b-card class="h-100 w-100 beginner card-disabled" :class="{ 'active': card === 'beginner'}" >
       <h4>Beginner</h4>
-      <p>New to hackathons? Get extra resources and workshops!</p>
+      <p>Unfortunately, this track is closed. Beginners are still welcome in the General track!</p>
     </b-card>
   </label>
   </b-col>
@@ -24,23 +34,13 @@
   <b-col md="3" class="p-1 d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="hardware" @click="onClickCard('hardware')" :disabled="true">
-    <b-card class="h-100 w-100 hardware disabled" :class="{ 'active': card === 'hardware'}">
+    <b-card class="h-100 w-100 hardware card-disabled" :class="{ 'active': card === 'hardware'}">
       <h4>Hardware</h4>
-      <p>Using hardware in your hack? Get some resources from us!</p>
+      <p>Unfortunately, this track is closed. You can still use hardware in the General track!</p>
     </b-card>
   </label>
-  </b-col>
+  </b-col> -->
 
-  <b-col md="3" class="p-1 d-flex align-items-stretch">
-  <label>
-    <input type="radio" v-model="card" value="research" @click="onClickCard('research')">
-    <b-card class="h-100 w-100 research" :class="{ 'active': card === 'research'}">
-      <h4>Research</h4>
-      <p>A separate 3-day research and technology event during Technica weekend!</p>
-    </b-card>
-  </label>
-  </b-col>
-  
 </b-row>
 </template>
 
@@ -116,8 +116,8 @@ input {
   background-color: rgba(160, 214, 180, 0.75);
 }
 
-.disabled {
-  opacity: 50%;
+.card-disabled {
+  opacity: 0.4 !important;
   border-color: rgb(170, 167, 167, 0.5);
   background-color: rgb(150, 148, 148, 0.25);
   pointer-events: none;
