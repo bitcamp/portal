@@ -134,6 +134,7 @@ export default {
         { value: "hf-friend", text: "A friend" },
         { value: "hf-ambassador", text: "A Technica ambassador" },
         { value: "hf-mlh", text: "Major League Hacking" },
+        { value: "hf-youtube", text: "YouTube" },
         { value: "hf-other", text: "Other" },
       ]
 
