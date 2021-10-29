@@ -20,7 +20,6 @@ const routes = [
   {
     path: '/:referral',
     component: Register,
-    props: (route) => ({ default_track: route.query.t })  
   },
 ];
 

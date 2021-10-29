@@ -126,7 +126,7 @@
         <hr />
         <h4>Choose a track!</h4>
         <p class="info">Unfortunately, we've closed our other track registrations. Not to worry, you can still join us in the general track!</p>
-        <track-selection v-bind:default="this.default_track" @picked="updateTrack" />
+        <track-selection v-bind:default="'general'" @picked="updateTrack" />
 
         <!-- Shipping Address -->
         <hr />
@@ -301,12 +301,6 @@ export default {
   name: "RegistrationForm",
   mixins: [generalMixin],
   components: { TrackSelection },
-  props: {
-    default_track: {
-        type: String,
-        default: "general"
-    }
-  },
 
   data() {
     return {
