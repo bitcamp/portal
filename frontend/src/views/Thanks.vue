@@ -135,6 +135,8 @@ export default {
         { value: "hf-ambassador", text: "A Technica ambassador" },
         { value: "hf-mlh", text: "Major League Hacking" },
         { value: "hf-youtube", text: "YouTube" },
+        { value: "hf-snapchat", text: "Snapchat" },
+        { value: "hf-flyer", text: "A Flyer or Poster" },
         { value: "hf-other", text: "Other" },
       ]
 
