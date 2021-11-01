@@ -79,7 +79,7 @@ module.exports.register = withSentry(async (event) => {
   if (body.referred_by) {
     await Promise.all([
       logStatistic(ddb, "referrals", 1),
-      logReferral(ddb, body.referred_by),
+      logReferral(ddb, body.referred_by, body.name),
     ]);
   }
 
@@ -126,6 +126,23 @@ const sendConfirmationEmail = async (fullName, email, referralID, user) => {
     ConfigurationSetName: "registration-2021",
     Template: "DetailedHackerRegistrationConfirmation",
     TemplateData: `{\"firstName\":\"${firstName}\",\"referralLink\":\"${referralLink}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_type}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\"}`,
+  };
+
+  return await ses.sendTemplatedEmail(params).promise();
+};
+
+const sendReferralNotificationEmail = async (fullName, email, referralID, referralName) => {
+  const ses = new AWS.SES();
+
+  const referralLink = "https://register.gotechnica.org/" + referralID;
+  const firstName = fullName.split(" ")[0];
+
+  const params = {
+    Destination: { ToAddresses: [email] },
+    Source: "Technica <hello@gotechnica.org>",
+    ConfigurationSetName: "registration-2021",
+    Template: "ReferralNotificationEmail3",
+    TemplateData: `{\"firstName\":\"${firstName}\",\"referralLink\":\"${referralLink}\",\"ReferralName\":\"${referralName}\",\"email\":\"${email}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
@@ -206,7 +223,7 @@ const logStatistic = (ddb, stat) => {
     .promise();
 };
 
-const logReferral = async (ddb, referred_by) => {
+const logReferral = async (ddb, referred_by, referralName) => {
   var referralQuery = {
     TableName: process.env.REGISTRATION_TABLE,
     IndexName: "referralsIndex",
@@ -214,6 +231,8 @@ const logReferral = async (ddb, referred_by) => {
     ExpressionAttributeValues: { ":v_refer": referred_by },
   };
   const resp = await ddb.query(referralQuery).promise();
+  await sendReferralNotificationEmail(resp.Items[0].name, resp.Items[0].email, referred_by, referralName)
+
   return ddb
     .update({
       TableName: process.env.REGISTRATION_TABLE,
