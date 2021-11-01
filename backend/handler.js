@@ -4,8 +4,16 @@ const { IncomingWebhook } = require("@slack/webhook");
 
 AWS.config.update({ region: "us-east-1" });
 
+const withSentryOptions = {
+  captureErrors: true,
+  captureUnhandledRejections: true,
+  captureUncaughtException: true,
+  captureMemory: true,
+  captureTimeouts: true,
+};
+
 // POST /register - Adds a new registration to the database
-module.exports.register = withSentry(async (event) => {
+module.exports.register = withSentry(withSentryOptions, async (event) => {
   const body = JSON.parse(event.body);
   const ddb = new AWS.DynamoDB.DocumentClient();
 
@@ -77,10 +85,19 @@ module.exports.register = withSentry(async (event) => {
   }
 
   if (body.referred_by) {
-    await Promise.all([
-      logStatistic(ddb, "referrals", 1),
-      logReferral(ddb, body.referred_by, body.name),
-    ]);
+    try {
+      const referred_by = normalizeReferral(body.referred_by);
+      params.Item.referred_by = referred_by
+      body.referred_by = referred_by
+
+      await Promise.all([
+        logStatistic(ddb, "referrals", 1),
+        logReferral(ddb, body.referred_by, body.name),
+      ]);
+    } catch (error) {
+      console.error("Failed to log referral!")
+      console.error(error)
+    }
   }
 
   await Promise.all([
@@ -222,6 +239,12 @@ const logStatistic = (ddb, stat) => {
     })
     .promise();
 };
+
+const normalizeReferral = (referred_by) => {
+    // check for illegal characters
+    const givenChunks = referred_by.split('-');
+    return (givenChunks[0] + '-' + givenChunks[1].substring(0,3));  
+}
 
 const logReferral = async (ddb, referred_by, referralName) => {
   var referralQuery = {
