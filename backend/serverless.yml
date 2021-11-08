@@ -42,7 +42,7 @@ functions:
     description: Receives registration information from a user
     events:
       - http: 
-          path: register
+          path: signup
           method: post
           cors: true
     memorySize: 256

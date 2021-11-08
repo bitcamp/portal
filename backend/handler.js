@@ -12,6 +12,11 @@ const withSentryOptions = {
   captureTimeouts: true,
 };
 
+const getSecret = () => {
+  const d = new Date()
+  return (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().split("").reverse().join("")
+}
+
 // POST /register - Adds a new registration to the database
 module.exports.register = withSentry(withSentryOptions, async (event) => {
   const body = JSON.parse(event.body);
@@ -23,6 +28,10 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       statusCode: 500,
       body: "/register is missing a field",
     };
+  }
+
+  if (body.secret !== getSecret()) {
+    return { statusCode: 403 };
   }
 
   const existingReg = await ddb.get({
@@ -113,7 +122,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     statusCode: 200,
     body: JSON.stringify(params.Item),
     headers: {
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "https://register.gotechnica.org",
       "Access-Control-Allow-Credentials": true,
     },
   };
