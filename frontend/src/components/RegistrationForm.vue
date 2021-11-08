@@ -230,6 +230,18 @@
         <!-- MLH Stuff -->
         <h4 class="mb-2">Rules and privacy policies</h4>
         <b-form-checkbox
+          id="checkbox-5"
+          v-model="form.underrepresented_Gender"
+          name="checkbox-5"
+          class="checkbox"
+          :state="valid_underrepresented_Gender"
+        >
+          <b>I identify as an underrepresented gender in tech.</b> This includes but is not limited to: cisgender women, transgender women, transgender men, non-binary individuals, gender neutral individuals, genderqueer individuals, and other underrepresented genders.*
+          <b-form-invalid-feedback :state="valid_underrepresented_Gender">
+            Please acknowledge you identify as a female or another underrepresented gender in tech in order to attend Technica as a hacker. Cisgender men are unfortunately not eligible to attend Technica as a hacker.
+          </b-form-invalid-feedback>
+        </b-form-checkbox>
+        <b-form-checkbox
           id="checkbox-2"
           v-model="form.MLH_privacy"
           name="checkbox-2"
@@ -310,6 +322,7 @@ export default {
         MLH_emails: false,
         MLH_conduct: false,
         MLH_privacy: false,
+        underrepresented_Gender: false,
         name: "",
         pronouns: "",
         school_type: "",
@@ -341,6 +354,7 @@ export default {
       valid_mlh_privacy: null,
       valid_track_selected: null,
       valid_address: null,
+      valid_underrepresented_Gender: null,
 
       options: [
         { value: "", text: "Select one...", disabled: true },
@@ -562,6 +576,11 @@ export default {
         this.valid_mlh_privacy = false;
         valid_form = false;
       } else this.valid_mlh_privacy = null;
+
+      if (!this.form.underrepresented_Gender) {
+        this.valid_underrepresented_Gender = false;
+        valid_form = false;
+      } else this.valid_underrepresented_Gender = null;
 
       if (this.form.track_selected.length === 0) {
         this.valid_track_selected = false;

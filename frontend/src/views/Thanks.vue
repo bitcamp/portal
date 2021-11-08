@@ -137,6 +137,7 @@ export default {
         { value: "hf-youtube", text: "YouTube" },
         { value: "hf-snapchat", text: "Snapchat" },
         { value: "hf-flyer", text: "A Flyer or Poster" },
+        { value: "hf-linkedin", text: "LinkedIn" },
         { value: "hf-other", text: "Other" },
       ]
 
