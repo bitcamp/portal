@@ -27,4 +27,4 @@ sls deploy -s dev    # deploy to dev stage (our playground where things can brea
 To start working on a feature, assign yourself to the related ticket.
 Then, make a new branch with the name `<your_first_name>/<feature_name>` to do your work. For example, `dhanvee/favicon-update`.
 
-When you're done working on your task, make a pull request and assign @honDhan as a reviewer.
+When you're done working on your task, make a pull request and assign @Sylean as a reviewer.
