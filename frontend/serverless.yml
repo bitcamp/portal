@@ -1,4 +1,4 @@
-org: technica
+org: bitcamp
 app: portal
 service: frontend
 name: portal-frontend
