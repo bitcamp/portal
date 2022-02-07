@@ -1,4 +1,4 @@
-org: technica
+org: bitcamp
 app: portal
 service: portal-backend
 
@@ -8,7 +8,7 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   deploymentBucket:
-    name: portal-backend-${self:provider.stage}-layers-deploymentbucket
+    name: bitcamp-portal-backend-${self:provider.stage}-layers-deploymentbucket
   environment:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
