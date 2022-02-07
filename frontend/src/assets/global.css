@@ -40,6 +40,12 @@ body {
   --asphalt-grey: #2d2d2d;
   --charcoal-grey: #464343;
   --dark-hero-blue:#087F8A;
+  --bitcamp-font-title: Aleo;
+  --bitcamp-font-general: Avenir;
+  --bitcamp-fontsize-title: 48px;
+  --bitcamp-fontsize-heading: 32px;
+  --bitcamp-fontsize-body: 16px;
+  --bitcamp-fontsize-disclaimer: 12px;
 }
 
 body {
