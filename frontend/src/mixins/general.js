@@ -31,7 +31,7 @@ export default {
     },
     async sendAnalyticsEvent(eventType) {
       if (this.getCurrentEnvironment() === 'prd') {
-        return await Axios.post(this.getEnvVariable('ANALYTICS_ENDPOINT'), {type: eventType, "date": (new Date().toLocaleDateString())});
+        // return await Axios.post(this.getEnvVariable('ANALYTICS_ENDPOINT'), {type: eventType, "date": (new Date().toLocaleDateString())});
       }
     },
     getCurrentEnvironment() {

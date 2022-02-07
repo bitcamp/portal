@@ -161,7 +161,7 @@ export default {
       this.$confetti.stop();
     });
     this.sendAnalyticsEvent('completed_registration');
-    gtag('event', 'conversion', {'send_to': this.getEnvVariable('GOOGLE_AD_ANALYTICS_ID')});
+    // gtag('event', 'conversion', {'send_to': this.getEnvVariable('GOOGLE_AD_ANALYTICS_ID')});
   },
 
   computed: {
