@@ -26,6 +26,19 @@ export default {
         return null;
       }
     },
+    async performRawPostRequest(endpoint, params) {
+      try {
+        const result = await Axios.put(endpoint, params, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        return result.data;
+      } catch (e) {
+        console.error(e);
+        return null;
+      }
+    },
     async track(event) {
       return this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'track', event);
     },

@@ -122,6 +122,21 @@
         </b-form-group>
         </b-form-row>
 
+        <!-- resume upload -->
+        <b-form-row>
+        <b-form-group id="input-group-resume" label="Resume" label-for="input-resume" class="col-md-12">
+          <b-form-file
+            id="input-resume"
+            v-model="form.resume"
+            name="resume"
+            accept=".pdf, .doc, .docx, .txt"
+            :placeholder="form.resume || 'Upload Resume'"
+            drop-placeholder="Drop file here..."
+            @input="upload"
+          ></b-form-file>
+        </b-form-group>
+        </b-form-row>
+
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
@@ -304,10 +319,14 @@
 import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
 import Vue from "vue";
-import { FormRadioPlugin, IconsPlugin } from "bootstrap-vue";
+import { FormRadioPlugin, IconsPlugin, FormFilePlugin } from "bootstrap-vue";
 import TrackSelection from "./TrackSelection.vue";
+import * as PDFJS from 'pdfjs-dist/legacy/build/pdf.js';
+import 'pdfjs-dist/build/pdf.worker.entry';
+
 Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
+Vue.use(FormFilePlugin)
 
 export default {
   name: "RegistrationForm",
@@ -327,6 +346,7 @@ export default {
         pronouns: "",
         school_type: "",
         school: "",
+        resume: "",
         birthday: "",
         address: "",
         address1: "",
@@ -599,7 +619,60 @@ export default {
       } else this.valid_address = null;
 
       return valid_form;
-    }
+    },
+    async upload(file) {
+      const userParams = {
+        id: this.random_id,
+        filename: this.resume.name,
+        filetype: this.resume.filetype,
+      };
+      const r = await this.performPostRequest(
+        this.getEnvVariable('BACKEND'),
+        '/upload_resume',
+        userParams,
+      );
+      await this.performRawPostRequest(r.putUrl, file);
+      this.resumeLink = r.uploadUrl;
+
+      // below is for resume parsing
+      let text = '';
+      const pdfVersion = '2.10.377';
+      // eslint-disable-next-line no-import-assign
+      PDFJS.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
+
+      const loadingTask = PDFJS.getDocument(this.resumeLink);
+      await loadingTask.promise.then((doc) => {
+        const { numPages } = doc;
+
+        let lastPromise;
+        lastPromise = doc.getMetadata();
+
+        const loadPage = async (pageNum) => {
+          const page = await doc.getPage(pageNum);
+
+          return page.getTextContent().then((content) => {
+            // we only want the page text (strings)
+            const strings = content.items.map((item) => item.str);
+            text += strings.join(' ');
+          });
+        };
+
+        for (let i = 1; i <= numPages; i += 1) {
+          lastPromise = lastPromise.then(loadPage.bind(null, i));
+        }
+        return lastPromise;
+      });
+
+      const resumeParams = {
+        user_id: this.getUserId(),
+        resume_text: text,
+      };
+      await this.performPostRequest(
+        this.getEnvVariable('BACKEND'),
+        '/upload_text_resume',
+        resumeParams,
+      );
+    },
   }
 };
 </script>
