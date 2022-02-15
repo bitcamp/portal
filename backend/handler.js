@@ -5,6 +5,12 @@ const { IncomingWebhook } = require("@slack/webhook");
 
 AWS.config.update({ region: "us-east-1" });
 
+const HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+  'Access-Control-Allow-Headers': '*',
+};
+
 const withSentryOptions = {
   captureErrors: true,
   captureUnhandledRejections: true,
@@ -177,7 +183,7 @@ const sendReferralNotificationEmail = async (fullName, email, referralID, referr
 
 // =============================================================================
 
-// POST /resume - Uploads hacker resume to S3 bucket
+// POST /upload_resume - Uploads hacker resume to S3 bucket
 module.exports.upload_resume = withSentry(async (event) => {
   const body = JSON.parse(event.body);
 
@@ -209,7 +215,7 @@ module.exports.upload_resume = withSentry(async (event) => {
   };
 });
 
-// POST /resume_text - Uploads text format of hacker resume to DynamoDB table
+// POST /upload_resume_text - Uploads text format of hacker resume to DynamoDB table
 module.exports.upload_resume_text = withSentry(async (event) => {
   const body = JSON.parse(event.body);
 
