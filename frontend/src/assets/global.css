@@ -7,6 +7,9 @@
   src: local('DIN Pro'), url('./DINPro.woff2') format('woff2');
 }
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"); /* Noto Sans */
+@import url("https://fonts.googleapis.com/css2?family=Aleo"); /* Aleo */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap'); /* Lato */
+
 
 body {
   background-color: var(--green);
@@ -49,7 +52,7 @@ body {
 }
 
 body {
-  font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Lato', 'Noto Sans', Helvetica, Arial, sans-serif;
 }
 
 h1,
@@ -57,7 +60,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "DIN Pro", sans-serif;
+  font-family: 'Aleo', 'DIN Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -89,7 +92,7 @@ label {
 
 /* Body 2 */
 .body-2 {
-  font-family: Noto Sans;
+  font-family: 'Lato', 'Noto Sans';
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -121,5 +124,5 @@ hr {
 
 /* Google autocomplete styles */
 .pac-container {
-  font-family: 'Noto Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Lato', 'Noto Sans', Helvetica, Arial, sans-serif;
 }
