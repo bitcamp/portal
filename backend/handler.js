@@ -14,7 +14,7 @@ const withSentryOptions = {
 
 const getSecret = () => {
   const d = new Date()
-  return (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().split("").reverse().join("")
+  return (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().toString().split("").reverse().join("")
 }
 
 // POST /register - Adds a new registration to the database
