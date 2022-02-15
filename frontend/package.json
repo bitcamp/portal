@@ -22,6 +22,7 @@
     "cache-loader": "^4.1.0",
     "core-js": "^3.6.5",
     "jquery": "^3.5.0",
+    "pdfjs-dist": "^2.12.313",
     "uuid": "^8.3.2",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
