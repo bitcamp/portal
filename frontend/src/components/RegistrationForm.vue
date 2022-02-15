@@ -347,6 +347,7 @@ export default {
         school_type: "",
         school: "",
         resume: "",
+        resumeLink: "",
         birthday: "",
         address: "",
         address1: "",
@@ -623,8 +624,8 @@ export default {
     async upload(file) {
       const userParams = {
         id: this.random_id,
-        filename: this.resume.name,
-        filetype: this.resume.filetype,
+        filename: this.form.resume.name,
+        filetype: this.form.resume.filetype,
       };
       const r = await this.performPostRequest(
         this.getEnvVariable('BACKEND'),
@@ -632,7 +633,7 @@ export default {
         userParams,
       );
       await this.performRawPostRequest(r.putUrl, file);
-      this.resumeLink = r.uploadUrl;
+      this.form.resumeLink = r.uploadUrl;
 
       // below is for resume parsing
       let text = '';
@@ -640,7 +641,7 @@ export default {
       // eslint-disable-next-line no-import-assign
       PDFJS.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
-      const loadingTask = PDFJS.getDocument(this.resumeLink);
+      const loadingTask = PDFJS.getDocument(this.form.resumeLink);
       await loadingTask.promise.then((doc) => {
         const { numPages } = doc;
 
@@ -664,7 +665,7 @@ export default {
       });
 
       const resumeParams = {
-        user_id: this.getUserId(),
+        user_id: this.random_id,
         resume_text: text,
       };
       await this.performPostRequest(
