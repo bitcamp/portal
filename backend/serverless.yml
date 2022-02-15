@@ -11,6 +11,7 @@ provider:
     name: bitcamp-portal-backend-${self:provider.stage}-layers-deploymentbucket
   environment:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
+    RESUMES_TABLE: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
@@ -35,6 +36,15 @@ provider:
       Action:
         - ses:SendTemplatedEmail
       Resource: "arn:aws:ses:us-east-1:*"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:ListBucket
+        - s3:ListBucketVersions
+        - s3:PutObjectTagging
+      Resource:
+        - "arn:aws:s3:us-east-1:::bitcamp-portal-backend-dev-layers-deploymentbucket"
 
 functions:
   register:
@@ -64,6 +74,14 @@ functions:
       - schedule:
          rate: rate(8 hours)
          enabled: ${self:custom.updateEnabled.${opt:stage}, self:custom.updateEnabled.other}
+  upload_resume:
+    handler: handler.upload_resume
+    description: Uploads a hacker's resume to s3
+    events:
+      - http:
+          path: upload_resume
+          method: post
+          cors: true
 
 resources: # define DynamoDB tables within serverless
   Resources:
@@ -89,6 +107,21 @@ resources: # define DynamoDB tables within serverless
             NonKeyAttributes:
             - name
             ProjectionType: INCLUDE
+    resumesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: submitted
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: submitted
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
     registrationTable:
       Type: AWS::DynamoDB::Table
       Properties:

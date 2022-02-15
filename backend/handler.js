@@ -1,4 +1,5 @@
 const AWS = require("aws-sdk");
+const UUID = require('uuid');
 const withSentry = require("serverless-sentry-lib");
 const { IncomingWebhook } = require("@slack/webhook");
 
@@ -175,6 +176,39 @@ const sendReferralNotificationEmail = async (fullName, email, referralID, referr
 };
 
 // =============================================================================
+
+// POST /resume - Uploads hacker resume to S3 bucket
+module.exports.upload_resume = withSentry(async (event) => {
+  const body = JSON.parse(event.body);
+
+  if (!body.filename) {
+    return {
+      statusCode: 500,
+      body: 'upload_resume is missing filename',
+    };
+  }
+
+  const s3 = new AWS.S3();
+
+  const folder = UUID.v4();
+  const filePath = `${folder}/${body.filename}`;
+
+  const params = {
+    Bucket: 'bitcamp-2022-resumes',
+    Key: filePath,
+    Expires: 600,
+    ContentType: 'multipart/form-data',
+  };
+
+  const s3Result = s3.getSignedUrl('putObject', params);
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ putUrl: s3Result, uploadUrl: `https://bitcamp-2022-resumes.s3.amazonaws.com/${filePath}` }),
+    headers: HEADERS,
+  };
+});
+
 
 // POST /track - Keeps track of various user actions
 module.exports.track = withSentry(async (event) => {
