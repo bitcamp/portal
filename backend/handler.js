@@ -184,7 +184,7 @@ module.exports.upload_resume = withSentry(async (event) => {
   if (!body.filename) {
     return {
       statusCode: 500,
-      body: 'upload_resume is missing filename',
+      body: '/upload_resume is missing filename',
     };
   }
 
@@ -209,6 +209,35 @@ module.exports.upload_resume = withSentry(async (event) => {
   };
 });
 
+// POST /resume_text - Uploads text format of hacker resume to DynamoDB table
+module.exports.upload_resume_text = withSentry(async (event) => {
+  const body = JSON.parse(event.body);
+
+  if (!body.user_id || !body.resume_text) {
+    return {
+      statusCode: 500,
+      body: '/upload_resume_text is missing user_id or resume_text',
+    };
+  }
+
+  const ddb = new AWS.DynamoDB.DocumentClient();
+  const params = {
+    TableName: process.env.RESUMES_TABLE,
+    Item: {
+      id: body.user_id,
+      submitted: new Date().getTime(),
+      resume_text: body.resume_text,
+    },
+  };
+
+  await ddb.put(params).promise();
+
+  return {
+    statusCode: 200,
+    body: 'success',
+    headers: HEADERS,
+  };
+});
 
 // POST /track - Keeps track of various user actions
 module.exports.track = withSentry(async (event) => {

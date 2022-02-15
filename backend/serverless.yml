@@ -42,9 +42,8 @@ provider:
         - s3:GetObject
         - s3:ListBucket
         - s3:ListBucketVersions
-        - s3:PutObjectTagging
       Resource:
-        - "arn:aws:s3:us-east-1:::bitcamp-portal-backend-dev-layers-deploymentbucket"
+        - "arn:aws:s3:::*"
 
 functions:
   register:
@@ -76,12 +75,21 @@ functions:
          enabled: ${self:custom.updateEnabled.${opt:stage}, self:custom.updateEnabled.other}
   upload_resume:
     handler: handler.upload_resume
-    description: Uploads a hacker's resume to s3
+    description: Uploads a hacker's resume to S3 bucket
     events:
       - http:
           path: upload_resume
           method: post
           cors: true
+  upload_resume_text:
+    handler: handler.upload_resume_text
+    description: Upload's a hacker's resume text to DynamoDB Table
+    events:
+      - http:
+          path: upload_text_resume
+          method: post
+          cors: true
+  
 
 resources: # define DynamoDB tables within serverless
   Resources:
