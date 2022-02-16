@@ -529,9 +529,6 @@ export default {
           value: this.form.time_taken
         });
 
-        const d = new Date()
-        this.form.secret = (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().split("").reverse().join("")
-
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
           "signup",

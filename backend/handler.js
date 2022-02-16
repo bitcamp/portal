@@ -19,11 +19,6 @@ const withSentryOptions = {
   captureTimeouts: true,
 };
 
-const getSecret = () => {
-  const d = new Date()
-  return (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().split("").reverse().join("")
-}
-
 // POST /register - Adds a new registration to the database
 module.exports.register = withSentry(withSentryOptions, async (event) => {
   const body = JSON.parse(event.body);
@@ -35,10 +30,6 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       statusCode: 500,
       body: "/register is missing a field",
     };
-  }
-
-  if (body.secret !== getSecret()) {
-    return { statusCode: 403 };
   }
 
   const existingReg = await ddb.get({
@@ -121,7 +112,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
-    sendConfirmationEmail(body.name, body.email, referralID, params.Item),
+    // sendConfirmationEmail(body.name, body.email, referralID, params.Item),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
@@ -129,7 +120,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     statusCode: 200,
     body: JSON.stringify(params.Item),
     headers: {
-      "Access-Control-Allow-Origin": "https://register.gotechnica.org",
+      "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
     },
   };
@@ -332,7 +323,7 @@ const logReferral = async (ddb, referred_by, referralName) => {
     ExpressionAttributeValues: { ":v_refer": referred_by },
   };
   const resp = await ddb.query(referralQuery).promise();
-  await sendReferralNotificationEmail(resp.Items[0].name, resp.Items[0].email, referred_by, referralName)
+  // await sendReferralNotificationEmail(resp.Items[0].name, resp.Items[0].email, referred_by, referralName)
 
   return ddb
     .update({
