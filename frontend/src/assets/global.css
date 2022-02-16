@@ -12,7 +12,8 @@
 
 
 body {
-  background-color: var(--green);
+  background-color: #FFAF3F;
+  background-image: radial-gradient(50% 49.08% at 0% 50.92%, #FF793F 48.23%, #FFAF3F 100%);
   /* background-image: url("./hero-clouds.png");
   background-size: cover; */
   /*centered on x, starting 56px lower than top for y so that the navbar doesn't cover image*/
@@ -43,6 +44,7 @@ body {
   --asphalt-grey: #2d2d2d;
   --charcoal-grey: #464343;
   --dark-hero-blue:#087F8A;
+  --orange_grad: radial-gradient(50% 49.08% at 0% 50.92%, #FF793F 48.23%, #FFAF3F 100%);
   --bitcamp-font-title: Aleo;
   --bitcamp-font-general: Avenir;
   --bitcamp-fontsize-title: 48px;
@@ -101,9 +103,8 @@ label {
 
 
 .main-card {
-  border-radius: 1rem;
   margin-bottom: 5.5rem !important;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.9);
   border: none;
   box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.125);
 }
