@@ -26,19 +26,32 @@ export default {
         return null;
       }
     },
+    async performRawPostRequest(endpoint, params) {
+      try {
+        const result = await Axios.put(endpoint, params, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        return result.data;
+      } catch (e) {
+        console.error(e);
+        return null;
+      }
+    },
     async track(event) {
       return this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'track', event);
     },
     async sendAnalyticsEvent(eventType) {
       if (this.getCurrentEnvironment() === 'prd') {
-        return await Axios.post(this.getEnvVariable('ANALYTICS_ENDPOINT'), {type: eventType, "date": (new Date().toLocaleDateString())});
+        // return await Axios.post(this.getEnvVariable('ANALYTICS_ENDPOINT'), {type: eventType, "date": (new Date().toLocaleDateString())});
       }
     },
     getCurrentEnvironment() {
-      if (window.location.hostname === 'register.gotechnica.org') {
+      if (window.location.hostname === 'register.bit.camp') {
         return 'prd';
       }
-      if (window.location.hostname === 'register.beta.gotechnica.org') {
+      if (window.location.hostname === 'register.beta.bit.camp') {
         return 'stg';
       }
       return 'dev';

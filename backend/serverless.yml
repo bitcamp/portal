@@ -1,4 +1,4 @@
-org: technica
+org: bitcamp
 app: portal
 service: portal-backend
 
@@ -8,9 +8,10 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   deploymentBucket:
-    name: portal-backend-${self:provider.stage}-layers-deploymentbucket
+    name: bitcamp-portal-backend-${self:provider.stage}-layers-deploymentbucket
   environment:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
+    RESUMES_TABLE: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
@@ -35,6 +36,14 @@ provider:
       Action:
         - ses:SendTemplatedEmail
       Resource: "arn:aws:ses:us-east-1:*"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:ListBucket
+        - s3:ListBucketVersions
+      Resource:
+        - "arn:aws:s3:::*"
 
 functions:
   register:
@@ -47,7 +56,7 @@ functions:
           cors: true
     memorySize: 256
     timeout: 15
-    provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self.provisionedConcurrency.other}
+    provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
   track:
     handler: handler.track
     description: Receives registration information from a user
@@ -64,6 +73,23 @@ functions:
       - schedule:
          rate: rate(8 hours)
          enabled: ${self:custom.updateEnabled.${opt:stage}, self:custom.updateEnabled.other}
+  upload_resume:
+    handler: handler.upload_resume
+    description: Uploads a hacker's resume to S3 bucket
+    events:
+      - http:
+          path: upload_resume
+          method: post
+          cors: true
+  upload_resume_text:
+    handler: handler.upload_resume_text
+    description: Upload's a hacker's resume text to DynamoDB Table
+    events:
+      - http:
+          path: upload_text_resume
+          method: post
+          cors: true
+  
 
 resources: # define DynamoDB tables within serverless
   Resources:
@@ -89,6 +115,21 @@ resources: # define DynamoDB tables within serverless
             NonKeyAttributes:
             - name
             ProjectionType: INCLUDE
+    resumesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: submitted
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: submitted
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
     registrationTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -134,6 +175,7 @@ plugins:
 custom:
   provisionedConcurrency:
     prd: 1
+    dev: 0
     other: 0
   updateEnabled:
     prd: true
