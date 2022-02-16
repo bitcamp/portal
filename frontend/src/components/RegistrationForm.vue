@@ -2,20 +2,20 @@
   <b-row>
     <b-col md="1"></b-col>
     <b-col md="10">
-      <h1 style="text-align: center">Register for Technica 2021</h1>
+      <h1 style="text-align: center">Register for Bitcamp 2022</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Chat with us in the bottom right hand corner or email
-        <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
-        <br> You can also learn more at <a href="https://gotechnica.org">gotechnica.org</a>!
+        <a href="mailto:hello@bitcamp.org">hello@bitcamp.org</a>.
+        <br> You can also learn more at <a href="https://bitcamp.org">bitcamp.org</a>!
       </p>
       <hr />
       <b-form @submit="registerUser" class="registration-form" autocomplete="on">
-        <!-- Name and Pronouns -->
+        <!-- Name -->
         <h4>Tell us about yourself!</h4>
-        <p class="info">Once you register, you'll receive more info about Technica 2021 at the email you provide.</p>
+        <p class="info">Once you register, you'll receive more info about Bitcamp 2022 at the email you provide.</p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-6">
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-7">
             <b-form-input
               id="input-1"
               v-model="form.name"
@@ -29,22 +29,9 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
-          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-6 col-md-3">
-            <b-form-input
-              id="input-p"
-              v-model="form.pronouns"
-              name="pronouns"
-              autocomplete="off"
-              placeholder="e.g. she/her"
-              :state="valid_pronouns"
-            ></b-form-input>
-            <b-form-invalid-feedback :state="valid_pronouns">
-              Please enter your pronouns
-            </b-form-invalid-feedback>
-          </b-form-group>
 
           <!-- Date of Birth -->
-          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-6 col-md-3">
+          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-12 col-md-5">
             <b-form-input
               id="input-birthday"
               v-model="form.birthday"
@@ -62,7 +49,7 @@
 
         <!-- Email -->
         <b-form-row>
-        <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-6">
+        <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-7">
           <b-form-input
             id="input-2"
             v-model="form.email"
@@ -78,7 +65,7 @@
         </b-form-group>
 
         <!-- Phone Number -->
-        <b-form-group id="input-group-9" label="Phone*" label-for="input-9" class="col-5 col-md-6">
+        <b-form-group id="input-group-9" label="Phone Number*" label-for="input-9" class="col-5 col-md-5">
           <b-form-input
             id="input-9"
             v-model="form.phone"
@@ -125,15 +112,16 @@
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
-        <p class="info">Unfortunately, we've closed our other track registrations. Not to worry, you can still join us in the general track!</p>
         <track-selection v-bind:default="'general'" @picked="updateTrack" />
+        
 
         <!-- Shipping Address -->
         <hr />
         <h4>Want to give us a shipping address?</h4>
         <p class="info">If you do, we'll try to send you some swag! If you choose the hardware track, this is where we'll send your hardware kit.</p>
         <b-form-group>
-        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
+        <b-form-row>
+        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5" class="col-5 col-md-7">
           <b-form-input
             id="input-5"
             v-model="form.address1"
@@ -149,18 +137,19 @@
           id="input-group-address-line2"
           label="Shipping address line 2"
           label-for="input-address-line2"
+          class="col-5 col-md-5"
         >
           <b-form-input
             id="input-address-line2"
             v-model="form.address2"
             name="address-line2"
             autocomplete="address-line2"
-            placeholder="Apartment or unit number (optional)"
+            placeholder="Apartment or unit number"
             class="form-input"
             :state="valid_address"
           ></b-form-input>
         </b-form-group>
-
+        </b-form-row>
         <b-form-row>
           <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-8 col-md-5">
             <b-form-input
@@ -229,18 +218,7 @@
         <hr />
         <!-- MLH Stuff -->
         <h4 class="mb-2">Rules and privacy policies</h4>
-        <b-form-checkbox
-          id="checkbox-5"
-          v-model="form.underrepresented_Gender"
-          name="checkbox-5"
-          class="checkbox"
-          :state="valid_underrepresented_Gender"
-        >
-          <b>I identify as an underrepresented gender in tech.</b> This includes but is not limited to: cisgender women, transgender women, transgender men, non-binary individuals, gender neutral individuals, genderqueer individuals, and other underrepresented genders.*
-          <b-form-invalid-feedback :state="valid_underrepresented_Gender">
-            Please acknowledge you identify as a female or another underrepresented gender in tech in order to attend Technica as a hacker. Cisgender men are unfortunately not eligible to attend Technica as a hacker.
-          </b-form-invalid-feedback>
-        </b-form-checkbox>
+        
         <b-form-checkbox
           id="checkbox-2"
           v-model="form.MLH_privacy"
@@ -672,6 +650,7 @@ hr {
   display: block;
   width: 100%;
 }
+
 
 @media (min-width: 992px) {
   .submit-btn {
