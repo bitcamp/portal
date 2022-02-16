@@ -243,8 +243,8 @@
 
         <hr />
         <!-- MLH Stuff -->
-        <h4 class="mb-2">Rules and privacy policies</h4>
-        <b-form-checkbox
+        <h4 class="mb-2">Rules and Privacy policies</h4>
+        <!--<b-form-checkbox
           id="checkbox-5"
           v-model="form.underrepresented_Gender"
           name="checkbox-5"
@@ -255,7 +255,7 @@
           <b-form-invalid-feedback :state="valid_underrepresented_Gender">
             Please acknowledge you identify as a female or another underrepresented gender in tech in order to attend Technica as a hacker. Cisgender men are unfortunately not eligible to attend Technica as a hacker.
           </b-form-invalid-feedback>
-        </b-form-checkbox>
+        </b-form-checkbox> -->
         <b-form-checkbox
           id="checkbox-2"
           v-model="form.MLH_privacy"
@@ -306,9 +306,11 @@
         </b-form-checkbox>
 
       <!-- Submit -->
-      <b-button type="submit" variant="purple" class="submit-btn m-1 mx-auto" :disabled="isSending">
-        <h5 class="m-1">Register for Technica!</h5>
+      <div>
+      <b-button type="submit" class="submit-btn m1 mx-auto" style="center" :disabled="isSending">
+         <h5 class="m-1">Confirm Registration for Bitcamp!</h5>
       </b-button>
+      </div>
       </b-form>
     </b-col>
     <b-col md="1"></b-col>
@@ -743,14 +745,21 @@ hr {
 }
 
 .submit-btn {
-  display: block;
-  width: 100%;
+   width: 100%;
+   height: 72px;
+
+   text-align:center;
+   margin:auto;
+
+   background: radial-gradient(92.62% 25% at 33.31% 0%, #FFAA6C 0.01%, #FF6A37 50.52%, #FF6A37 100%);
+   box-shadow: 0px 10px 30px rgba(176, 148, 132, 0.33);
+   border-radius: 6px;
 }
 
 @media (min-width: 992px) {
   .submit-btn {
     display: block;
-    width: 50%;
+    margin: 0 auto;
   }
 }
 
