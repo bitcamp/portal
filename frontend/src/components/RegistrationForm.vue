@@ -40,6 +40,8 @@
               placeholder="mm/dd/yyyy"
               :state="valid_birthday"
               type="date"
+              min="1900-01-01"
+              max="2022-01-01"
             ></b-form-input>
             <b-form-invalid-feedback :state="valid_birthday">
               Please enter your birthday
@@ -326,13 +328,13 @@
           shirt will be given to you once you arrive at UMD.</p>
 
         <b-form-row>
-        <b-form-group id="input-group-tshirt" label="T-shirt Size" label-for="input-tshirt" class="col-md-12">
+        <b-form-group id="input-group-tshirt" label="T-shirt Size*" label-for="input-tshirt" class="col-md-12">
           <b-form-select
             id="input-4"
             v-model="form.tshirt_size"
             placeholder="Choose a T-shirt size"
             :options="tshirt_size_options"
-            :state="valid_tshirt_type"
+            :state="valid_tshirt_size"
           ></b-form-select>
           <b-form-invalid-feedback :state="valid_tshirt_size">
             Please select a T-shirt size.
@@ -871,11 +873,6 @@ hr {
   border-color: var(--dark-green) !important;
   outline: 0 !important;
   box-shadow: 0 0 0 0.15rem var(--green) !important;
-}
-
-/* removes the annoying calendar space in chrome */
-input[type=date].form-control::-webkit-calendar-picker-indicator {
-    margin-left: 0.25rem;
 }
 
 .form-control,
