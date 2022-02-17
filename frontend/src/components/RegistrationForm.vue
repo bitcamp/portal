@@ -39,6 +39,9 @@
               autocomplete="bday"
               placeholder="mm/dd/yyyy"
               :state="valid_birthday"
+              type="date"
+              min="1900-01-01"
+              max="2022-01-01"
             ></b-form-input>
             <b-form-invalid-feedback :state="valid_birthday">
               Please enter your birthday
@@ -58,6 +61,7 @@
             placeholder="hello@gotechnica.org"
             :state="valid_email"
             @blur="this.emailFilledOut"
+            type="email"
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_email">
             Please enter a valid email address
@@ -73,6 +77,7 @@
             autocomplete="tel"
             placeholder="555-555-5555"
             :state="valid_phone"
+            type="tel"
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_phone">
             Please enter a valid phone number
@@ -128,7 +133,7 @@
         <hr />
         <h4>Choose a track!</h4>
         <track-selection v-bind:default="'general'" @picked="updateTrack" />
-        
+
 
         <!-- Shipping Address -->
         <hr />
@@ -230,7 +235,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <!-- Bitcamp Campfire Games Survey --> 
+        <!-- Bitcamp Campfire Games Survey -->
         <hr />
         <h4>Campfire Games Survey</h4>
         <p class="info">This year, you’ll once again be put into one of three teams based on your personality and interests. By winning unique challenges and attending workshops and mini-events, you and your fellow hackers will rack up points for your team. At the end of the event, members of the winning team will receive limited edition Bitcamp apparel. So what are you waiting for? Take the survey and find your team!
@@ -241,7 +246,7 @@
             id="survey-1"
             v-model="form.selected_survey_1"
             :state=valid_survey_1
-          > 
+          >
             <b-form-radio value="r">I'm up on the stage!</b-form-radio>
             <b-form-radio value="g">Takes some convincing</b-form-radio>
             <b-form-radio value="b">Never in my life</b-form-radio>
@@ -257,7 +262,7 @@
             id="survey-2"
             v-model="form.selected_survey_2"
             :state=valid_survey_2
-          > 
+          >
             <b-form-radio value="b">Broadway Show</b-form-radio>
             <b-form-radio value="g">Concert</b-form-radio>
             <b-form-radio value="r">Most Pit</b-form-radio>
@@ -273,7 +278,7 @@
             id="survey-3"
             v-model="form.selected_survey_3"
             :state=valid_survey_3
-          > 
+          >
             <b-form-radio value="g">10 minutes early</b-form-radio>
             <b-form-radio value="b">Right on time</b-form-radio>
             <b-form-radio value="r">5 minutes late</b-form-radio>
@@ -289,7 +294,7 @@
             id="survey-4"
             v-model="form.selected_survey_4"
             :state=valid_survey_4
-          > 
+          >
             <b-form-radio value="b">Classic cheese</b-form-radio>
             <b-form-radio value="r">ALL THE TOPPINGS</b-form-radio>
             <b-form-radio value="g">Different every time</b-form-radio>
@@ -305,7 +310,7 @@
             id="survey-5"
             v-model="form.selected_survey_5"
             :state=valid_survey_5
-          > 
+          >
             <b-form-radio value="r">Hacking</b-form-radio>
             <b-form-radio value="g">Free stuff</b-form-radio>
             <b-form-radio value="b">Workshops </b-form-radio>
@@ -323,7 +328,7 @@
           shirt will be given to you once you arrive at UMD.</p>
 
         <b-form-row>
-        <b-form-group id="input-group-tshirt" label="T-shirt Size" label-for="input-tshirt" class="col-md-12">
+        <b-form-group id="input-group-tshirt" label="T-shirt Size*" label-for="input-tshirt" class="col-md-12">
           <b-form-select
             id="input-4"
             v-model="form.tshirt_size"
@@ -342,7 +347,7 @@
         <hr />
         <!-- MLH Stuff -->
         <h4 class="mb-2">Rules and privacy policies</h4>
-        
+
         <b-form-checkbox
           id="checkbox-2"
           v-model="form.MLH_privacy"
@@ -410,12 +415,16 @@ import { v4 as uuid } from "uuid";
 import Vue from "vue";
 import { FormRadioPlugin, IconsPlugin, FormFilePlugin } from "bootstrap-vue";
 import TrackSelection from "./TrackSelection.vue";
-import * as PDFJS from 'pdfjs-dist/legacy/build/pdf.js';
-import 'pdfjs-dist/build/pdf.worker.entry';
+import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
+import "pdfjs-dist/build/pdf.worker.entry";
+import * as EmailValidator from "email-validator"
+import parsePhoneNumber from "libphonenumber-js"
 
 Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 Vue.use(FormFilePlugin)
+
+const DEFAULT_COUNTRY_PHONE = 'US'
 
 export default {
   name: "RegistrationForm",
@@ -607,6 +616,8 @@ export default {
       if (this.formCheck()) {
         // time taken to fill out form in seconds
         this.form.time_taken = (Date.now() - this.form_start) / 1000;
+        let phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE)
+        this.form.phone = phoneNumber.number
 
         this.isSending = true; // block double submits
 
@@ -675,12 +686,14 @@ export default {
         valid_form = false;
       } else this.valid_name = null;
 
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email)) {
+      if (!EmailValidator.validate(this.form.email)) {
         this.valid_email = false;
         valid_form = false;
       } else this.valid_email = null;
 
-      if (!/[^a-zA-Z]/.test(this.form.phone) || this.form.phone.length < 2) {
+      let phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE)
+      console.log(phoneNumber)
+      if (!phoneNumber || !phoneNumber.isValid()) {
         this.valid_phone = false;
         valid_form = false;
       } else this.valid_phone = null;
