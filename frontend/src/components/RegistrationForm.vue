@@ -100,7 +100,7 @@
             id="input-4"
             v-model="form.school_type"
             placeholder="Choose a level"
-            :options="options"
+            :options="school_type_options"
             :state="valid_school_type"
           ></b-form-select>
           <b-form-invalid-feedback :state="valid_school_type">
@@ -148,7 +148,7 @@
         <h4>Want to give us a shipping address?</h4>
         <p class="info">If you do, we'll try to send you some swag! If you choose the hardware track, this is where we'll send your hardware kit.</p>
         <b-form-group>
-        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
+        <b-form-group id="input-group-5" label="Shipping Address" label-for="input-5">
           <b-form-input
             id="input-5"
             v-model="form.address1"
@@ -162,7 +162,7 @@
 
         <b-form-group
           id="input-group-address-line2"
-          label="Shipping address line 2"
+          label="Shipping Address Line 2"
           label-for="input-address-line2"
         >
           <b-form-input
@@ -170,7 +170,7 @@
             v-model="form.address2"
             name="address-line2"
             autocomplete="address-line2"
-            placeholder="Apartment or unit number (optional)"
+            placeholder="Apartment or Unit Number (optional)"
             class="form-input"
             :state="valid_address"
           ></b-form-input>
@@ -240,6 +240,29 @@
             Please provide a valid shipping address to apply for the hardware track.
           </b-form-invalid-feedback>
         </b-form-group>
+
+        <hr />
+        <!-- T-Shirt Size -->
+        <h4 class="mb-2">Select a T-shirt size!</h4>
+        <p class="info">We've got T-shirts in XS-XL sizes! Choose whichever size you like, and your very own Bitcamp 2022
+          shirt will be given to you once you arrive at UMD.</p>
+
+        <b-form-row>
+        <b-form-group id="input-group-tshirt" label="T-shirt Size" label-for="input-tshirt" class="col-md-12">
+          <b-form-select
+            id="input-4"
+            v-model="form.tshirt_size"
+            placeholder="Choose a T-shirt size"
+            :options="tshirt_size_options"
+            :state="valid_tshirt_type"
+          ></b-form-select>
+          <b-form-invalid-feedback :state="valid_tshirt_size">
+            Please select a T-shirt size.
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
+
 
         <hr />
         <!-- MLH Stuff -->
@@ -358,6 +381,7 @@ export default {
         state: "",
         country: "",
         zip: "",
+        tshirt_size: "",
         gmaps_place_id: "",
         referred_by: "",
         track_selected: "general"
@@ -377,9 +401,10 @@ export default {
       valid_mlh_privacy: null,
       valid_track_selected: null,
       valid_address: null,
+      valid_tshirt_size: null,
       valid_underrepresented_Gender: null,
 
-      options: [
+      school_type_options: [
         { value: "", text: "Select one...", disabled: true },
         { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
@@ -387,6 +412,15 @@ export default {
         { value: "graduate", text: "Graduate School / Masters" },
         { value: "phd", text: "PhD / Doctorate" },
         { value: "graduated", text: "Graduated" }
+      ],
+      tshirt_size_options: [
+        { value: "", text: "Select one...", disabled: true },
+        { value: "no tshirt", text: "I don't want a T-shirt" },
+        { value: "xs", text: "XS" },
+        { value: "s", text: "S" },
+        { value: "m", text: "M" },
+        { value: "l", text: "L" },
+        { value: "xl", text: "XL" }
       ]
     };
   },
@@ -581,6 +615,11 @@ export default {
         this.valid_school = false;
         valid_form = false;
       } else this.valid_school = null;
+
+      if (this.form.tshirt_size.length === 0) {
+        this.valid_tshirt_size = false;
+        valid_form = false;
+      } else this.valid_tshirt_size = null;
 
       if (this.form.birthday.length === 0) {
         this.valid_birthday = false;
