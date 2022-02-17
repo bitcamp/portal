@@ -329,7 +329,7 @@
             v-model="form.tshirt_size"
             placeholder="Choose a T-shirt size"
             :options="tshirt_size_options"
-            :state="valid_tshirt_type"
+            :state="valid_tshirt_size"
           ></b-form-select>
           <b-form-invalid-feedback :state="valid_tshirt_size">
             Please select a T-shirt size.
@@ -533,7 +533,6 @@ export default {
   methods: {
     updateTrack (value) {
       this.form.track_selected = value;
-      console.log(value)
     },
     fillInAddress(place) {
       let address1 = "";
