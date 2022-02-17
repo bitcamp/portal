@@ -2,20 +2,20 @@
   <b-row>
     <b-col md="1"></b-col>
     <b-col md="10">
-      <h1 style="text-align: center">Register for Technica 2021</h1>
+      <h1 style="text-align: center">Register for Bitcamp 2022</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Chat with us in the bottom right hand corner or email
-        <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.
-        <br> You can also learn more at <a href="https://gotechnica.org">gotechnica.org</a>!
+        <a href="mailto:hello@bitcamp.org">hello@bitcamp.org</a>.
+        <br> You can also learn more at <a href="https://bitcamp.org">bitcamp.org</a>!
       </p>
       <hr />
       <b-form @submit="registerUser" class="registration-form" autocomplete="on">
-        <!-- Name and Pronouns -->
+        <!-- Name -->
         <h4>Tell us about yourself!</h4>
-        <p class="info">Once you register, you'll receive more info about Technica 2021 at the email you provide.</p>
+        <p class="info">Once you register, you'll receive more info about Bitcamp 2022 at the email you provide.</p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-6">
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-7">
             <b-form-input
               id="input-1"
               v-model="form.name"
@@ -29,22 +29,9 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
-          <b-form-group id="input-group-p" label="Pronouns*" label-for="input-p" class="col-6 col-md-3">
-            <b-form-input
-              id="input-p"
-              v-model="form.pronouns"
-              name="pronouns"
-              autocomplete="off"
-              placeholder="e.g. she/her"
-              :state="valid_pronouns"
-            ></b-form-input>
-            <b-form-invalid-feedback :state="valid_pronouns">
-              Please enter your pronouns
-            </b-form-invalid-feedback>
-          </b-form-group>
 
           <!-- Date of Birth -->
-          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-6 col-md-3">
+          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-12 col-md-5">
             <b-form-input
               id="input-birthday"
               v-model="form.birthday"
@@ -63,7 +50,7 @@
 
         <!-- Email -->
         <b-form-row>
-        <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-6">
+        <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-7">
           <b-form-input
             id="input-2"
             v-model="form.email"
@@ -80,7 +67,7 @@
         </b-form-group>
 
         <!-- Phone Number -->
-        <b-form-group id="input-group-9" label="Phone*" label-for="input-9" class="col-5 col-md-6">
+        <b-form-group id="input-group-9" label="Phone Number*" label-for="input-9" class="col-5 col-md-5">
           <b-form-input
             id="input-9"
             v-model="form.phone"
@@ -103,7 +90,7 @@
             id="input-4"
             v-model="form.school_type"
             placeholder="Choose a level"
-            :options="options"
+            :options="school_type_options"
             :state="valid_school_type"
           ></b-form-select>
           <b-form-invalid-feedback :state="valid_school_type">
@@ -143,15 +130,16 @@
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
-        <p class="info">Unfortunately, we've closed our other track registrations. Not to worry, you can still join us in the general track!</p>
         <track-selection v-bind:default="'general'" @picked="updateTrack" />
+
 
         <!-- Shipping Address -->
         <hr />
         <h4>Want to give us a shipping address?</h4>
         <p class="info">If you do, we'll try to send you some swag! If you choose the hardware track, this is where we'll send your hardware kit.</p>
         <b-form-group>
-        <b-form-group id="input-group-5" label="Shipping address" label-for="input-5">
+        <b-form-row>
+        <b-form-group id="input-group-5" label="Shipping Address" label-for="input-5" class="col-5 col-md-7">
           <b-form-input
             id="input-5"
             v-model="form.address1"
@@ -165,20 +153,21 @@
 
         <b-form-group
           id="input-group-address-line2"
-          label="Shipping address line 2"
+          label="Shipping Address Line 2"
           label-for="input-address-line2"
+          class="col-5 col-md-5"
         >
           <b-form-input
             id="input-address-line2"
             v-model="form.address2"
             name="address-line2"
             autocomplete="address-line2"
-            placeholder="Apartment or unit number (optional)"
+            placeholder="Apartment or Unit Number (optional)"
             class="form-input"
             :state="valid_address"
           ></b-form-input>
         </b-form-group>
-
+        </b-form-row>
         <b-form-row>
           <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-8 col-md-5">
             <b-form-input
@@ -244,21 +233,119 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
+        <!-- Bitcamp Campfire Games Survey -->
+        <hr />
+        <h4>Campfire Games Survey</h4>
+        <p class="info">This year, you’ll once again be put into one of three teams based on your personality and interests. By winning unique challenges and attending workshops and mini-events, you and your fellow hackers will rack up points for your team. At the end of the event, members of the winning team will receive limited edition Bitcamp apparel. So what are you waiting for? Take the survey and find your team!
+</p>
+        <b-form-group class="font-weight-bold" label="How willing are you to do Karaoke?">
+          <b-form-radio-group
+            class="font-weight-normal pt-2"
+            id="survey-1"
+            v-model="form.selected_survey_1"
+            :state=valid_survey_1
+          >
+            <b-form-radio value="r">I'm up on the stage!</b-form-radio>
+            <b-form-radio value="g">Takes some convincing</b-form-radio>
+            <b-form-radio value="b">Never in my life</b-form-radio>
+            <b-form-radio value="g">Karaoke? What's that?</b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_survey_1">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group class="font-weight-bold"  label="Would you rather go to:">
+          <b-form-radio-group
+            class="font-weight-normal pt-2"
+            id="survey-2"
+            v-model="form.selected_survey_2"
+            :state=valid_survey_2
+          >
+            <b-form-radio value="b">Broadway Show</b-form-radio>
+            <b-form-radio value="g">Concert</b-form-radio>
+            <b-form-radio value="r">Most Pit</b-form-radio>
+            <b-form-radio value="b">I'll stay in for the night</b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_survey_2">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group class="font-weight-bold"  label="When do you get to class?">
+          <b-form-radio-group
+            class="font-weight-normal pt-2"
+            id="survey-3"
+            v-model="form.selected_survey_3"
+            :state=valid_survey_3
+          >
+            <b-form-radio value="g">10 minutes early</b-form-radio>
+            <b-form-radio value="b">Right on time</b-form-radio>
+            <b-form-radio value="r">5 minutes late</b-form-radio>
+            <b-form-radio value="r">Wait, I had class today?</b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_survey_3">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group class="font-weight-bold" label="Your pizza order is:">
+          <b-form-radio-group
+            class="font-weight-normal pt-2"
+            id="survey-4"
+            v-model="form.selected_survey_4"
+            :state=valid_survey_4
+          >
+            <b-form-radio value="b">Classic cheese</b-form-radio>
+            <b-form-radio value="r">ALL THE TOPPINGS</b-form-radio>
+            <b-form-radio value="g">Different every time</b-form-radio>
+            <b-form-radio value="r">Mr. Worldwide slice</b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_survey_4">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group class="font-weight-bold" label="What's your favorite thing about hackathons?">
+          <b-form-radio-group
+            class="font-weight-normal pt-2"
+            id="survey-5"
+            v-model="form.selected_survey_5"
+            :state=valid_survey_5
+          >
+            <b-form-radio value="r">Hacking</b-form-radio>
+            <b-form-radio value="g">Free stuff</b-form-radio>
+            <b-form-radio value="b">Workshops </b-form-radio>
+            <b-form-radio value="g">First hackathon, I’ll find out!</b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_survey_5">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <hr />
+        <!-- T-Shirt Size -->
+        <h4 class="mb-2">Select a T-shirt size!</h4>
+        <p class="info">We've got T-shirts in XS-XL sizes! Choose whichever size you like, and your very own Bitcamp 2022
+          shirt will be given to you once you arrive at UMD.</p>
+
+        <b-form-row>
+        <b-form-group id="input-group-tshirt" label="T-shirt Size" label-for="input-tshirt" class="col-md-12">
+          <b-form-select
+            id="input-4"
+            v-model="form.tshirt_size"
+            placeholder="Choose a T-shirt size"
+            :options="tshirt_size_options"
+            :state="valid_tshirt_type"
+          ></b-form-select>
+          <b-form-invalid-feedback :state="valid_tshirt_size">
+            Please select a T-shirt size.
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
+
+
         <hr />
         <!-- MLH Stuff -->
-        <h4 class="mb-2">Rules and Privacy policies</h4>
-        <!--<b-form-checkbox
-          id="checkbox-5"
-          v-model="form.underrepresented_Gender"
-          name="checkbox-5"
-          class="checkbox"
-          :state="valid_underrepresented_Gender"
-        >
-          <b>I identify as an underrepresented gender in tech.</b> This includes but is not limited to: cisgender women, transgender women, transgender men, non-binary individuals, gender neutral individuals, genderqueer individuals, and other underrepresented genders.*
-          <b-form-invalid-feedback :state="valid_underrepresented_Gender">
-            Please acknowledge you identify as a female or another underrepresented gender in tech in order to attend Technica as a hacker. Cisgender men are unfortunately not eligible to attend Technica as a hacker.
-          </b-form-invalid-feedback>
-        </b-form-checkbox> -->
+        <h4 class="mb-2">Rules and privacy policies</h4>
+
         <b-form-checkbox
           id="checkbox-2"
           v-model="form.MLH_privacy"
@@ -366,6 +453,7 @@ export default {
         state: "",
         country: "",
         zip: "",
+        tshirt_size: "",
         gmaps_place_id: "",
         referred_by: "",
         track_selected: "general"
@@ -385,9 +473,15 @@ export default {
       valid_mlh_privacy: null,
       valid_track_selected: null,
       valid_address: null,
+      valid_tshirt_size: null,
       valid_underrepresented_Gender: null,
+      valid_survey_1: null,
+      valid_survey_2: null,
+      valid_survey_3: null,
+      valid_survey_4: null,
+      valid_survey_5: null,
 
-      options: [
+      school_type_options: [
         { value: "", text: "Select one...", disabled: true },
         { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
@@ -395,6 +489,15 @@ export default {
         { value: "graduate", text: "Graduate School / Masters" },
         { value: "phd", text: "PhD / Doctorate" },
         { value: "graduated", text: "Graduated" }
+      ],
+      tshirt_size_options: [
+        { value: "", text: "Select one...", disabled: true },
+        //{ value: "no tshirt", text: "I don't want a T-shirt" },
+        { value: "xs", text: "XS" },
+        { value: "s", text: "S" },
+        { value: "m", text: "M" },
+        { value: "l", text: "L" },
+        { value: "xl", text: "XL" }
       ]
     };
   },
@@ -539,9 +642,24 @@ export default {
           value: this.form.time_taken
         });
 
+        const d = new Date()
+        this.form.secret = (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().toString().split("").reverse().join("")
+
+        let survey_count = {"r":0, "b":0, "g":0}
+
+        survey_count[this.form.selected_survey_1] += 1
+        survey_count[this.form.selected_survey_2] += 1
+        survey_count[this.form.selected_survey_3] += 1
+        survey_count[this.form.selected_survey_4] += 1
+        survey_count[this.form.selected_survey_5] += 1
+
+        this.form.red = survey_count["r"]
+        this.form.green = survey_count["g"]
+        this.form.blue = survey_count["b"]
+
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
-          "signup",
+          "register",
           this.form
         );
 
@@ -567,11 +685,6 @@ export default {
         valid_form = false;
       } else this.valid_name = null;
 
-      if (this.form.pronouns.length === 0) {
-        this.valid_pronouns = false;
-        valid_form = false;
-      } else this.valid_pronouns = null;
-
       if (!EmailValidator.validate(this.form.email)) {
         this.valid_email = false;
         valid_form = false;
@@ -593,6 +706,11 @@ export default {
         this.valid_school = false;
         valid_form = false;
       } else this.valid_school = null;
+
+      if (this.form.tshirt_size.length === 0) {
+        this.valid_tshirt_size = false;
+        valid_form = false;
+      } else this.valid_tshirt_size = null;
 
       if (this.form.birthday.length === 0) {
         this.valid_birthday = false;
@@ -624,6 +742,32 @@ export default {
         this.valid_address = false;
         valid_form = false;
       } else this.valid_address = null;
+
+      if (!this.form.selected_survey_1
+        ) {
+        this.valid_survey_1 = false;
+        valid_form = false;
+      } else this.valid_survey_1 = null;
+      if (!this.form.selected_survey_2
+        ) {
+        this.valid_survey_2 = false;
+        valid_form = false;
+      } else this.valid_survey_2 = null;
+      if (!this.form.selected_survey_3
+        ) {
+        this.valid_survey_3 = false;
+        valid_form = false;
+      } else this.valid_survey_3 = null;
+      if (!this.form.selected_survey_4
+        ) {
+        this.valid_survey_4 = false;
+        valid_form = false;
+      } else this.valid_survey_4 = null;
+      if (!this.form.selected_survey_5
+        ) {
+        this.valid_survey_5 = false;
+        valid_form = false;
+      } else this.valid_survey_5 = null;
 
       return valid_form;
     },
@@ -768,6 +912,7 @@ input[type=date].form-control::-webkit-calendar-picker-indicator {
    box-shadow: 0px 10px 30px rgba(176, 148, 132, 0.33);
    border-radius: 6px;
 }
+
 
 @media (min-width: 992px) {
   .submit-btn {
