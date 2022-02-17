@@ -4,5 +4,6 @@
     "REGISTRATION_TABLE": "portal-dev-registration",
     "STATISTICS_TABLE": "portal-dev-statistics",
     "TRACKING_TABLE": "portal-dev-tracking",
+    "RESUMES_TABLE": "portal-dev-resumes",
     "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot"
 }

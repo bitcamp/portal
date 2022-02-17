@@ -1,8 +1,15 @@
 const AWS = require("aws-sdk");
+const UUID = require('uuid');
 const withSentry = require("serverless-sentry-lib");
 const { IncomingWebhook } = require("@slack/webhook");
 
 AWS.config.update({ region: "us-east-1" });
+
+const HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+  'Access-Control-Allow-Headers': '*',
+};
 
 const withSentryOptions = {
   captureErrors: true,
@@ -11,11 +18,6 @@ const withSentryOptions = {
   captureMemory: true,
   captureTimeouts: true,
 };
-
-const getSecret = () => {
-  const d = new Date()
-  return (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().split("").reverse().join("")
-}
 
 // POST /register - Adds a new registration to the database
 module.exports.register = withSentry(withSentryOptions, async (event) => {
@@ -28,10 +30,6 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       statusCode: 500,
       body: "/register is missing a field",
     };
-  }
-
-  if (body.secret !== getSecret()) {
-    return { statusCode: 403 };
   }
 
   const existingReg = await ddb.get({
@@ -79,6 +77,8 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       zip: body.zip,
       country: body.country,
       phone: body.phone,
+      resume_link: body.resume_link,
+      resume_id: body.resume_id,
       MLH_emails: body.MLH_emails,
       MLH_conduct: body.MLH_conduct,
       MLH_privacy: body.MLH_privacy,
@@ -114,7 +114,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
-    sendConfirmationEmail(body.name, body.email, referralID, params.Item),
+    // sendConfirmationEmail(body.name, body.email, referralID, params.Item),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
@@ -122,7 +122,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     statusCode: 200,
     body: JSON.stringify(params.Item),
     headers: {
-      "Access-Control-Allow-Origin": "https://register.gotechnica.org",
+      "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
     },
   };
@@ -175,6 +175,68 @@ const sendReferralNotificationEmail = async (fullName, email, referralID, referr
 };
 
 // =============================================================================
+
+// POST /upload_resume - Uploads hacker resume to S3 bucket
+module.exports.upload_resume = withSentry(async (event) => {
+  const body = JSON.parse(event.body);
+
+  if (!body.filename) {
+    return {
+      statusCode: 500,
+      body: '/upload_resume is missing filename',
+    };
+  }
+
+  const s3 = new AWS.S3();
+
+  const folder = UUID.v4();
+  const filePath = `${folder}/${body.filename}`;
+
+  const params = {
+    Bucket: 'bitcamp-2022-resumes',
+    Key: filePath,
+    Expires: 600,
+    ContentType: 'multipart/form-data',
+  };
+
+  const s3Result = s3.getSignedUrl('putObject', params);
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ putUrl: s3Result, uploadUrl: `https://bitcamp-2022-resumes.s3.amazonaws.com/${filePath}` }),
+    headers: HEADERS,
+  };
+});
+
+// POST /upload_resume_text - Uploads text format of hacker resume to DynamoDB table
+module.exports.upload_resume_text = withSentry(async (event) => {
+  const body = JSON.parse(event.body);
+
+  if (!body.user_id || !body.resume_text) {
+    return {
+      statusCode: 500,
+      body: '/upload_resume_text is missing user_id or resume_text',
+    };
+  }
+
+  const ddb = new AWS.DynamoDB.DocumentClient();
+  const params = {
+    TableName: process.env.RESUMES_TABLE,
+    Item: {
+      id: body.user_id,
+      submitted: new Date().getTime(),
+      resume_text: body.resume_text,
+    },
+  };
+
+  await ddb.put(params).promise();
+
+  return {
+    statusCode: 200,
+    body: 'success',
+    headers: HEADERS,
+  };
+});
 
 // POST /track - Keeps track of various user actions
 module.exports.track = withSentry(async (event) => {
@@ -263,7 +325,7 @@ const logReferral = async (ddb, referred_by, referralName) => {
     ExpressionAttributeValues: { ":v_refer": referred_by },
   };
   const resp = await ddb.query(referralQuery).promise();
-  await sendReferralNotificationEmail(resp.Items[0].name, resp.Items[0].email, referred_by, referralName)
+  // await sendReferralNotificationEmail(resp.Items[0].name, resp.Items[0].email, referred_by, referralName)
 
   return ddb
     .update({
