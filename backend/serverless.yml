@@ -48,10 +48,10 @@ provider:
 functions:
   register:
     handler: handler.register
-    description: Receives registration information from a user
+    description: Adds a new registration to the database
     events:
       - http: 
-          path: signup
+          path: register
           method: post
           cors: true
     memorySize: 256
@@ -59,7 +59,7 @@ functions:
     provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
   track:
     handler: handler.track
-    description: Receives registration information from a user
+    description: Keeps track of various user actions
     events:
       - http: 
           path: track
