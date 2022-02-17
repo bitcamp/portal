@@ -326,12 +326,16 @@ import { v4 as uuid } from "uuid";
 import Vue from "vue";
 import { FormRadioPlugin, IconsPlugin, FormFilePlugin } from "bootstrap-vue";
 import TrackSelection from "./TrackSelection.vue";
-import * as PDFJS from 'pdfjs-dist/legacy/build/pdf.js';
-import 'pdfjs-dist/build/pdf.worker.entry';
+import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
+import "pdfjs-dist/build/pdf.worker.entry";
+import * as EmailValidator from "email-validator"
+import parsePhoneNumber from "libphonenumber-js"
 
 Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 Vue.use(FormFilePlugin)
+
+const DEFAULT_COUNTRY_PHONE = 'US'
 
 export default {
   name: "RegistrationForm",
@@ -508,6 +512,8 @@ export default {
       if (this.formCheck()) {
         // time taken to fill out form in seconds
         this.form.time_taken = (Date.now() - this.form_start) / 1000;
+        let phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE)
+        this.form.phone = phoneNumber.number
 
         this.isSending = true; // block double submits
 
@@ -566,12 +572,14 @@ export default {
         valid_form = false;
       } else this.valid_pronouns = null;
 
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email)) {
+      if (!EmailValidator.validate(this.form.email)) {
         this.valid_email = false;
         valid_form = false;
       } else this.valid_email = null;
 
-      if (!/[^a-zA-Z]/.test(this.form.phone) || this.form.phone.length < 2) {
+      let phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE)
+      console.log(phoneNumber)
+      if (!phoneNumber || !phoneNumber.isValid()) {
         this.valid_phone = false;
         valid_form = false;
       } else this.valid_phone = null;
