@@ -77,6 +77,8 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       zip: body.zip,
       country: body.country,
       phone: body.phone,
+      resume_link: body.resume_link,
+      resume_id: body.resume_id,
       MLH_emails: body.MLH_emails,
       MLH_conduct: body.MLH_conduct,
       MLH_privacy: body.MLH_privacy,

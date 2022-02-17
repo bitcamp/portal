@@ -130,7 +130,7 @@
             v-model="form.resume"
             name="resume"
             accept=".pdf, .doc, .docx, .txt"
-            :placeholder="form.resume || 'Upload Resume'"
+            placeholder="Upload Resume"
             drop-placeholder="Drop file here..."
             @input="upload"
           ></b-form-file>
@@ -349,7 +349,8 @@ export default {
         school_type: "",
         school: "",
         resume: "",
-        resumeLink: "",
+        resume_link: "",
+        resume_id:"",
         birthday: "",
         address: "",
         address1: "",
@@ -597,11 +598,6 @@ export default {
         valid_form = false;
       } else this.valid_mlh_privacy = null;
 
-      if (!this.form.underrepresented_Gender) {
-        this.valid_underrepresented_Gender = false;
-        valid_form = false;
-      } else this.valid_underrepresented_Gender = null;
-
       if (this.form.track_selected.length === 0) {
         this.valid_track_selected = false;
         valid_form = false;
@@ -626,13 +622,15 @@ export default {
         filename: this.form.resume.name,
         filetype: this.form.resume.filetype,
       };
+      // console.log(this.getEnvVariable("BACKEND_ENDPOINT"));
       const r = await this.performPostRequest(
-        this.getEnvVariable('BACKEND'),
-        '/upload_resume',
+        this.getEnvVariable('BACKEND_ENDPOINT'),
+        'upload_resume',
         userParams,
       );
       await this.performRawPostRequest(r.putUrl, file);
-      this.form.resumeLink = r.uploadUrl;
+      this.form.resume_link = r.uploadUrl;
+      this.form.resume_id = this.random_id;
 
       // below is for resume parsing
       let text = '';
@@ -640,7 +638,7 @@ export default {
       // eslint-disable-next-line no-import-assign
       PDFJS.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
-      const loadingTask = PDFJS.getDocument(this.form.resumeLink);
+      const loadingTask = PDFJS.getDocument(this.form.resume_link);
       await loadingTask.promise.then((doc) => {
         const { numPages } = doc;
 
@@ -668,10 +666,12 @@ export default {
         resume_text: text,
       };
       await this.performPostRequest(
-        this.getEnvVariable('BACKEND'),
-        '/upload_text_resume',
+        this.getEnvVariable("BACKEND_ENDPOINT"),
+        'upload_text_resume',
         resumeParams,
       );
+
+
     },
   }
 };
