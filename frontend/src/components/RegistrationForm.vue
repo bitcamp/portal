@@ -356,7 +356,6 @@ export default {
       valid_mlh_privacy: null,
       valid_track_selected: null,
       valid_address: null,
-      valid_underrepresented_Gender: null,
 
       options: [
         { value: "", text: "Select one...", disabled: true },
@@ -535,11 +534,6 @@ export default {
         this.valid_name = false;
         valid_form = false;
       } else this.valid_name = null;
-
-      if (this.form.pronouns.length === 0) {
-        this.valid_pronouns = false;
-        valid_form = false;
-      } else this.valid_pronouns = null;
 
       if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.form.email)) {
         this.valid_email = false;

@@ -1,7 +1,7 @@
 <template>
 <b-row class="row gx-12">
 
-    <!-- <b-col md="12" class="p-1 d-flex align-items-stretch">
+    <!-- <b-col md="3" class="p-1 d-flex align-items-stretch">
     <label>
         <input type="radio" v-model="card" value="general">
         <b-card class="h-100 w-100 general" :class="{ 'active': card === 'general'}">
@@ -14,19 +14,27 @@
   <b-col md="3" class="p-1 col d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="general" @click="onClickCard('general')">
-    <b-card class="general" :class="{ 'active': card === 'general'}">
+    <b-card class="h-100 w-100 general" :class="{ 'active': card === 'general'}">
       <h4>General</h4>
       <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
     </b-card>
   </label>
   </b-col>
   
-  
+  <b-col md="3" class="p-1 col d-flex align-items-stretch">
+  <label>
+    <input type="radio" v-model="card" value="beginner" @click="onClickCard('beginner')">
+    <b-card class="h-100 w-100 general" :class="{ 'active': card === 'beginner'}">
+      <h4>Beginner</h4>
+      <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
+    </b-card>
+  </label>
+  </b-col>
   
   <b-col md="3" class="p-1 col d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="hardware" @click="onClickCard('hardware')">
-    <b-card class="general" :class="{ 'active': card === 'hardware'}">
+    <b-card class="h-100 w-100 general" :class="{ 'active': card === 'hardware'}">
       <h4>Hardware</h4>
       <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
     </b-card>
@@ -36,7 +44,7 @@
   <b-col md="3" class="p-1 col d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="quantum" @click="onClickCard('quantum')">
-    <b-card class="general" :class="{ 'active': card === 'quantum'}" >
+    <b-card class="h-100 w-100 general" :class="{ 'active': card === 'quantum'}" >
       <h4>Quantum</h4>
       <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
     </b-card>
