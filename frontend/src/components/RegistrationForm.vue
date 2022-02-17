@@ -416,7 +416,7 @@ export default {
       ],
       tshirt_size_options: [
         { value: "", text: "Select one...", disabled: true },
-        { value: "no tshirt", text: "I don't want a T-shirt" },
+        //{ value: "no tshirt", text: "I don't want a T-shirt" },
         { value: "xs", text: "XS" },
         { value: "s", text: "S" },
         { value: "m", text: "M" },
