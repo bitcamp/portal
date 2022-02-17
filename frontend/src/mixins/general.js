@@ -48,10 +48,10 @@ export default {
       }
     },
     getCurrentEnvironment() {
-      if (window.location.hostname === 'register.gotechnica.org') {
+      if (window.location.hostname === 'register.bit.camp') {
         return 'prd';
       }
-      if (window.location.hostname === 'register.beta.gotechnica.org') {
+      if (window.location.hostname === 'register.beta.bit.camp') {
         return 'stg';
       }
       return 'dev';
