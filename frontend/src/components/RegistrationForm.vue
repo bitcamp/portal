@@ -52,6 +52,7 @@
               autocomplete="bday"
               placeholder="mm/dd/yyyy"
               :state="valid_birthday"
+              type="date"
             ></b-form-input>
             <b-form-invalid-feedback :state="valid_birthday">
               Please enter your birthday
@@ -71,6 +72,7 @@
             placeholder="hello@gotechnica.org"
             :state="valid_email"
             @blur="this.emailFilledOut"
+            type="email"
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_email">
             Please enter a valid email address
@@ -86,6 +88,7 @@
             autocomplete="tel"
             placeholder="555-555-5555"
             :state="valid_phone"
+            type="tel"
           ></b-form-input>
           <b-form-invalid-feedback :state="valid_phone">
             Please enter a valid phone number
@@ -716,6 +719,11 @@ hr {
   border-color: var(--dark-green) !important;
   outline: 0 !important;
   box-shadow: 0 0 0 0.15rem var(--green) !important;
+}
+
+/* removes the annoying calendar space in chrome */
+input[type=date].form-control::-webkit-calendar-picker-indicator {
+    margin-left: 0.25rem;
 }
 
 .form-control,
