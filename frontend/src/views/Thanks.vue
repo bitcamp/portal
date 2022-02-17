@@ -150,11 +150,14 @@ export default {
       defaultType: 'rect',
       particlesPerFrame: 0.25,
       defaultColors: [
-        '#00ffff',
-        '#82ecec',
-        '#b6a1c4',
-        '#ded2e5',
-        '#ff7bac'
+        '#FF3F46',
+        '#FF6F3F',
+        '#FFAF3F',
+        '#FFEF3F',
+        '#CBF2FF',
+        '#FFFFFF',
+        '#528CA5',
+        '#528CA5'
       ]
     });
 

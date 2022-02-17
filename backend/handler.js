@@ -153,13 +153,10 @@ const sendConfirmationEmail = async (fullName, email, referralID, user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2022",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${firstName}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_type}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\"}`,
+    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_type}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
 
-  console.log("SENDING...")
-  x = await ses.sendTemplatedEmail(params).promise();
-  console.log(x);
-  return x;
+  return await ses.sendTemplatedEmail(params).promise();
 };
 
 const sendReferralNotificationEmail = async (fullName, email, referralID, referralName) => {
