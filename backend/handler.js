@@ -82,6 +82,9 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       MLH_emails: body.MLH_emails,
       MLH_conduct: body.MLH_conduct,
       MLH_privacy: body.MLH_privacy,
+      survey_green: body.green,
+      survey_red: body.red,
+      survey_blue: body.blue,
     },
   };
 
