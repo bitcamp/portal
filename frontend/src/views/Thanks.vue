@@ -7,6 +7,8 @@
           <b-col>
             <h1>You're registered for Bitcamp 2022!</h1>
 
+            <img style="width: 200px; height 200px;" src="@/assets/bitcamp.gif" />
+
             <div class="py-3">
               <p class="mb-4">
                 You'll get a confirmation email shortly. See you by the campfire!
@@ -133,7 +135,7 @@ export default {
         { value: "hf-email", text: "Email list-serv" },
         { value: "hf-google", text: "Google" },
         { value: "hf-friend", text: "A friend" },
-        { value: "hf-ambassador", text: "A Technica ambassador" },
+        // { value: "hf-ambassador", text: "A Technica ambassador" },
         { value: "hf-mlh", text: "Major League Hacking" },
         { value: "hf-youtube", text: "YouTube" },
         { value: "hf-snapchat", text: "Snapchat" },

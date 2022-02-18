@@ -5,7 +5,7 @@
             <img src="../assets/w_youtube.svg" alt="YouTube icon">
           </div>
       </a>
-      <a href="https://twitter.com/bitcmp?lang=en" target="_blank">
+      <a href="https://twitter.com/bitcmp" target="_blank">
         <div class="red-circle">
             <img src="../assets/w_twitter.svg" alt="Twitter icon">
           </div>
@@ -20,9 +20,14 @@
             <img src="../assets/w_instagram.svg" alt="Instagram icon">
         </div>
       </a>
-      <a href="https://bitcmp.medium.com/" target="_blank" >
+      <!-- <a href="https://bitcmp.medium.com/" target="_blank" >
         <div class="yellow-circle">
             <img src="../assets/w_medium.svg" alt="Medium icon">
+        </div>
+      </a> -->
+      <a href="https://www.tiktok.com/@bitcamp_umd" target="_blank">
+        <div class="yellow-circle">
+            <img src="../assets/tiktoklogo.svg" alt="TikTok icon">
         </div>
       </a>
       <a href="https://www.linkedin.com/company/bitcamp/" target="_blank">
@@ -30,11 +35,6 @@
             <img src="../assets/w_linkedin.svg" alt="LinkedIn icon">
         </div>
       </a>
-      <!-- <a href="https://www.tiktok.com/@bitcamp_umd" target="_blank">
-        <div class="pink-circle">
-            <img src="../assets/w_linkedin.svg" alt="TikTok icon">
-        </div>
-      </a> -->
     </div>
 </template>
 
