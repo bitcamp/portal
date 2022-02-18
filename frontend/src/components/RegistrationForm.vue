@@ -2,12 +2,13 @@
   <b-row>
     <b-col md="1"></b-col>
     <b-col md="10">
+      <br />
       <h1 style="text-align: left">Register for Bitcamp 2022</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Chat with us in the bottom right hand corner or email
-        <a href="mailto:hello@bitcamp.org">hello@bitcamp.org</a>.
-        <br> You can also learn more at <a href="https://bitcamp.org">bitcamp.org</a>!
+        <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
+        <br> You can also learn more at <a href="https://bit.camp">bit.camp</a>!
       </p>
       <hr />
       <b-form @submit="registerUser" class="registration-form" autocomplete="on">
@@ -58,7 +59,7 @@
             v-model="form.email"
             name="email"
             autocomplete="email"
-            placeholder="hello@gotechnica.org"
+            placeholder="hello@bit.camp"
             :state="valid_email"
             @blur="this.emailFilledOut"
             type="email"
@@ -226,7 +227,7 @@
         <!-- Shipping Address -->
         <hr />
         <h4>Want to give us a shipping address?</h4>
-        <p class="info">If you do, we'll try to send you some swag! If you choose the hardware track, this is where we'll send your hardware kit.</p>
+        <p class="info">We plan on handing out all swag in-person at the event, but in case we need to ship swag to you instead, this is where we'll send it to. Please note that we can only ship to the USA.</p>
         <b-form-group>
         <b-form-row>
         <b-form-group id="input-group-5" label="Shipping Address" label-for="input-5" class="col-5 col-md-7">
@@ -386,7 +387,7 @@
             <b-form-radio value="b">Classic cheese</b-form-radio>
             <b-form-radio value="r">ALL THE TOPPINGS</b-form-radio>
             <b-form-radio value="g">Different every time</b-form-radio>
-            <b-form-radio value="r">Mr. Worldwide slice</b-form-radio>
+            <b-form-radio value="r">Pineapple. Pizza.</b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
             Please select an answer
@@ -1130,14 +1131,14 @@ hr {
 .form-control:active,
 .custom-select:focus,
 .custom-select:active {
-  border-color: var(--dark-green) !important;
+  border-color: var(--mango-orange) !important;
   outline: 0 !important;
-  box-shadow: 0 0 0 0.15rem var(--green) !important;
+  box-shadow: 0 0 0 0.15rem var(--light-orange) !important;
 }
 
 .form-control,
 .custom-select {
-  border-color: var(--dark-green);
+  border-color: var(--bark);
   border-radius: 0.6rem;
 }
 

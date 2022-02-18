@@ -115,13 +115,12 @@ input {
   transition-timing-function: ease-out;
 }
 .general:hover, .general.active {
+  color: white;
   background: none;
 }
 
 .general:hover p, .general.active p {
-  
   color: white !important;
-
 }
 
 /* .research {
