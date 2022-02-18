@@ -11,43 +11,51 @@
     </label>
     </b-col> -->
   
-  <b-col md="3" class="p-1 col d-flex align-items-stretch">
+  <b-col md="6" class="p-1 col d-flex align-items-stretch">
   <label>
+    <div class="color h-100 w-100">
     <input type="radio" v-model="card" value="general" @click="onClickCard('general')">
     <b-card class="h-100 w-100 general" :class="{ 'active': card === 'general'}">
       <h4>General</h4>
-      <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
+      <p>For any and all hackers! Build the perfect hack using hardware, software, and collaboration with other tech-lovers, design thinkers, and students - all skill and experience levels are welcome!</p>
     </b-card>
+    </div>
   </label>
   </b-col>
   
-  <b-col md="3" class="p-1 col d-flex align-items-stretch">
+  <b-col md="6" class="p-1 col d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="beginner" @click="onClickCard('beginner')">
+    <div class="color h-100 w-100">
     <b-card class="h-100 w-100 general" :class="{ 'active': card === 'beginner'}">
       <h4>Beginner</h4>
-      <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
+      <p>New to hackathons? Don't know how to code? No worries! At Bitcamp, you'll have access to beginner-friendly workshops, helpful mentors, personalized one-on-one sessions, and resources to kickstart your coding journey.</p>
     </b-card>
+    </div>
   </label>
   </b-col>
   
-  <b-col md="3" class="p-1 col d-flex align-items-stretch">
+  <b-col md="6" class="p-1 col d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="hardware" @click="onClickCard('hardware')">
+    <div class="color h-100 w-100">
     <b-card class="h-100 w-100 general" :class="{ 'active': card === 'hardware'}">
       <h4>Hardware</h4>
-      <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
+      <p>Embark on your hardware journey at Bitcamp with access to exclusive hardware materials, mentors, and workshops! We'll provide all the resources needed to build your very own hardware project and master hardware fundamentals.</p>
     </b-card>
+    </div>
   </label>
   </b-col>
 
-  <b-col md="3" class="p-1 col d-flex align-items-stretch">
+  <b-col md="6" class="p-1 col d-flex align-items-stretch">
   <label>
     <input type="radio" v-model="card" value="quantum" @click="onClickCard('quantum')">
+    <div class="color h-100 w-100">
     <b-card class="h-100 w-100 general" :class="{ 'active': card === 'quantum'}" >
       <h4>Quantum</h4>
-      <p>For any and all hackers! All skill levels welcome. The full Bitcamp experience!</p>
+      <p> Our newest track! Hackers will learn more about the field of quantum computing with exclusive mentors, sponsors, and workshops! Hackers will use their knowledge of Python and other computing skills on educational and interactive Quantum Track activities.</p>
     </b-card>
+    </div>
   </label>
   </b-col>
 
@@ -89,6 +97,11 @@ input {
   
 }
 
+.color {
+  border-radius: 4px;
+  background: radial-gradient(90.38% 29.85% at 33.49% -2.8%, #FFAA6C 0.01%, #FF6A37 50.52%, #FF6A37 100%);
+}
+
 .card-body {
   padding: 0.75rem;
 }
@@ -97,12 +110,18 @@ input {
   border: 1px solid #FCD8CB;
   box-sizing: border-box;
   border-radius: 4px;
+  background: white;
+  transition: background 0.5s;
+  transition-timing-function: ease-out;
 }
 .general:hover, .general.active {
+  background: none;
+}
+
+.general:hover p, .general.active p {
   
-  background: radial-gradient(90.38% 29.85% at 33.49% -2.8%, #FFAA6C 0.01%, #FF6A37 50.52%, #FF6A37 100%);
   color: white !important;
-  
+
 }
 
 /* .research {
@@ -137,11 +156,11 @@ input {
 }
 
 h4 {
-  font-size: 1.25rem;
+  font-size: 20px;
 }
 
 p {
-  font-size: 0.9rem;
+  font-size: 14px;
   text-align: left;
   justify-content: left;
   margin-bottom: 0.05rem;
