@@ -127,17 +127,14 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
-    // sendConfirmationEmail(body.name, body.email, referralID, params.Item),
+    sendConfirmationEmail(body.name, body.email, referralID, params.Item),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
   return {
     statusCode: 200,
     body: JSON.stringify(params.Item),
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
+    headers: HEADERS,
   };
 });
 
@@ -155,16 +152,17 @@ const makeAddon = (length) => {
 const sendConfirmationEmail = async (fullName, email, referralID, user) => {
   const ses = new AWS.SES();
 
-  const referralLink = "https://register.gotechnica.org/" + referralID;
-  const reregisterLink = "https://register.gotechnica.org?redo=" + email
+  // As of right now, Bitcamp does not use a referral link
+  // const referralLink = "https://register.gotechnica.org/" + referralID;
+  const reregisterLink = "https://register.bit.camp?redo=" + email
   const firstName = fullName.split(" ")[0];
 
   const params = {
     Destination: { ToAddresses: [email] },
-    Source: "Technica <hello@gotechnica.org>",
-    ConfigurationSetName: "registration-2021",
+    Source: "Bitcamp <hello@bit.camp>",
+    ConfigurationSetName: "registration-2022",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${firstName}\",\"referralLink\":\"${referralLink}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_type}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\"}`,
+    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_type}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
@@ -304,10 +302,7 @@ module.exports.track = withSentry(async (event) => {
   // Return success
   return {
     statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
+    headers: HEADERS,
   };
 });
 

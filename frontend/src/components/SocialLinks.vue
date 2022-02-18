@@ -1,35 +1,40 @@
 <template>
   <div class="social-buttons">
-      <a href="https://www.youtube.com/channel/UC-Wo4UqhGUKQEp4o-51VMIw/" target="_blank">
-        <div class="blue-circle">
+      <a href="https://www.youtube.com/channel/UC_F_7Hv3SAUcQBubYWD-2BA" target="_blank">
+        <div class="red-circle">
             <img src="../assets/w_youtube.svg" alt="YouTube icon">
           </div>
       </a>
-      <a href="https://twitter.com/gotechnica?lang=en" target="_blank">
-        <div class="blue-circle">
+      <a href="https://twitter.com/bitcmp?lang=en" target="_blank">
+        <div class="red-circle">
             <img src="../assets/w_twitter.svg" alt="Twitter icon">
           </div>
       </a>
-      <a href="https://www.facebook.com/gotechnica/" target="_blank">
-        <div class="purple-circle">
+      <a href="https://www.facebook.com/bitcmp/" target="_blank">
+        <div class="orange-circle">
             <img src="../assets/w_facebook.svg" alt="Facebook icon">
         </div>
       </a>
-      <a href="https://www.instagram.com/gotechnica/" target="_blank">
-        <div class="purple-circle">
+      <a href="https://www.instagram.com/bitcamp/" target="_blank">
+        <div class="orange-circle">
             <img src="../assets/w_instagram.svg" alt="Instagram icon">
         </div>
       </a>
-      <a href="https://medium.com/gotechnica" target="_blank" >
-        <div class="pink-circle">
+      <a href="https://bitcmp.medium.com/" target="_blank" >
+        <div class="yellow-circle">
             <img src="../assets/w_medium.svg" alt="Medium icon">
         </div>
       </a>
-      <a href="https://linkedin.com/company/gotechnica" target="_blank">
-        <div class="pink-circle">
+      <a href="https://www.linkedin.com/company/bitcamp/" target="_blank">
+        <div class="yellow-circle">
             <img src="../assets/w_linkedin.svg" alt="LinkedIn icon">
         </div>
       </a>
+      <!-- <a href="https://www.tiktok.com/@bitcamp_umd" target="_blank">
+        <div class="pink-circle">
+            <img src="../assets/w_linkedin.svg" alt="TikTok icon">
+        </div>
+      </a> -->
     </div>
 </template>
 
@@ -41,7 +46,7 @@ export default {
 
 <style scoped>
 
-.blue-circle, .purple-circle, .pink-circle {
+.red-circle, .orange-circle, .yellow-circle {
   padding: 8px;
   margin: 0px 10px;
   transition: ease 0.2s;
@@ -52,12 +57,12 @@ export default {
   display: inline-block;
 }
 
-.blue-circle:hover, .purple-circle:hover, .pink-circle:hover {
+.red-circle:hover, .orange-circle:hover, .yellow-circle:hover {
   transform: scale(1.06);
 }
 
 @media (max-width: 575px) {
-  .blue-circle, .purple-circle, .pink-circle {
+  .red-circle, .orange-circle, .yellow-circle {
     margin: 0px 3px;
     padding: 5px;
     width: 40px;
@@ -65,16 +70,16 @@ export default {
   }
 }
 
-.blue-circle {
-  background-color: #6fcbdc;
+.red-circle {
+  background-color: #FF3F46;
 }
 
-.purple-circle {
-  background-color: #b5a1c4;
+.orange-circle {
+  background-color: #FF6F3F;
 }
 
-.pink-circle {
-  background-color: #f27aaa;
+.yellow-circle {
+  background-color: #FFAF3F;
 }
 
 </style>

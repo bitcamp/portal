@@ -5,21 +5,22 @@
         <b-row>
           <b-col md=1></b-col>
           <b-col>
-            <h1>You're registered for Technica 2021!</h1>
+            <h1>You're registered for Bitcamp 2022!</h1>
 
             <div class="py-3">
               <p class="mb-4">
-                You'll get a confirmation email for registering. Get ready for the best weekend ever!
+                You'll get a confirmation email shortly. See you by the campfire!
                 <br/>
-                If you have any questions, be sure to reach out to <a href="mailto:hello@gotechnica.org">hello@gotechnica.org</a>.                
+                If you have any questions, be sure to reach out to <a href="mailto:hello@bit.camp">hello@bit.camp</a>.                
               </p>
 
-              <p class="mb-1">
+              <!-- <p class="mb-1">
                 Next, share your referral link with others to earn rewards.
               </p>
+              -->
 
               <!-- Referral link copy -->
-              <b-row class="mb-5">
+              <!-- <b-row class="mb-5">
                 <b-col md=1></b-col>
                 <b-col>
 
@@ -49,7 +50,7 @@
                   </b-input-group>
                 </b-col>
                 <b-col md=1></b-col>
-              </b-row>
+              </b-row> -->
 
               <p class="mb-1">
                 Where did you hear about us? Letting us know helps us reach more people!
@@ -88,7 +89,7 @@
               </b-row>
 
               <p>
-                Follow us on social media to make sure you don't miss any updates from Technica.
+                Follow us on social media to make sure you don't miss any updates from Bitcamp.
               </p>
               <!-- Social links -->
               <div class="pb-3">
@@ -149,11 +150,14 @@ export default {
       defaultType: 'rect',
       particlesPerFrame: 0.25,
       defaultColors: [
-        '#00ffff',
-        '#82ecec',
-        '#b6a1c4',
-        '#ded2e5',
-        '#ff7bac'
+        '#FF3F46',
+        '#FF6F3F',
+        '#FFAF3F',
+        '#FFEF3F',
+        '#CBF2FF',
+        '#FFFFFF',
+        '#528CA5',
+        '#528CA5'
       ]
     });
 
