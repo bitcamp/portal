@@ -2,7 +2,7 @@
   <b-row>
     <b-col md="1"></b-col>
     <b-col md="10">
-      <h1 style="text-align: center">Register for Bitcamp 2022</h1>
+      <h1 style="text-align: left">Register for Bitcamp 2022</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Chat with us in the bottom right hand corner or email
@@ -80,6 +80,38 @@
         </b-form-group>
         </b-form-row>
 
+        <!-- Ethnicity & Gender -->
+        <b-form-row>
+        <b-form-group id="input-group-gender" label="Gender Identity*" label-for="input-gender" class="col-md-6">
+          <b-form-select
+            id="input-gender"
+            v-model="form.gender"
+            placeholder="Choose a gender identity"
+            :options="gender_options"
+            :state="valid_gender"
+          ></b-form-select>
+          <b-form-invalid-feedback :state="valid_gender">
+            Please select a gender identity
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group id="input-group-ethnicity" label="Ethnicity*" label-for="input-ethnicity" class="col-md-6">
+          <b-form-select
+            id="input-ethnicity"
+            v-model="form.ethnicity"
+            placeholder="Choose an ethnicity"
+            :options="ethnicity_options"
+            :state="valid_ethnicity"
+          ></b-form-select>
+          <b-form-invalid-feedback :state="valid_ethnicity">
+            Please select an ethnicity
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
+        <hr>
+        <h4>How about your school?</h4>
+        <br>
+
         <!-- School Type -->
         <b-form-row>
         <b-form-group id="input-group-4" label="School Level*" label-for="input-4" class="col-md-3">
@@ -106,6 +138,62 @@
           <b-form-invalid-feedback :state="valid_school">
             Please enter your school name
           </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
+        <!-- More School Info -->
+        <b-form-row>
+        <b-form-group id="input-group-schoolyear" label="School Year*" label-for="input-schoolyear" class="col-md-6">
+          <b-form-select
+            id="input-schoolyear"
+            v-model="form.school_year"
+            placeholder="Choose a major"
+            :options="school_year_options"
+            :state="valid_school_year"
+          ></b-form-select>
+          <b-form-invalid-feedback :state="valid_school_year">
+            Please select a year
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group id="input-group-major" label="Primary Major*" label-for="input-major" class="col-md-6">
+          <b-form-select
+            id="input-major"
+            v-model="form.major"
+            placeholder="Choose a major"
+            :options="major_options"
+            :state="valid_major"
+          ></b-form-select>
+          <b-form-invalid-feedback :state="valid_major">
+            Please select a major
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
+        <hr>
+        <h4>Want to get hired?</h4>
+        <p class="info">Let us know, and we'll pass your info on to our partners and sponsors!</p>
+
+        <!-- recruitment info -->
+        <b-form-row>
+        <b-form-group id="input-group-recruit" label="Do you want to be recruited for jobs?*" label-for="input-recruit" class="col-6">
+          <b-form-select
+            id="input-recruit"
+            v-model="form.recruit"
+            placeholder="Choose an option"
+            :options="recruit_options"
+            :state="valid_recruit"
+          ></b-form-select>
+          <b-form-invalid-feedback :state="valid_recruit">
+            Please select an option
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group id="input-group-portfolio" label="GitHub or Portfolio Link" label-for="input-portfolio" class="col-md-6">
+          <b-form-input
+            id="input-portfolio"
+            v-model="form.portfolio"
+            autocomplete="input-portfolio"
+            placeholder="github.com/yourname"
+          ></b-form-input>
         </b-form-group>
         </b-form-row>
 
@@ -337,7 +425,62 @@
         </b-form-group>
         </b-form-row>
 
+        <hr />
+         <!-- Short Questions -->
+        <h4 class="mb-2">Why Bitcamp?</h4>
+        <p class="info">We'd like to get to know you a little better! Help us learn more about you and make Bitcamp even more amazing by answering some questions!</p>
 
+
+        <b-form-row>
+        <b-form-group id="input-group-hackcount" label="How many hackathons have you participated in before?*" label-for="input-hackcount" class="col-md-12">
+          <b-form-input
+            id="input-hackcount"
+            v-model="form.hack_count"
+            name="input-hackcount"
+            autocomplete="off"
+            placeholder="Number of Hackathons here..."
+            class="form-input"
+            :state="valid_hackcount"
+            type="number"
+          ></b-form-input>
+          <b-form-invalid-feedback :state="valid_hackcount">
+            Please enter a number
+          </b-form-invalid-feedback>
+        </b-form-group>
+        <b-form-group id="input-group-question1" label="Why are you interested in attending Bitcamp?*" label-for="input-question1" class="font-weight-bold col-md-12">
+          <b-form-textarea
+            id="input-question1"
+            v-model="form.question1"
+            name="question1"
+            autocomplete="off"
+            placeholder="Your response here..."
+            rows=3
+            max-rows=3
+            :state="valid_question1"
+          ></b-form-textarea>
+          <b-form-invalid-feedback :state="valid_question1">
+            Oops! You forgot to fill out this question
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
+        <b-form-row>
+        <b-form-group id="input-group-question2" label="What do you plan on doing or building at Bitcamp?*" label-for="input-question2" class="font-weight-bold col-md-12">
+          <b-form-textarea
+            id="input-question2"
+            v-model="form.question2"
+            name="question2"
+            autocomplete="off"
+            placeholder="Your response here..."
+            rows=3
+            max-rows=3
+            :state="valid_question2"
+          ></b-form-textarea>
+          <b-form-invalid-feedback :state="valid_question2">
+            Oops! You forgot to fill out this question
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
 
         <hr />
         <!-- MLH Stuff -->
@@ -408,14 +551,27 @@
 import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
 import Vue from "vue";
-import { FormRadioPlugin, IconsPlugin, FormFilePlugin } from "bootstrap-vue";
+import { FormRadioPlugin, IconsPlugin, FormFilePlugin, BFormTextarea } from "bootstrap-vue";
 import TrackSelection from "./TrackSelection.vue";
 import * as PDFJS from 'pdfjs-dist/legacy/build/pdf.js';
 import 'pdfjs-dist/build/pdf.worker.entry';
+import * as majors_list from '../assets/college-majors.json';
 
 Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 Vue.use(FormFilePlugin)
+Vue.component('b-form-textarea', BFormTextarea)
+
+let major_map = majors_list["rows"].map((major) => {
+  return {
+    value: major[2].toLowerCase(),
+    text: major[2].toLowerCase().split(' ').map((word) => word === "and" ? word : word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+  };
+});
+
+major_map.sort((major1, major2) => {
+  return major1["value"] < major2["value"] ? -1 : (major1["value"] > major2["value"] ? 1 : 0) ;
+});
 
 export default {
   name: "RegistrationForm",
@@ -433,6 +589,12 @@ export default {
         underrepresented_Gender: false,
         name: "",
         pronouns: "",
+        gender: "",
+        ethnicity: "",
+        major: "",
+        recruit: "",
+        portfolio: "",
+        school_year: "",
         school_type: "",
         school: "",
         resume: "",
@@ -447,6 +609,9 @@ export default {
         country: "",
         zip: "",
         tshirt_size: "",
+        hack_count: "",
+        question1: "",
+        question2: "",
         gmaps_place_id: "",
         referred_by: "",
         track_selected: "general"
@@ -460,7 +625,13 @@ export default {
       valid_email: null,
       valid_phone: null,
       valid_school_type: null,
+      valid_school_year: null,
       valid_school: null,
+      valid_gender: null,
+      valid_ethnicity: null,
+      valid_major: null,
+      valid_recruit: null,
+      valid_portfolio: null,
       valid_birthday: null,
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
@@ -468,21 +639,56 @@ export default {
       valid_address: null,
       valid_tshirt_size: null,
       valid_underrepresented_Gender: null,
+      valid_hackcount: null,
       valid_survey_1: null,
       valid_survey_2: null,
       valid_survey_3: null,
       valid_survey_4: null,
       valid_survey_5: null,
+      valid_question1: null,
+      valid_question2: null,
 
       school_type_options: [
         { value: "", text: "Select one...", disabled: true },
-        { value: "middle school", text: "Middle School" },
         { value: "high school", text: "High School" },
         { value: "undergrad", text: "Undergraduate / Bachelors" },
         { value: "graduate", text: "Graduate School / Masters" },
         { value: "phd", text: "PhD / Doctorate" },
-        { value: "graduated", text: "Graduated" }
+        { value: "graduated", text: "Graduated" },
+        { value: "other", text: "Other" }
       ],
+
+      school_year_options: [
+        { value: "", text: "Select one...", disabled: true },
+        { value: "high school", text: "High School" },
+        { value: "freshman", text: "Freshman (1st year)" },
+        { value: "sophomore", text: "Sophomore (2nd year)" },
+        { value: "junior", text: "Junior (3rd year)" },
+        { value: "senior", text: "Senior (4th year and above)" },
+        { value: "graduated", text: "College Graduate" },
+        { value: "other", text: "Other" }
+      ],
+
+      gender_options: [
+        { value: "", text: "Select one...", disabled: true },
+        { value: "female", text: "Female" },
+        { value: "male", text: "Male" },
+        { value: "nonbinary", text: "Nonbinary" },
+        { value: "prefer not to answer", text: "Prefer not to answer" },
+        { value: "other", text: "Other" }
+      ],
+
+      ethnicity_options: [
+        { value: "", text: "Select one...", disabled: true },
+        { value: "asian or pacific islander", text: "Asian or Pacific-Islander" },
+        { value: "black or african-american", text: "Black or African-American" },
+        { value: "caucasian", text: "Caucasian" },
+        { value: "hispanic", text: "Hispanic" },
+        { value: "native american", text: "Native American" },
+        { value: "prefer not to answer", text: "Prefer not to answer" },
+        { value: "other", text: "Other" }
+      ],
+
       tshirt_size_options: [
         { value: "", text: "Select one...", disabled: true },
         //{ value: "no tshirt", text: "I don't want a T-shirt" },
@@ -491,6 +697,20 @@ export default {
         { value: "m", text: "M" },
         { value: "l", text: "L" },
         { value: "xl", text: "XL" }
+      ],
+
+      major_options: [
+        { value: "", text: "Select one...", disabled: true},
+        { value: "no major", text: "No Major" },
+        ...major_map,
+      ],
+
+      recruit_options: [
+        { value: "", text: "Select one...", disabled: true},
+        { value: "yes fte", text: "Yes, for an internship" },
+        { value: "yes intern", text: "Yes, for a full-time position" },
+        { value: "yes both", text: "Yes, for an internship or full-time position" },
+        { value: "no", text: "No" },
       ]
     };
   },
@@ -691,6 +911,31 @@ export default {
         valid_form = false;
       } else this.valid_school_type = null;
 
+      if (this.form.gender.length === 0) {
+        this.valid_gender = false;
+        valid_form = false;
+      } else this.valid_gender = null;
+
+      if (this.form.ethnicity.length === 0) {
+        this.valid_ethnicity = false;
+        valid_form = false;
+      } else this.valid_ethnicity = null;
+
+      if (this.form.major.length === 0) {
+        this.valid_major = false;
+        valid_form = false;
+      } else this.valid_major = null;
+
+      if (this.form.recruit.length === 0) {
+        this.valid_recruit = false;
+        valid_form = false;
+      } else this.valid_recruit = null;
+
+      if (this.form.school_year.length === 0) {
+        this.valid_school_year = false;
+        valid_form = false;
+      } else this.valid_school_year = null;
+
       if (this.form.school.length === 0) {
         this.valid_school = false;
         valid_form = false;
@@ -705,6 +950,21 @@ export default {
         this.valid_birthday = false;
         valid_form = false;
       } else this.valid_birthday = null;
+
+      if (this.form.hack_count.length === 0) {
+        this.valid_hackcount = false;
+        valid_form = false;
+      } else this.valid_hackcount = null;
+
+      if (this.form.question1.length === 0) {
+        this.valid_question1 = false;
+        valid_form = false;
+      } else this.valid_question1 = null;
+
+      if (this.form.question2.length === 0) {
+        this.valid_question2 = false;
+        valid_form = false;
+      } else this.valid_question2 = null;
 
       if (!this.form.MLH_conduct) {
         this.valid_code_of_conduct = false;
@@ -829,7 +1089,7 @@ h4 {
 }
 
 p {
-  text-align: center;
+  text-align: left;
 }
 
 .info {
