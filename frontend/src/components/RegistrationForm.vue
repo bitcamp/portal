@@ -578,7 +578,7 @@ Vue.use(FormFilePlugin)
 Vue.component('b-form-textarea', BFormTextarea)
 Vue.component('vue-typeahead-bootstrap', VueTypeaheadBootstrap)
 
-let university_list = univ_list.map(univ => univ["name"]);
+let university_list = univ_list["list"].map(univ => univ["name"]);
 
 let major_map = majors_list["rows"].map((major) => {
   return {
@@ -772,6 +772,8 @@ export default {
           this.form.gmaps_place_id = place.place_id;
         }
       });
+
+      document.getElementsByClassName("typeahead")[0].setAttribute("autocomplete", "off");
 
       // document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
     });
