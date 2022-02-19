@@ -33,7 +33,7 @@ export default {
             'Content-Type': 'multipart/form-data',
           },
         });
-        return result.data;
+        return result;
       } catch (e) {
         console.error(e);
         return null;

@@ -133,14 +133,14 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-9">
-          <b-form-input
+          <vue-typeahead-bootstrap
             id="input-school"
+            :inputClass="school_class"
+            inputName="school"
+            placeholder="University of Maryland at College Park"
             v-model="form.school"
-            name="school"
-            autocomplete="off"
-            placeholder="University of Maryland, College Park"
-            :state="valid_school"
-          ></b-form-input>
+            :data="university_options"
+            :state="valid_school"></vue-typeahead-bootstrap>
           <b-form-invalid-feedback :state="valid_school">
             Please enter your school name
           </b-form-invalid-feedback>
@@ -205,7 +205,7 @@
 
         <!-- resume upload -->
         <b-form-row>
-        <b-form-group id="input-group-resume" label="Resume" label-for="input-resume" class="col-md-12">
+        <b-form-group id="input-group-resume" label="Resume (.pdf .doc .docx)" label-for="input-resume" class="col-md-12">
           <b-form-file
             id="input-resume"
             v-model="form.resume"
@@ -213,8 +213,12 @@
             accept=".pdf, .doc, .docx, .txt"
             placeholder="Upload Resume"
             drop-placeholder="Drop file here..."
+            :state="valid_resume"
             @input="upload"
           ></b-form-file>
+          <b-form-invalid-feedback :state="valid_resume">
+            We couldn't upload your resume. Try again later, or check that you entered your name first!
+          </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
 
@@ -558,10 +562,12 @@ import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
 import Vue from "vue";
 import { FormRadioPlugin, IconsPlugin, FormFilePlugin, BFormTextarea } from "bootstrap-vue";
+import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap';
 import TrackSelection from "./TrackSelection.vue";
 import * as PDFJS from 'pdfjs-dist/legacy/build/pdf.js';
 import 'pdfjs-dist/build/pdf.worker.entry';
 import * as majors_list from '../assets/college-majors.json';
+import * as univ_list from '../assets/global-universities-list.json';
 import * as EmailValidator from "email-validator"
 import parsePhoneNumber from "libphonenumber-js"
 
@@ -570,6 +576,9 @@ Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 Vue.use(FormFilePlugin)
 Vue.component('b-form-textarea', BFormTextarea)
+Vue.component('vue-typeahead-bootstrap', VueTypeaheadBootstrap)
+
+let university_list = univ_list.map(univ => univ["name"]);
 
 let major_map = majors_list["rows"].map((major) => {
   return {
@@ -635,6 +644,7 @@ export default {
       valid_pronouns: null,
       valid_email: null,
       valid_phone: null,
+      valid_resume: null,
       valid_school_type: null,
       valid_school_year: null,
       valid_school: null,
@@ -658,6 +668,8 @@ export default {
       valid_survey_5: null,
       valid_question1: null,
       valid_question2: null,
+
+      school_class: "typeahead",
 
       school_type_options: [
         { value: "", text: "Select one...", disabled: true },
@@ -722,6 +734,10 @@ export default {
         { value: "yes intern", text: "Yes, for a full-time position" },
         { value: "yes both", text: "Yes, for an internship or full-time position" },
         { value: "no", text: "No" },
+      ],
+
+      university_options: [
+        ...university_list
       ]
     };
   },
@@ -833,6 +849,15 @@ export default {
         variant: "danger"
       });
     },
+    showErrorToastCustom(str) {
+      this.$bvToast.toast(str, {
+        toaster: "b-toaster-top-center",
+        solid: true,
+        appendToast: false,
+        noCloseButton: true,
+        variant: "danger"
+      });
+    },
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
@@ -914,7 +939,6 @@ export default {
       } else this.valid_email = null;
 
       let phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE)
-      console.log(phoneNumber)
       if (!phoneNumber || !phoneNumber.isValid()) {
         this.valid_phone = false;
         valid_form = false;
@@ -952,8 +976,12 @@ export default {
 
       if (this.form.school.length === 0) {
         this.valid_school = false;
+        this.school_class = "typeahead is-invalid";
         valid_form = false;
-      } else this.valid_school = null;
+      } else {
+        this.school_class = "typeahead";
+        this.valid_school = null;
+      }
 
       if (this.form.tshirt_size.length === 0) {
         this.valid_tshirt_size = false;
@@ -1035,20 +1063,51 @@ export default {
       return valid_form;
     },
     async upload(file) {
+      if (this.form.name.length == 0)
+      {
+        this.showErrorToastCustom('Oops! Put in your name first so our marshies make sure your file is in the right place!');
+        this.valid_resume = false;
+        return;
+      }
+
+      this.valid_resume = null;
+
+      var cleanname = this.form.name.replace(/[^a-z0-9_-]/gi, '_').toLowerCase().replace(/_{2,}/g, '_').substring(0,48) + "." + this.form.resume.name.slice(-3);
+
       const userParams = {
         id: this.random_id,
-        filename: this.form.resume.name,
-        filetype: this.form.resume.filetype,
+        filename: cleanname,
+        filetype: this.form.resume.name.slice(-3),
       };
-      // console.log(this.getEnvVariable("BACKEND_ENDPOINT"));
-      const r = await this.performPostRequest(
+
+      let r = await this.performPostRequest(
         this.getEnvVariable('BACKEND_ENDPOINT'),
         'upload_resume',
         userParams,
       );
-      await this.performRawPostRequest(r.putUrl, file);
+
+      if (!(r && r.putUrl))
+      {
+        this.showErrorToastCustom('Oops! We couldn\'t upload your resume, try again later!');
+        this.valid_resume = false;
+        return;
+      }
+      
+      var cleanFile = new File([file], cleanname, {
+        type: file.type,
+        lastModified: file.lastModified,
+      });
+
+      let r2 = await this.performRawPostRequest(r.putUrl, cleanFile);
       this.form.resume_link = r.uploadUrl;
       this.form.resume_id = this.random_id;
+
+      if (!(r2 && (r2.status == 200)))
+      {
+        this.showErrorToastCustom('Oops! We couldn\'t upload your resume, try again later!');
+        this.valid_resume = false;
+        return;
+      }
 
       // below is for resume parsing
       let text = '';
@@ -1094,6 +1153,22 @@ export default {
   }
 };
 </script>
+
+<style>
+
+.input-group > .typeahead {
+  border-color: var(--bark);
+  border-radius: 0.6rem;
+}
+
+.typeahead:focus,
+.typeahead:active {
+  border-color: var(--mango-orange) !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.15rem var(--light-orange) !important;
+}
+
+</style>
 
 <style scoped>
 
