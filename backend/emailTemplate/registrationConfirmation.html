@@ -20,18 +20,33 @@
         div,
         p,
         a {
+            font-family: "Aleo";
             -webkit-font-smoothing: antialiased;
             text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
             -webkit-text-size-adjust: 100%
         }
         
+        body {
+            background: radial-gradient(92.62% 25% at 33.31% 0%, #FFAA6C 0.01%, #FF6A37 50.52%, #FF6A37 100%);
+        }
+        
         table,
         td {
+            background: none;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
+            border: none;
             border-collapse: collapse !important;
             border-spacing: 0
+        }
+
+        td.hero, td.paragraph {
+            background: rgba(255,255,255,0.9);
+            
+        }
+        td.hero {
+            box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.125);
         }
         
         img {
@@ -68,7 +83,7 @@
                 </table>
                 <table border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" width="560" style="border-collapse: separate; border-spacing: 0; padding: 0; width: inherit; max-width: 560px;" class="container">
                     <tr>
-                        <td align="center" valign="top" style="border-collapse: seperate; border-spacing: 0; margin: 0; padding: 0; overflow: hidden;" class="hero"><img border="0" vspace="0" hspace="0" src="https://bitcamp-assets.s3.amazonaws.com/bitcamp-brand/logos/badge.png" alt="Please enable images to view this content" title="Hero Image" width="125" style="max-width:250px;padding-bottom:25px;display:inline!important;vertical-align:bottom;border:0;height:auto;outline:none;text-decoration:none">
+                        <td align="center" valign="top" style="border-collapse: seperate; border-spacing: 0; margin: 0; padding: 0; padding-top: 20px; overflow: hidden;" class="hero"><img border="0" vspace="0" hspace="0" src="https://bitcamp-assets.s3.amazonaws.com/bitcamp-brand/logos/badge.png" alt="Please enable images to view this content" title="Hero Image" width="125" style="max-width:250px;padding-bottom:25px;display:inline!important;vertical-align:bottom;border:0;height:auto;outline:none;text-decoration:none">
                     <tr>
                         <td valign="top" style="border-collapse: seperate; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%; font-size: 17px; font-weight: 400; padding-top: 25px; padding-bottom: 25px; color: #000000; font-family: 'Noto Sans', Helvetica, Arial, sans-serif;"
                             class="paragraph">
@@ -79,13 +94,11 @@
                             <table border="1" cellpadding="5">
                                 <tr><td>Email</td><td>{{email}}</td></tr>
                                 <tr><td>Name</td><td>{{name}}</td></tr>
-                                <tr><td>Pronouns</td><td>{{pronouns}}</td></tr>
                                 <tr><td>Birthday</td><td>{{birthday}}</td></tr>
                                 <tr><td>Track</td><td>{{track}}</td></tr>
                                 <tr><td>Phone number</td><td>{{phone}}</td></tr>
                                 <tr><td>School level</td><td>{{school_type}}</td></tr>
                                 <tr><td>School</td><td>{{school}}</td></tr>
-                                <tr><td>Address</td><td>{{address}}</td></tr>
                                 <tr><td>T-Shirt Size</td><td>{{tshirt_size}}</td></tr>
                             </table>
                             <p>If you ever have any questions, reach out to us at <a href="mailto:hello@bit.camp">hello@bit.camp</a> or visit us at <a href="https://bit.camp">bit.camp</a>.</p>
