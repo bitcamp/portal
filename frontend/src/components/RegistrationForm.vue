@@ -260,7 +260,7 @@
           > 
             <b-form-radio value="b">Broadway Show</b-form-radio>
             <b-form-radio value="g">Concert</b-form-radio>
-            <b-form-radio value="r">Most Pit</b-form-radio>
+            <b-form-radio value="r">Mosh Pit</b-form-radio>
             <b-form-radio value="b">I'll stay in for the night</b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_2">
