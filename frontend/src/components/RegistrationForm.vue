@@ -1063,7 +1063,23 @@ export default {
 
       this.valid_resume = null;
 
-      var cleanname = this.form.name.replace(/[^a-z0-9_-]/gi, '_').toLowerCase().replace(/_{2,}/g, '_').substring(0,48) + "." + this.form.resume.name.slice(-3);
+      if (this.form.resume.name.slice(-3) != "pdf" && this.form.resume.name.slice(-3) != "doc" && this.form.resume.name.slice(-4) != "docx" && this.form.resume.name.slice(-3) != "txt")
+      {
+        this.showErrorToastCustom('Oops! Make sure your resume is in pdf, doc, docx, or txt format!');
+        this.valid_resume = false;
+        return;
+      }
+
+      var cleanname;
+
+      if (this.form.resume.name.slice(-4) == "docx"){
+         cleanname = this.form.name.replace(/[^a-z0-9_-]/gi, '_').toLowerCase().replace(/_{2,}/g, '_').substring(0,48) + "." + this.form.resume.name.slice(-4);
+      }
+      else {
+         cleanname = this.form.name.replace(/[^a-z0-9_-]/gi, '_').toLowerCase().replace(/_{2,}/g, '_').substring(0,48) + "." + this.form.resume.name.slice(-3);
+      }
+
+      
 
       const userParams = {
         id: this.random_id,
