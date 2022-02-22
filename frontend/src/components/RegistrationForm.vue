@@ -902,6 +902,8 @@ export default {
         } else {
           this.showErrorToast();
         }
+      } else {
+        this.showErrorToast();
       }
     },
     // logic goes here so feedback is only shown after submission
