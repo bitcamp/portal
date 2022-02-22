@@ -914,6 +914,8 @@ export default {
         } else {
           this.showErrorToast();
         }
+      } else {
+        this.showErrorToastCustom("Something went wrong. Please refresh the page and try registering again!")
       }
     },
     // logic goes here so feedback is only shown after submission
