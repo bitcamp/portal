@@ -120,19 +120,8 @@
 
         <!-- School Type -->
         <b-form-row>
-        <b-form-group id="input-group-4" label="School Level*" label-for="input-4" class="col-md-3">
-          <b-form-select
-            id="input-4"
-            v-model="form.school_type"
-            placeholder="Choose a level"
-            :options="school_type_options"
-            :state="valid_school_type"
-          ></b-form-select>
-          <b-form-invalid-feedback :state="valid_school_type">
-            Please select a school level
-          </b-form-invalid-feedback>
-        </b-form-group>
-        <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-9">
+        
+        <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
           <vue-typeahead-bootstrap
             id="input-school"
             :inputClass="school_class"
