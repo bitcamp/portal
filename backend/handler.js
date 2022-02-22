@@ -25,7 +25,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
   const ddb = new AWS.DynamoDB.DocumentClient();
 
   // Checks if any field is missing
-  if (!body.email || !body.name || !body.phone || !body.school_type) {
+  if (!body.email || !body.name || !body.phone || !body.school_year) {
     return {
       statusCode: 500,
       body: "/register is missing a field",
@@ -71,7 +71,6 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       major: body.major,
       recruit: body.recruit,
       portfolio: body.portfolio,
-      school_type: body.school_type,
       school: body.school,
       birthday: body.birthday,
       address: body.address,
@@ -162,7 +161,7 @@ const sendConfirmationEmail = async (fullName, email, referralID, user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2022",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_type}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
+    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
