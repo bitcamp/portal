@@ -417,7 +417,7 @@
         <hr />
         <!-- T-Shirt Size -->
         <h4 class="mb-2">Select a T-shirt size!</h4>
-        <p class="info">We've got T-shirts in XS-XL sizes! Choose whichever size you like, and your very own Bitcamp 2022
+        <p class="info">We've got unisex T-shirts in XS-XL sizes! Choose whichever size you like, and your very own Bitcamp 2022
           shirt will be given to you once you arrive at UMD.</p>
 
         <b-form-row>
