@@ -431,7 +431,7 @@
 
 
         <b-form-row>
-        <b-form-group id="input-group-hackcount" label="How many hackathons have you participated in before?*" label-for="input-hackcount" class="col-md-12">
+        <b-form-group id="input-group-hackcount" label="How many hackathons have you participated in before?*" label-for="input-hackcount" class="font-weight-bold col-md-12">
           <b-form-input
             id="input-hackcount"
             v-model="form.hack_count"
@@ -458,7 +458,7 @@
             :state="valid_question1"
           ></b-form-textarea>
           <b-form-invalid-feedback :state="valid_question1">
-            Oops! You forgot to fill out this question
+            Please tell us why you are interested in attending Bitcamp.
           </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
@@ -476,7 +476,7 @@
             :state="valid_question2"
           ></b-form-textarea>
           <b-form-invalid-feedback :state="valid_question2">
-            Oops! You forgot to fill out this question
+            Please tell us what oyou plan on doing/building at Bitcamp.
           </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
