@@ -322,7 +322,7 @@
         <h4>Campfire Games Survey</h4>
         <p class="info">This year, you’ll once again be put into one of three teams based on your personality and interests. By winning unique challenges and attending workshops and mini-events, you and your fellow hackers will rack up points for your team. At the end of the event, members of the winning team will receive limited edition Bitcamp apparel. So what are you waiting for? Take the survey and find your team!
 </p>
-        <b-form-group class="font-weight-bold" label="How willing are you to do Karaoke?">
+        <b-form-group class="font-weight-bold" label="How willing are you to do Karaoke?*">
           <b-form-radio-group
             class="font-weight-normal pt-2"
             id="survey-1"
@@ -338,7 +338,7 @@
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold"  label="Would you rather go to:">
+        <b-form-group class="font-weight-bold"  label="Would you rather go to:*">
           <b-form-radio-group
             class="font-weight-normal pt-2"
             id="survey-2"
@@ -354,7 +354,7 @@
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold"  label="When do you get to class?">
+        <b-form-group class="font-weight-bold"  label="When do you get to class?*">
           <b-form-radio-group
             class="font-weight-normal pt-2"
             id="survey-3"
@@ -370,7 +370,7 @@
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="Your pizza order is:">
+        <b-form-group class="font-weight-bold" label="Your pizza order is:*">
           <b-form-radio-group
             class="font-weight-normal pt-2"
             id="survey-4"
@@ -386,7 +386,7 @@
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="What's your favorite thing about hackathons?">
+        <b-form-group class="font-weight-bold" label="What's your favorite thing about hackathons?*">
           <b-form-radio-group
             class="font-weight-normal pt-2"
             id="survey-5"
