@@ -111,12 +111,17 @@ input {
   box-sizing: border-box;
   border-radius: 4px;
   background: white;
-  transition: background 0.5s;
+  transition: background 0.25s;
   transition-timing-function: ease-out;
 }
-.general:hover, .general.active {
+.general.active {
   color: white;
   background: none;
+}
+
+.general:hover {
+  color: white;
+  background: #FFAF3F;
 }
 
 .general:hover p, .general.active p {
