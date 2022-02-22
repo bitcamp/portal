@@ -604,7 +604,6 @@ export default {
         recruit: "",
         portfolio: "",
         school_year: "",
-        school_type: "",
         school: "",
         resume: "",
         resume_link: "",
@@ -634,7 +633,6 @@ export default {
       valid_email: null,
       valid_phone: null,
       valid_resume: null,
-      valid_school_type: null,
       valid_school_year: null,
       valid_school: null,
       valid_gender: null,
@@ -659,16 +657,6 @@ export default {
       valid_question2: null,
 
       school_class: "typeahead",
-
-      school_type_options: [
-        { value: "", text: "Select one...", disabled: true },
-        { value: "high school", text: "High School" },
-        { value: "undergrad", text: "Undergraduate / Bachelors" },
-        { value: "graduate", text: "Graduate School / Masters" },
-        { value: "phd", text: "PhD / Doctorate" },
-        { value: "graduated", text: "Graduated" },
-        { value: "other", text: "Other" }
-      ],
 
       school_year_options: [
         { value: "", text: "Select one...", disabled: true },
@@ -886,11 +874,11 @@ export default {
 
         let survey_count = {"r":0, "b":0, "g":0}
 
-        survey_count[this.form.selected_survey_1[0]] += 1
-        survey_count[this.form.selected_survey_2[0]] += 1
-        survey_count[this.form.selected_survey_3[0]] += 1
-        survey_count[this.form.selected_survey_4[0]] += 1
-        survey_count[this.form.selected_survey_5[0]] += 1
+        survey_count[this.form.selected_survey_1.substring(0,1)] += 1
+        survey_count[this.form.selected_survey_2.substring(0,1)] += 1
+        survey_count[this.form.selected_survey_3.substring(0,1)] += 1
+        survey_count[this.form.selected_survey_4.substring(0,1)] += 1
+        survey_count[this.form.selected_survey_5.substring(0,1)] += 1
 
         this.form.red = survey_count["r"]
         this.form.green = survey_count["g"]
@@ -934,11 +922,6 @@ export default {
         this.valid_phone = false;
         valid_form = false;
       } else this.valid_phone = null;
-
-      if (this.form.school_type.length === 0) {
-        this.valid_school_type = false;
-        valid_form = false;
-      } else this.valid_school_type = null;
 
       if (this.form.gender.length === 0) {
         this.valid_gender = false;
