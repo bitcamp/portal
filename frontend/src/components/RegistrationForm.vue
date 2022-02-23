@@ -42,7 +42,7 @@
               :state="valid_birthday"
               type="date"
               min="1900-01-01"
-              max="2022-01-01"
+              max="2021-12-31"
             ></b-form-input>
             <b-form-invalid-feedback :state="valid_birthday">
               Please enter your birthday
@@ -120,7 +120,7 @@
 
         <!-- School Type -->
         <b-form-row>
-        
+
         <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
           <vue-typeahead-bootstrap
             id="input-school"
@@ -964,10 +964,17 @@ export default {
         valid_form = false;
       } else this.valid_tshirt_size = null;
 
-      if (this.form.birthday.length === 0) {
+      if (this.form.birthday.length === 0 ) {
         this.valid_birthday = false;
         valid_form = false;
-      } else this.valid_birthday = null;
+      } else {
+        let birthday = new Date(this.form.birthday)
+        if (!dates.inRange(birthday, new Date('1900-01-01'),
+                          new Date('2021-12-31'))) {
+          this.valid_birthday = false;
+          valid_form = false;
+        } else this.valid_birthday = null;
+      }
 
       if (this.form.hack_count.length === 0) {
         this.valid_hackcount = false;
@@ -1064,7 +1071,7 @@ export default {
          cleanname = this.form.name.replace(/[^a-z0-9_-]/gi, '_').toLowerCase().replace(/_{2,}/g, '_').substring(0,48) + "." + this.form.resume.name.slice(-3);
       }
 
-      
+
 
       const userParams = {
         id: this.random_id,
@@ -1084,7 +1091,7 @@ export default {
         this.valid_resume = false;
         return;
       }
-      
+
       var cleanFile = new File([file], cleanname, {
         type: file.type,
         lastModified: file.lastModified,
@@ -1236,6 +1243,7 @@ hr {
    background: radial-gradient(92.62% 25% at 33.31% 0%, #FFAA6C 0.01%, #FF6A37 50.52%, #FF6A37 100%);
    box-shadow: 0px 10px 30px rgba(176, 148, 132, 0.33);
    border-radius: 6px;
+   border-width: 0px;
 }
 
 
