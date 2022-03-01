@@ -356,12 +356,7 @@ module.exports.update = withSentry(async () => {
   };
 
   // Prepare the slack webhook
-  const SecretsManager = new AWS.SecretsManager({ region: "us-east-1" });
-  const SecretsManagerSlackKey = await SecretsManager.getSecretValue({
-    SecretId: process.env.SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME,
-  }).promise();
-  const webhookJSON = JSON.parse(SecretsManagerSlackKey.SecretString);
-  const webhookUrl = webhookJSON.tech_bots_SLACK_WEBHOOK;
+  const webhookUrl = "https://hooks.slack.com/services/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";
   const webhook = new IncomingWebhook(webhookUrl);
 
   // Send the statistic update to slack
