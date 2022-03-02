@@ -151,7 +151,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group id="input-group-major" label="Primary Major*" label-for="input-major" class="col-md-6">
-          <b-form-select
+          <b-form-select 
             id="input-major"
             v-model="form.major"
             placeholder="Choose a major"
@@ -163,6 +163,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
+
 
         <hr>
         <h4>Want to get hired?</h4>
@@ -703,6 +704,7 @@ export default {
         { value: "", text: "Select one...", disabled: true},
         { value: "no major", text: "No Major" },
         ...major_map,
+        { value: "other", text: "Other" },
       ],
 
       recruit_options: [
