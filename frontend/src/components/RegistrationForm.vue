@@ -481,6 +481,24 @@
           </b-form-invalid-feedback>
         </b-form-group>
         </b-form-row>
+        <b-form-row>
+        <b-form-group id="input-dietary-restrictions" label="Lastly, do you have any dietary restrictions?" label-for="input-dietary-restrictions" class="font-weight-bold col-md-12">
+          <b-form-textarea
+            id="input-dietary-restrictions"
+            v-model="form.dietary_restrictions"
+            name="dietary_restrictions"
+            autocomplete="off"
+            placeholder="Your response here..."
+            rows=3
+            max-rows=3
+            :state="valid_dietary_restrictions"
+          ></b-form-textarea>
+          <b-form-invalid-feedback :state="valid_dietary_restrictions">
+            Please tell us if you have any dietary restrictions (or type N/A if you have none)
+          </b-form-invalid-feedback>
+        </b-form-group>
+        </b-form-row>
+
 
         <hr />
         <!-- MLH Stuff -->
@@ -621,6 +639,7 @@ export default {
         hack_count: "",
         question1: "",
         question2: "",
+        dietary_restrictions: "",
         gmaps_place_id: "",
         referred_by: "",
         track_selected: "general"
@@ -656,6 +675,7 @@ export default {
       valid_survey_5: null,
       valid_question1: null,
       valid_question2: null,
+      valid_dietary_restrictions: null,
 
       school_class: "typeahead",
 
