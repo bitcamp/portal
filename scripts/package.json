@@ -1,0 +1,8 @@
+{
+  "name": "infrastructure",
+  "version": "1.0.0",
+  "dependencies": {
+    "aws-sdk": "^2.1087.0",
+    "papaparse": "^5.3.1"
+  }
+}
