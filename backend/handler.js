@@ -123,6 +123,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
   }
 
   await Promise.all([
+    logStatistic(ddb, "track-"+ body.track_selected, 1),
     logStatistic(ddb, "registrations", 1),
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
