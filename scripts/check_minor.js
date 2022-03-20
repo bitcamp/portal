@@ -20,40 +20,41 @@ let minor_template = template.replace('{body text}', `<div style='display: flex;
 <br /><br />http://gotechnica.org/r?r=389bb 
 <br /><br />If you have any questions, just reply to this email. <br /><br />Best, The Bitcamp Organizing Team", /* required */`);
 
-// NOTE: does this work the same way in a script?
-const scan_params = {
-  TableName: 'platform-prd-registration',
-};
-
-const result = (await ddb.scan(scan_params).promise()).Items;
-
 // if you're 18 by the first day of bitcamp that means you were born <= Apr 8 2004
 // monthIndex for April is 3
 let cutoff = new Date(2004, 3, 8);
-result.forEach(element => {
-  const params = {
-    Destination: { /* required */
-      ToAddresses: [
-        element.email,
-      ],
-    },
-    Message: { /* required */
-      Body: { /* required */
-        Html: {
-          Data: (element.birthday < cutoff ? main_template : minor_template),
+
+const scan_params = {
+  TableName: 'portal-prd-registration',
+};
+
+(async function () {
+  const result = await ddb.scan(scan_params).promise();
+
+  result.Items.forEach(element => {
+    const params = {
+      Destination: { /* required */
+        ToAddresses: [
+          element.email,
+        ],
+      },
+      Message: { /* required */
+        Body: { /* required */
+          Html: {
+            Data: (new Date(element.birthday) < cutoff ? main_template : minor_template),
+          },
+        },
+        Subject: { /* required */
+          Data: "You're Registered for Bitcamp 2021! Now Refer Your Friends...", /* required */
         },
       },
-      Subject: { /* required */
-        Data: "You're Registered for Bitcamp 2021! Now Refer Your Friends...", /* required */
-      },
-    },
-    ConfigurationSetName: 'platform_prod',
-    Source: 'hello@bit.camp', /* required */
-  };
-  ses.sendEmail(params, (err, data) => {
-    if (err) console.log(err, err.stack); // an error occurred
-    else console.log(data); // successful response
+      ConfigurationSetName: 'platform_prod',
+      Source: 'hello@bit.camp', /* required */
+    };
+    ses.sendEmail(params, (err, data) => {
+      if (err) console.log(err, err.stack); // an error occurred
+      else console.log(data); // successful response
+    });
   });
-});
 
-
+})();
