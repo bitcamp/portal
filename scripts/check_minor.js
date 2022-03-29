@@ -75,15 +75,43 @@ let minor_template = {
 // monthIndex for April is 3
 let cutoff = new Date(2004, 3, 8);
 
-const scan_params = {
-  TableName: 'portal-prd-registration',
-};
-
 let main_emails = [];
 let minor_emails = [];
 
+const downloadRegistrations = async (stage) => {
+  const fullTableName = `portal-${stage}-registration`;
+  let params = {
+    TableName: fullTableName,
+  };
+
+  registrationResults = [];
+
+  // We'll be looping through repeatedly, appending
+  done = false;
+  do {
+    ddb.scan(params, (err, data) => {
+      if (err) console.log(err);
+      else {
+        registrationResults = [
+          registrationResults,
+          ...data.Items,
+        ];
+      }
+      // If we reached the 1MB limit, we scan some more with the old startKey
+      if (typeof data.LastEvalutedKey !== 'undefined') {
+        params.ExclusiveStartKey = data.LastEvalutedKey;
+      } else {
+        done = true;
+      }
+    });
+    await sleep(1000)
+  } while (!done);
+
+  return registrationResults;
+};
+
 (async function () {
-  const result = await ddb.scan(scan_params).promise();
+  const result = await downloadRegistrations('prd');
 
   result.Items.forEach(element => {
     if (new Date(element.birthday) < cutoff) {
