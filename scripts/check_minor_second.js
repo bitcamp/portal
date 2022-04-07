@@ -9,7 +9,7 @@ const ddb = new AWS.DynamoDB.DocumentClient();
 
 let main_html = fs.readFileSync('./templates/rsvp_template.html', 'utf8');
 let minors_html = fs.readFileSync('./templates/minors_rsvp_template.html', 'utf8');
-// let users = Papa.parse(fs.readFileSync('./hypecamp-users.csv', 'utf8'), { header: true });
+let old_minors = Papa.parse(fs.readFileSync('./minors-list.csv', 'utf8'), { header: true });
 
 // let template = fs.readFileSync('../users/email_template.html', 'utf8');
 // template = template.replace('{header text}',);
@@ -126,6 +126,8 @@ const minorsFile = `./rsvp-minors-users.csv`;
 (async function () {
   const result = await downloadRegistrations('prd');
 
+  let minor_set = new Set(old_minors.data.map((user) => user.Email));
+
   // let temp = await downloadRegistrations('prd');
   // temp.forEach(element => {
   //   console.log(new Date(element.birthday));
@@ -159,19 +161,22 @@ const minorsFile = `./rsvp-minors-users.csv`;
   
         main_users.push(element);
       } else {
-        minor_emails.push({
-          "Destination": {
-            "ToAddresses": [
-              element.email,
-            ]
-          },
-          "ReplacementTemplateData": JSON.stringify({
-            "name": element.name.split(" ")[0],
-            "link": "https://docs.google.com/forms/d/e/1FAIpQLSehul00a34SEH-cZ0u8VoaR2H-xyFF3V-RACwlPurFQufKiMA/viewform?entry.1444202695=" + element.name + "&entry.369431247=" + encodeURIComponent(element.email)        })
-        });
-        console.log(element.email);
-  
-        minor_users.push(element);
+        if (!minor_set.has(element.email))
+        {
+          minor_emails.push({
+            "Destination": {
+              "ToAddresses": [
+                element.email,
+              ]
+            },
+            "ReplacementTemplateData": JSON.stringify({
+              "name": element.name.split(" ")[0],
+              "link": "https://docs.google.com/forms/d/e/1FAIpQLSehul00a34SEH-cZ0u8VoaR2H-xyFF3V-RACwlPurFQufKiMA/viewform?entry.1444202695=" + element.name + "&entry.369431247=" + encodeURIComponent(element.email)        })
+          });
+          console.log(element.email);
+    
+          minor_users.push(element);
+        }
       }
     } catch(error) {
       console.log("Possibly invalid birthday: " + element.birthday + "\n" + error);
