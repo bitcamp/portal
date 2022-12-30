@@ -3,17 +3,22 @@
     <b-container>
       <b-card class="main-card mt-3 mt-md-5">
         <b-row>
-          <b-col md=1></b-col>
+          <b-col md="1" />
           <b-col>
             <h1>You're registered for Bitcamp 2022!</h1>
 
-            <img style="width: 200px; height 200px;" src="@/assets/bitcamp.gif" />
+            <img
+              style="width: 200px; height 200px;"
+              src="@/assets/bitcamp.gif"
+            >
 
             <div class="py-3">
               <p class="mb-4">
-                You'll get a confirmation email shortly. See you by the campfire!
-                <br/>
-                If you have any questions, be sure to reach out to <a href="mailto:hello@bit.camp">hello@bit.camp</a>.                
+                You'll get a confirmation email shortly. See you by the
+                campfire!
+                <br>
+                If you have any questions, be sure to reach out to
+                <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
               </p>
 
               <!-- <p class="mb-1">
@@ -55,22 +60,22 @@
               </b-row> -->
 
               <p class="mb-1">
-                Where did you hear about us? Letting us know helps us reach more people!
+                Where did you hear about us? Letting us know helps us reach more
+                people!
               </p>
 
               <!-- Heard from -->
               <b-row class="mb-5">
-                <b-col md=1></b-col>
+                <b-col md="1" />
                 <b-col>
-
                   <!-- <b-input-group> -->
-                    <b-form-select
-                      class="flex-0"
-                      v-model="heardFrom"
-                      @change="handleHeardFrom"
-                      :options="options"
-                    />
-                    <!-- <b-input-group-append>
+                  <b-form-select
+                    v-model="heardFrom"
+                    class="flex-0"
+                    :options="options"
+                    @change="handleHeardFrom"
+                  />
+                  <!-- <b-input-group-append>
                       <b-button
                         v-clipboard:copy="referralLink"
                         v-clipboard:success="changeCopyText"
@@ -87,21 +92,20 @@
                     </b-input-group-append>
                   </b-input-group> -->
                 </b-col>
-                <b-col md=1></b-col>
+                <b-col md="1" />
               </b-row>
 
               <p>
-                Follow us on social media to make sure you don't miss any updates from Bitcamp.
+                Follow us on social media to make sure you don't miss any
+                updates from Bitcamp.
               </p>
               <!-- Social links -->
               <div class="pb-3">
-                <social-links/>
+                <social-links />
               </div>
-
             </div>
-
           </b-col>
-          <b-col md=1></b-col>
+          <b-col md="1" />
         </b-row>
       </b-card>
     </b-container>
@@ -109,24 +113,30 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueClipboard from 'vue-clipboard2';
-import VueConfetti from 'vue-confetti';
-import generalMixin from '../mixins/general';
-import SocialLinks from '../components/SocialLinks.vue';
+import Vue from "vue";
+import VueClipboard from "vue-clipboard2";
+import VueConfetti from "vue-confetti";
+import generalMixin from "../mixins/general";
+import SocialLinks from "../components/SocialLinks.vue";
 
 Vue.use(VueClipboard);
 Vue.use(VueConfetti);
 
 export default {
-  name: 'Team',
+  name: "ThanksView",
   components: { SocialLinks },
   mixins: [generalMixin],
-  data () {
+  props: {
+    referralID: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
     return {
       copyBtnText: "Copy Link",
 
-      heardFrom : "",
+      heardFrom: "",
       options: [
         { value: "", text: "How did you find out about us?", disabled: true },
         { value: "hf-instagram", text: "Instagram" },
@@ -142,32 +152,8 @@ export default {
         { value: "hf-flyer", text: "A Flyer or Poster" },
         { value: "hf-linkedin", text: "LinkedIn" },
         { value: "hf-other", text: "Other" },
-      ]
-
-    }
-  },
-
-  mounted() {
-    this.$confetti.start({
-      defaultType: 'rect',
-      particlesPerFrame: 0.25,
-      defaultColors: [
-        '#FF3F46',
-        '#FF6F3F',
-        '#FFAF3F',
-        '#FFEF3F',
-        '#CBF2FF',
-        '#FFFFFF',
-        '#528CA5',
-        '#528CA5'
-      ]
-    });
-
-    this.sleep(3000).then(() => {
-      this.$confetti.stop();
-    });
-    this.sendAnalyticsEvent('completed_registration');
-    // gtag('event', 'conversion', {'send_to': this.getEnvVariable('GOOGLE_AD_ANALYTICS_ID')});
+      ],
+    };
   },
 
   computed: {
@@ -175,24 +161,41 @@ export default {
       return `${document.location.origin}/${this.referralID}`;
     },
   },
-  props: {
-      referralID: {
-          type: String,
-          default: ""
-      }
+
+  mounted() {
+    this.$confetti.start({
+      defaultType: "rect",
+      particlesPerFrame: 0.25,
+      defaultColors: [
+        "#FF3F46",
+        "#FF6F3F",
+        "#FFAF3F",
+        "#FFEF3F",
+        "#CBF2FF",
+        "#FFFFFF",
+        "#528CA5",
+        "#528CA5",
+      ],
+    });
+
+    this.sleep(3000).then(() => {
+      this.$confetti.stop();
+    });
+    // this.sendAnalyticsEvent('completed_registration');
+    // gtag('event', 'conversion', {'send_to': this.getEnvVariable('GOOGLE_AD_ANALYTICS_ID')});
   },
   methods: {
     changeCopyText() {
       this.copyBtnText = "Link copied!";
-      this.sleep(1000).then( () => {
+      this.sleep(1000).then(() => {
         this.copyBtnText = "Copy Link";
-        this.$gtag.event('copied-referral-link', { method: 'Google' })
+        this.$gtag.event("copied-referral-link", { method: "Google" });
         this.track({
           referral_id: this.referralID,
           key: "copied-referral",
-          value: true
+          value: true,
         });
-      })
+      });
     },
     // Select the entire input value on click
     handleLinkInputClick(event) {
@@ -201,11 +204,11 @@ export default {
       const input = event.currentTarget;
       input.setSelectionRange(0, input.value.length);
     },
-    handleHeardFrom(event) {
+    handleHeardFrom() {
       this.track({
         referral_id: this.referralID,
         key: this.heardFrom,
-        value: 1
+        value: 1,
       });
     },
   },
@@ -213,7 +216,6 @@ export default {
 </script>
 
 <style scoped>
-
 p {
   font-size: 1.05rem;
 }
@@ -234,5 +236,4 @@ p {
   z-index: 0;
   margin: 0;
 }
-
 </style>

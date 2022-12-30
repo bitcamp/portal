@@ -1,10 +1,10 @@
-import Axios from 'axios';
-import Config from '../config/general';
+import Axios from "axios";
+import Config from "../config/general";
 
 export default {
   methods: {
     sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise((resolve) => setTimeout(resolve, ms));
     },
     async performGetRequest(baseUrl, endpoint) {
       const stage = this.getCurrentEnvironment();
@@ -30,7 +30,7 @@ export default {
       try {
         const result = await Axios.put(endpoint, params, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
         });
         return result;
@@ -40,21 +40,21 @@ export default {
       }
     },
     async track(event) {
-      return this.performPostRequest(this.getEnvVariable('BACKEND_ENDPOINT'), 'track', event);
+      return this.performPostRequest(this.getEnvVariable("BACKEND_ENDPOINT"), "track", event);
     },
-    async sendAnalyticsEvent(eventType) {
-      if (this.getCurrentEnvironment() === 'prd') {
-        // return await Axios.post(this.getEnvVariable('ANALYTICS_ENDPOINT'), {type: eventType, "date": (new Date().toLocaleDateString())});
-      }
-    },
+    // async sendAnalyticsEvent(eventType) {
+    //   if (this.getCurrentEnvironment() === 'prd') {
+    //     // return await Axios.post(this.getEnvVariable('ANALYTICS_ENDPOINT'), {type: eventType, "date": (new Date().toLocaleDateString())});
+    //   }
+    // },
     getCurrentEnvironment() {
-      if (window.location.hostname === 'register.bit.camp') {
-        return 'prd';
+      if (window.location.hostname === "register.bit.camp") {
+        return "prd";
       }
-      if (window.location.hostname === 'register.beta.bit.camp') {
-        return 'stg';
+      if (window.location.hostname === "register.beta.bit.camp") {
+        return "stg";
       }
-      return 'dev';
+      return "dev";
     },
     getEnvVariable(variableName) {
       if (Config.shared[variableName]) {
