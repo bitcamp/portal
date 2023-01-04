@@ -51,6 +51,12 @@ body {
   --soil: #7F6C5F;
   --bark: #A58D7C;
   --sand: #E5D8CE;
+  --red-orange: #e87347;
+  --faded-red-orange: #e8734780;
+  --pale-red: #ea6666;
+  --faded-pale-red: #ea666640;
+  --pale-grey: #bbbbbb;
+  --faded-light-grey: #d9d9d980;
   --bitcamp-font-title: Aleo;
   --bitcamp-font-general: Avenir;
   --bitcamp-fontsize-title: 48px;
@@ -95,8 +101,7 @@ a:hover {
 label {
   font-size: 0.85rem;
   margin-bottom: 0.2rem;
-  margin-left: 0.5rem;
-  color: var(--charcoal-grey);
+  color: var(--black);
 }
 
 /* Body 2 */
