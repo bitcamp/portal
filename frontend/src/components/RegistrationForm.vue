@@ -1475,6 +1475,65 @@ export default {
   outline: 0 !important;
   box-shadow: 0 0 0 0.15rem var(--light-orange) !important;
 }
+
+/* checkbox */
+input[type="checkbox"]:hover ~ .custom-control-label::before {
+  box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
+}
+input[type="checkbox"]:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
+}
+input[type="checkbox"]:checked ~ .custom-control-label::before {
+  background-color: orange;
+  border-color: grey;
+}
+/* disabled checkbox */
+input[type="checkbox"]:disabled ~ .custom-control-label::before {
+  box-shadow: none !important;
+  background-color: white;
+  border-color: lightgrey;
+}
+input[type="checkbox"]:disabled:checked ~ .custom-control-label::before {
+  background-color: rgba(255, 165, 0, 0.4) !important;
+}
+
+/* radio button */
+input[type="radio"]:checked ~ .custom-control-label::after {
+  background-image: none;
+  transform: scale(0.7);
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 10px inset orange;
+}
+input[type="radio"]:checked ~ .custom-control-label::before {
+  background-color: white;
+  border-color: orange;
+}
+input[type="radio"]:hover ~ .custom-control-label::before {
+  box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
+  background-color: rgba(255, 165, 0, 0.3);
+}
+input[type="radio"]:focus ~ .custom-control-label::before {
+  box-shadow: none;
+}
+input[type="radio"]:active ~ .custom-control-label::before {
+  box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.5);
+  background-color: rgba(255, 165, 0, 0.5);
+}
+/* disabled radio button */
+input[type="radio"]:disabled:hover ~ .custom-control-label::before {
+  box-shadow: none;
+}
+input[type="radio"]:disabled ~ .custom-control-label::before {
+  border-color: lightgrey;
+  background-color: white;
+}
+input[type="radio"]:disabled:checked ~ .custom-control-label::before {
+  background-color: white !important;
+  border-color: rgba(255, 165, 0, 0.4);
+}
+input[type="radio"]:disabled:checked  ~ .custom-control-label::after {
+  box-shadow: 0px 0px 0px 10px inset rgb(255, 165, 0, 0.4);
+}
 </style>
 
 <style scoped>
