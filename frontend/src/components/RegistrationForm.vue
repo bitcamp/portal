@@ -123,8 +123,9 @@
               id="input-gender"
               v-model="form.gender"
               placeholder="Choose a gender identity"
+              class="form-select"
               :options="gender_options"
-              :state="valid_gender"
+              :state="valid_gender"            
             />
             <b-form-invalid-feedback :state="valid_gender">
               Please select a gender identity
@@ -139,6 +140,7 @@
             <b-form-select
               id="input-ethnicity"
               v-model="form.ethnicity"
+              class="form-select"
               placeholder="Choose an ethnicity"
               :options="ethnicity_options"
               :state="valid_ethnicity"
@@ -188,6 +190,7 @@
               id="input-schoolyear"
               v-model="form.school_year"
               placeholder="Choose a major"
+              class="form-select"
               :options="school_year_options"
               :state="valid_school_year"
             />
@@ -204,6 +207,7 @@
             <b-form-select
               id="input-major"
               v-model="form.major"
+              class="form-select"
               placeholder="Choose a major"
               :options="major_options"
               :state="valid_major"
@@ -233,6 +237,7 @@
               v-model="form.recruit"
               placeholder="Choose an option"
               :options="recruit_options"
+              class="form-select"
               :state="valid_recruit"
             />
             <b-form-invalid-feedback :state="valid_recruit">
@@ -520,6 +525,7 @@
           >
             <b-form-select
               id="input-4"
+              class="form-select"
               v-model="form.tshirt_size"
               placeholder="Choose a T-shirt size"
               :options="tshirt_size_options"
@@ -1480,6 +1486,21 @@ hr {
     border-color: var(--faded-red-orange);
     background-color: var(--faded-light-grey);
   }
+}
+
+.form-select {
+  appearance:none;
+  background-image: url("../assets/dropdown-icons/dropdown-arrow.png") ;
+  background-size: 25px 25px;
+  background-repeat: none;
+  overflow: hidden;
+}
+
+.form-select:active {
+  appearance: none;
+  background-image: url("../assets/dropdown-icons/dropdown-arrow2.png");
+  background-size: 25px 25px;
+  overflow: hidden;
 }
 
 .btn-purple {
