@@ -3,7 +3,7 @@
     <b-col md="1" />
     <b-col md="10">
       <br />
-      <h1 style="text-align: left">Register for Bitcamp 2022</h1>
+      <h1 style="text-align: left">Register for Bitcamp 2023</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Chat with us in the bottom right hand corner or email
@@ -19,7 +19,7 @@
         <!-- Name -->
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2022 at the
+          Once you register, you'll receive more info about Bitcamp 2023 at the
           email you provide.
         </p>
         <b-form-row>
@@ -58,7 +58,7 @@
               :state="valid_birthday"
               type="date"
               min="1900-01-01"
-              max="2022-01-01"
+              max="2023-01-01"
             />
             <b-form-invalid-feedback :state="valid_birthday">
               Please enter your birthday
@@ -512,7 +512,7 @@
         <h4 class="mb-2">Select a T-shirt size!</h4>
         <p class="info">
           We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
-          like, and your very own Bitcamp 2022 shirt will be given to you once
+          like, and your very own Bitcamp 2023 shirt will be given to you once
           you arrive at UMD.
         </p>
 
