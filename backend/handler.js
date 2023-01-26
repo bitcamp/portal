@@ -205,7 +205,7 @@ module.exports.upload_resume = withSentry(async (event) => {
   const filePath = `${folder}/${body.filename}`;
 
   const params = {
-    Bucket: 'bitcamp-2022-resumes',
+    Bucket: 'bitcamp-2023-resumes',
     Key: filePath,
     Expires: 600,
     ContentType: 'multipart/form-data',
@@ -215,7 +215,7 @@ module.exports.upload_resume = withSentry(async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ putUrl: s3Result, uploadUrl: `https://bitcamp-2022-resumes.s3.amazonaws.com/${filePath}` }),
+    body: JSON.stringify({ putUrl: s3Result, uploadUrl: `https://bitcamp-2023-resumes.s3.amazonaws.com/${filePath}` }),
     headers: HEADERS,
   };
 });
