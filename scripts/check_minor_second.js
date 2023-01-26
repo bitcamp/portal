@@ -204,7 +204,7 @@ const minorsFile = `./rsvp-minors-users.csv`;
 
     const main_params = {
       Destinations: chunk,
-      ConfigurationSetName: 'registration-2022',
+      ConfigurationSetName: 'registration-2023',
       Source: 'hello@bit.camp', // required
       Template: "MainTemplate",
       DefaultTemplateData: JSON.stringify({
@@ -223,7 +223,7 @@ const minorsFile = `./rsvp-minors-users.csv`;
 
     const minor_params = {
       Destinations: chunk,
-      ConfigurationSetName: 'registration-2022',
+      ConfigurationSetName: 'registration-2023',
       Source: 'hello@bit.camp', // required
       Template: "MinorTemplate",
       DefaultTemplateData: JSON.stringify({

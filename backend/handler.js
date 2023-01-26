@@ -161,7 +161,7 @@ const sendConfirmationEmail = async (fullName, email, referralID, user) => {
   const params = {
     Destination: { ToAddresses: [email] },
     Source: "Bitcamp <hello@bit.camp>",
-    ConfigurationSetName: "registration-2022",
+    ConfigurationSetName: "registration-2023",
     Template: "DetailedHackerRegistrationConfirmation",
     TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
