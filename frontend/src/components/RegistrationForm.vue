@@ -2,15 +2,17 @@
   <b-row>
     <b-col md="1" />
     <b-col md="10">
-      <br />
-      <h1 style="text-align: left">Register for Bitcamp 2022</h1>
+      <br>
+      <h1 style="text-align: left">
+        Register for Bitcamp 2022
+      </h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Chat with us in the bottom right hand corner or email
-        <a href="mailto:hello@bit.camp">hello@bit.camp</a>. <br />
+        <a href="mailto:hello@bit.camp">hello@bit.camp</a>. <br>
         You can also learn more at <a href="https://bit.camp">bit.camp</a>!
       </p>
-      <hr />
+      <hr>
       <b-form
         class="registration-form"
         autocomplete="on"
@@ -218,7 +220,7 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <h4>Want to get hired?</h4>
         <p class="info">
           Let us know, and we'll pass your info on to our partners and sponsors!
@@ -285,12 +287,12 @@
         </b-form-row>
 
         <!-- Track selection -->
-        <hr />
+        <hr>
         <h4>Choose a track!</h4>
         <TrackSelection :default="'general'" @picked="updateTrack" />
 
         <!-- Shipping Address -->
-        <hr />
+        <hr>
         <h4>Want to give us a shipping address?</h4>
         <p class="info">
           We plan on handing out all swag in-person at the event, but in case we
@@ -417,7 +419,7 @@
         </p>
         <b-form-group
           class="font-weight-bold"
-          label="How willing are you to do Karaoke?*"
+          label="What animal would you willingly fight for 5 minutes?*"
         >
           <b-form-radio-group
             id="survey-1"
@@ -425,26 +427,45 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_1"
           >
-            <b-form-radio value="r"> I'm up on the stage! </b-form-radio>
-            <b-form-radio value="g"> Takes some convincing </b-form-radio>
-            <b-form-radio value="b"> Never in my life </b-form-radio>
-            <b-form-radio value="g1"> Karaoke? What's that? </b-form-radio>
+            <b-form-radio value="r">
+              A gorilla
+            </b-form-radio>
+            <b-form-radio value="g">
+              A bear
+            </b-form-radio>
+            <b-form-radio value="b">
+              A giraffe
+            </b-form-radio>
+            <b-form-radio value="g1"> 
+              A snake
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_1">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="Would you rather go to:*">
+        <b-form-group 
+          class="font-weight-bold" 
+          label="If you were running out of time to finish a project, what would you do?*"
+        >
           <b-form-radio-group
             id="survey-2"
             v-model="form.selected_survey_2"
             class="font-weight-normal pt-2"
             :state="valid_survey_2"
           >
-            <b-form-radio value="b"> Broadway Show </b-form-radio>
-            <b-form-radio value="g"> Concert </b-form-radio>
-            <b-form-radio value="r"> Mosh Pit </b-form-radio>
-            <b-form-radio value="b1"> I'll stay in for the night </b-form-radio>
+            <b-form-radio value="b">
+              Focus on priorities and speed up
+            </b-form-radio>
+            <b-form-radio value="g">
+              Continue working and following the same tempo
+            </b-form-radio>
+            <b-form-radio value="r">
+              Ask for help from colleagues
+            </b-form-radio>
+            <b-form-radio value="b1">
+              Ask for an extended deadline
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_2">
             Please select an answer
@@ -452,7 +473,7 @@
         </b-form-group>
         <b-form-group
           class="font-weight-bold"
-          label="When do you get to class?*"
+          label="If you could find out one thing about your future using a crystal ball, what would it be that you would want to know?*"
         >
           <b-form-radio-group
             id="survey-3"
@@ -460,26 +481,46 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_3"
           >
-            <b-form-radio value="g"> 10 minutes early </b-form-radio>
-            <b-form-radio value="b"> Right on time </b-form-radio>
-            <b-form-radio value="r"> 5 minutes late </b-form-radio>
-            <b-form-radio value="r1"> Wait, I had class today? </b-form-radio>
+            <b-form-radio value="g">
+              Know how your career unfolds
+            </b-form-radio>
+            <b-form-radio value="b">
+              Know how you die
+            </b-form-radio>
+            <b-form-radio value="r">
+              Know all the places you end up living in
+            </b-form-radio>
+            <b-form-radio value="r1">
+              Know what to invest in
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_3">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="Your pizza order is:*">
+        <b-form-group 
+          class="font-weight-bold" 
+          label="If we paid you $100 per minute to give a speech in front of 2,000 people about one of your interests/hobbies, how long could you speak without stopping?
+*"
+        >
           <b-form-radio-group
             id="survey-4"
             v-model="form.selected_survey_4"
             class="font-weight-normal pt-2"
             :state="valid_survey_4"
           >
-            <b-form-radio value="b"> Classic cheese </b-form-radio>
-            <b-form-radio value="r"> ALL THE TOPPINGS </b-form-radio>
-            <b-form-radio value="g"> Different every time </b-form-radio>
-            <b-form-radio value="r1"> Pineapple. Pizza. </b-form-radio>
+            <b-form-radio value="b">
+              5 minutes
+            </b-form-radio>
+            <b-form-radio value="r">
+              10 minutes
+            </b-form-radio>
+            <b-form-radio value="g">
+              30 minutes
+            </b-form-radio>
+            <b-form-radio value="r1">
+              60 minutes
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
             Please select an answer
@@ -487,7 +528,7 @@
         </b-form-group>
         <b-form-group
           class="font-weight-bold"
-          label="What's your favorite thing about hackathons?*"
+          label="Given the chance to go back in time, you would…*"
         >
           <b-form-radio-group
             id="survey-5"
@@ -495,11 +536,17 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_5"
           >
-            <b-form-radio value="r"> Hacking </b-form-radio>
-            <b-form-radio value="g"> Free stuff </b-form-radio>
-            <b-form-radio value="b"> Workshops </b-form-radio>
+            <b-form-radio value="r">
+              go to a concert of your favorite old musician/band
+            </b-form-radio>
+            <b-form-radio value="g">
+              go to the first showing of your favorite old movie
+            </b-form-radio>
+            <b-form-radio value="b">
+              go see a historic event in real time
+            </b-form-radio>
             <b-form-radio value="g1">
-              First hackathon, I’ll find out!
+              go to an iconic sports event
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
@@ -507,9 +554,11 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <hr />
+        <hr>
         <!-- T-Shirt Size -->
-        <h4 class="mb-2">Select a T-shirt size!</h4>
+        <h4 class="mb-2">
+          Select a T-shirt size!
+        </h4>
         <p class="info">
           We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
           like, and your very own Bitcamp 2022 shirt will be given to you once
@@ -525,8 +574,8 @@
           >
             <b-form-select
               id="input-4"
-              class="form-select"
               v-model="form.tshirt_size"
+              class="form-select"
               placeholder="Choose a T-shirt size"
               :options="tshirt_size_options"
               :state="valid_tshirt_size"
