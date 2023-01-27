@@ -28,10 +28,8 @@
           >
             <h4>General</h4>
             <p>
-              For any and all hackers! Build the perfect hack using hardware,
-              software, and collaboration with other tech-lovers, design
-              thinkers, and students - all skill and experience levels are
-              welcome!
+              For any and all hackers! Build the perfect hack using hardware, software, and collaboration with 
+              other tech-lovers, design thinkers, and students - all skill and experience levels are welcome!
             </p>
           </b-card>
         </div>
@@ -56,10 +54,9 @@
           >
             <h4>Beginner</h4>
             <p>
-              New to hackathons? Don't know how to code? No worries! At Bitcamp,
-              you'll have access to beginner-friendly workshops, helpful
-              mentors, personalized one-on-one sessions, and resources to
-              kickstart your coding journey.
+              New to hackathons? Don't know how to code? No worries! At Bitcamp, you'll have 
+              access to beginner-friendly workshops, helpful mentors, personalized one-on-one
+              sessions, and resources to kickstart your coding journey.
             </p>
           </b-card>
         </div>
@@ -112,10 +109,37 @@
           >
             <h4>Quantum</h4>
             <p>
-              Our newest track! Hackers will learn more about the field of
-              quantum computing with exclusive mentors, sponsors, and workshops!
-              Hackers will use their knowledge of Python and other computing
-              skills on educational and interactive Quantum Track activities.
+              Hackers will delve into the field of quantum computing with exclusive 
+              mentors, sponsors, and workshops! Hackers will use their knowledge of 
+              Python and other computing skills on educational and interactive 
+              Quantum Track activities.
+            </p>
+          </b-card>
+        </div>
+      </label>
+    </b-col>
+
+    <b-col
+      md="6"
+      class="p-1 col d-flex align-items-stretch"
+    >
+      <label>
+        <input
+          v-model="card"
+          type="radio"
+          value="machine-learning"
+          @click="onClickCard('machine-learning')"
+        >
+        <div class="color h-100 w-100">
+          <b-card
+            class="h-100 w-100 general"
+            :class="{ active: card === 'machine-learning' }"
+          >
+            <h4>Machine Learning</h4>
+            <p>
+              Our newest track! If you’re wowed by recent AI advancements like ChatGPT, this is the track 
+              for you! We will have ML-related workshops, guest speakers, and activities for hackers of all 
+              experience levels.
             </p>
           </b-card>
         </div>
