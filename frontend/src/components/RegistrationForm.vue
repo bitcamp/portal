@@ -153,9 +153,9 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <h4>How about your school?</h4>
-        <br />
+        <br>
 
         <!-- School Type -->
         <b-form-row>
@@ -289,7 +289,10 @@
         <!-- Track selection -->
         <hr>
         <h4>Choose a track!</h4>
-        <TrackSelection :default="'general'" @picked="updateTrack" />
+        <TrackSelection
+          :default="'general'"
+          @picked="updateTrack"
+        />
 
         <!-- Shipping Address -->
         <hr>
@@ -400,14 +403,17 @@
               />
             </b-form-group>
           </b-form-row>
-          <b-form-invalid-feedback :state="valid_address" style="margin: 0">
+          <b-form-invalid-feedback
+            :state="valid_address"
+            style="margin: 0"
+          >
             Please provide a valid shipping address to apply for the hardware
             track.
           </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Bitcamp Campfire Games Survey -->
-        <hr />
+        <hr>
         <h4>Campfire Games Survey</h4>
         <p class="info">
           This year, you’ll once again be put into one of three teams based on
@@ -430,13 +436,13 @@
             <b-form-radio value="r">
               A gorilla
             </b-form-radio>
-            <b-form-radio value="g">
+            <b-form-radio value="r1">
               A bear
             </b-form-radio>
-            <b-form-radio value="b">
+            <b-form-radio value="g">
               A giraffe
             </b-form-radio>
-            <b-form-radio value="g1"> 
+            <b-form-radio value="b"> 
               A snake
             </b-form-radio>
           </b-form-radio-group>
@@ -457,10 +463,10 @@
             <b-form-radio value="b">
               Focus on priorities and speed up
             </b-form-radio>
-            <b-form-radio value="g">
+            <b-form-radio value="r">
               Continue working and following the same tempo
             </b-form-radio>
-            <b-form-radio value="r">
+            <b-form-radio value="g">
               Ask for help from colleagues
             </b-form-radio>
             <b-form-radio value="b1">
@@ -481,10 +487,10 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_3"
           >
-            <b-form-radio value="g">
+            <b-form-radio value="b">
               Know how your career unfolds
             </b-form-radio>
-            <b-form-radio value="b">
+            <b-form-radio value="g">
               Know how you die
             </b-form-radio>
             <b-form-radio value="r">
@@ -509,16 +515,16 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_4"
           >
-            <b-form-radio value="b">
+            <b-form-radio value="g">
               5 minutes
             </b-form-radio>
-            <b-form-radio value="r">
+            <b-form-radio value="b">
               10 minutes
             </b-form-radio>
-            <b-form-radio value="g">
+            <b-form-radio value="r">
               30 minutes
             </b-form-radio>
-            <b-form-radio value="r1">
+            <b-form-radio value="g1">
               60 minutes
             </b-form-radio>
           </b-form-radio-group>
@@ -553,7 +559,34 @@
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-
+        <b-form-group
+          class="font-weight-bold"
+          label="When do you get to class?*"
+        >
+          <b-form-radio-group
+            id="survey-6"
+            v-model="form.selected_survey_6"
+            class="font-weight-normal pt-2"
+            :state="valid_survey_6"
+          >
+            <b-form-radio value="b">
+              10 minutes early
+            </b-form-radio>
+            <b-form-radio value="g">
+              Right on time 
+            </b-form-radio>
+            <b-form-radio value="r"> 
+              5 minutes late 
+            </b-form-radio>
+            <b-form-radio value="b1"> 
+              Wait, I had class today? 
+            </b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_survey_6">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+        
         <hr>
         <!-- T-Shirt Size -->
         <h4 class="mb-2">
@@ -586,9 +619,11 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <!-- Short Questions -->
-        <h4 class="mb-2">Why Bitcamp?</h4>
+        <h4 class="mb-2">
+          Why Bitcamp?
+        </h4>
         <p class="info">
           We'd like to get to know you a little better! Help us learn more about
           you and make Bitcamp even more amazing by answering some questions!
@@ -683,9 +718,11 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <!-- MLH Stuff -->
-        <h4 class="mb-2">Rules and privacy policies</h4>
+        <h4 class="mb-2">
+          Rules and privacy policies
+        </h4>
 
         <b-form-checkbox
           id="checkbox-2"
@@ -697,16 +734,19 @@
           I authorize you to share my application/registration information with
           Major League Hacking for event administration, ranking, and MLH
           administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a
-          >. I further agree to the terms of both the
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>. I further agree to the terms of both the
           <a
             href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions"
             target="_blank"
-            >MLH Contest Terms and Conditions</a
-          >
+          >MLH Contest Terms and Conditions</a>
           and the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a
-          >.*
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>.*
           <b-form-invalid-feedback :state="valid_mlh_privacy">
             Please agree to MLH's privacy policy and terms
           </b-form-invalid-feedback>
@@ -724,8 +764,7 @@
           <a
             href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
             target="_blank"
-            >MLH Code of Conduct</a
-          >.*
+          >MLH Code of Conduct</a>.*
           <b-form-invalid-feedback :state="valid_code_of_conduct">
             Please agree to MLH's code of conduct
           </b-form-invalid-feedback>
@@ -749,7 +788,9 @@
             style="center"
             :disabled="isSending"
           >
-            <h5 class="m-1">Confirm Registration for Bitcamp!</h5>
+            <h5 class="m-1">
+              Confirm Registration for Bitcamp!
+            </h5>
           </b-button>
         </div>
       </b-form>
@@ -880,6 +921,7 @@ export default {
       valid_survey_3: null,
       valid_survey_4: null,
       valid_survey_5: null,
+      valid_survey_6: null,
       valid_question1: null,
       valid_question2: null,
       valid_dietary_restrictions: null,
@@ -1127,6 +1169,7 @@ export default {
         survey_count[this.form.selected_survey_3.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_4.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_5.substring(0, 1)] += 1;
+        survey_count[this.form.selected_survey_6.substring(0, 1)] += 1;
 
         this.form.red = survey_count["r"];
         this.form.green = survey_count["g"];
@@ -1326,6 +1369,12 @@ export default {
         valid_form = false;
       } else {
         this.valid_survey_5 = null;
+      }
+      if (!this.form.selected_survey_6) {
+        this.valid_survey_6 = false;
+        valid_form = false;
+      } else {
+        this.valid_survey_6 = null;
       }
 
       return valid_form;
