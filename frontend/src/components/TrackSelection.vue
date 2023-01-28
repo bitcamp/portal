@@ -1,5 +1,8 @@
 <template>
-  <b-row class="row gx-12">
+  <b-row
+    class="row gx-12"
+    cols="1"
+  >
     <!-- <b-col md="3" class="p-1 d-flex align-items-stretch">
     <label>
         <input type="radio" v-model="card" value="general">
