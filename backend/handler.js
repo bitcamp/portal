@@ -161,7 +161,7 @@ const sendConfirmationEmail = async (fullName, email, referralID, user) => {
   const params = {
     Destination: { ToAddresses: [email] },
     Source: "Bitcamp <hello@bit.camp>",
-    ConfigurationSetName: "registration-2022",
+    ConfigurationSetName: "registration-2023",
     Template: "DetailedHackerRegistrationConfirmation",
     TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
@@ -205,7 +205,7 @@ module.exports.upload_resume = withSentry(async (event) => {
   const filePath = `${folder}/${body.filename}`;
 
   const params = {
-    Bucket: 'bitcamp-2022-resumes',
+    Bucket: 'bitcamp-2023-resumes',
     Key: filePath,
     Expires: 600,
     ContentType: 'multipart/form-data',
@@ -215,7 +215,7 @@ module.exports.upload_resume = withSentry(async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ putUrl: s3Result, uploadUrl: `https://bitcamp-2022-resumes.s3.amazonaws.com/${filePath}` }),
+    body: JSON.stringify({ putUrl: s3Result, uploadUrl: `https://bitcamp-2023-resumes.s3.amazonaws.com/${filePath}` }),
     headers: HEADERS,
   };
 });
