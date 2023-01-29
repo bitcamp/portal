@@ -13,7 +13,7 @@ let main_template = {
   Template: {
     TemplateName: "HypecampTemplate",
     SubjectPart: "You're invited to Bytecamp Hype Camp!",
-    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2022! 
+    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2023! 
     \n\nBitcamp is only a few weeks away, and we know you’re as excited as we are! But why wait to
     \n\nget in on the fun? Do you want a chance to meet other hackers, form new friendships, and 
     \n\nmake a team before Bitcamp officially starts? If so, join us in Edward St. John Learning and
@@ -123,7 +123,7 @@ const fileName = `./hypecamp-users.csv`;
 
     const main_params = {
       Destinations: chunk,
-      ConfigurationSetName: 'registration-2022',
+      ConfigurationSetName: 'registration-2023',
       Source: 'hello@bit.camp', /* required */
       Template: "HypecampTemplate",
       DefaultTemplateData: '{ \"name\":\"Participant\" }',
