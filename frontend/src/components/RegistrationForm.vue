@@ -2,15 +2,17 @@
   <b-row>
     <b-col md="1" />
     <b-col md="10">
-      <br />
-      <h1 style="text-align: left">Register for Bitcamp 2022</h1>
+      <br>
+      <h1 style="text-align: left">
+        Register for Bitcamp 2022
+      </h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Chat with us in the bottom right hand corner or email
-        <a href="mailto:hello@bit.camp">hello@bit.camp</a>. <br />
+        <a href="mailto:hello@bit.camp">hello@bit.camp</a>. <br>
         You can also learn more at <a href="https://bit.camp">bit.camp</a>!
       </p>
-      <hr />
+      <hr>
       <b-form
         class="registration-form"
         autocomplete="on"
@@ -151,9 +153,9 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <h4>How about your school?</h4>
-        <br />
+        <br>
 
         <!-- School Type -->
         <b-form-row>
@@ -218,7 +220,7 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <h4>Want to get hired?</h4>
         <p class="info">
           Let us know, and we'll pass your info on to our partners and sponsors!
@@ -285,12 +287,15 @@
         </b-form-row>
 
         <!-- Track selection -->
-        <hr />
+        <hr>
         <h4>Choose a track!</h4>
-        <TrackSelection :default="'general'" @picked="updateTrack" />
+        <TrackSelection
+          :default="'general'"
+          @picked="updateTrack"
+        />
 
         <!-- Shipping Address -->
-        <hr />
+        <hr>
         <h4>Want to give us a shipping address?</h4>
         <p class="info">
           We plan on handing out all swag in-person at the event, but in case we
@@ -398,14 +403,17 @@
               />
             </b-form-group>
           </b-form-row>
-          <b-form-invalid-feedback :state="valid_address" style="margin: 0">
+          <b-form-invalid-feedback
+            :state="valid_address"
+            style="margin: 0"
+          >
             Please provide a valid shipping address to apply for the hardware
             track.
           </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Bitcamp Campfire Games Survey -->
-        <hr />
+        <hr>
         <h4>Campfire Games Survey</h4>
         <p class="info">
           This year, you’ll once again be put into one of three teams based on
@@ -425,26 +433,45 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_1"
           >
-            <b-form-radio value="r"> I'm up on the stage! </b-form-radio>
-            <b-form-radio value="g"> Takes some convincing </b-form-radio>
-            <b-form-radio value="b"> Never in my life </b-form-radio>
-            <b-form-radio value="g1"> Karaoke? What's that? </b-form-radio>
+            <b-form-radio value="r">
+              I'm up on the stage!
+            </b-form-radio>
+            <b-form-radio value="g">
+              Takes some convincing
+            </b-form-radio>
+            <b-form-radio value="b">
+              Never in my life
+            </b-form-radio>
+            <b-form-radio value="g1">
+              Karaoke? What's that?
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_1">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="Would you rather go to:*">
+        <b-form-group
+          class="font-weight-bold"
+          label="Would you rather go to:*"
+        >
           <b-form-radio-group
             id="survey-2"
             v-model="form.selected_survey_2"
             class="font-weight-normal pt-2"
             :state="valid_survey_2"
           >
-            <b-form-radio value="b"> Broadway Show </b-form-radio>
-            <b-form-radio value="g"> Concert </b-form-radio>
-            <b-form-radio value="r"> Mosh Pit </b-form-radio>
-            <b-form-radio value="b1"> I'll stay in for the night </b-form-radio>
+            <b-form-radio value="b">
+              Broadway Show
+            </b-form-radio>
+            <b-form-radio value="g">
+              Concert
+            </b-form-radio>
+            <b-form-radio value="r">
+              Mosh Pit
+            </b-form-radio>
+            <b-form-radio value="b1">
+              I'll stay in for the night
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_2">
             Please select an answer
@@ -460,26 +487,45 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_3"
           >
-            <b-form-radio value="g"> 10 minutes early </b-form-radio>
-            <b-form-radio value="b"> Right on time </b-form-radio>
-            <b-form-radio value="r"> 5 minutes late </b-form-radio>
-            <b-form-radio value="r1"> Wait, I had class today? </b-form-radio>
+            <b-form-radio value="g">
+              10 minutes early
+            </b-form-radio>
+            <b-form-radio value="b">
+              Right on time
+            </b-form-radio>
+            <b-form-radio value="r">
+              5 minutes late
+            </b-form-radio>
+            <b-form-radio value="r1">
+              Wait, I had class today?
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_3">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="Your pizza order is:*">
+        <b-form-group
+          class="font-weight-bold"
+          label="Your pizza order is:*"
+        >
           <b-form-radio-group
             id="survey-4"
             v-model="form.selected_survey_4"
             class="font-weight-normal pt-2"
             :state="valid_survey_4"
           >
-            <b-form-radio value="b"> Classic cheese </b-form-radio>
-            <b-form-radio value="r"> ALL THE TOPPINGS </b-form-radio>
-            <b-form-radio value="g"> Different every time </b-form-radio>
-            <b-form-radio value="r1"> Pineapple. Pizza. </b-form-radio>
+            <b-form-radio value="b">
+              Classic cheese
+            </b-form-radio>
+            <b-form-radio value="r">
+              ALL THE TOPPINGS
+            </b-form-radio>
+            <b-form-radio value="g">
+              Different every time
+            </b-form-radio>
+            <b-form-radio value="r1">
+              Pineapple. Pizza.
+            </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
             Please select an answer
@@ -495,9 +541,15 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_5"
           >
-            <b-form-radio value="r"> Hacking </b-form-radio>
-            <b-form-radio value="g"> Free stuff </b-form-radio>
-            <b-form-radio value="b"> Workshops </b-form-radio>
+            <b-form-radio value="r">
+              Hacking
+            </b-form-radio>
+            <b-form-radio value="g">
+              Free stuff
+            </b-form-radio>
+            <b-form-radio value="b">
+              Workshops
+            </b-form-radio>
             <b-form-radio value="g1">
               First hackathon, I’ll find out!
             </b-form-radio>
@@ -507,9 +559,11 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <hr />
+        <hr>
         <!-- T-Shirt Size -->
-        <h4 class="mb-2">Select a T-shirt size!</h4>
+        <h4 class="mb-2">
+          Select a T-shirt size!
+        </h4>
         <p class="info">
           We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
           like, and your very own Bitcamp 2022 shirt will be given to you once
@@ -525,8 +579,8 @@
           >
             <b-form-select
               id="input-4"
-              class="form-select"
               v-model="form.tshirt_size"
+              class="form-select"
               placeholder="Choose a T-shirt size"
               :options="tshirt_size_options"
               :state="valid_tshirt_size"
@@ -537,9 +591,11 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <!-- Short Questions -->
-        <h4 class="mb-2">Why Bitcamp?</h4>
+        <h4 class="mb-2">
+          Why Bitcamp?
+        </h4>
         <p class="info">
           We'd like to get to know you a little better! Help us learn more about
           you and make Bitcamp even more amazing by answering some questions!
@@ -613,30 +669,50 @@
         <b-form-row>
           <b-form-group
             id="input-dietary-restrictions"
-            label="Lastly, do you have any dietary restrictions?"
+            label="Lastly, do you have any dietary restrictions? (If other, list out restrictions separated by a comma)"
             label-for="input-dietary-restrictions"
             class="col-md-12"
           >
-            <b-form-textarea
-              id="input-dietary-restrictions"
-              v-model="form.dietary_restrictions"
-              name="dietary_restrictions"
-              autocomplete="off"
-              placeholder="Your response here..."
-              rows="3"
-              max-rows="3"
-              :state="valid_dietary_restrictions"
-            />
             <b-form-invalid-feedback :state="valid_dietary_restrictions">
               Please tell us if you have any dietary restrictions (or type N/A
               if you have none)
             </b-form-invalid-feedback>
+
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
+              <b-form-checkbox
+                v-for="option in diet_options"
+                :key="option.value"
+                v-model="diet_select"
+                :value="option.value"
+                :aria-describedby="ariaDescribedby"
+                name="flavour-3a"
+              >
+                {{ option.text }}
+              </b-form-checkbox>
+              <b-form-checkbox
+                v-model="diet_other"
+              >
+                Other
+              </b-form-checkbox>
+            </b-form-group>
+
+            <b-form-input 
+              v-if="diet_other"
+              v-model="diet_restrictions_other"
+              class="col-4" 
+              aria-label="Dietary Restriction Other Text Box" 
+            />
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <!-- MLH Stuff -->
-        <h4 class="mb-2">Rules and privacy policies</h4>
+        <h4 class="mb-2">
+          Rules and privacy policies
+        </h4>
 
         <b-form-checkbox
           id="checkbox-2"
@@ -648,16 +724,19 @@
           I authorize you to share my application/registration information with
           Major League Hacking for event administration, ranking, and MLH
           administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a
-          >. I further agree to the terms of both the
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>. I further agree to the terms of both the
           <a
             href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions"
             target="_blank"
-            >MLH Contest Terms and Conditions</a
-          >
+          >MLH Contest Terms and Conditions</a>
           and the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a
-          >.*
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>.*
           <b-form-invalid-feedback :state="valid_mlh_privacy">
             Please agree to MLH's privacy policy and terms
           </b-form-invalid-feedback>
@@ -675,8 +754,7 @@
           <a
             href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
             target="_blank"
-            >MLH Code of Conduct</a
-          >.*
+          >MLH Code of Conduct</a>.*
           <b-form-invalid-feedback :state="valid_code_of_conduct">
             Please agree to MLH's code of conduct
           </b-form-invalid-feedback>
@@ -700,7 +778,9 @@
             style="center"
             :disabled="isSending"
           >
-            <h5 class="m-1">Confirm Registration for Bitcamp!</h5>
+            <h5 class="m-1">
+              Confirm Registration for Bitcamp!
+            </h5>
           </b-button>
         </div>
       </b-form>
@@ -903,6 +983,19 @@ export default {
       ],
 
       university_options: [...university_list],
+
+      diet_select: [],
+      diet_other: false,
+      diet_restrictions_other: "",
+      diet_options: [
+        {text: "Vegan", value: "vegan"},
+        {text: "Vegetarian", value: "vegetarian"},
+        {text: "Gluten Free", value: "gluten-free"},
+        {text: "Dairy Free", value: "dairy-free"},
+        {text: "Nut Allergy", value: "nut-allergy"},
+        {text: "Kosher", value: "kosher"},
+        {text: "Halal", value: "halal"},
+      ]
     };
   },
 
@@ -1031,6 +1124,15 @@ export default {
         variant: "danger",
       });
     },
+    createDietaryRestrictionString() {
+      let diet_string = this.diet_select.join(",");
+
+      if (this.diet_other && this.diet_restrictions_other != "") {
+        diet_string = diet_string + ",other(" + this.diet_restrictions_other + ")";
+      }
+
+      return diet_string;
+    },
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
@@ -1082,6 +1184,8 @@ export default {
         this.form.red = survey_count["r"];
         this.form.green = survey_count["g"];
         this.form.blue = survey_count["b"];
+
+        this.form.dietary_restrictions = this.createDietaryRestrictionString();
 
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
