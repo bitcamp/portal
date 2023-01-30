@@ -732,6 +732,7 @@
               v-model="diet_restrictions_other"
               class="col-4" 
               aria-label="Dietary Restriction Other Text Box" 
+              placeholder="Other dietary restriction"
             />
           </b-form-group>
         </b-form-row>
