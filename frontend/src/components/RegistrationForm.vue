@@ -4,7 +4,7 @@
     <b-col md="10">
       <br>
       <h1 style="text-align: left">
-        Register for Bitcamp 2022
+        Register for Bitcamp 2023
       </h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
@@ -21,7 +21,7 @@
         <!-- Name -->
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2022 at the
+          Once you register, you'll receive more info about Bitcamp 2023 at the
           email you provide.
         </p>
         <b-form-row>
@@ -60,7 +60,7 @@
               :state="valid_birthday"
               type="date"
               min="1900-01-01"
-              max="2022-01-01"
+              max="2023-01-01"
             />
             <b-form-invalid-feedback :state="valid_birthday">
               Please enter your birthday
@@ -425,7 +425,7 @@
         </p>
         <b-form-group
           class="font-weight-bold"
-          label="How willing are you to do Karaoke?*"
+          label="What animal would you willingly fight for 5 minutes?*"
         >
           <b-form-radio-group
             id="survey-1"
@@ -434,25 +434,25 @@
             :state="valid_survey_1"
           >
             <b-form-radio value="r">
-              I'm up on the stage!
+              A gorilla
+            </b-form-radio>
+            <b-form-radio value="r1">
+              A bear
             </b-form-radio>
             <b-form-radio value="g">
-              Takes some convincing
+              A giraffe
             </b-form-radio>
-            <b-form-radio value="b">
-              Never in my life
-            </b-form-radio>
-            <b-form-radio value="g1">
-              Karaoke? What's that?
+            <b-form-radio value="b"> 
+              A snake
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_1">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group
-          class="font-weight-bold"
-          label="Would you rather go to:*"
+        <b-form-group 
+          class="font-weight-bold" 
+          label="If you were running out of time to finish a project, what would you do?*"
         >
           <b-form-radio-group
             id="survey-2"
@@ -461,16 +461,16 @@
             :state="valid_survey_2"
           >
             <b-form-radio value="b">
-              Broadway Show
-            </b-form-radio>
-            <b-form-radio value="g">
-              Concert
+              Focus on priorities and speed up
             </b-form-radio>
             <b-form-radio value="r">
-              Mosh Pit
+              Continue working and following the same tempo
+            </b-form-radio>
+            <b-form-radio value="g">
+              Ask for help from colleagues
             </b-form-radio>
             <b-form-radio value="b1">
-              I'll stay in for the night
+              Ask for an extended deadline
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_2">
@@ -479,7 +479,7 @@
         </b-form-group>
         <b-form-group
           class="font-weight-bold"
-          label="When do you get to class?*"
+          label="If you could find out one thing about your future using a crystal ball, what would it be that you would want to know?*"
         >
           <b-form-radio-group
             id="survey-3"
@@ -487,26 +487,27 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_3"
           >
-            <b-form-radio value="g">
-              10 minutes early
-            </b-form-radio>
             <b-form-radio value="b">
-              Right on time
+              Know how your career unfolds
+            </b-form-radio>
+            <b-form-radio value="g">
+              Know how you die
             </b-form-radio>
             <b-form-radio value="r">
-              5 minutes late
+              Know all the places you end up living in
             </b-form-radio>
             <b-form-radio value="r1">
-              Wait, I had class today?
+              Know what to invest in
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_3">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group
-          class="font-weight-bold"
-          label="Your pizza order is:*"
+        <b-form-group 
+          class="font-weight-bold" 
+          label="If we paid you $100 per minute to give a speech in front of 2,000 people about one of your interests/hobbies, how long could you speak without stopping?
+*"
         >
           <b-form-radio-group
             id="survey-4"
@@ -514,17 +515,17 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_4"
           >
+            <b-form-radio value="g">
+              5 minutes
+            </b-form-radio>
             <b-form-radio value="b">
-              Classic cheese
+              10 minutes
             </b-form-radio>
             <b-form-radio value="r">
-              ALL THE TOPPINGS
+              30 minutes
             </b-form-radio>
-            <b-form-radio value="g">
-              Different every time
-            </b-form-radio>
-            <b-form-radio value="r1">
-              Pineapple. Pizza.
+            <b-form-radio value="g1">
+              60 minutes
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
@@ -533,7 +534,7 @@
         </b-form-group>
         <b-form-group
           class="font-weight-bold"
-          label="What's your favorite thing about hackathons?*"
+          label="Given the chance to go back in time, you would…*"
         >
           <b-form-radio-group
             id="survey-5"
@@ -542,23 +543,50 @@
             :state="valid_survey_5"
           >
             <b-form-radio value="r">
-              Hacking
+              go to a concert of your favorite old musician/band
             </b-form-radio>
             <b-form-radio value="g">
-              Free stuff
+              go to the first showing of your favorite old movie
             </b-form-radio>
             <b-form-radio value="b">
-              Workshops
+              go see a historic event in real time
             </b-form-radio>
             <b-form-radio value="g1">
-              First hackathon, I’ll find out!
+              go to an iconic sports event
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-
+        <b-form-group
+          class="font-weight-bold"
+          label="When do you get to class?*"
+        >
+          <b-form-radio-group
+            id="survey-6"
+            v-model="form.selected_survey_6"
+            class="font-weight-normal pt-2"
+            :state="valid_survey_6"
+          >
+            <b-form-radio value="b">
+              10 minutes early
+            </b-form-radio>
+            <b-form-radio value="g">
+              Right on time 
+            </b-form-radio>
+            <b-form-radio value="r"> 
+              5 minutes late 
+            </b-form-radio>
+            <b-form-radio value="b1"> 
+              Wait, I had class today? 
+            </b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_survey_6">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+        
         <hr>
         <!-- T-Shirt Size -->
         <h4 class="mb-2">
@@ -566,7 +594,7 @@
         </h4>
         <p class="info">
           We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
-          like, and your very own Bitcamp 2022 shirt will be given to you once
+          like, and your very own Bitcamp 2023 shirt will be given to you once
           you arrive at UMD.
         </p>
 
@@ -911,6 +939,7 @@ export default {
       valid_survey_3: null,
       valid_survey_4: null,
       valid_survey_5: null,
+      valid_survey_6: null,
       valid_question1: null,
       valid_question2: null,
       valid_dietary_restrictions: null,
@@ -1180,6 +1209,7 @@ export default {
         survey_count[this.form.selected_survey_3.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_4.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_5.substring(0, 1)] += 1;
+        survey_count[this.form.selected_survey_6.substring(0, 1)] += 1;
 
         this.form.red = survey_count["r"];
         this.form.green = survey_count["g"];
@@ -1381,6 +1411,12 @@ export default {
         valid_form = false;
       } else {
         this.valid_survey_5 = null;
+      }
+      if (!this.form.selected_survey_6) {
+        this.valid_survey_6 = false;
+        valid_form = false;
+      } else {
+        this.valid_survey_6 = null;
       }
 
       return valid_form;
