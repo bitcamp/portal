@@ -697,24 +697,42 @@
         <b-form-row>
           <b-form-group
             id="input-dietary-restrictions"
-            label="Lastly, do you have any dietary restrictions?"
+            label="Lastly, do you have any dietary restrictions? (If other, list out restrictions separated by a comma)"
             label-for="input-dietary-restrictions"
             class="col-md-12"
           >
-            <b-form-textarea
-              id="input-dietary-restrictions"
-              v-model="form.dietary_restrictions"
-              name="dietary_restrictions"
-              autocomplete="off"
-              placeholder="Your response here..."
-              rows="3"
-              max-rows="3"
-              :state="valid_dietary_restrictions"
-            />
             <b-form-invalid-feedback :state="valid_dietary_restrictions">
               Please tell us if you have any dietary restrictions (or type N/A
               if you have none)
             </b-form-invalid-feedback>
+
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
+              <b-form-checkbox
+                v-for="option in diet_options"
+                :key="option.value"
+                v-model="diet_select"
+                :value="option.value"
+                :aria-describedby="ariaDescribedby"
+                name="flavour-3a"
+              >
+                {{ option.text }}
+              </b-form-checkbox>
+              <b-form-checkbox
+                v-model="diet_other"
+              >
+                Other
+              </b-form-checkbox>
+            </b-form-group>
+
+            <b-form-input 
+              v-if="diet_other"
+              v-model="diet_restrictions_other"
+              class="col-4" 
+              aria-label="Dietary Restriction Other Text Box" 
+            />
           </b-form-group>
         </b-form-row>
 
@@ -994,6 +1012,19 @@ export default {
       ],
 
       university_options: [...university_list],
+
+      diet_select: [],
+      diet_other: false,
+      diet_restrictions_other: "",
+      diet_options: [
+        {text: "Vegan", value: "vegan"},
+        {text: "Vegetarian", value: "vegetarian"},
+        {text: "Gluten Free", value: "gluten-free"},
+        {text: "Dairy Free", value: "dairy-free"},
+        {text: "Nut Allergy", value: "nut-allergy"},
+        {text: "Kosher", value: "kosher"},
+        {text: "Halal", value: "halal"},
+      ]
     };
   },
 
@@ -1122,6 +1153,15 @@ export default {
         variant: "danger",
       });
     },
+    createDietaryRestrictionString() {
+      let diet_string = this.diet_select.join(",");
+
+      if (this.diet_other && this.diet_restrictions_other != "") {
+        diet_string = diet_string + ",other(" + this.diet_restrictions_other + ")";
+      }
+
+      return diet_string;
+    },
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
@@ -1174,6 +1214,8 @@ export default {
         this.form.red = survey_count["r"];
         this.form.green = survey_count["g"];
         this.form.blue = survey_count["b"];
+
+        this.form.dietary_restrictions = this.createDietaryRestrictionString();
 
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
