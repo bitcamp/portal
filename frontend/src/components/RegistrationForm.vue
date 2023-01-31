@@ -41,7 +41,7 @@
           </b-form-group>
           <!-- Country of Residence -->
           <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
-            <b-form-select id="input-country" v-model="form.country" placeholder="Select a country"
+            <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
               class="form-select" :options="country_options" :state="valid_country" />
             <b-form-invalid-feedback :state="valid_country">
               Please select your country of residence
@@ -549,7 +549,7 @@ export default {
         underrepresented_Gender: false,
         name: "",
         pronouns: "",
-        country: "",
+        country_of_residence: "",
         gender: "",
         ethnicity: "",
         major: "",
@@ -944,7 +944,7 @@ export default {
         this.valid_phone = null;
       }
 
-      if (this.form.country.length === 0) {
+      if (this.form.country_of_residence.length === 0) {
         this.valid_country = false;
         valid_form = false;
       } else {
