@@ -1229,7 +1229,7 @@ input[type="checkbox"]:focus~.custom-control-label::before {
 }
 
 input[type="checkbox"]:checked~.custom-control-label::before {
-  background-color: orange;
+  background-color: var(--light-orange);
   border-color: grey;
 }
 
@@ -1249,7 +1249,7 @@ input[type="radio"]:checked~.custom-control-label::after {
   background-image: none;
   transform: scale(0.7);
   border-radius: 50%;
-  box-shadow: 0px 0px 0px 10px inset orange;
+  box-shadow: 0px 0px 0px 10px inset var(--light-orange);
 }
 
 input[type="radio"]:checked~.custom-control-label::before {
