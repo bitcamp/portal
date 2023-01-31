@@ -21,7 +21,7 @@
           email you provide.
         </p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-7">
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-9">
             <b-form-input id="input-1" v-model="form.name" name="name" autocomplete="name" placeholder="Sophie Wilson"
               :state="valid_name" />
             <b-form-invalid-feedback :state="valid_name">
@@ -30,11 +30,14 @@
           </b-form-group>
 
           <!-- Date of Birth -->
-          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-12 col-md-5">
-            <b-form-input id="input-birthday" v-model="form.birthday" name="birthday" autocomplete="bday"
-              placeholder="mm/dd/yyyy" :state="valid_birthday" type="date" min="1900-01-01" max="2023-01-01" />
-            <b-form-invalid-feedback :state="valid_birthday">
-              Please enter your birthday
+          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-12 col-md-3">
+            <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
+              max="120" placeholder="19" :state="valid_age" />
+            <b-form-invalid-feedback v-if="form.age < 18" :state="valid_age">
+              Unfortunately, we can't admit students under 18
+            </b-form-invalid-feedback>
+            <b-form-invalid-feedback v-else :state="valid_age">
+              Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -197,7 +200,7 @@
           </b-form-row>
           <b-form-invalid-feedback :state="valid_address" style="margin: 0">
             Please provide a valid shipping address to apply for the hardware
-            track.
+            track
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -205,7 +208,7 @@
         <hr>
         <h4>Campfire Games Survey</h4>
         <p class="info">
-          This year, you’ll once again be put into one of three teams based on
+          This year, you'll once again be put into one of three teams based on
           your personality and interests. By winning unique challenges and
           attending workshops and mini-events, you and your fellow hackers will
           rack up points for your team. At the end of the event, members of the
@@ -352,7 +355,7 @@
             <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select"
               placeholder="Choose a T-shirt size" :options="tshirt_size_options" :state="valid_tshirt_size" />
             <b-form-invalid-feedback :state="valid_tshirt_size">
-              Please select a T-shirt size.
+              Please select a T-shirt size
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -579,7 +582,7 @@ export default {
       valid_major: null,
       valid_recruit: null,
       valid_portfolio: null,
-      valid_birthday: null,
+      valid_age: null,
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
       valid_track_selected: null,
@@ -971,11 +974,11 @@ export default {
         this.valid_tshirt_size = null;
       }
 
-      if (this.form.birthday.length === 0) {
-        this.valid_birthday = false;
+      if (this.form.age.length === 0 || this.form.age < 18) {
+        this.valid_age = false;
         valid_form = false;
       } else {
-        this.valid_birthday = null;
+        this.valid_age = null;
       }
 
       if (this.form.hack_count.length === 0) {
