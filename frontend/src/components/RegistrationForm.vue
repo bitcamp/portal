@@ -559,6 +559,7 @@ export default {
         MLH_conduct: false,
         MLH_privacy: false,
         underrepresented_Gender: false,
+        name: "",
         first_name: "",
         last_name: "",
         pronouns: "",
@@ -939,6 +940,9 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
+
+      this.form.name = `${this.form.first_name} ${this.form.last_name}`
+
       if (this.form.first_name.length === 0) {
         this.valid_first_name = false;
         valid_form = false;
