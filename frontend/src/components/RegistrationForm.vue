@@ -1164,7 +1164,7 @@ export default {
             .toLowerCase()
             .replace(/_{2,}/g, "_")
             .substring(0, 48) +
-          "." + this.form.last_name
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1178,7 +1178,7 @@ export default {
             .toLowerCase()
             .replace(/_{2,}/g, "_")
             .substring(0, 48) +
-          "." + this.form.last_name
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
