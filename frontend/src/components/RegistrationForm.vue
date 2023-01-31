@@ -40,9 +40,10 @@
             </b-form-invalid-feedback>
           </b-form-group>
           <!-- Country of Residence -->
-          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
-            <b-form-select id="input-country" v-model="form.country" placeholder="Select a country"
-              class="form-select" :options="country_options" :state="valid_country" />
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country"
+            class="col-md-6">
+            <b-form-select id="input-country" v-model="form.country" placeholder="Select a country" class="form-select"
+              :options="country_options" :state="valid_country" />
             <b-form-invalid-feedback :state="valid_country">
               Please select your country of residence
             </b-form-invalid-feedback>
@@ -105,7 +106,8 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear" class="col-md-6">
+          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear"
+            class="col-md-6">
             <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
               class="form-select" :options="school_year_options" :state="valid_school_year" />
             <b-form-invalid-feedback :state="valid_school_year">
