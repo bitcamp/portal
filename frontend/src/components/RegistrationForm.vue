@@ -120,7 +120,7 @@
         <!-- recruitment info -->
         <b-form-row>
           <b-form-group id="input-group-recruit" label="Do you want to be recruited for jobs?*"
-            label-for="input-recruit" class="col-6">
+            label-for="input-recruit" class="col-md-6">
             <b-form-select id="input-recruit" v-model="form.recruit" placeholder="Choose an option"
               :options="recruit_options" class="form-select" :state="valid_recruit" />
             <b-form-invalid-feedback :state="valid_recruit">
@@ -162,13 +162,13 @@
         </p>
         <b-form-group>
           <b-form-row>
-            <b-form-group id="input-group-5" label="Shipping Address" label-for="input-5" class="col-5 col-md-7">
+            <b-form-group id="input-group-5" label="Shipping Address" label-for="input-5" class="col-md-7">
               <b-form-input id="input-5" v-model="form.address1" name="address" autocomplete="off"
                 placeholder="8125 Paint Branch Drive" class="form-input" :state="valid_address" />
             </b-form-group>
 
             <b-form-group id="input-group-address-line2" label="Shipping Address Line 2" label-for="input-address-line2"
-              class="col-5 col-md-5">
+              class="col-md-5">
               <b-form-input id="input-address-line2" v-model="form.address2" name="address-line2"
                 autocomplete="address-line2" placeholder="Apartment or Unit Number (optional)" class="form-input"
                 :state="valid_address" />
