@@ -948,6 +948,7 @@ export default {
         valid_form = false;
       } else {
         this.valid_first_name = null;
+        this.form.first_name = this.form.first_name.trim();
       }
 
       if (this.form.last_name.length === 0) {
@@ -955,6 +956,7 @@ export default {
         valid_form = false;
       } else {
         this.valid_last_name = null;
+        this.form.last_name = this.form.last_name.trim();
       }
 
       if (!EmailValidator.validate(this.form.email)) {
