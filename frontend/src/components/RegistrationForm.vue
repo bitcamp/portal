@@ -485,7 +485,7 @@ import TrackSelection from "./TrackSelection.vue";
 import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
 import * as majors_list from "../assets/college-majors.json";
-import * as univ_list from "../assets/global-universities-list.json";
+import * as univ_list from '../assets/university-list.json';
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
 
@@ -495,7 +495,7 @@ Vue.use(FormFilePlugin);
 Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueTypeaheadBootstrap", VueTypeaheadBootstrap);
 
-const university_list = univ_list["list"].map((univ) => univ["name"]);
+const university_list = univ_list.default
 
 const major_map = majors_list["rows"].map((major) => {
   return {
@@ -955,7 +955,7 @@ export default {
         this.valid_school_year = null;
       }
 
-      if (this.form.school.length === 0) {
+      if (!university_list.includes(this.form.school)) {
         this.valid_school = false;
         this.school_class = "typeahead is-invalid";
         valid_form = false;
