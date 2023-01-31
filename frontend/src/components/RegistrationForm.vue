@@ -433,7 +433,7 @@
           administration in-line with the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of both
           the
-          <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank">MLH
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
             Contest Terms and Conditions</a>
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
