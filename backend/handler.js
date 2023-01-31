@@ -81,6 +81,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       state: body.state,
       zip: body.zip,
       country: body.country,
+      country_of_residence: body.country_of_residence,
       phone: body.phone,
       resume_link: body.resume_link,
       resume_id: body.resume_id,

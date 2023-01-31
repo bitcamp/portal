@@ -21,16 +21,18 @@
           email you provide.
         </p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-9">
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-12">
             <b-form-input id="input-1" v-model="form.name" name="name" autocomplete="name" placeholder="Sophie Wilson"
               :state="valid_name" />
             <b-form-invalid-feedback :state="valid_name">
               Please enter your name
             </b-form-invalid-feedback>
           </b-form-group>
+        </b-form-row>
 
+        <b-form-row>
           <!-- Date of Birth -->
-          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-12 col-md-3">
+          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-12 col-md-6">
             <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
               max="120" placeholder="19" :state="valid_age" />
             <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
@@ -38,6 +40,15 @@
             </b-form-invalid-feedback>
             <b-form-invalid-feedback v-else-if="form.age.length === 0" :state="valid_age">
               Please enter your age
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <!-- Country of Residence -->
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
+            <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
+              class="form-select" :options="country_options" :state="valid_country" />
+            <b-form-invalid-feedback :state="valid_country">
+              Please select your country of residence
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -98,8 +109,8 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group id="input-group-schoolyear" label="School Year*" label-for="input-schoolyear" class="col-md-6">
-            <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a major"
+          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear" class="col-md-6">
+            <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
               class="form-select" :options="school_year_options" :state="valid_school_year" />
             <b-form-invalid-feedback :state="valid_school_year">
               Please select a year
@@ -302,16 +313,16 @@
           <b-form-radio-group id="survey-5" v-model="form.selected_survey_5" class="font-weight-normal pt-2"
             :state="valid_survey_5">
             <b-form-radio value="r">
-              go to a concert of your favorite old musician/band
+              Go to a concert of your favorite old musician/band
             </b-form-radio>
             <b-form-radio value="g">
-              go to the first showing of your favorite old movie
+              Go to the first showing of your favorite old movie
             </b-form-radio>
             <b-form-radio value="b">
-              go see a historic event in real time
+              Go see a historic event in real time
             </b-form-radio>
             <b-form-radio value="g1">
-              go to an iconic sports event
+              Go to an iconic sports event
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
@@ -436,7 +447,7 @@
           administration in-line with the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of both
           the
-          <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank">MLH
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
             Contest Terms and Conditions</a>
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
@@ -489,6 +500,7 @@ import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
 import * as majors_list from "../assets/college-majors.json";
 import * as univ_list from "../assets/global-universities-list.json";
+import * as country_codes from "../assets/country-codes.json";
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
 
@@ -499,6 +511,8 @@ Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueTypeaheadBootstrap", VueTypeaheadBootstrap);
 
 const university_list = univ_list["list"].map((univ) => univ["name"]);
+
+const country_list = country_codes.map((country) => country["name"]);
 
 const major_map = majors_list["rows"].map((major) => {
   return {
@@ -539,6 +553,7 @@ export default {
         underrepresented_Gender: false,
         name: "",
         pronouns: "",
+        country_of_residence: "",
         gender: "",
         ethnicity: "",
         major: "",
@@ -577,6 +592,7 @@ export default {
       valid_resume: null,
       valid_school_year: null,
       valid_school: null,
+      valid_country: null,
       valid_gender: null,
       valid_ethnicity: null,
       valid_major: null,
@@ -604,13 +620,17 @@ export default {
 
       school_year_options: [
         { value: "", text: "Select one...", disabled: true },
-        { value: "high school", text: "High School" },
-        { value: "freshman", text: "Freshman (1st year)" },
-        { value: "sophomore", text: "Sophomore (2nd year)" },
-        { value: "junior", text: "Junior (3rd year)" },
-        { value: "senior", text: "Senior (4th year and above)" },
-        { value: "graduated", text: "College Graduate" },
+        { value: "less than high school", text: "Less than Secondary / High School" },
+        { value: "high school", text: "Secondary / High School" },
+        { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+        { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+        { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+        { value: "bootcamp", text: "Code School / Bootcamp" },
+        { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+        { value: "postdoc", text: "Post Doctorate" },
         { value: "other", text: "Other" },
+        { value: "not a student", text: "I’m not currently a student" },
+        { value: "prefer not to answer", text: "Prefer not to answer" },
       ],
 
       gender_options: [
@@ -668,6 +688,11 @@ export default {
       ],
 
       university_options: [...university_list],
+
+      country_options: [
+        { value: "", text: "Select one...", disabled: true },
+        ...country_list
+      ],
 
       diet_select: [],
       diet_other: false,
@@ -921,6 +946,13 @@ export default {
         valid_form = false;
       } else {
         this.valid_phone = null;
+      }
+
+      if (this.form.country_of_residence.length === 0) {
+        this.valid_country = false;
+        valid_form = false;
+      } else {
+        this.valid_country = null;
       }
 
       if (this.form.gender.length === 0) {
