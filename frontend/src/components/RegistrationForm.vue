@@ -842,6 +842,12 @@ export default {
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
+        // prevent blacklisted hackers from registering
+        if (this.form.name === 'Auran Shereef' || this.form.name === 'Monte James') {
+          this.$router.push({ path: "thanks" });
+          return;
+        }
+
         // time taken to fill out form in seconds
         this.form.time_taken = (Date.now() - this.form_start) / 1000;
         const phoneNumber = parsePhoneNumber(
@@ -893,7 +899,7 @@ export default {
         this.form.blue = survey_count["b"];
 
         this.form.dietary_restrictions = this.createDietaryRestrictionString();
-
+        
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
           "register",
