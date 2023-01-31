@@ -105,8 +105,8 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group id="input-group-schoolyear" label="School Year*" label-for="input-schoolyear" class="col-md-6">
-            <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a major"
+          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear" class="col-md-6">
+            <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
               class="form-select" :options="school_year_options" :state="valid_school_year" />
             <b-form-invalid-feedback :state="valid_school_year">
               Please select a year
@@ -616,13 +616,17 @@ export default {
 
       school_year_options: [
         { value: "", text: "Select one...", disabled: true },
-        { value: "high school", text: "High School" },
-        { value: "freshman", text: "Freshman (1st year)" },
-        { value: "sophomore", text: "Sophomore (2nd year)" },
-        { value: "junior", text: "Junior (3rd year)" },
-        { value: "senior", text: "Senior (4th year and above)" },
-        { value: "graduated", text: "College Graduate" },
+        { value: "less than high school", text: "Less than Secondary / High School" },
+        { value: "high school", text: "Secondary / High School" },
+        { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+        { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+        { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+        { value: "bootcamp", text: "Code School / Bootcamp" },
+        { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+        { value: "postdoc", text: "Post Doctorate" },
         { value: "other", text: "Other" },
+        { value: "not a student", text: "I’m not currently a student" },
+        { value: "prefer not to answer", text: "Prefer not to answer" },
       ],
 
       gender_options: [
