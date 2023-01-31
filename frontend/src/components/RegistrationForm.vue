@@ -21,20 +21,30 @@
           email you provide.
         </p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-7">
+          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-12">
             <b-form-input id="input-1" v-model="form.name" name="name" autocomplete="name" placeholder="Sophie Wilson"
               :state="valid_name" />
             <b-form-invalid-feedback :state="valid_name">
               Please enter your name
             </b-form-invalid-feedback>
           </b-form-group>
+        </b-form-row>
 
-          <!-- Date of Birth -->
-          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-12 col-md-5">
+        <!-- Date of Birth -->
+        <b-form-row>
+          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-12 col-md-6">
             <b-form-input id="input-birthday" v-model="form.birthday" name="birthday" autocomplete="bday"
               placeholder="mm/dd/yyyy" :state="valid_birthday" type="date" min="1900-01-01" max="2023-01-01" />
             <b-form-invalid-feedback :state="valid_birthday">
               Please enter your birthday
+            </b-form-invalid-feedback>
+          </b-form-group>
+          <!-- Country of Residence -->
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
+            <b-form-select id="input-country" v-model="form.country" placeholder="Select a country"
+              class="form-select" :options="country_options" :state="valid_country" />
+            <b-form-invalid-feedback :state="valid_country">
+              Please select your country of residence
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -486,6 +496,7 @@ import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
 import * as majors_list from "../assets/college-majors.json";
 import * as univ_list from "../assets/global-universities-list.json";
+import * as country_codes from "../assets/country-codes.json";
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
 
@@ -496,6 +507,8 @@ Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueTypeaheadBootstrap", VueTypeaheadBootstrap);
 
 const university_list = univ_list["list"].map((univ) => univ["name"]);
+
+const country_list = country_codes.map((country) => country["name"]);
 
 const major_map = majors_list["rows"].map((major) => {
   return {
@@ -536,6 +549,7 @@ export default {
         underrepresented_Gender: false,
         name: "",
         pronouns: "",
+        country: "",
         gender: "",
         ethnicity: "",
         major: "",
@@ -574,6 +588,7 @@ export default {
       valid_resume: null,
       valid_school_year: null,
       valid_school: null,
+      valid_country: null,
       valid_gender: null,
       valid_ethnicity: null,
       valid_major: null,
@@ -665,6 +680,8 @@ export default {
       ],
 
       university_options: [...university_list],
+
+      country_options: [...country_list],
 
       diet_select: [],
       diet_other: false,
@@ -918,6 +935,13 @@ export default {
         valid_form = false;
       } else {
         this.valid_phone = null;
+      }
+
+      if (this.form.country.length === 0) {
+        this.valid_country = false;
+        valid_form = false;
+      } else {
+        this.valid_country = null;
       }
 
       if (this.form.gender.length === 0) {
