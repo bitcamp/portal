@@ -299,16 +299,16 @@
           <b-form-radio-group id="survey-5" v-model="form.selected_survey_5" class="font-weight-normal pt-2"
             :state="valid_survey_5">
             <b-form-radio value="r">
-              go to a concert of your favorite old musician/band
+              Go to a concert of your favorite old musician/band
             </b-form-radio>
             <b-form-radio value="g">
-              go to the first showing of your favorite old movie
+              Go to the first showing of your favorite old movie
             </b-form-radio>
             <b-form-radio value="b">
-              go see a historic event in real time
+              Go see a historic event in real time
             </b-form-radio>
             <b-form-radio value="g1">
-              go to an iconic sports event
+              Go to an iconic sports event
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
