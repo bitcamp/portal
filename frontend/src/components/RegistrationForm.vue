@@ -1202,7 +1202,6 @@ export default {
 
 <style lang="scss">
 .input-group>.typeahead {
-  border-color: var(--faded-pale-red);
   border-radius: 0.4rem;
 
   &.is-invalid {
@@ -1334,7 +1333,6 @@ hr {
 .form-control,
 .custom-select {
   color: var(--black);
-  border-color: var(--faded-pale-red);
   border-radius: 0.4rem;
 
   &.is-invalid {
