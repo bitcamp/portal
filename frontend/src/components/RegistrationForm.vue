@@ -685,7 +685,10 @@ export default {
 
       university_options: [...university_list],
 
-      country_options: [...country_list],
+      country_options: [
+        { value: "", text: "Select one...", disabled: true },
+        ...country_list
+      ],
 
       diet_select: [],
       diet_other: false,
