@@ -21,11 +21,21 @@
           email you provide.
         </p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-12">
-            <b-form-input id="input-1" v-model="form.name" name="name" autocomplete="name" placeholder="Sophie Wilson"
-              :state="valid_name" />
-            <b-form-invalid-feedback :state="valid_name">
-              Please enter your name
+          <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
+            class="col-12 col-md-6">
+            <b-form-input id="input-first-name" v-model="form.firstname" name="firstname" autocomplete="firstname"
+              placeholder="Sophie" :state="valid_firstname" />
+            <b-form-invalid-feedback :state="valid_firstname">
+              Please enter your first name
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
+            class="col-12 col-md-6">
+            <b-form-input id="input-last-name" v-model="form.lastname" name="lastname" autocomplete="lastname"
+              placeholder="Wilson" :state="valid_lastname" />
+            <b-form-invalid-feedback :state="valid_lastname">
+              Please enter your last name
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -443,7 +453,8 @@
           I authorize you to share my application/registration information with
           Major League Hacking for event administration, ranking, and MLH
           administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of both
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of
+          both
           the
           <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
             Contest Terms and Conditions</a>
@@ -549,7 +560,8 @@ export default {
         MLH_conduct: false,
         MLH_privacy: false,
         underrepresented_Gender: false,
-        name: "",
+        firstname: "",
+        lastname: "",
         pronouns: "",
         country: "",
         gender: "",
@@ -583,7 +595,8 @@ export default {
       isSending: false,
       random_id: uuid(),
       form_start: Date.now(),
-      valid_name: null,
+      valid_firstname: null,
+      valid_lastname: null,
       valid_pronouns: null,
       valid_email: null,
       valid_phone: null,
@@ -918,11 +931,18 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
-      if (this.form.name.length === 0) {
-        this.valid_name = false;
+      if (this.form.firstname.length === 0) {
+        this.valid_firstname = false;
         valid_form = false;
       } else {
-        this.valid_name = null;
+        this.valid_firstname = null;
+      }
+
+      if (this.form.lastname.length === 0) {
+        this.valid_lastname = false;
+        valid_form = false;
+      } else {
+        this.valid_lastname = null;
       }
 
       if (!EmailValidator.validate(this.form.email)) {
@@ -1105,7 +1125,7 @@ export default {
       return valid_form;
     },
     async upload(file) {
-      if (this.form.name.length == 0) {
+      if (this.form.firstname.length == 0 || this.form.lastname.length == 0) {
         this.showErrorToastCustom(
           "Oops! Put in your name first so our marshies make sure your file is in the right place!"
         );
@@ -1129,10 +1149,14 @@ export default {
       }
 
       let cleanname;
-
       if (this.form.resume.name.slice(-4) == "docx") {
         cleanname =
-          this.form.name
+          this.form.firstname
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "." + this.form.lastname
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1141,7 +1165,12 @@ export default {
           this.form.resume.name.slice(-4);
       } else {
         cleanname =
-          this.form.name
+          this.form.firstname
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "." + this.form.lastname
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
