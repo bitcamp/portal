@@ -33,10 +33,10 @@
           <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-12 col-md-3">
             <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
               max="120" placeholder="19" :state="valid_age" />
-            <b-form-invalid-feedback v-if="form.age < 18" :state="valid_age">
+            <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
               Unfortunately, we can't admit students under 18
             </b-form-invalid-feedback>
-            <b-form-invalid-feedback v-else :state="valid_age">
+            <b-form-invalid-feedback v-else-if="form.age.length === 0" :state="valid_age">
               Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
@@ -549,7 +549,7 @@ export default {
         resume: "",
         resume_link: "",
         resume_id: "",
-        birthday: "",
+        age: "",
         address: "",
         address1: "",
         address2: "",
