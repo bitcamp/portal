@@ -424,7 +424,7 @@
           <b-form-group id="input-group-hackcount" label="How many hackathons have you participated in before?*"
             label-for="input-hackcount" class="col-md-12">
             <b-form-input id="input-hackcount" v-model="form.hack_count" name="input-hackcount" autocomplete="off"
-              placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number" />
+              placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number" min="0"/>
             <b-form-invalid-feedback :state="valid_hackcount">
               Please enter a valid number
             </b-form-invalid-feedback>
