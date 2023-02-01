@@ -106,7 +106,7 @@
 
         <!-- Race / Ethnicity -->
         <b-form-row>
-          <b-form-group id="input-group-ethnicity" label="Race / Ethnicity" label-for="input-group-ethnicity"
+          <b-form-group id="input-group-ethnicity" label="Race / Ethnicity*" label-for="input-group-ethnicity"
             class="col-md-12">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in ethnicity_options" :key="option.value" v-model="ethnicity_select"
