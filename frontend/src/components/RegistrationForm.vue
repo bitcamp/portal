@@ -268,7 +268,7 @@
           your personality and interests. By winning unique challenges and
           attending workshops and mini-events, you and your fellow hackers will
           rack up points for your team. At the end of the event, members of the
-          winning team will receive limited edition Bitcamp apparel. So what are
+          winning team will receive limited edition Bitcamp swag. So what are
           you waiting for? Take the survey and find your team!
         </p>
         <b-form-group class="font-weight-bold" label="What animal would you willingly fight for 5 minutes?*">
