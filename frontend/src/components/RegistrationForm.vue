@@ -14,15 +14,18 @@
       </p>
       <hr>
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
-        <!-- Name -->
+        
         <h4>Tell us about yourself!</h4>
         <p class="info">
           Once you register, you'll receive more info about Bitcamp 2023 at the
           email you provide.
         </p>
+        
+        <!-- Name and Age -->
         <b-form-row>
+          <!-- First Name -->
           <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
-            class="col-12 col-md-6">
+            class="col-12 col-md-5">
             <b-form-input id="input-first-name" v-model="form.first_name" name="firstname" autocomplete="firstname"
               placeholder="Sophie" :state="valid_first_name" />
             <b-form-invalid-feedback :state="valid_first_name">
@@ -30,19 +33,18 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
+          <!-- Last Name -->
           <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
-            class="col-12 col-md-6">
+            class="col-7 col-md-5">
             <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
               placeholder="Wilson" :state="valid_last_name" />
             <b-form-invalid-feedback :state="valid_last_name">
               Please enter your last name
             </b-form-invalid-feedback>
           </b-form-group>
-        </b-form-row>
 
-        <b-form-row>
           <!-- Date of Birth -->
-          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-12 col-md-6">
+          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-5 col-md-2">
             <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
               max="120" placeholder="19" :state="valid_age" />
             <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
@@ -52,19 +54,11 @@
               Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
-
-          <!-- Country of Residence -->
-          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
-            <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
-              class="form-select" :options="country_options" :state="valid_country" />
-            <b-form-invalid-feedback :state="valid_country">
-              Please select your country of residence
-            </b-form-invalid-feedback>
-          </b-form-group>
         </b-form-row>
 
-        <!-- Email -->
+        <!-- Email and Phone Number-->
         <b-form-row>
+          <!-- Email -->
           <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-7">
             <b-form-input id="input-2" v-model="form.email" name="email" autocomplete="email"
               placeholder="hello@bit.camp" :state="valid_email" type="email" @blur="emailFilledOut" />
@@ -83,8 +77,9 @@
           </b-form-group>
         </b-form-row>
 
-        <!-- Ethnicity & Gender -->
+        <!-- Gender and Country of Residence -->
         <b-form-row>
+          <!-- Gender -->
           <b-form-group id="input-group-gender" label="Gender Identity*" label-for="input-gender" class="col-md-6">
             <b-form-select id="input-gender" v-model="form.gender" placeholder="Choose a gender identity"
               class="form-select" :options="gender_options" :state="valid_gender" />
@@ -93,13 +88,23 @@
             </b-form-invalid-feedback>
           </b-form-group>
 
+          <!-- Country of Residence -->
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
+            <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
+              class="form-select" :options="country_options" :state="valid_country" />
+            <b-form-invalid-feedback :state="valid_country">
+              Please select your country of residence
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+
+        <!-- Race / Ethnicity -->
+        <b-form-row>
           <b-form-group id="input-group-ethnicity"
             label="Race / Ethnicity"
             label-for="input-group-ethnicity" 
             class="col-md-12"
           >
-            
-
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in ethnicity_options" :key="option.value" v-model="ethnicity_select"
                 :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_ethnicity"
@@ -113,7 +118,7 @@
                 Other (Please Specify)
               </b-form-checkbox>
             </b-form-group>
-            <b-form-input v-if="ethnicity_other" v-model="ethnicity_other_text" class="col-4"
+            <b-form-input v-if="ethnicity_other" v-model="ethnicity_other_text" class="col-12 col-md-5"
                 aria-label="Ethnicity Other Text Box" placeholder="Other race / ethnicity" />
           </b-form-group>
           <b-form-invalid-feedback :state="valid_ethnicity">
@@ -460,7 +465,7 @@
               </b-form-checkbox>
             </b-form-group>
 
-            <b-form-input v-if="diet_other" v-model="diet_restrictions_other" class="col-4"
+            <b-form-input v-if="diet_other" v-model="diet_restrictions_other" class="col-12 col-md-5"
               aria-label="Dietary Restriction Other Text Box" placeholder="Other dietary restriction" />
           </b-form-group>
         </b-form-row>
