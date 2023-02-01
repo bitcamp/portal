@@ -1196,21 +1196,6 @@ export default {
         this.valid_track_selected = null;
       }
 
-      if (
-        this.form.track_selected === "hardware" &&
-        this.form.address1.length === 0 &&
-        this.form.address2.length === 0 &&
-        this.form.city.length === 0 &&
-        this.form.state.length === 0 &&
-        this.form.zip.length === 0 &&
-        this.form.country.length === 0
-      ) {
-        this.valid_address = false;
-        valid_form = false;
-      } else {
-        this.valid_address = null;
-      }
-
       if (!this.form.selected_survey_1) {
         this.valid_survey_1 = false;
         valid_form = false;
