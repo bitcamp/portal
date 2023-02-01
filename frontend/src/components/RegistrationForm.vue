@@ -569,7 +569,7 @@ Vue.component("VueTypeaheadBootstrap", VueTypeaheadBootstrap);
 
 const university_list = univ_list.default
 
-const country_list = country_codes.map((country) => country["name"]);
+const country_list = country_codes.default.map((country) => country["name"]);
 
 const major_map = majors_list["rows"].map((major) => {
   return {
