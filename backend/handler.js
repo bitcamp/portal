@@ -131,7 +131,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
-    sendConfirmationEmail(body.name, body.email, referralID, params.Item),
+    sendConfirmationEmail(params.Item),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
@@ -153,20 +153,19 @@ const makeAddon = (length) => {
 };
 
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
-const sendConfirmationEmail = async (fullName, email, referralID, user) => {
+const sendConfirmationEmail = async (user) => {
   const ses = new AWS.SES();
 
   // As of right now, Bitcamp does not use a referral link
   // const referralLink = "https://register.gotechnica.org/" + referralID;
-  const reregisterLink = "https://register.bit.camp?redo=" + email
-  const firstName = fullName.split(" ")[0];
+  const reregisterLink = "https://register.bit.camp?redo=" + user.email;
 
   const params = {
-    Destination: { ToAddresses: [email] },
+    Destination: { ToAddresses: [user.email] },
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2023",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
+    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
