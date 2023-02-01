@@ -1,8 +1,5 @@
 <template>
-  <b-row
-    class="row gx-12"
-    cols="1"
-  >
+  <b-row class="row gx-12" cols="1">
     <!-- <b-col md="3" class="p-1 d-flex align-items-stretch">
     <label>
         <input type="radio" v-model="card" value="general">
@@ -13,22 +10,11 @@
     </label>
     </b-col> -->
 
-    <b-col
-      md="6"
-      class="p-1 col d-flex align-items-stretch"
-    >
+    <b-col md="6" class="p-1 col d-flex align-items-stretch">
       <label>
         <div class="color h-100 w-100">
-          <input
-            v-model="card"
-            type="radio"
-            value="general"
-            @click="onClickCard('general')"
-          >
-          <b-card
-            class="h-100 w-100 general"
-            :class="{ active: card === 'general' }"
-          >
+          <input v-model="card" type="radio" value="general" @click="onClickCard('general')">
+          <b-card class="h-100 w-100 general" :class="{ active: card === 'general' }">
             <h4>General</h4>
             <p>
               For any and all hackers! Build the perfect hack using hardware,
@@ -41,22 +27,11 @@
       </label>
     </b-col>
 
-    <b-col
-      md="6"
-      class="p-1 col d-flex align-items-stretch"
-    >
+    <b-col md="6" class="p-1 col d-flex align-items-stretch">
       <label>
-        <input
-          v-model="card"
-          type="radio"
-          value="beginner"
-          @click="onClickCard('beginner')"
-        >
+        <input v-model="card" type="radio" value="beginner" @click="onClickCard('beginner')">
         <div class="color h-100 w-100">
-          <b-card
-            class="h-100 w-100 general"
-            :class="{ active: card === 'beginner' }"
-          >
+          <b-card class="h-100 w-100 general" :class="{ active: card === 'beginner' }">
             <h4>Beginner</h4>
             <p>
               New to hackathons? Don't know how to code? No worries! At Bitcamp,
@@ -69,22 +44,11 @@
       </label>
     </b-col>
 
-    <b-col
-      md="6"
-      class="p-1 col d-flex align-items-stretch"
-    >
+    <b-col md="6" class="p-1 col d-flex align-items-stretch">
       <label>
-        <input
-          v-model="card"
-          type="radio"
-          value="hardware"
-          @click="onClickCard('hardware')"
-        >
+        <input v-model="card" type="radio" value="hardware" @click="onClickCard('hardware')">
         <div class="color h-100 w-100">
-          <b-card
-            class="h-100 w-100 general"
-            :class="{ active: card === 'hardware' }"
-          >
+          <b-card class="h-100 w-100 general" :class="{ active: card === 'hardware' }">
             <h4>Hardware</h4>
             <p>
               Embark on your hardware journey at Bitcamp with access to
@@ -97,22 +61,11 @@
       </label>
     </b-col>
 
-    <b-col
-      md="6"
-      class="p-1 col d-flex align-items-stretch"
-    >
+    <b-col md="6" class="p-1 col d-flex align-items-stretch">
       <label>
-        <input
-          v-model="card"
-          type="radio"
-          value="quantum"
-          @click="onClickCard('quantum')"
-        >
+        <input v-model="card" type="radio" value="quantum" @click="onClickCard('quantum')">
         <div class="color h-100 w-100">
-          <b-card
-            class="h-100 w-100 general"
-            :class="{ active: card === 'quantum' }"
-          >
+          <b-card class="h-100 w-100 general" :class="{ active: card === 'quantum' }">
             <h4>Quantum</h4>
             <p>
               Hackers will delve into the field of quantum computing with
@@ -124,23 +77,12 @@
         </div>
       </label>
     </b-col>
-    
-    <b-col
-      md="6"
-      class="p-1 col d-flex align-items-stretch"
-    >
+
+    <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch center">
       <label>
-        <input
-          v-model="card"
-          type="radio"
-          value="machine_learning"
-          @click="onClickCard('machine_learning')"
-        >
+        <input v-model="card" type="radio" value="machine_learning" @click="onClickCard('machine_learning')">
         <div class="color h-100 w-100">
-          <b-card
-            class="h-100 w-100 general"
-            :class="{ active: card === 'machine_learning' }"
-          >
+          <b-card class="h-100 w-100 general" :class="{ active: card === 'machine_learning' }">
             <h4>Machine Learning</h4>
             <p>
               Our newest track! If you’re wowed by recent AI advancements like
@@ -190,12 +132,10 @@ input {
 
 .color {
   border-radius: 4px;
-  background: radial-gradient(
-    90.38% 29.85% at 33.49% -2.8%,
-    #ffaa6c 0.01%,
-    #ff6a37 50.52%,
-    #ff6a37 100%
-  );
+  background: radial-gradient(90.38% 29.85% at 33.49% -2.8%,
+      #ffaa6c 0.01%,
+      #ff6a37 50.52%,
+      #ff6a37 100%);
 }
 
 .card-body {
@@ -210,6 +150,7 @@ input {
   transition: background 0.25s;
   transition-timing-function: ease-out;
 }
+
 .general.active {
   color: white;
   background: none;
