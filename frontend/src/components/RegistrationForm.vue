@@ -21,11 +21,21 @@
           email you provide.
         </p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-12">
-            <b-form-input id="input-1" v-model="form.name" name="name" autocomplete="name" placeholder="Sophie Wilson"
-              :state="valid_name" />
-            <b-form-invalid-feedback :state="valid_name">
-              Please enter your name
+          <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
+            class="col-12 col-md-6">
+            <b-form-input id="input-first-name" v-model="form.first_name" name="firstname" autocomplete="firstname"
+              placeholder="Sophie" :state="valid_first_name" />
+            <b-form-invalid-feedback :state="valid_first_name">
+              Please enter your first name
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
+            class="col-12 col-md-6">
+            <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
+              placeholder="Wilson" :state="valid_last_name" />
+            <b-form-invalid-feedback :state="valid_last_name">
+              Please enter your last name
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -109,7 +119,8 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear" class="col-md-6">
+          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear"
+            class="col-md-6">
             <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
               class="form-select" :options="school_year_options" :state="valid_school_year" />
             <b-form-invalid-feedback :state="valid_school_year">
@@ -445,7 +456,8 @@
           I authorize you to share my application/registration information with
           Major League Hacking for event administration, ranking, and MLH
           administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of both
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of
+          both
           the
           <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
             Contest Terms and Conditions</a>
@@ -552,6 +564,8 @@ export default {
         MLH_privacy: false,
         underrepresented_Gender: false,
         name: "",
+        first_name: "",
+        last_name: "",
         pronouns: "",
         country_of_residence: "",
         gender: "",
@@ -585,7 +599,8 @@ export default {
       isSending: false,
       random_id: uuid(),
       form_start: Date.now(),
-      valid_name: null,
+      valid_first_name: null,
+      valid_last_name: null,
       valid_pronouns: null,
       valid_email: null,
       valid_phone: null,
@@ -929,11 +944,23 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
-      if (this.form.name.length === 0) {
-        this.valid_name = false;
+
+      this.form.name = `${this.form.first_name} ${this.form.last_name}`
+
+      if (this.form.first_name.length === 0) {
+        this.valid_first_name = false;
         valid_form = false;
       } else {
-        this.valid_name = null;
+        this.valid_first_name = null;
+        this.form.first_name = this.form.first_name.trim();
+      }
+
+      if (this.form.last_name.length === 0) {
+        this.valid_last_name = false;
+        valid_form = false;
+      } else {
+        this.valid_last_name = null;
+        this.form.last_name = this.form.last_name.trim();
       }
 
       if (!EmailValidator.validate(this.form.email)) {
@@ -1116,7 +1143,7 @@ export default {
       return valid_form;
     },
     async upload(file) {
-      if (this.form.name.length == 0) {
+      if (this.form.first_name.length == 0 || this.form.last_name.length == 0) {
         this.showErrorToastCustom(
           "Oops! Put in your name first so our marshies make sure your file is in the right place!"
         );
@@ -1140,10 +1167,14 @@ export default {
       }
 
       let cleanname;
-
       if (this.form.resume.name.slice(-4) == "docx") {
         cleanname =
-          this.form.name
+          this.form.first_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1152,7 +1183,12 @@ export default {
           this.form.resume.name.slice(-4);
       } else {
         cleanname =
-          this.form.name
+          this.form.first_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
