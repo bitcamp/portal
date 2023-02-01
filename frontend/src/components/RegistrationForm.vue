@@ -1366,6 +1366,11 @@ input[type="radio"]:disabled:checked~.custom-control-label::before {
 input[type="radio"]:disabled:checked~.custom-control-label::after {
   box-shadow: 0px 0px 0px 10px inset rgb(255, 165, 0, 0.4);
 }
+
+/* Vertically center checkbox and radio */
+.custom-control-label {
+  padding-top: 3px;
+}
 </style>
 
 <style scoped lang="scss">
