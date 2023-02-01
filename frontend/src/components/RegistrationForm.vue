@@ -1430,15 +1430,15 @@ hr {
 
 .form-select {
   appearance: none;
-  background-image: url("../assets/dropdown-icons/dropdown-arrow.png");
+  background-image: url("../assets/dropdown-icons/dropdown-arrow-down.png");
   background-size: 25px 25px;
   background-repeat: none;
   overflow: hidden;
 }
 
-.form-select:active {
+.form-select:focus {
   appearance: none;
-  background-image: url("../assets/dropdown-icons/dropdown-arrow2.png");
+  background-image: url("../assets/dropdown-icons/dropdown-arrow-up.png");
   background-size: 25px 25px;
   overflow: hidden;
 }
