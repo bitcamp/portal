@@ -21,27 +21,41 @@
           email you provide.
         </p>
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-12">
-            <b-form-input id="input-1" v-model="form.name" name="name" autocomplete="name" placeholder="Sophie Wilson"
-              :state="valid_name" />
-            <b-form-invalid-feedback :state="valid_name">
-              Please enter your name
+          <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
+            class="col-12 col-md-6">
+            <b-form-input id="input-first-name" v-model="form.first_name" name="firstname" autocomplete="firstname"
+              placeholder="Sophie" :state="valid_first_name" />
+            <b-form-invalid-feedback :state="valid_first_name">
+              Please enter your first name
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
+            class="col-12 col-md-6">
+            <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
+              placeholder="Wilson" :state="valid_last_name" />
+            <b-form-invalid-feedback :state="valid_last_name">
+              Please enter your last name
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
 
-        <!-- Date of Birth -->
         <b-form-row>
-          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-12 col-md-6">
-            <b-form-input id="input-birthday" v-model="form.birthday" name="birthday" autocomplete="bday"
-              placeholder="mm/dd/yyyy" :state="valid_birthday" type="date" min="1900-01-01" max="2023-01-01" />
-            <b-form-invalid-feedback :state="valid_birthday">
-              Please enter your birthday
+          <!-- Date of Birth -->
+          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-12 col-md-6">
+            <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
+              max="120" placeholder="19" :state="valid_age" />
+            <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
+              Unfortunately, we can't admit students under 18
+            </b-form-invalid-feedback>
+            <b-form-invalid-feedback v-else-if="form.age.length === 0" :state="valid_age">
+              Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
+
           <!-- Country of Residence -->
           <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
-            <b-form-select id="input-country" v-model="form.country" placeholder="Select a country"
+            <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
               class="form-select" :options="country_options" :state="valid_country" />
             <b-form-invalid-feedback :state="valid_country">
               Please select your country of residence
@@ -125,7 +139,8 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear" class="col-md-6">
+          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear"
+            class="col-md-6">
             <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
               class="form-select" :options="school_year_options" :state="valid_school_year" />
             <b-form-invalid-feedback :state="valid_school_year">
@@ -227,7 +242,7 @@
           </b-form-row>
           <b-form-invalid-feedback :state="valid_address" style="margin: 0">
             Please provide a valid shipping address to apply for the hardware
-            track.
+            track
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -235,7 +250,7 @@
         <hr>
         <h4>Campfire Games Survey</h4>
         <p class="info">
-          This year, you’ll once again be put into one of three teams based on
+          This year, you'll once again be put into one of three teams based on
           your personality and interests. By winning unique challenges and
           attending workshops and mini-events, you and your fellow hackers will
           rack up points for your team. At the end of the event, members of the
@@ -382,7 +397,7 @@
             <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select"
               placeholder="Choose a T-shirt size" :options="tshirt_size_options" :state="valid_tshirt_size" />
             <b-form-invalid-feedback :state="valid_tshirt_size">
-              Please select a T-shirt size.
+              Please select a T-shirt size
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -403,7 +418,7 @@
             <b-form-input id="input-hackcount" v-model="form.hack_count" name="input-hackcount" autocomplete="off"
               placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number" />
             <b-form-invalid-feedback :state="valid_hackcount">
-              Please enter a number
+              Please enter a valid number
             </b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="input-group-question1" label="Why are you interested in attending Bitcamp?*"
@@ -461,7 +476,8 @@
           I authorize you to share my application/registration information with
           Major League Hacking for event administration, ranking, and MLH
           administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of both
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of
+          both
           the
           <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
             Contest Terms and Conditions</a>
@@ -568,8 +584,10 @@ export default {
         MLH_privacy: false,
         underrepresented_Gender: false,
         name: "",
+        first_name: "",
+        last_name: "",
         pronouns: "",
-        country: "",
+        country_of_residence: "",
         gender: "",
         ethnicity: "",
         major: "",
@@ -580,7 +598,7 @@ export default {
         resume: "",
         resume_link: "",
         resume_id: "",
-        birthday: "",
+        age: "",
         address: "",
         address1: "",
         address2: "",
@@ -600,7 +618,8 @@ export default {
       isSending: false,
       random_id: uuid(),
       form_start: Date.now(),
-      valid_name: null,
+      valid_first_name: null,
+      valid_last_name: null,
       valid_pronouns: null,
       valid_email: null,
       valid_phone: null,
@@ -613,7 +632,7 @@ export default {
       valid_major: null,
       valid_recruit: null,
       valid_portfolio: null,
-      valid_birthday: null,
+      valid_age: null,
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
       valid_track_selected: null,
@@ -901,6 +920,12 @@ export default {
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
+        // prevent blacklisted hackers from registering
+        if (this.form.name === 'Auran Shereef' || this.form.name === 'Monte James') {
+          this.$router.push({ path: "thanks" });
+          return;
+        }
+
         // time taken to fill out form in seconds
         this.form.time_taken = (Date.now() - this.form_start) / 1000;
         const phoneNumber = parsePhoneNumber(
@@ -979,11 +1004,23 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
-      if (this.form.name.length === 0) {
-        this.valid_name = false;
+
+      this.form.name = `${this.form.first_name} ${this.form.last_name}`
+
+      if (this.form.first_name.length === 0) {
+        this.valid_first_name = false;
         valid_form = false;
       } else {
-        this.valid_name = null;
+        this.valid_first_name = null;
+        this.form.first_name = this.form.first_name.trim();
+      }
+
+      if (this.form.last_name.length === 0) {
+        this.valid_last_name = false;
+        valid_form = false;
+      } else {
+        this.valid_last_name = null;
+        this.form.last_name = this.form.last_name.trim();
       }
 
       if (!EmailValidator.validate(this.form.email)) {
@@ -1004,7 +1041,7 @@ export default {
         this.valid_phone = null;
       }
 
-      if (this.form.country.length === 0) {
+      if (this.form.country_of_residence.length === 0) {
         this.valid_country = false;
         valid_form = false;
       } else {
@@ -1062,14 +1099,15 @@ export default {
         this.valid_tshirt_size = null;
       }
 
-      if (this.form.birthday.length === 0) {
-        this.valid_birthday = false;
+      if (this.form.age.length === 0 || this.form.age < 18) {
+        this.valid_age = false;
         valid_form = false;
       } else {
-        this.valid_birthday = null;
+        this.valid_age = null;
       }
 
-      if (this.form.hack_count.length === 0) {
+      if (this.form.hack_count.length === 0 ||
+      parseInt(this.form.hack_count) < 0) {
         this.valid_hackcount = false;
         valid_form = false;
       } else {
@@ -1166,7 +1204,7 @@ export default {
       return valid_form;
     },
     async upload(file) {
-      if (this.form.name.length == 0) {
+      if (this.form.first_name.length == 0 || this.form.last_name.length == 0) {
         this.showErrorToastCustom(
           "Oops! Put in your name first so our marshies make sure your file is in the right place!"
         );
@@ -1190,10 +1228,14 @@ export default {
       }
 
       let cleanname;
-
       if (this.form.resume.name.slice(-4) == "docx") {
         cleanname =
-          this.form.name
+          this.form.first_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1202,7 +1244,12 @@ export default {
           this.form.resume.name.slice(-4);
       } else {
         cleanname =
-          this.form.name
+          this.form.first_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1379,6 +1426,11 @@ input[type="radio"]:disabled:checked~.custom-control-label::before {
 input[type="radio"]:disabled:checked~.custom-control-label::after {
   box-shadow: 0px 0px 0px 10px inset rgb(255, 165, 0, 0.4);
 }
+
+/* Vertically center checkbox and radio */
+.custom-control-label {
+  padding-top: 3px;
+}
 </style>
 
 <style scoped lang="scss">
@@ -1444,15 +1496,15 @@ hr {
 
 .form-select {
   appearance: none;
-  background-image: url("../assets/dropdown-icons/dropdown-arrow.png");
+  background-image: url("../assets/dropdown-icons/dropdown-arrow-down.png");
   background-size: 25px 25px;
   background-repeat: none;
   overflow: hidden;
 }
 
-.form-select:active {
+.form-select:focus {
   appearance: none;
-  background-image: url("../assets/dropdown-icons/dropdown-arrow2.png");
+  background-image: url("../assets/dropdown-icons/dropdown-arrow-up.png");
   background-size: 25px 25px;
   overflow: hidden;
 }

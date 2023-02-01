@@ -61,6 +61,8 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       timestamp: new Date().toISOString(),
       email: body.email.toLowerCase(),
       name: body.name,
+      first_name: body.first_name,
+      last_name: body.last_name,
       track: body.track_selected,
       referred_by: body.referred_by,
       referral_id: referralID,
@@ -72,7 +74,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       recruit: body.recruit,
       portfolio: body.portfolio,
       school: body.school,
-      birthday: body.birthday,
+      age: body.age,
       address: body.address,
       gmaps_place_id: body.gmaps_place_id,
       address1: body.address1,
@@ -81,6 +83,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       state: body.state,
       zip: body.zip,
       country: body.country,
+      country_of_residence: body.country_of_residence,
       phone: body.phone,
       resume_link: body.resume_link,
       resume_id: body.resume_id,
@@ -128,7 +131,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
-    sendConfirmationEmail(body.name, body.email, referralID, params.Item),
+    sendConfirmationEmail(params.Item),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
@@ -150,20 +153,19 @@ const makeAddon = (length) => {
 };
 
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
-const sendConfirmationEmail = async (fullName, email, referralID, user) => {
+const sendConfirmationEmail = async (user) => {
   const ses = new AWS.SES();
 
   // As of right now, Bitcamp does not use a referral link
   // const referralLink = "https://register.gotechnica.org/" + referralID;
-  const reregisterLink = "https://register.bit.camp?redo=" + email
-  const firstName = fullName.split(" ")[0];
+  const reregisterLink = "https://register.bit.camp?redo=" + user.email;
 
   const params = {
-    Destination: { ToAddresses: [email] },
+    Destination: { ToAddresses: [user.email] },
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2023",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
+    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
