@@ -682,6 +682,7 @@ export default {
         { value: "m", text: "M" },
         { value: "l", text: "L" },
         { value: "xl", text: "XL" },
+        { value: "2xl", text: "2XL" },
       ],
 
       major_options: [
