@@ -92,13 +92,33 @@
               Please select a gender identity
             </b-form-invalid-feedback>
           </b-form-group>
-          <b-form-group id="input-group-ethnicity" label="Ethnicity*" label-for="input-ethnicity" class="col-md-6">
-            <b-form-select id="input-ethnicity" v-model="form.ethnicity" class="form-select"
-              placeholder="Choose an ethnicity" :options="ethnicity_options" :state="valid_ethnicity" />
-            <b-form-invalid-feedback :state="valid_ethnicity">
-              Please select an ethnicity
-            </b-form-invalid-feedback>
+
+          <b-form-group id="input-group-ethnicity"
+            label="Race / Ethnicity"
+            label-for="input-group-ethnicity" 
+            class="col-md-12"
+          >
+            
+
+            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+              <b-form-checkbox v-for="option in ethnicity_options" :key="option.value" v-model="ethnicity_select"
+                :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_ethnicity"
+                :disabled="prefer_no_answer_ethnicity">
+                {{ option.text }}
+              </b-form-checkbox> 
+              <b-form-checkbox v-model="prefer_no_answer_ethnicity" :state="valid_ethnicity" @change="uncheckEthnicity()">
+                Prefer Not to Answer
+              </b-form-checkbox>
+              <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity" :disabled="prefer_no_answer_ethnicity">
+                Other (Please Specify)
+              </b-form-checkbox>
+            </b-form-group>
+            <b-form-input v-if="ethnicity_other" v-model="ethnicity_other_text" class="col-4"
+                aria-label="Ethnicity Other Text Box" placeholder="Other race / ethnicity" />
           </b-form-group>
+          <b-form-invalid-feedback :state="valid_ethnicity">
+            Please select your race / ethnicity
+          </b-form-invalid-feedback>
         </b-form-row>
 
         <hr>
@@ -656,22 +676,28 @@ export default {
         { value: "prefer not to answer", text: "Prefer not to answer" },
         { value: "other", text: "Other" },
       ],
-
+      ethnicity_select: [],
+      ethnicity_other: false,
+      ethnicity_other_text: "",
+      prefer_no_answer_ethnicity: false,
       ethnicity_options: [
-        { value: "", text: "Select one...", disabled: true },
-        {
-          value: "asian or pacific islander",
-          text: "Asian or Pacific-Islander",
-        },
-        {
-          value: "black or african-american",
-          text: "Black or African-American",
-        },
-        { value: "caucasian", text: "Caucasian" },
-        { value: "hispanic", text: "Hispanic" },
-        { value: "native american", text: "Native American" },
-        { value: "prefer not to answer", text: "Prefer not to answer" },
-        { value: "other", text: "Other" },
+        { value: "asian-indian", text: "Asian Indian" },
+        { value: "black-african", text: "Black or African" },
+        { value: "chinese", text: "Chinese" },
+        { value: "filipino", text: "Filipino" },
+        { value: "guamanian-chamorro", text: "Guamanian or Chamorro" },
+        { value: "hispanic", text: "Hispanic / Latino / Spanish Origin" },
+        { value: "japanese", text: "Japanese" },
+        { value: "korean", text: "Korean" },
+        { value: "middle-eastern", text: "Middle Eastern" },
+        { value: "native-american-alaskan-native", text: "Native American or Alaskan Native" },
+        { value: "hawaiian", text: "Native Hawaiian" },
+        { value: "samoan", text: "Samoan" },
+        { value: "vietnamese", text: "Vietnamese" },
+        { value: "white", text: "White" },
+        { value: "other-asian", text: "Other Asian (Thai, Cambodian, etc.)" },
+        { value: "other-pacific-islander", text: "Other Pacific Islander"},
+        // { value: "prefer-not-to-answer", text: "Prefer Not to Answer" },
       ],
 
       tshirt_size_options: [
@@ -854,10 +880,32 @@ export default {
       let diet_string = this.diet_select.join(",");
 
       if (this.diet_other && this.diet_restrictions_other != "") {
-        diet_string = diet_string + ",other(" + this.diet_restrictions_other + ")";
+        if (diet_string != "") {
+          diet_string += ","
+        }
+        diet_string = diet_string + "other(" + this.diet_restrictions_other + ")";
       }
 
       return diet_string;
+    },
+    createEthnicityString() {
+      let ethnicity_string = this.ethnicity_select.join(",");
+
+      if (this.prefer_no_answer_ethnicity) {
+        return "prefer-not-to-answer";
+      }
+      if (this.ethnicity_other && this.ethnicity_other_text != "") {
+        if (ethnicity_string != "") {
+          ethnicity_string += ","
+        }
+        ethnicity_string = ethnicity_string + "other(" + this.ethnicity_other_text + ")";
+      }
+
+      return ethnicity_string;
+    },
+    uncheckEthnicity() {
+      this.ethnicity_select = [];
+      this.ethnicity_other = false;
     },
     async registerUser(event) {
       event.preventDefault();
@@ -919,7 +967,8 @@ export default {
         this.form.blue = survey_count["b"];
 
         this.form.dietary_restrictions = this.createDietaryRestrictionString();
-        
+        this.form.ethnicity = this.createEthnicityString();
+
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
           "register",
@@ -996,7 +1045,7 @@ export default {
         this.valid_gender = null;
       }
 
-      if (this.form.ethnicity.length === 0) {
+      if (this.createEthnicityString().length === 0) {
         this.valid_ethnicity = false;
         valid_form = false;
       } else {
