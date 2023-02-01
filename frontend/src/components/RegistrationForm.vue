@@ -14,13 +14,13 @@
       </p>
       <hr>
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
-        
+
         <h4>Tell us about yourself!</h4>
         <p class="info">
           Once you register, you'll receive more info about Bitcamp 2023 at the
           email you provide.
         </p>
-        
+
         <!-- Name and Age -->
         <b-form-row>
           <!-- First Name -->
@@ -48,14 +48,18 @@
             <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
               max="120" placeholder="19" :state="valid_age" />
             <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
-              Unfortunately, we can't admit students under 18
+              Unfortunately, we are not accepting minor applications at this point - check back in late February for
+              that!
             </b-form-invalid-feedback>
             <b-form-invalid-feedback v-else-if="form.age.length === 0" :state="valid_age">
               Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
-
+        <p class="info" :style="{ color: red }">
+          Unfortunately, we are not accepting minor applications at this point - check back in late February for
+          that!
+        </p>
         <!-- Email and Phone Number-->
         <b-form-row>
           <!-- Email -->
@@ -89,7 +93,8 @@
           </b-form-group>
 
           <!-- Country of Residence -->
-          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country"
+            class="col-md-6">
             <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
               class="form-select" :options="country_options" :state="valid_country" />
             <b-form-invalid-feedback :state="valid_country">
@@ -100,26 +105,25 @@
 
         <!-- Race / Ethnicity -->
         <b-form-row>
-          <b-form-group id="input-group-ethnicity"
-            label="Race / Ethnicity"
-            label-for="input-group-ethnicity" 
-            class="col-md-12"
-          >
+          <b-form-group id="input-group-ethnicity" label="Race / Ethnicity" label-for="input-group-ethnicity"
+            class="col-md-12">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in ethnicity_options" :key="option.value" v-model="ethnicity_select"
                 :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_ethnicity"
                 :disabled="prefer_no_answer_ethnicity">
                 {{ option.text }}
-              </b-form-checkbox> 
-              <b-form-checkbox v-model="prefer_no_answer_ethnicity" :state="valid_ethnicity" @change="uncheckEthnicity()">
+              </b-form-checkbox>
+              <b-form-checkbox v-model="prefer_no_answer_ethnicity" :state="valid_ethnicity"
+                @change="uncheckEthnicity()">
                 Prefer Not to Answer
               </b-form-checkbox>
-              <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity" :disabled="prefer_no_answer_ethnicity">
+              <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity"
+                :disabled="prefer_no_answer_ethnicity">
                 Other (Please Specify)
               </b-form-checkbox>
             </b-form-group>
             <b-form-input v-if="ethnicity_other" v-model="ethnicity_other_text" class="col-12 col-md-5"
-                aria-label="Ethnicity Other Text Box" placeholder="Other race / ethnicity" />
+              aria-label="Ethnicity Other Text Box" placeholder="Other race / ethnicity" />
           </b-form-group>
           <b-form-invalid-feedback :state="valid_ethnicity">
             Please select your race / ethnicity
@@ -424,7 +428,8 @@
           <b-form-group id="input-group-hackcount" label="How many hackathons have you participated in before?*"
             label-for="input-hackcount" class="col-md-12">
             <b-form-input id="input-hackcount" v-model="form.hack_count" name="input-hackcount" autocomplete="off"
-              placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number" min="0"/>
+              placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number"
+              min="0" />
             <b-form-invalid-feedback :state="valid_hackcount">
               Please enter a valid number
             </b-form-invalid-feedback>
@@ -449,11 +454,10 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
-        
+
         <b-form-row>
-          <b-form-group id="input-heard-from"
-            label="Where did you hear about us?*"
-            label-for="input-heard-from" class="col-12 col-md-6">
+          <b-form-group id="input-heard-from" label="Where did you hear about us?*" label-for="input-heard-from"
+            class="col-12 col-md-6">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in heard_from_options" :key="option.value" v-model="heard_from_select"
                 :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
@@ -467,9 +471,8 @@
             <b-form-input v-if="heard_from_other" v-model="heard_from_other_text" class="col-12 col-md-12"
               aria-label="Heard From Other Text Box" placeholder="Other source" />
           </b-form-group>
-          
-          <b-form-group id="input-dietary-restrictions"
-            label="Lastly, do you have any dietary restrictions?"
+
+          <b-form-group id="input-dietary-restrictions" label="Lastly, do you have any dietary restrictions?"
             label-for="input-dietary-restrictions" class="col-12 col-md-6">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
@@ -483,11 +486,11 @@
 
             <b-form-input v-if="diet_other" v-model="diet_other_text" class="col-12 col-md-12"
               aria-label="Dietary Restriction Other Text Box" placeholder="Other dietary restriction" />
-          </b-form-group>   
+          </b-form-group>
         </b-form-row>
 
         <b-form-row>
- 
+
         </b-form-row>
 
         <hr>
@@ -723,7 +726,7 @@ export default {
         { value: "vietnamese", text: "Vietnamese" },
         { value: "white", text: "White" },
         { value: "other-asian", text: "Other Asian (Thai, Cambodian, etc.)" },
-        { value: "other-pacific-islander", text: "Other Pacific Islander"},
+        { value: "other-pacific-islander", text: "Other Pacific Islander" },
         // { value: "prefer-not-to-answer", text: "Prefer Not to Answer" },
       ],
 
@@ -1154,7 +1157,7 @@ export default {
       }
 
       if (this.form.hack_count.length === 0 ||
-      parseInt(this.form.hack_count) < 0) {
+        parseInt(this.form.hack_count) < 0) {
         this.valid_hackcount = false;
         valid_form = false;
       } else {
