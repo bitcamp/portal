@@ -446,15 +446,28 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
+        
         <b-form-row>
-          <b-form-group id="input-dietary-restrictions"
-            label="Lastly, do you have any dietary restrictions? (If other, list out restrictions separated by a comma)"
-            label-for="input-dietary-restrictions" class="col-md-12">
-            <b-form-invalid-feedback :state="valid_dietary_restrictions">
-              Please tell us if you have any dietary restrictions (or type N/A
-              if you have none)
-            </b-form-invalid-feedback>
+          <b-form-group id="input-heard-from"
+            label="Where did you hear about us?*"
+            label-for="input-heard-from" class="col-12 col-md-6">
+            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+              <b-form-checkbox v-for="option in heard_from_options" :key="option.value" v-model="heard_from_select"
+                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
+                {{ option.text }}
+              </b-form-checkbox>
+              <b-form-checkbox v-model="heard_from_other">
+                Other
+              </b-form-checkbox>
+            </b-form-group>
 
+            <b-form-input v-if="heard_from_other" v-model="heard_from_other_text" class="col-12 col-md-12"
+              aria-label="Heard From Other Text Box" placeholder="Other" />
+          </b-form-group>
+          
+          <b-form-group id="input-dietary-restrictions"
+            label="Lastly, do you have any dietary restrictions?"
+            label-for="input-dietary-restrictions" class="col-12 col-md-6">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
                 :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
@@ -465,9 +478,13 @@
               </b-form-checkbox>
             </b-form-group>
 
-            <b-form-input v-if="diet_other" v-model="diet_restrictions_other" class="col-12 col-md-5"
+            <b-form-input v-if="diet_other" v-model="diet_other_text" class="col-12 col-md-12"
               aria-label="Dietary Restriction Other Text Box" placeholder="Other dietary restriction" />
-          </b-form-group>
+          </b-form-group>   
+        </b-form-row>
+
+        <b-form-row>
+ 
         </b-form-row>
 
         <hr>
@@ -615,6 +632,7 @@ export default {
         hack_count: "",
         question1: "",
         question2: "",
+        heard_from: "",
         dietary_restrictions: "",
         gmaps_place_id: "",
         referred_by: "",
@@ -654,6 +672,7 @@ export default {
       valid_survey_6: null,
       valid_question1: null,
       valid_question2: null,
+      valid_heard_from: null,
       valid_dietary_restrictions: null,
 
       school_class: "typeahead",
@@ -741,9 +760,26 @@ export default {
         ...country_list
       ],
 
+      heard_from_select: [],
+      heard_from_other: false,
+      heard_from_other_text: "",
+      heard_from_options: [
+        { value: "instagram", text: "Instagram" },
+        { value: "facebook", text: "Facebook" },
+        { value: "twitter", text: "Twitter" },
+        { value: "tiktok", text: "TikTok" },
+        { value: "youtube", text: "YouTube" },
+        { value: "linkedin", text: "LinkedIn" },
+        { value: "google", text: "Google" },
+        { value: "mlh", text: "Major League Hacking" },
+        { value: "email", text: "Email Listserv" },
+        { value: "flyer", text: "Flyer or Poster" },
+        { value: "friend", text: "Friend" },
+      ],
+
       diet_select: [],
       diet_other: false,
-      diet_restrictions_other: "",
+      diet_other_text: "",
       diet_options: [
         { text: "Vegan", value: "vegan" },
         { text: "Vegetarian", value: "vegetarian" },
@@ -884,11 +920,11 @@ export default {
     createDietaryRestrictionString() {
       let diet_string = this.diet_select.join(",");
 
-      if (this.diet_other && this.diet_restrictions_other != "") {
+      if (this.diet_other && this.diet_other_text != "") {
         if (diet_string != "") {
           diet_string += ","
         }
-        diet_string = diet_string + "other(" + this.diet_restrictions_other + ")";
+        diet_string = diet_string + "other(" + this.diet_other_text + ")";
       }
 
       return diet_string;
@@ -907,6 +943,18 @@ export default {
       }
 
       return ethnicity_string;
+    },
+    createHeardFromString() {
+      let heard_from_string = this.heard_from_select.join(",");
+
+      if (this.heard_from_other && this.heard_from_other_text != "") {
+        if (heard_from_string != "") {
+          heard_from_string += ","
+        }
+        heard_from_string = heard_from_string + "other(" + this.heard_from_other_text + ")";
+      }
+
+      return heard_from_string;
     },
     uncheckEthnicity() {
       this.ethnicity_select = [];
@@ -973,6 +1021,7 @@ export default {
 
         this.form.dietary_restrictions = this.createDietaryRestrictionString();
         this.form.ethnicity = this.createEthnicityString();
+        this.form.heard_from = this.createHeardFromString();
 
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),

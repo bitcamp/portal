@@ -93,6 +93,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       hack_count: body.hack_count,
       question1: body.question1,
       question2: body.question2,
+      heard_from: body.heard_from,
       dietary_restrictions: body.dietary_restrictions,
       survey_green: body.green,
       survey_red: body.red,
