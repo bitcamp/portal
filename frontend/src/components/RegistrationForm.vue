@@ -111,15 +111,15 @@
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in ethnicity_options" :key="option.value" v-model="ethnicity_select"
                 :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_ethnicity"
-                :disabled="prefer_no_answer_ethnicity">
+                :disabled="ethnicity_prefer_no_answer">
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="prefer_no_answer_ethnicity" :state="valid_ethnicity"
+              <b-form-checkbox v-model="ethnicity_prefer_no_answer" :state="valid_ethnicity"
                 @change="uncheckEthnicity()">
                 Prefer Not to Answer
               </b-form-checkbox>
               <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity"
-                :disabled="prefer_no_answer_ethnicity">
+                :disabled="ethnicity_prefer_no_answer">
                 Other (Please Specify)
               </b-form-checkbox>
             </b-form-group>
@@ -467,22 +467,32 @@
               <b-form-checkbox v-model="heard_from_other">
                 Other
               </b-form-checkbox>
+              <b-form-invalid-feedback :state="valid_heard_from">
+                Please select an option
+              </b-form-invalid-feedback>
             </b-form-group>
 
             <b-form-input v-if="heard_from_other" v-model="heard_from_other_text" class="col-12 col-md-12"
               aria-label="Heard From Other Text Box" placeholder="Other source" />
           </b-form-group>
 
-          <b-form-group id="input-dietary-restrictions" label="Lastly, do you have any dietary restrictions?"
+          <b-form-group id="input-dietary-restrictions" label="Do you have any dietary restrictions?*"
             label-for="input-dietary-restrictions" class="col-12 col-md-6">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+              <b-form-checkbox v-model="diet_none" @change="uncheckDietaryRestrictions()">
+                None
+              </b-form-checkbox>
               <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
-                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
+                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a"
+                :disabled="diet_none">
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="diet_other">
+              <b-form-checkbox v-model="diet_other" :disabled="diet_none">
                 Other
               </b-form-checkbox>
+              <b-form-invalid-feedback :state="valid_diet">
+                Please select your dietary restrictions ("None" is an option)
+              </b-form-invalid-feedback>
             </b-form-group>
 
             <b-form-input v-if="diet_other" v-model="diet_other_text" class="col-12 col-md-12"
@@ -680,7 +690,7 @@ export default {
       valid_question1: null,
       valid_question2: null,
       valid_heard_from: null,
-      valid_dietary_restrictions: null,
+      valid_diet: null,
 
       school_class: "typeahead",
 
@@ -707,10 +717,11 @@ export default {
         { value: "prefer not to answer", text: "Prefer not to answer" },
         { value: "other", text: "Other" },
       ],
+
       ethnicity_select: [],
       ethnicity_other: false,
       ethnicity_other_text: "",
-      prefer_no_answer_ethnicity: false,
+      ethnicity_prefer_no_answer: false,
       ethnicity_options: [
         { value: "asian-indian", text: "Asian Indian" },
         { value: "black-african", text: "Black or African" },
@@ -787,6 +798,7 @@ export default {
       diet_select: [],
       diet_other: false,
       diet_other_text: "",
+      diet_none: false,
       diet_options: [
         { text: "Vegan", value: "vegan" },
         { text: "Vegetarian", value: "vegetarian" },
@@ -927,6 +939,9 @@ export default {
     createDietaryRestrictionString() {
       let diet_string = this.diet_select.join(",");
 
+      if (this.diet_none) {
+        return "none";
+      }
       if (this.diet_other && this.diet_other_text != "") {
         if (diet_string != "") {
           diet_string += ","
@@ -939,7 +954,7 @@ export default {
     createEthnicityString() {
       let ethnicity_string = this.ethnicity_select.join(",");
 
-      if (this.prefer_no_answer_ethnicity) {
+      if (this.ethnicity_prefer_no_answer) {
         return "prefer-not-to-answer";
       }
       if (this.ethnicity_other && this.ethnicity_other_text != "") {
@@ -962,6 +977,10 @@ export default {
       }
 
       return heard_from_string;
+    },
+    uncheckDietaryRestrictions() {
+      this.diet_select = [];
+      this.diet_other = false;
     },
     uncheckEthnicity() {
       this.ethnicity_select = [];
@@ -1177,6 +1196,21 @@ export default {
         valid_form = false;
       } else {
         this.valid_question2 = null;
+      }
+
+      if (this.createHeardFromString().length === 0) {
+        this.valid_heard_from = false;
+        valid_form = false;
+      } else {
+        this.valid_heard_from = null;
+      }
+      
+      if (this.createDietaryRestrictionString().length === 0) {
+        this.valid_diet = false;
+        valid_form = false;
+      } else {
+        console.log('diet: ', this.createDietaryRestrictionString)
+        this.valid_diet = null;
       }
 
       if (!this.form.MLH_conduct) {
