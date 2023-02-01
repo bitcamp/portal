@@ -460,12 +460,12 @@
                 {{ option.text }}
               </b-form-checkbox>
               <b-form-checkbox v-model="heard_from_other">
-                Other source
+                Other
               </b-form-checkbox>
             </b-form-group>
 
             <b-form-input v-if="heard_from_other" v-model="heard_from_other_text" class="col-12 col-md-12"
-              aria-label="Heard From Other Text Box" placeholder="Other" />
+              aria-label="Heard From Other Text Box" placeholder="Other source" />
           </b-form-group>
           
           <b-form-group id="input-dietary-restrictions"
