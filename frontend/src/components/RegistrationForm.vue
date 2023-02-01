@@ -8,9 +8,8 @@
       </h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
-        Questions? Chat with us in the bottom right hand corner or email
-        <a href="mailto:hello@bit.camp">hello@bit.camp</a>. <br>
-        You can also learn more at <a href="https://bit.camp">bit.camp</a>!
+        Questions? Contact us at
+        <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
       </p>
       <hr>
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
@@ -153,7 +152,7 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear"
+          <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
             class="col-md-6">
             <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
               class="form-select" :options="school_year_options" :state="valid_school_year" />
