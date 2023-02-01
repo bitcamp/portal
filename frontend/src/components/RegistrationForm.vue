@@ -907,12 +907,6 @@ export default {
 
       return ethnicity_string;
     },
-    selectedPreferNoAnswerEthnicity() {
-      if (this.ethnicity_select.contains("prefer-not-to-answer")) {
-        return true;
-      }
-      return false;
-    },
     uncheckEthnicity() {
       this.ethnicity_select = [];
       this.ethnicity_other = false;
