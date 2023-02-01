@@ -136,8 +136,11 @@
             <vue-typeahead-bootstrap id="input-school" v-model="form.school" :input-class="school_class"
               input-name="school" placeholder="University of Maryland at College Park" :data="university_options"
               :state="valid_school" />
-            <b-form-invalid-feedback :state="valid_school">
+            <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
               Please enter your school name
+            </b-form-invalid-feedback>
+            <b-form-invalid-feedback v-else :state="valid_school">
+              Please select a school from the list
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -553,7 +556,7 @@ import TrackSelection from "./TrackSelection.vue";
 import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
 import * as majors_list from "../assets/college-majors.json";
-import * as univ_list from "../assets/global-universities-list.json";
+import * as univ_list from '../assets/university-list.json';
 import * as country_codes from "../assets/country-codes.json";
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
@@ -564,7 +567,7 @@ Vue.use(FormFilePlugin);
 Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueTypeaheadBootstrap", VueTypeaheadBootstrap);
 
-const university_list = univ_list["list"].map((univ) => univ["name"]);
+const university_list = univ_list.default
 
 const country_list = country_codes.map((country) => country["name"]);
 
@@ -1127,7 +1130,7 @@ export default {
         this.valid_school_year = null;
       }
 
-      if (this.form.school.length === 0) {
+      if (!university_list.includes(this.form.school)) {
         this.valid_school = false;
         this.school_class = "typeahead is-invalid";
         valid_form = false;
