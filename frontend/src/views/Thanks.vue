@@ -7,16 +7,15 @@
           <b-col>
             <h1>You're registered for Bitcamp 2023!</h1>
 
-            <img
-              style="width: 200px; height 200px;"
-              src="@/assets/bitcamp.gif"
-            >
+            <img style="width: 200px; height 200px;" src="@/assets/bitcamp.gif" />
 
             <div class="py-3">
               <p class="mb-4">
-                You'll get a confirmation email shortly. See you by the
-                campfire!
-                <br>
+                You'll get a confirmation email shortly. Please check your spam folder if you don't
+                see it.
+                <br />
+                See you by the campfire!
+                <br />
                 If you have any questions, be sure to reach out to
                 <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
               </p>
@@ -59,10 +58,7 @@
                 <b-col md=1></b-col>
               </b-row> -->
 
-              <p>
-                Follow us on social media to make sure you don't miss any
-                updates from Bitcamp.
-              </p>
+              <p>Follow us on social media to make sure you don't miss any updates from Bitcamp.</p>
               <!-- Social links -->
               <div class="pb-3">
                 <social-links />
