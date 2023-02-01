@@ -400,7 +400,7 @@
           Select a T-shirt size!
         </h4>
         <p class="info">
-          We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
+          We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you
           like, and your very own Bitcamp 2023 shirt will be given to you once
           you arrive at UMD.
         </p>
