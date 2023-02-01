@@ -460,7 +460,7 @@
                 {{ option.text }}
               </b-form-checkbox>
               <b-form-checkbox v-model="heard_from_other">
-                Other
+                Other source
               </b-form-checkbox>
             </b-form-group>
 
