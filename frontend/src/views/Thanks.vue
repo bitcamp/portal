@@ -59,42 +59,6 @@
                 <b-col md=1></b-col>
               </b-row> -->
 
-              <p class="mb-1">
-                Where did you hear about us? Letting us know helps us reach more
-                people!
-              </p>
-
-              <!-- Heard from -->
-              <b-row class="mb-5">
-                <b-col md="1" />
-                <b-col>
-                  <!-- <b-input-group> -->
-                  <b-form-select
-                    v-model="heardFrom"
-                    class="flex-0"
-                    :options="options"
-                    @change="handleHeardFrom"
-                  />
-                  <!-- <b-input-group-append>
-                      <b-button
-                        v-clipboard:copy="referralLink"
-                        v-clipboard:success="changeCopyText"
-                        size="sm"
-                        variant="cyan"
-                        class="copy-button"
-                      >
-                        <img
-                          class="btn-icon btn-icon-left"
-                          src="../assets/copy-icon.svg"
-                        >
-                        <span class="ml-1" v-html="copyBtnText"></span>
-                      </b-button>
-                    </b-input-group-append>
-                  </b-input-group> -->
-                </b-col>
-                <b-col md="1" />
-              </b-row>
-
               <p>
                 Follow us on social media to make sure you don't miss any
                 updates from Bitcamp.
@@ -135,24 +99,6 @@ export default {
   data() {
     return {
       copyBtnText: "Copy Link",
-
-      heardFrom: "",
-      options: [
-        { value: "", text: "How did you find out about us?", disabled: true },
-        { value: "hf-instagram", text: "Instagram" },
-        { value: "hf-facebook", text: "Facebook" },
-        { value: "hf-tiktok", text: "TikTok" },
-        { value: "hf-email", text: "Email list-serv" },
-        { value: "hf-google", text: "Google" },
-        { value: "hf-friend", text: "A friend" },
-        // { value: "hf-ambassador", text: "A Technica ambassador" },
-        { value: "hf-mlh", text: "Major League Hacking" },
-        { value: "hf-youtube", text: "YouTube" },
-        { value: "hf-snapchat", text: "Snapchat" },
-        { value: "hf-flyer", text: "A Flyer or Poster" },
-        { value: "hf-linkedin", text: "LinkedIn" },
-        { value: "hf-other", text: "Other" },
-      ],
     };
   },
 
@@ -204,18 +150,25 @@ export default {
       const input = event.currentTarget;
       input.setSelectionRange(0, input.value.length);
     },
-    handleHeardFrom() {
-      this.track({
-        referral_id: this.referralID,
-        key: this.heardFrom,
-        value: 1,
-      });
-    },
   },
 };
 </script>
 
 <style scoped>
+.about {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+}
+
+.card {
+  margin: 0 !important;
+}
+
+h1 {
+  margin-top: 1rem;
+}
+
 p {
   font-size: 1.05rem;
 }

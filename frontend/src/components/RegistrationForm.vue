@@ -14,33 +14,51 @@
       </p>
       <hr>
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
-        <!-- Name -->
+        
         <h4>Tell us about yourself!</h4>
         <p class="info">
           Once you register, you'll receive more info about Bitcamp 2023 at the
           email you provide.
         </p>
+        
+        <!-- Name and Age -->
         <b-form-row>
-          <b-form-group id="input-group-1" label="Full Name*" label-for="input-1" class="col-12 col-md-7">
-            <b-form-input id="input-1" v-model="form.name" name="name" autocomplete="name" placeholder="Sophie Wilson"
-              :state="valid_name" />
-            <b-form-invalid-feedback :state="valid_name">
-              Please enter your name
+          <!-- First Name -->
+          <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
+            class="col-12 col-md-5">
+            <b-form-input id="input-first-name" v-model="form.first_name" name="firstname" autocomplete="firstname"
+              placeholder="Sophie" :state="valid_first_name" />
+            <b-form-invalid-feedback :state="valid_first_name">
+              Please enter your first name
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <!-- Last Name -->
+          <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
+            class="col-7 col-md-5">
+            <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
+              placeholder="Wilson" :state="valid_last_name" />
+            <b-form-invalid-feedback :state="valid_last_name">
+              Please enter your last name
             </b-form-invalid-feedback>
           </b-form-group>
 
           <!-- Date of Birth -->
-          <b-form-group id="input-group-birthday" label="Birthday*" label-for="birthday" class="col-12 col-md-5">
-            <b-form-input id="input-birthday" v-model="form.birthday" name="birthday" autocomplete="bday"
-              placeholder="mm/dd/yyyy" :state="valid_birthday" type="date" min="1900-01-01" max="2023-01-01" />
-            <b-form-invalid-feedback :state="valid_birthday">
-              Please enter your birthday
+          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-5 col-md-2">
+            <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
+              max="120" placeholder="19" :state="valid_age" />
+            <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
+              Unfortunately, we can't admit students under 18
+            </b-form-invalid-feedback>
+            <b-form-invalid-feedback v-else-if="form.age.length === 0" :state="valid_age">
+              Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
 
-        <!-- Email -->
+        <!-- Email and Phone Number-->
         <b-form-row>
+          <!-- Email -->
           <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-7">
             <b-form-input id="input-2" v-model="form.email" name="email" autocomplete="email"
               placeholder="hello@bit.camp" :state="valid_email" type="email" @blur="emailFilledOut" />
@@ -59,8 +77,9 @@
           </b-form-group>
         </b-form-row>
 
-        <!-- Ethnicity & Gender -->
+        <!-- Gender and Country of Residence -->
         <b-form-row>
+          <!-- Gender -->
           <b-form-group id="input-group-gender" label="Gender Identity*" label-for="input-gender" class="col-md-6">
             <b-form-select id="input-gender" v-model="form.gender" placeholder="Choose a gender identity"
               class="form-select" :options="gender_options" :state="valid_gender" />
@@ -68,13 +87,43 @@
               Please select a gender identity
             </b-form-invalid-feedback>
           </b-form-group>
-          <b-form-group id="input-group-ethnicity" label="Ethnicity*" label-for="input-ethnicity" class="col-md-6">
-            <b-form-select id="input-ethnicity" v-model="form.ethnicity" class="form-select"
-              placeholder="Choose an ethnicity" :options="ethnicity_options" :state="valid_ethnicity" />
-            <b-form-invalid-feedback :state="valid_ethnicity">
-              Please select an ethnicity
+
+          <!-- Country of Residence -->
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
+            <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
+              class="form-select" :options="country_options" :state="valid_country" />
+            <b-form-invalid-feedback :state="valid_country">
+              Please select your country of residence
             </b-form-invalid-feedback>
           </b-form-group>
+        </b-form-row>
+
+        <!-- Race / Ethnicity -->
+        <b-form-row>
+          <b-form-group id="input-group-ethnicity"
+            label="Race / Ethnicity"
+            label-for="input-group-ethnicity" 
+            class="col-md-12"
+          >
+            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+              <b-form-checkbox v-for="option in ethnicity_options" :key="option.value" v-model="ethnicity_select"
+                :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_ethnicity"
+                :disabled="prefer_no_answer_ethnicity">
+                {{ option.text }}
+              </b-form-checkbox> 
+              <b-form-checkbox v-model="prefer_no_answer_ethnicity" :state="valid_ethnicity" @change="uncheckEthnicity()">
+                Prefer Not to Answer
+              </b-form-checkbox>
+              <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity" :disabled="prefer_no_answer_ethnicity">
+                Other (Please Specify)
+              </b-form-checkbox>
+            </b-form-group>
+            <b-form-input v-if="ethnicity_other" v-model="ethnicity_other_text" class="col-12 col-md-5"
+                aria-label="Ethnicity Other Text Box" placeholder="Other race / ethnicity" />
+          </b-form-group>
+          <b-form-invalid-feedback :state="valid_ethnicity">
+            Please select your race / ethnicity
+          </b-form-invalid-feedback>
         </b-form-row>
 
         <hr>
@@ -98,8 +147,9 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group id="input-group-schoolyear" label="School Year*" label-for="input-schoolyear" class="col-md-6">
-            <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a major"
+          <b-form-group id="input-group-schoolyear" label="Level of Study*" label-for="input-schoolyear"
+            class="col-md-6">
+            <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
               class="form-select" :options="school_year_options" :state="valid_school_year" />
             <b-form-invalid-feedback :state="valid_school_year">
               Please select a year
@@ -200,7 +250,7 @@
           </b-form-row>
           <b-form-invalid-feedback :state="valid_address" style="margin: 0">
             Please provide a valid shipping address to apply for the hardware
-            track.
+            track
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -208,7 +258,7 @@
         <hr>
         <h4>Campfire Games Survey</h4>
         <p class="info">
-          This year, you’ll once again be put into one of three teams based on
+          This year, you'll once again be put into one of three teams based on
           your personality and interests. By winning unique challenges and
           attending workshops and mini-events, you and your fellow hackers will
           rack up points for your team. At the end of the event, members of the
@@ -302,16 +352,16 @@
           <b-form-radio-group id="survey-5" v-model="form.selected_survey_5" class="font-weight-normal pt-2"
             :state="valid_survey_5">
             <b-form-radio value="r">
-              go to a concert of your favorite old musician/band
+              Go to a concert of your favorite old musician/band
             </b-form-radio>
             <b-form-radio value="g">
-              go to the first showing of your favorite old movie
+              Go to the first showing of your favorite old movie
             </b-form-radio>
             <b-form-radio value="b">
-              go see a historic event in real time
+              Go see a historic event in real time
             </b-form-radio>
             <b-form-radio value="g1">
-              go to an iconic sports event
+              Go to an iconic sports event
             </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
@@ -355,7 +405,7 @@
             <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select"
               placeholder="Choose a T-shirt size" :options="tshirt_size_options" :state="valid_tshirt_size" />
             <b-form-invalid-feedback :state="valid_tshirt_size">
-              Please select a T-shirt size.
+              Please select a T-shirt size
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -376,7 +426,7 @@
             <b-form-input id="input-hackcount" v-model="form.hack_count" name="input-hackcount" autocomplete="off"
               placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number" />
             <b-form-invalid-feedback :state="valid_hackcount">
-              Please enter a number
+              Please enter a valid number
             </b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="input-group-question1" label="Why are you interested in attending Bitcamp?*"
@@ -399,15 +449,28 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
+        
         <b-form-row>
-          <b-form-group id="input-dietary-restrictions"
-            label="Lastly, do you have any dietary restrictions? (If other, list out restrictions separated by a comma)"
-            label-for="input-dietary-restrictions" class="col-md-12">
-            <b-form-invalid-feedback :state="valid_dietary_restrictions">
-              Please tell us if you have any dietary restrictions (or type N/A
-              if you have none)
-            </b-form-invalid-feedback>
+          <b-form-group id="input-heard-from"
+            label="Where did you hear about us?*"
+            label-for="input-heard-from" class="col-12 col-md-6">
+            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+              <b-form-checkbox v-for="option in heard_from_options" :key="option.value" v-model="heard_from_select"
+                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
+                {{ option.text }}
+              </b-form-checkbox>
+              <b-form-checkbox v-model="heard_from_other">
+                Other
+              </b-form-checkbox>
+            </b-form-group>
 
+            <b-form-input v-if="heard_from_other" v-model="heard_from_other_text" class="col-12 col-md-12"
+              aria-label="Heard From Other Text Box" placeholder="Other" />
+          </b-form-group>
+          
+          <b-form-group id="input-dietary-restrictions"
+            label="Lastly, do you have any dietary restrictions?"
+            label-for="input-dietary-restrictions" class="col-12 col-md-6">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
                 :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
@@ -418,9 +481,13 @@
               </b-form-checkbox>
             </b-form-group>
 
-            <b-form-input v-if="diet_other" v-model="diet_restrictions_other" class="col-4"
+            <b-form-input v-if="diet_other" v-model="diet_other_text" class="col-12 col-md-12"
               aria-label="Dietary Restriction Other Text Box" placeholder="Other dietary restriction" />
-          </b-form-group>
+          </b-form-group>   
+        </b-form-row>
+
+        <b-form-row>
+ 
         </b-form-row>
 
         <hr>
@@ -434,9 +501,10 @@
           I authorize you to share my application/registration information with
           Major League Hacking for event administration, ranking, and MLH
           administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of both
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of
+          both
           the
-          <a href="https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions" target="_blank">MLH
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
             Contest Terms and Conditions</a>
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
@@ -489,6 +557,7 @@ import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
 import * as majors_list from "../assets/college-majors.json";
 import * as univ_list from '../assets/university-list.json';
+import * as country_codes from "../assets/country-codes.json";
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
 
@@ -499,6 +568,8 @@ Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueTypeaheadBootstrap", VueTypeaheadBootstrap);
 
 const university_list = univ_list.default
+
+const country_list = country_codes.map((country) => country["name"]);
 
 const major_map = majors_list["rows"].map((major) => {
   return {
@@ -538,7 +609,10 @@ export default {
         MLH_privacy: false,
         underrepresented_Gender: false,
         name: "",
+        first_name: "",
+        last_name: "",
         pronouns: "",
+        country_of_residence: "",
         gender: "",
         ethnicity: "",
         major: "",
@@ -549,7 +623,7 @@ export default {
         resume: "",
         resume_link: "",
         resume_id: "",
-        birthday: "",
+        age: "",
         address: "",
         address1: "",
         address2: "",
@@ -561,6 +635,7 @@ export default {
         hack_count: "",
         question1: "",
         question2: "",
+        heard_from: "",
         dietary_restrictions: "",
         gmaps_place_id: "",
         referred_by: "",
@@ -570,19 +645,21 @@ export default {
       isSending: false,
       random_id: uuid(),
       form_start: Date.now(),
-      valid_name: null,
+      valid_first_name: null,
+      valid_last_name: null,
       valid_pronouns: null,
       valid_email: null,
       valid_phone: null,
       valid_resume: null,
       valid_school_year: null,
       valid_school: null,
+      valid_country: null,
       valid_gender: null,
       valid_ethnicity: null,
       valid_major: null,
       valid_recruit: null,
       valid_portfolio: null,
-      valid_birthday: null,
+      valid_age: null,
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
       valid_track_selected: null,
@@ -598,19 +675,24 @@ export default {
       valid_survey_6: null,
       valid_question1: null,
       valid_question2: null,
+      valid_heard_from: null,
       valid_dietary_restrictions: null,
 
       school_class: "typeahead",
 
       school_year_options: [
         { value: "", text: "Select one...", disabled: true },
-        { value: "high school", text: "High School" },
-        { value: "freshman", text: "Freshman (1st year)" },
-        { value: "sophomore", text: "Sophomore (2nd year)" },
-        { value: "junior", text: "Junior (3rd year)" },
-        { value: "senior", text: "Senior (4th year and above)" },
-        { value: "graduated", text: "College Graduate" },
+        { value: "less than high school", text: "Less than Secondary / High School" },
+        { value: "high school", text: "Secondary / High School" },
+        { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+        { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+        { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+        { value: "bootcamp", text: "Code School / Bootcamp" },
+        { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+        { value: "postdoc", text: "Post Doctorate" },
         { value: "other", text: "Other" },
+        { value: "not a student", text: "I’m not currently a student" },
+        { value: "prefer not to answer", text: "Prefer not to answer" },
       ],
 
       gender_options: [
@@ -621,22 +703,28 @@ export default {
         { value: "prefer not to answer", text: "Prefer not to answer" },
         { value: "other", text: "Other" },
       ],
-
+      ethnicity_select: [],
+      ethnicity_other: false,
+      ethnicity_other_text: "",
+      prefer_no_answer_ethnicity: false,
       ethnicity_options: [
-        { value: "", text: "Select one...", disabled: true },
-        {
-          value: "asian or pacific islander",
-          text: "Asian or Pacific-Islander",
-        },
-        {
-          value: "black or african-american",
-          text: "Black or African-American",
-        },
-        { value: "caucasian", text: "Caucasian" },
-        { value: "hispanic", text: "Hispanic" },
-        { value: "native american", text: "Native American" },
-        { value: "prefer not to answer", text: "Prefer not to answer" },
-        { value: "other", text: "Other" },
+        { value: "asian-indian", text: "Asian Indian" },
+        { value: "black-african", text: "Black or African" },
+        { value: "chinese", text: "Chinese" },
+        { value: "filipino", text: "Filipino" },
+        { value: "guamanian-chamorro", text: "Guamanian or Chamorro" },
+        { value: "hispanic", text: "Hispanic / Latino / Spanish Origin" },
+        { value: "japanese", text: "Japanese" },
+        { value: "korean", text: "Korean" },
+        { value: "middle-eastern", text: "Middle Eastern" },
+        { value: "native-american-alaskan-native", text: "Native American or Alaskan Native" },
+        { value: "hawaiian", text: "Native Hawaiian" },
+        { value: "samoan", text: "Samoan" },
+        { value: "vietnamese", text: "Vietnamese" },
+        { value: "white", text: "White" },
+        { value: "other-asian", text: "Other Asian (Thai, Cambodian, etc.)" },
+        { value: "other-pacific-islander", text: "Other Pacific Islander"},
+        // { value: "prefer-not-to-answer", text: "Prefer Not to Answer" },
       ],
 
       tshirt_size_options: [
@@ -647,6 +735,7 @@ export default {
         { value: "m", text: "M" },
         { value: "l", text: "L" },
         { value: "xl", text: "XL" },
+        { value: "2xl", text: "2XL" },
       ],
 
       major_options: [
@@ -669,9 +758,31 @@ export default {
 
       university_options: [...university_list],
 
+      country_options: [
+        { value: "", text: "Select one...", disabled: true },
+        ...country_list
+      ],
+
+      heard_from_select: [],
+      heard_from_other: false,
+      heard_from_other_text: "",
+      heard_from_options: [
+        { value: "instagram", text: "Instagram" },
+        { value: "facebook", text: "Facebook" },
+        { value: "twitter", text: "Twitter" },
+        { value: "tiktok", text: "TikTok" },
+        { value: "youtube", text: "YouTube" },
+        { value: "linkedin", text: "LinkedIn" },
+        { value: "google", text: "Google" },
+        { value: "mlh", text: "Major League Hacking" },
+        { value: "email", text: "Email Listserv" },
+        { value: "flyer", text: "Flyer or Poster" },
+        { value: "friend", text: "Friend" },
+      ],
+
       diet_select: [],
       diet_other: false,
-      diet_restrictions_other: "",
+      diet_other_text: "",
       diet_options: [
         { text: "Vegan", value: "vegan" },
         { text: "Vegetarian", value: "vegetarian" },
@@ -812,15 +923,55 @@ export default {
     createDietaryRestrictionString() {
       let diet_string = this.diet_select.join(",");
 
-      if (this.diet_other && this.diet_restrictions_other != "") {
-        diet_string = diet_string + ",other(" + this.diet_restrictions_other + ")";
+      if (this.diet_other && this.diet_other_text != "") {
+        if (diet_string != "") {
+          diet_string += ","
+        }
+        diet_string = diet_string + "other(" + this.diet_other_text + ")";
       }
 
       return diet_string;
     },
+    createEthnicityString() {
+      let ethnicity_string = this.ethnicity_select.join(",");
+
+      if (this.prefer_no_answer_ethnicity) {
+        return "prefer-not-to-answer";
+      }
+      if (this.ethnicity_other && this.ethnicity_other_text != "") {
+        if (ethnicity_string != "") {
+          ethnicity_string += ","
+        }
+        ethnicity_string = ethnicity_string + "other(" + this.ethnicity_other_text + ")";
+      }
+
+      return ethnicity_string;
+    },
+    createHeardFromString() {
+      let heard_from_string = this.heard_from_select.join(",");
+
+      if (this.heard_from_other && this.heard_from_other_text != "") {
+        if (heard_from_string != "") {
+          heard_from_string += ","
+        }
+        heard_from_string = heard_from_string + "other(" + this.heard_from_other_text + ")";
+      }
+
+      return heard_from_string;
+    },
+    uncheckEthnicity() {
+      this.ethnicity_select = [];
+      this.ethnicity_other = false;
+    },
     async registerUser(event) {
       event.preventDefault();
       if (this.formCheck()) {
+        // prevent blacklisted hackers from registering
+        if (this.form.name === 'Auran Shereef' || this.form.name === 'Monte James') {
+          this.$router.push({ path: "thanks" });
+          return;
+        }
+
         // time taken to fill out form in seconds
         this.form.time_taken = (Date.now() - this.form_start) / 1000;
         const phoneNumber = parsePhoneNumber(
@@ -872,6 +1023,8 @@ export default {
         this.form.blue = survey_count["b"];
 
         this.form.dietary_restrictions = this.createDietaryRestrictionString();
+        this.form.ethnicity = this.createEthnicityString();
+        this.form.heard_from = this.createHeardFromString();
 
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
@@ -898,11 +1051,23 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
-      if (this.form.name.length === 0) {
-        this.valid_name = false;
+
+      this.form.name = `${this.form.first_name} ${this.form.last_name}`
+
+      if (this.form.first_name.length === 0) {
+        this.valid_first_name = false;
         valid_form = false;
       } else {
-        this.valid_name = null;
+        this.valid_first_name = null;
+        this.form.first_name = this.form.first_name.trim();
+      }
+
+      if (this.form.last_name.length === 0) {
+        this.valid_last_name = false;
+        valid_form = false;
+      } else {
+        this.valid_last_name = null;
+        this.form.last_name = this.form.last_name.trim();
       }
 
       if (!EmailValidator.validate(this.form.email)) {
@@ -923,6 +1088,13 @@ export default {
         this.valid_phone = null;
       }
 
+      if (this.form.country_of_residence.length === 0) {
+        this.valid_country = false;
+        valid_form = false;
+      } else {
+        this.valid_country = null;
+      }
+
       if (this.form.gender.length === 0) {
         this.valid_gender = false;
         valid_form = false;
@@ -930,7 +1102,7 @@ export default {
         this.valid_gender = null;
       }
 
-      if (this.form.ethnicity.length === 0) {
+      if (this.createEthnicityString().length === 0) {
         this.valid_ethnicity = false;
         valid_form = false;
       } else {
@@ -974,14 +1146,15 @@ export default {
         this.valid_tshirt_size = null;
       }
 
-      if (this.form.birthday.length === 0) {
-        this.valid_birthday = false;
+      if (this.form.age.length === 0 || this.form.age < 18) {
+        this.valid_age = false;
         valid_form = false;
       } else {
-        this.valid_birthday = null;
+        this.valid_age = null;
       }
 
-      if (this.form.hack_count.length === 0) {
+      if (this.form.hack_count.length === 0 ||
+      parseInt(this.form.hack_count) < 0) {
         this.valid_hackcount = false;
         valid_form = false;
       } else {
@@ -1078,7 +1251,7 @@ export default {
       return valid_form;
     },
     async upload(file) {
-      if (this.form.name.length == 0) {
+      if (this.form.first_name.length == 0 || this.form.last_name.length == 0) {
         this.showErrorToastCustom(
           "Oops! Put in your name first so our marshies make sure your file is in the right place!"
         );
@@ -1102,10 +1275,14 @@ export default {
       }
 
       let cleanname;
-
       if (this.form.resume.name.slice(-4) == "docx") {
         cleanname =
-          this.form.name
+          this.form.first_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1114,7 +1291,12 @@ export default {
           this.form.resume.name.slice(-4);
       } else {
         cleanname =
-          this.form.name
+          this.form.first_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "_" + this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1291,6 +1473,11 @@ input[type="radio"]:disabled:checked~.custom-control-label::before {
 input[type="radio"]:disabled:checked~.custom-control-label::after {
   box-shadow: 0px 0px 0px 10px inset rgb(255, 165, 0, 0.4);
 }
+
+/* Vertically center checkbox and radio */
+.custom-control-label {
+  padding-top: 3px;
+}
 </style>
 
 <style scoped lang="scss">
@@ -1356,15 +1543,15 @@ hr {
 
 .form-select {
   appearance: none;
-  background-image: url("../assets/dropdown-icons/dropdown-arrow.png");
+  background-image: url("../assets/dropdown-icons/dropdown-arrow-down.png");
   background-size: 25px 25px;
   background-repeat: none;
   overflow: hidden;
 }
 
-.form-select:active {
+.form-select:focus {
   appearance: none;
-  background-image: url("../assets/dropdown-icons/dropdown-arrow2.png");
+  background-image: url("../assets/dropdown-icons/dropdown-arrow-up.png");
   background-size: 25px 25px;
   overflow: hidden;
 }
