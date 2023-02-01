@@ -387,7 +387,7 @@
             <b-form-input id="input-hackcount" v-model="form.hack_count" name="input-hackcount" autocomplete="off"
               placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number" />
             <b-form-invalid-feedback :state="valid_hackcount">
-              Please enter a number
+              Please enter a valid number
             </b-form-invalid-feedback>
           </b-form-group>
           <b-form-group id="input-group-question1" label="Why are you interested in attending Bitcamp?*"
@@ -1019,7 +1019,8 @@ export default {
         this.valid_age = null;
       }
 
-      if (this.form.hack_count.length === 0) {
+      if (this.form.hack_count.length === 0 ||
+      parseInt(this.form.hack_count) < 0) {
         this.valid_hackcount = false;
         valid_form = false;
       } else {
