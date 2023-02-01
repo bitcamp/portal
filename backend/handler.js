@@ -72,7 +72,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       recruit: body.recruit,
       portfolio: body.portfolio,
       school: body.school,
-      birthday: body.birthday,
+      age: body.age,
       address: body.address,
       gmaps_place_id: body.gmaps_place_id,
       address1: body.address1,
@@ -164,7 +164,7 @@ const sendConfirmationEmail = async (fullName, email, referralID, user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2023",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"birthday\":\"${user.birthday}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
+    TemplateData: `{\"firstName\":\"${firstName}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${user.track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${user.school_year}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${user.tshirt_size}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
