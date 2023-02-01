@@ -48,17 +48,19 @@
             <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
               max="120" placeholder="19" :state="valid_age" />
             <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
-              Unfortunately, we are not accepting minor applications at this point - check back in late February for
-              that!
+              Unfortunately, we are currently not accepting minor applications — check back in late February for updates
+              on minor
+              applications!
             </b-form-invalid-feedback>
             <b-form-invalid-feedback v-else-if="form.age.length === 0" :state="valid_age">
               Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
-        <p class="info" :style="{ color: red }">
-          Unfortunately, we are not accepting minor applications at this point - check back in late February for
-          that!
+        <p class="info" style="text-align: center !important;">
+          Unfortunately, we are currently not accepting minor applications — check back in late February for updates on
+          minor
+          applications!
         </p>
         <!-- Email and Phone Number-->
         <b-form-row>
