@@ -604,6 +604,7 @@ export default {
         address2: "",
         city: "",
         state: "",
+        country: "",
         zip: "",
         tshirt_size: "",
         hack_count: "",
@@ -680,14 +681,8 @@ export default {
       ethnicity_other_text: "",
       prefer_no_answer_ethnicity: false,
       ethnicity_options: [
-        {
-          value: "asian-indian",
-          text: "Asian Indian",
-        },
-        {
-          value: "black-african",
-          text: "Black or African",
-        },
+        { value: "asian-indian", text: "Asian Indian" },
+        { value: "black-african", text: "Black or African" },
         { value: "chinese", text: "Chinese" },
         { value: "filipino", text: "Filipino" },
         { value: "guamanian-chamorro", text: "Guamanian or Chamorro" },
