@@ -1015,6 +1015,22 @@ export default {
           });
         }
 
+        // Track "heard from" statistics
+        for (let heardFrom of this.heard_from_select) {
+          this.track({
+            random_id: this.random_id,
+            key: `hf-${heardFrom}`,
+            value: 1,
+          });
+        }
+        if (this.heard_from_other) {
+          this.track({
+            random_id: this.random_id,
+            key: 'hf-other',
+            value: 1,
+          });
+        }
+
         this.$gtag.event("submit-registration", { method: "Google" });
         this.$gtag.time({
           name: "completion-time",
@@ -1209,7 +1225,6 @@ export default {
         this.valid_diet = false;
         valid_form = false;
       } else {
-        console.log('diet: ', this.createDietaryRestrictionString)
         this.valid_diet = null;
       }
 
