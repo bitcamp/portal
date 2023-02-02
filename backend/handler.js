@@ -392,24 +392,47 @@ module.exports.update = withSentry(async () => {
   const webhookUrl = "https://hooks.slack.com/services/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";
   const webhook = new IncomingWebhook(webhookUrl);
 
-  // Send the statistic update to slack
-  var statArr = [];
-  var hfArr = [];
+  // Collect statistic data
+  const trackArr = [];
+  const hfArr = [];
   let registrations = 0;
+  let pageViews = 0;
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
-    if (stat.statistic.startsWith("hf")) {
-      hfArr.push(stat.value + " " + stat.statistic)
-    } else if (stat.statistic === "registrations") { // save for later
+    if (stat.statistic === "registrations") { // save for later
       registrations = stat.value;
-    } else {
-      statArr.push(stat.value + " " + stat.statistic);
+    } else if (stat.statistic === "page-view") {
+      pageViews = stat.value;
+    } else if (stat.statistic.startsWith("track-")) {
+      let track = stat.statistic.replace("track-", "");
+      track = track.split('_')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+      trackArr.push(`${stat.value} ${track}`);
+    } else if (stat.statistic.startsWith("hf-")) {
+      let hf = stat.statistic.replace("hf-", "");
+      hf = hf.charAt(0).toUpperCase() + hf.slice(1);
+      hfArr.push(`${stat.value} ${hf}`);
     }
   });
-  statArr.unshift("~~~~~~~~~~~");
-  statArr.unshift("*" + registrations + " registrations*");
-  statArr = statArr.concat("~~~~~~~~~~~", hfArr.sort())
 
+  // Sort strings ignoring the statistic value
+  const sortWithoutStatisticValue = ((a,b) => {
+    a = a.replace(/[0-9]/g, '');
+    b = b.replace(/[0-9]/g, '');
+    return a.localeCompare(b);
+  });
+
+  // Format statistic update
+  let statArr = [];
+  statArr.push(`*${registrations} Registrations*`);
+  statArr.push("~~~~~~~~~~~");
+  statArr = statArr.concat(trackArr.sort(sortWithoutStatisticValue));
+  statArr.push("~~~~~~~~~~~");
+  statArr = statArr.concat(hfArr.sort(sortWithoutStatisticValue));
+  statArr.push(`${pageViews} Page Views`)
+
+  // Send the statistic update to slack
   await webhook.send({
     text:
       `Registration update for ` +
