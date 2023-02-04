@@ -17,33 +17,35 @@ provider:
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
     SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME: ${file(./config/${self:provider.stage}.json):SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME}
 
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-       - dynamodb:Query
-       - dynamodb:Scan
-       - dynamodb:GetItem
-       - dynamodb:PutItem
-       - dynamodb:UpdateItem
-       - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:*"
-    - Effect: "Allow"
-      Action:
-        - secretsmanager:DescribeSecret
-        - secretsmanager:GetSecretValue
-      Resource: "arn:aws:secretsmanager:us-east-1:*"
-    - Effect: "Allow"
-      Action:
-        - ses:SendTemplatedEmail
-      Resource: "arn:aws:ses:us-east-1:*"
-    - Effect: Allow
-      Action:
-        - s3:PutObject
-        - s3:GetObject
-        - s3:ListBucket
-        - s3:ListBucketVersions
-      Resource:
-        - "arn:aws:s3:::*"
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+          Resource: "arn:aws:dynamodb:us-east-1:*"
+        - Effect: "Allow"
+          Action:
+            - secretsmanager:DescribeSecret
+            - secretsmanager:GetSecretValue
+          Resource: "arn:aws:secretsmanager:us-east-1:*"
+        - Effect: "Allow"
+          Action:
+            - ses:SendTemplatedEmail
+          Resource: "arn:aws:ses:us-east-1:*"
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+            - s3:ListBucket
+            - s3:ListBucketVersions
+          Resource:
+            - "arn:aws:s3:::*"
 
 functions:
   register:
