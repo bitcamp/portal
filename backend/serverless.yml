@@ -117,6 +117,7 @@ resources: # define DynamoDB tables within serverless
             NonKeyAttributes:
             - name
             ProjectionType: INCLUDE
+      DeletionPolicy: Retain
     resumesTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -132,6 +133,7 @@ resources: # define DynamoDB tables within serverless
           - AttributeName: submitted
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
+      DeletionPolicy: Retain
     registrationTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -154,6 +156,7 @@ resources: # define DynamoDB tables within serverless
             NonKeyAttributes:
             - name
             ProjectionType: INCLUDE
+      DeletionPolicy: Retain
     statisticsTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -165,6 +168,7 @@ resources: # define DynamoDB tables within serverless
         KeySchema:
           - AttributeName: statistic
             KeyType: HASH
+      DeletionPolicy: Retain
 
 package:
   exclude:
