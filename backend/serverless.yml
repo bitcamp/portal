@@ -73,8 +73,8 @@ functions:
     description: Sends a stat update to Slack
     events:
       - schedule:
-         rate: rate(8 hours)
-         enabled: ${self:custom.updateEnabled.${opt:stage}, self:custom.updateEnabled.other}
+          rate: cron(0 5/8 * * ? *)
+          enabled: ${self:custom.updateEnabled.${opt:stage}, self:custom.updateEnabled.other}
   upload_resume:
     handler: handler.upload_resume
     description: Uploads a hacker's resume to S3 bucket

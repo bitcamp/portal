@@ -389,7 +389,7 @@ module.exports.update = withSentry(async () => {
   };
 
   // Prepare the slack webhook
-  const webhookUrl = "https://hooks.slack.com/services/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";
+  const webhookUrl = "https://hooks.slack.com/services/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";
   const webhook = new IncomingWebhook(webhookUrl);
 
   // Collect statistic data
