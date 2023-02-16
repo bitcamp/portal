@@ -537,8 +537,9 @@
         </b-form-checkbox>
 
         <b-form-checkbox id="checkbox-1" v-model="form.MLH_emails" name="checkbox-1" class="checkbox">
-          I authorize MLH to send me pre- and post-event informational emails,
-          which contain free credit and opportunities from their partners.
+          I authorize MLH to send me an email where I can further
+          opt into the MLH Hacker, Events, or Organizer Newsletters
+          and other communications from MLH.
         </b-form-checkbox>
 
         <!-- Submit -->
