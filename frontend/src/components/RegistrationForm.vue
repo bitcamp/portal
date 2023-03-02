@@ -46,21 +46,18 @@
           <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-5 col-md-2">
             <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
               max="120" placeholder="19" :state="valid_age" />
-            <b-form-invalid-feedback v-if="form.age.length > 0 && form.age < 18" :state="valid_age">
-              Unfortunately, we are currently not accepting minor applications — check back in late February for updates
-              on minor
-              applications!
-            </b-form-invalid-feedback>
-            <b-form-invalid-feedback v-else-if="form.age.length === 0" :state="valid_age">
+            <b-form-invalid-feedback v-if="form.age.length === 0" :state="valid_age">
               Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
-        <p class="info" style="text-align: center !important;">
-          Unfortunately, we are currently not accepting minor applications — check back in late February for updates on
-          minor
-          applications!
+
+        <p class="info" v-if="form.age.length > 0 && form.age > 2 && form.age < 18">
+          To attend Bitcamp as a minor, please fill out these
+          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors forms</a> and email them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
         </p>
+
         <!-- Email and Phone Number-->
         <b-form-row>
           <!-- Email -->
@@ -500,17 +497,23 @@
           </b-form-group>
         </b-form-row>
 
-        <b-form-row>
-
-        </b-form-row>
-
         <hr>
         <!-- MLH Stuff -->
         <h4 class="mb-2">
           Rules and privacy policies
         </h4>
 
-        <b-form-checkbox id="checkbox-2" v-model="form.MLH_privacy" name="checkbox-2" class="checkbox"
+        <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form" name="checkbox-0" :state="valid_minors_form"
+          class="checkbox">
+          I have filled out the
+          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors forms</a> and emailed them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+          <b-form-invalid-feedback :state="valid_minors_form">
+            Please fill out the minors forms
+          </b-form-invalid-feedback>
+        </b-form-checkbox>
+
+        <b-form-checkbox id="checkbox-1" v-model="form.MLH_privacy" name="checkbox-1" class="checkbox"
           :state="valid_mlh_privacy">
           I authorize you to share my application/registration information with
           Major League Hacking for event administration, ranking, and MLH
@@ -527,7 +530,7 @@
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox id="checkbox-3" v-model="form.MLH_conduct" name="checkbox-3" :state="valid_code_of_conduct"
+        <b-form-checkbox id="checkbox-2" v-model="form.MLH_conduct" name="checkbox-2" :state="valid_code_of_conduct"
           class="checkbox" style="padding-bottom: 1rem">
           I have read and agree to the
           <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.*
@@ -536,7 +539,7 @@
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox id="checkbox-1" v-model="form.MLH_emails" name="checkbox-1" class="checkbox">
+        <b-form-checkbox id="checkbox-3" v-model="form.MLH_emails" name="checkbox-3" class="checkbox">
           I authorize MLH to send me an email where I can further
           opt into the MLH Hacker, Events, or Organizer Newsletters
           and other communications from MLH.
@@ -639,6 +642,7 @@ export default {
         resume_link: "",
         resume_id: "",
         age: "",
+        minors_form: false,
         address: "",
         address1: "",
         address2: "",
@@ -675,6 +679,7 @@ export default {
       valid_recruit: null,
       valid_portfolio: null,
       valid_age: null,
+      valid_minors_form: null,
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
       valid_track_selected: null,
@@ -1186,11 +1191,18 @@ export default {
         this.valid_tshirt_size = null;
       }
 
-      if (this.form.age.length === 0 || this.form.age < 18) {
+      if (this.form.age.length === 0) {
         this.valid_age = false;
         valid_form = false;
       } else {
         this.valid_age = null;
+      }
+
+      if (this.form.age.length > 0 && this.form.age < 18 && !this.form.minors_form) {
+        this.valid_minors_form = false;
+        valid_form = false;
+      } else {
+        this.valid_minors_form = null;
       }
 
       if (this.form.hack_count.length === 0 ||
