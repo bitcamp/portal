@@ -205,7 +205,7 @@
         <!-- Track selection -->
         <hr>
         <h4>Choose a track!</h4>
-        <TrackSelection :default="'general'" @picked="updateTrack" />
+        <TrackSelection :default="'general'" @picked="updateTrack" @waitlisted="updateWaitlistTrack"/>
 
         <!-- Shipping Address -->
         <hr>
@@ -659,6 +659,7 @@ export default {
         gmaps_place_id: "",
         referred_by: "",
         track_selected: "general",
+        waitlist_track_selected: "",
       },
 
       isSending: false,
@@ -683,6 +684,7 @@ export default {
       valid_code_of_conduct: null,
       valid_mlh_privacy: null,
       valid_track_selected: null,
+      valid_waitlist_track_selected: null,
       valid_address: null,
       valid_tshirt_size: null,
       valid_underrepresented_Gender: null,
@@ -859,6 +861,9 @@ export default {
   methods: {
     updateTrack(value) {
       this.form.track_selected = value;
+    },
+    updateWaitlistTrack(value) {
+      this.form.waitlist_track_selected = value;
     },
     fillInAddress(place) {
       let address1 = "";
@@ -1233,7 +1238,7 @@ export default {
       } else {
         this.valid_heard_from = null;
       }
-      
+
       if (this.createDietaryRestrictionString().length === 0) {
         this.valid_diet = false;
         valid_form = false;

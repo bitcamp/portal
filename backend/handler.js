@@ -64,6 +64,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       first_name: body.first_name,
       last_name: body.last_name,
       track: body.track_selected,
+      track_waitlist: body.waitlist_track_selected,
       referred_by: body.referred_by,
       referral_id: referralID,
       // pronouns: body.pronouns,
@@ -126,8 +127,15 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     }
   }
 
+  const logWaitlistTrack = () => {
+    if (body.waitlist_track_selected.length > 0) {
+      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1)
+    }
+  }
+
   await Promise.all([
-    logStatistic(ddb, "track-"+ body.track_selected, 1),
+    logStatistic(ddb, "track-" + body.track_selected, 1),
+    logWaitlistTrack(),
     logStatistic(ddb, "registrations", 1),
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
