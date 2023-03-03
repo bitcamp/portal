@@ -413,9 +413,19 @@ module.exports.update = withSentry(async () => {
       pageViews = stat.value;
     } else if (stat.statistic.startsWith("track-")) {
       let track = stat.statistic.replace("track-", "");
+
+      let waitlist = false;
+      if (track.startsWith("waitlist-")) {
+        waitlist = true;
+        track.replace("waitlist-", "");
+      }
+
       track = track.split('_')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
+      if (waitlist) {
+        track = `Waitlist (${track})`;
+      }
       trackArr.push(`${stat.value} ${track}`);
     } else if (stat.statistic.startsWith("hf-")) {
       let hf = stat.statistic.replace("hf-", "");
