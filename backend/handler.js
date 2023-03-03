@@ -417,7 +417,7 @@ module.exports.update = withSentry(async () => {
       let waitlist = false;
       if (track.startsWith("waitlist-")) {
         waitlist = true;
-        track.replace("waitlist-", "");
+        track = track.replace("waitlist-", "");
       }
 
       track = track.split('_')
