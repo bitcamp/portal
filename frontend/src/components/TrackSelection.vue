@@ -42,7 +42,9 @@
               <p>
                 Hackers will delve into the field of quantum computing with exclusive mentors,
                 sponsors, and workshops! Hackers will use their knowledge of Python and other
-                computing skills on educational and interactive Quantum Track activities.
+                computing skills on educational and interactive Quantum Track activities. If you’ve
+                been a previous participant of the Quantum track, there will be new, challenging
+                prompts for you to tackle!
               </p>
             </b-card>
           </div>
@@ -53,7 +55,8 @@
     <br />
     <p class="info">
       The following tracks have been filled. However, you can still join the waitlist if it's your
-      top choice and we'll let you know weekend-of if we have space!
+      top choice and we'll let you know weekend-of if we have space! Otherwise, you'll be placed in
+      the track you selected above.
     </p>
     <b-row class="row gx-12" cols="1">
       <b-col md="6" class="p-1 col d-flex align-items-stretch">
