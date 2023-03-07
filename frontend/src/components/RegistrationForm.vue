@@ -135,14 +135,30 @@
         <!-- School Type -->
         <b-form-row>
           <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
-            <vue-typeahead-bootstrap id="input-school" v-model="form.school" :input-class="school_class"
+            <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
               input-name="school" placeholder="University of Maryland at College Park" :data="university_options"
+              noResultsInfo="No results found." :disabled="school_other_selected"
               :state="valid_school" />
             <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
               Please enter your school name
             </b-form-invalid-feedback>
             <b-form-invalid-feedback v-else :state="valid_school">
               Please select a school from the list
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+
+        <b-form-row>
+          <div class="col-md-12">
+            <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
+              My school is not listed above
+            </b-form-checkbox>
+          </div>
+          <b-form-group class="col-md-12">
+            <b-form-input v-if="school_other_selected" v-model="form.school_other" class="col-12 col-md-12"
+              aria-label="School Other Text Box" placeholder="Other school" :state="valid_school_other" />
+            <b-form-invalid-feedback :state="valid_school_other">
+              Please enter your school name
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
@@ -569,7 +585,7 @@ import {
   FormRadioPlugin,
   IconsPlugin,
 } from "bootstrap-vue";
-import VueTypeaheadBootstrap from "vue-typeahead-bootstrap";
+import VueBootstrapAutocomplete from '@vue-bootstrap-components/vue-bootstrap-autocomplete';
 import TrackSelection from "./TrackSelection.vue";
 import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
@@ -583,7 +599,7 @@ Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 Vue.use(FormFilePlugin);
 Vue.component("BFormTextarea", BFormTextarea);
-Vue.component("VueTypeaheadBootstrap", VueTypeaheadBootstrap);
+Vue.component("VueBootstrapAutocomplete", VueBootstrapAutocomplete);
 
 const university_list = univ_list.default
 
@@ -638,6 +654,7 @@ export default {
         portfolio: "",
         school_year: "",
         school: "",
+        school_other: "",
         resume: "",
         resume_link: "",
         resume_id: "",
@@ -673,6 +690,7 @@ export default {
       valid_resume: null,
       valid_school_year: null,
       valid_school: null,
+      valid_school_other: null,
       valid_country: null,
       valid_gender: null,
       valid_ethnicity: null,
@@ -716,6 +734,8 @@ export default {
         { value: "not a student", text: "I’m not currently a student" },
         { value: "prefer not to answer", text: "Prefer not to answer" },
       ],
+
+      school_other_selected: false,
 
       gender_options: [
         { value: "", text: "Select one...", disabled: true },
@@ -1180,13 +1200,25 @@ export default {
         this.valid_school_year = null;
       }
 
-      if (!university_list.includes(this.form.school)) {
-        this.valid_school = false;
-        this.school_class = "typeahead is-invalid";
-        valid_form = false;
-      } else {
+      if (this.school_other_selected) {
         this.school_class = "typeahead";
         this.valid_school = null;
+        if (this.form.school_other.length === 0) {
+          this.valid_school_other = false;
+          valid_form = false;
+        } else {
+          this.valid_school_other = null;
+        }
+      } else {
+        if (!university_list.includes(this.form.school)) {
+          this.valid_school = false;
+          this.school_class = "typeahead is-invalid";
+          valid_form = false;
+        } else {
+          this.school_class = "typeahead";
+          this.valid_school = null;
+        }
+        this.valid_school_other = null;
       }
 
       if (this.form.tshirt_size.length === 0) {
@@ -1305,6 +1337,16 @@ export default {
       }
 
       return valid_form;
+    },
+    resetSchool(other) {
+      console.log(other);
+      if (other) {
+        this.form.school = "Other";
+        this.form.school_other = "";
+      } else {
+        this.form.school = "";
+        this.form.school_other = "";
+      }
     },
     async upload(file) {
       if (this.form.first_name.length == 0 || this.form.last_name.length == 0) {

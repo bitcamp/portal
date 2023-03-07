@@ -75,6 +75,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       recruit: body.recruit,
       portfolio: body.portfolio,
       school: body.school,
+      school_other: body.school_other,
       age: body.age,
       address: body.address,
       gmaps_place_id: body.gmaps_place_id,
