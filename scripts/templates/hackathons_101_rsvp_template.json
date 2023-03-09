@@ -1,0 +1,8 @@
+{
+  "Template": {
+    "TemplateName": "Hackathons101RSVPTemplate",
+    "SubjectPart": "Reminder: Hackathons 101 Tonight!",
+    "HtmlPart": "Hello",
+    "TextPart": "Hello"
+  }
+}
