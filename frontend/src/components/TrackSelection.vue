@@ -19,22 +19,6 @@
 
       <b-col md="6" class="p-1 col d-flex align-items-stretch">
         <label>
-          <input v-model="card" type="radio" value="hardware" @click="onSelectTrack('hardware')" />
-          <div class="color h-100 w-100">
-            <b-card class="h-100 w-100 general" :class="{ active: card === 'hardware' }">
-              <h4>Hardware</h4>
-              <p>
-                Embark on your hardware journey at Bitcamp with access to exclusive hardware
-                materials, mentors, and workshops! We'll provide all the resources needed to build
-                your very own hardware project and master hardware fundamentals.
-              </p>
-            </b-card>
-          </div>
-        </label>
-      </b-col>
-
-      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch center">
-        <label>
           <input v-model="card" type="radio" value="quantum" @click="onSelectTrack('quantum')" />
           <div class="color h-100 w-100">
             <b-card class="h-100 w-100 general" :class="{ active: card === 'quantum' }">
@@ -81,6 +65,27 @@
       </b-col>
 
       <b-col md="6" class="p-1 col d-flex align-items-stretch">
+        <label>
+          <input
+            v-model="waitlistCard"
+            type="radio"
+            value="hardware"
+            @click="onSelectWaitlistTrack('hardware')"
+          />
+          <div class="color h-100 w-100">
+            <b-card class="h-100 w-100 general" :class="{ active: waitlistCard === 'hardware' }">
+              <h4>Hardware</h4>
+              <p>
+                Embark on your hardware journey at Bitcamp with access to exclusive hardware
+                materials, mentors, and workshops! We'll provide all the resources needed to build
+                your very own hardware project and master hardware fundamentals.
+              </p>
+            </b-card>
+          </div>
+        </label>
+      </b-col>
+
+      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch center">
         <label>
           <input
             v-model="waitlistCard"
