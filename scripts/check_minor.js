@@ -247,7 +247,7 @@ const downloadRegistrations = async (stage) => {
     const minor_params = {
       Destinations: chunk,
       ConfigurationSetName: 'registration-2023',
-      Source: 'hello@bit.camp', // required
+      Source: '"Bitcamp Team" <hello@bit.camp>', // required
       Template: "MinorTemplate",
       DefaultTemplateData: JSON.stringify({
         "name": "Participant",

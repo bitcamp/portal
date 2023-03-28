@@ -126,7 +126,7 @@ const fileName = `./hackathons-101-users.csv`;
     const main_params = {
       Destinations: chunk,
       ConfigurationSetName: 'registration-2023',
-      Source: 'hello@bit.camp' /* required */,
+      Source: '"Bitcamp Team" <hello@bit.camp>' /* required */,
       Template: 'Hackathons101Template',
       DefaultTemplateData: '{ "name":"Camper" }',
     };
