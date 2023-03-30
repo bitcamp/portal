@@ -92,7 +92,7 @@ const fileName = `./bootcamp-rsvp-users.csv`;
   let result = Papa.parse(fs.readFileSync(fileNameOriginal, 'utf8'), {
     header: true,
   }).data.map((user) => {
-    return { email: user['Email'], first_name: user['First Name'] };
+    return { email: user['Email'], first_name: user['Name'].split(' ')[0] };
   });
 
   result.forEach((element) => {
