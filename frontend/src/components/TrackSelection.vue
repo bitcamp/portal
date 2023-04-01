@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row class="row gx-12" cols="1">
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch center">
         <label>
           <div class="color h-100 w-100">
             <input v-model="card" type="radio" value="general" @click="onSelectTrack('general')" />
@@ -16,31 +16,13 @@
           </div>
         </label>
       </b-col>
-
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
-        <label>
-          <input v-model="card" type="radio" value="quantum" @click="onSelectTrack('quantum')" />
-          <div class="color h-100 w-100">
-            <b-card class="h-100 w-100 general" :class="{ active: card === 'quantum' }">
-              <h4>Quantum</h4>
-              <p>
-                Hackers will delve into the field of quantum computing with exclusive mentors,
-                sponsors, and workshops! Hackers will use their knowledge of Python and other
-                computing skills on educational and interactive Quantum Track activities. If you’ve
-                been a previous participant of the Quantum track, there will be new, challenging
-                prompts for you to tackle!
-              </p>
-            </b-card>
-          </div>
-        </label>
-      </b-col>
     </b-row>
 
     <br />
     <p class="info">
       The following tracks have been filled. However, you can still join the waitlist if it's your
       top choice and we'll let you know weekend-of if we have space! Otherwise, you'll be placed in
-      the track you selected above.
+      the general track.
     </p>
     <b-row class="row gx-12" cols="1">
       <b-col md="6" class="p-1 col d-flex align-items-stretch">
@@ -85,7 +67,30 @@
         </label>
       </b-col>
 
-      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch center">
+      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+        <label>
+          <input
+            v-model="waitlistCard"
+            type="radio"
+            value="quantum"
+            @click="onSelectWaitlistTrack('quantum')"
+          />
+          <div class="color h-100 w-100">
+            <b-card class="h-100 w-100 general" :class="{ active: waitlistCard === 'quantum' }">
+              <h4>Quantum</h4>
+              <p>
+                Hackers will delve into the field of quantum computing with exclusive mentors,
+                sponsors, and workshops! Hackers will use their knowledge of Python and other
+                computing skills on educational and interactive Quantum Track activities. If you’ve
+                been a previous participant of the Quantum track, there will be new, challenging
+                prompts for you to tackle!
+              </p>
+            </b-card>
+          </div>
+        </label>
+      </b-col>
+
+      <b-col md="6" class="p-1 col d-flex align-items-stretch">
         <label>
           <input
             v-model="waitlistCard"
