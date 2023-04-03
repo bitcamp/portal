@@ -2,20 +2,18 @@
   <div class="home">
     <b-container>
       <b-card class="main-card mt-3 mt-lg-4 mt-xxl-5">
-        <!-- <registration-form :default_track="default_track" /> -->
-        <registration-closed />
+        <registration-form :default_track="default_track" />
       </b-card>
     </b-container>
   </div>
 </template>
 
 <script>
-// import RegistrationForm from "../components/RegistrationForm.vue";
-import RegistrationClosed from "../components/RegistrationClosed.vue"
+import RegistrationForm from "../components/RegistrationForm.vue";
+
 export default {
   name: "RegisterView",
-  // components: { RegistrationForm },
-  components: { RegistrationClosed },
+  components: { RegistrationForm },
   props: {
     default_track: {
       type: String,
