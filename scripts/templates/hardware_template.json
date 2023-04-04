@@ -1,0 +1,8 @@
+{
+  "Template": {
+    "TemplateName": "HardwareTemplate",
+    "SubjectPart": "Bitcamp Hardware Track Reminder",
+    "HtmlPart": "Hello",
+    "TextPart": "Hello"
+  }
+}
