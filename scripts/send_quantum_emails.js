@@ -7,21 +7,25 @@ AWS.config.update({ region: 'us-east-1' });
 const ses = new AWS.SES();
 const ddb = new AWS.DynamoDB.DocumentClient();
 
-let template = fs.readFileSync('./templates/quantum_template.html', 'utf8');
+let template = fs.readFileSync(
+  `${__dirname}/templates/quantum_template.html`,
+  'utf8'
+);
 // template = template.replace('{header text}',);
 let main_template = {
   Template: {
     TemplateName: 'QuantumTemplate',
-    SubjectPart: 'Bitcamp Quantum Track Update',
+    SubjectPart: 'Follow Up: Bitcamp Quantum Track Update',
     TextPart: `Hey {{name}} 
-    \n\nAll of us are super excited for Bitcamp 2023 this April 7-9! As we're gearing up to
-    \nstart we wanted to gauge interest in The Quantum Track having two different levels:
-    \nan intro level and advanced level.
-    \n\nThe introduction level would be suggested for beginner hackers / people who don't
-    \nhave much experience with quantum. On the other hand, the advanced level would have a
-    \nmore open-ended prompt, this level would be suggested for hackers who attended the 
-    \nquantum track last year (Bitcamp 2022) or have experience with quantum.
-    \n\nPlease fill out the following form ASAP: https://docs.google.com/forms/d/e/1FAIpQLScGHABG_fjzWgXYkqnf6uRIAg4NCy35N4g6PAu1sv1dvfrNqw/viewform
+    \n\nWe hope you're as excited as we are for Bitcamp this weekend! We wanted to send a
+    \nreminder to fill out the sub-track selection form (https://docs.google.com/forms/d/e/1FAIpQLScGHABG_fjzWgXYkqnf6uRIAg4NCy35N4g6PAu1sv1dvfrNqw/viewform). 
+    \nThis form is to indicate whether you will be pursuing the Beginner Quantum track or
+    \nthe Advanced Quantum track.
+    \n\nPlease fill out this form as soon as possible as it will allow us to have an
+    \naccurate headcount and provide the best possible experience for everyone registered
+    \nfor this track. If you’ve already filled out this form, no further action is needed
+    \nat this time.
+    \n\nWe appreciate your time and look forward to welcoming you to a great Bitcamp weekend!
     \n\nSee you by the campfire!
     \nBitcamp Organizing Team`,
     HtmlPart: template,
@@ -83,7 +87,7 @@ const downloadRegistrations = async (stage) => {
 const fileName = `./quantum-users.csv`;
 
 (async function () {
-  const result = await downloadRegistrations('prd');
+  const result = await downloadRegistrations('dev');
 
   // Send email to all registered quantum track hackers
   result.forEach((element) => {
