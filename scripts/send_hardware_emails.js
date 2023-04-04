@@ -87,7 +87,7 @@ const fileName = `./hardware-users.csv`;
   // Send email to all registered hardware track hackers
   result.forEach((element) => {
     if (element.track && element.email) {
-      if (element.track === 'hardware') {
+      if (element.track === 'hardware' || element.track_waitlist === 'hardware') {
         main_emails.push({
           Destination: {
             ToAddresses: [element.email],
