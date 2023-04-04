@@ -11,9 +11,9 @@
 
             <div class="py-3">
               <p class="mb-4">
-                If you would like to join the waitlist, please fill out
-                <a href="https://forms.gle/C31xLjHLnLkBNRSXA">this form</a> and we'll let you know
-                when you can come to Bitcamp!
+                If you'd like to join the waitlist, please fill out
+                <a href="https://forms.gle/C31xLjHLnLkBNRSXA">this form</a> and keep an eye out for
+                an email Friday night or Saturday morning.
               </p>
               <p class="mb-4">
                 If you have any questions, be sure to reach out to
