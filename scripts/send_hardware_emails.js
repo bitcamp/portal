@@ -64,11 +64,11 @@ const downloadRegistrations = async (stage) => {
     ddb.scan(params, (err, data) => {
       if (err) console.log(err);
       else {
-        registrationResults = [registrationResults, ...data.Items];
+        data.Items.forEach((item) => registrationResults.push(item));
       }
       // If we reached the 1MB limit, we scan some more with the old startKey
-      if (typeof data.LastEvalutedKey !== 'undefined') {
-        params.ExclusiveStartKey = data.LastEvalutedKey;
+      if (typeof data.LastEvaluatedKey !== 'undefined') {
+        params.ExclusiveStartKey = data.LastEvaluatedKey;
       } else {
         done = true;
       }
@@ -87,7 +87,10 @@ const fileName = `./hardware-users.csv`;
   // Send email to all registered hardware track hackers
   result.forEach((element) => {
     if (element.track && element.email) {
-      if (element.track === 'hardware' || element.track_waitlist === 'hardware') {
+      if (
+        element.track === 'hardware' ||
+        element.track_waitlist === 'hardware'
+      ) {
         main_emails.push({
           Destination: {
             ToAddresses: [element.email],
@@ -106,8 +109,6 @@ const fileName = `./hardware-users.csv`;
   fs.appendFile(fileName, csv, (err) => {
     if (err) console.log(err);
   });
-
-  console.log(main_emails.length);
 
   const chunkSize = 50;
   for (let i = 0; i < main_emails.length; i += chunkSize) {

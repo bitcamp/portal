@@ -69,11 +69,11 @@ const downloadRegistrations = async (stage) => {
     ddb.scan(params, (err, data) => {
       if (err) console.log(err);
       else {
-        registrationResults = [registrationResults, ...data.Items];
+        data.Items.forEach((item) => registrationResults.push(item));
       }
       // If we reached the 1MB limit, we scan some more with the old startKey
-      if (typeof data.LastEvalutedKey !== 'undefined') {
-        params.ExclusiveStartKey = data.LastEvalutedKey;
+      if (typeof data.LastEvaluatedKey !== 'undefined') {
+        params.ExclusiveStartKey = data.LastEvaluatedKey;
       } else {
         done = true;
       }
