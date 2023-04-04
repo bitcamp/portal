@@ -87,7 +87,7 @@ const downloadRegistrations = async (stage) => {
 const fileName = `./quantum-users.csv`;
 
 (async function () {
-  const result = await downloadRegistrations('dev');
+  const result = await downloadRegistrations('prd');
 
   // Send email to all registered quantum track hackers
   result.forEach((element) => {
