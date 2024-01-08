@@ -12,16 +12,16 @@ const routes = [
     component: Register,
     props: (route) => ({ default_track: route.query.t })  
   },
-  // {
-  //   path: '/thanks',
-  //   name: 'Thanks',
-  //   component: () => import('../views/Thanks.vue'),
-  //   props: (route) => ({ referralID: route.query.r })  
-  // },
-  // {
-  //   path: '/:referral',
-  //   component: Register,
-  // },
+  {
+    path: '/thanks',
+    name: 'Thanks',
+    component: () => import('../views/Thanks.vue'),
+    props: (route) => ({ referralID: route.query.r })  
+  },
+  {
+    path: '/:referral',
+    component: Register,
+  },
 ];
 
 const router = new VueRouter({
