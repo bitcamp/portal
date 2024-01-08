@@ -185,7 +185,7 @@
         <hr>
         <h4>Want to get hired?</h4>
         <p class="info">
-          Let us know, and we'll pass your info on to our partners and sponsors!
+          Let us know, and we'll pass your info on to our sponsors!
         </p>
 
         <!-- recruitment info -->
