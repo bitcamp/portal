@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import Register from '../views/Register.vue';
+import Register from '../views/Register.vue';
 import RegistrationClosed from '../components/RegistrationClosed.vue'
 Vue.use(VueRouter);
 
@@ -8,9 +8,9 @@ const routes = [
   {
     path: '/',
     name: 'Register',
-    component: RegistrationClosed
-    // component: Register,
-    // props: (route) => ({ default_track: route.query.t })  
+    // component: RegistrationClosed
+    component: Register,
+    props: (route) => ({ default_track: route.query.t })  
   },
   // {
   //   path: '/thanks',
