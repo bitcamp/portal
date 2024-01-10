@@ -14,7 +14,7 @@
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2023 at the email you provide.
+          Once you register, you'll receive more info about Bitcamp 2024 at the email you provide.
         </p>
 
         <!-- Name and Age -->
@@ -531,10 +531,10 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_1"
           >
-            <b-form-radio value="r"> Summer </b-form-radio>
-            <b-form-radio value="r1"> Spring </b-form-radio>
-            <b-form-radio value="g"> Fall </b-form-radio>
-            <b-form-radio value="b"> Winter </b-form-radio>
+            <b-form-radio value="r"> Summer ☀️ </b-form-radio>
+            <b-form-radio value="r1"> Spring ⚡ </b-form-radio>
+            <b-form-radio value="g"> Fall 🍁 </b-form-radio>
+            <b-form-radio value="b"> Winter ❄️ </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_1">
             Please select an answer
@@ -565,10 +565,10 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_3"
           >
-            <b-form-radio value="b"> Listen to music </b-form-radio>
-            <b-form-radio value="g"> Watch TV </b-form-radio>
-            <b-form-radio value="r"> Eat junk food </b-form-radio>
-            <b-form-radio value="r1"> Use your phone to text and call </b-form-radio>
+            <b-form-radio value="b"> Listen to music 🎵 </b-form-radio>
+            <b-form-radio value="g"> Watch TV 📺 </b-form-radio>
+            <b-form-radio value="r"> Eat junk food 🍕 </b-form-radio>
+            <b-form-radio value="r1"> Use your phone to text and call 📱 </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_3">
             Please select an answer
@@ -584,7 +584,7 @@
             <b-form-radio value="g"> Straight black coffee </b-form-radio>
             <b-form-radio value="b"> Anything with pumpkin spice or matcha in it </b-form-radio>
             <b-form-radio value="r"> As long as it has enough sugar to taste good </b-form-radio>
-            <b-form-radio value="g1"> Something new everytime I order </b-form-radio>
+            <b-form-radio value="g1"> Something new every time I order </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
             Please select an answer
@@ -612,7 +612,7 @@
         <h4 class="mb-2">Select a T-shirt size!</h4>
         <p class="info">
           We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you like, and your very
-          own Bitcamp 2023 shirt will be given to you once you arrive at UMD.
+          own Bitcamp 2024 shirt will be given to you once you arrive at UMD.
         </p>
 
         <b-form-row>
@@ -996,7 +996,6 @@ export default {
       valid_survey_3: null,
       valid_survey_4: null,
       valid_survey_5: null,
-      valid_survey_6: null,
       valid_question1: null,
       valid_question2: null,
       valid_heard_from: null,
@@ -1360,7 +1359,6 @@ export default {
         survey_count[this.form.selected_survey_3.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_4.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_5.substring(0, 1)] += 1;
-        survey_count[this.form.selected_survey_6.substring(0, 1)] += 1;
 
         this.form.red = survey_count["r"];
         this.form.green = survey_count["g"];
@@ -1598,12 +1596,6 @@ export default {
         valid_form = false;
       } else {
         this.valid_survey_5 = null;
-      }
-      if (!this.form.selected_survey_6) {
-        this.valid_survey_6 = false;
-        valid_form = false;
-      } else {
-        this.valid_survey_6 = null;
       }
 
       return valid_form;
