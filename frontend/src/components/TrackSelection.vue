@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row class="row gx-12" cols="1">
-      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch center">
+      <b-col md="6" class="p-1 col d-flex align-items-stretch center">
         <label>
           <div class="color h-100 w-100">
             <input v-model="card" type="radio" value="general" @click="onSelectTrack('general')" />
@@ -16,8 +16,7 @@
           </div>
         </label>
       </b-col>
-    </b-row>
-    <!--
+      <!--
     <br />
     <p class="info">
       The following tracks have been filled. However, you can still join the waitlist if it's your
@@ -25,7 +24,6 @@
       the general track.
     </p>
     -->
-    <b-row class="row gx-12" cols="1">
       <b-col md="6" class="p-1 col d-flex align-items-stretch">
         <label>
           <div class="color h-100 w-100">
