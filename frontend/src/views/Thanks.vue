@@ -5,7 +5,7 @@
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>You're registered for Bitcamp 2023!</h1>
+            <h1>You're registered for Bitcamp 2024!</h1>
 
             <img style="width: 200px; height 200px;" src="@/assets/bitcamp.gif" />
 

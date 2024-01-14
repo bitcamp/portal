@@ -16,11 +16,11 @@ let minors_html = fs.readFileSync('./templates/minors_rsvp_template.html', 'utf8
 let main_template = {
   Template: {
     TemplateName: "MainTemplate",
-    SubjectPart: "RSVP for Bitcamp 2023!",
-    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2023! 
-    \n\nWe're excited to have you join us at Bitcamp 2023!
+    SubjectPart: "RSVP for Bitcamp 2024!",
+    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2024! 
+    \n\nWe're excited to have you join us at Bitcamp 2024!
     \n\nBefore you come, we want to make sure that we're ready to make Bytecamp the best Bitcamp ever!
-    \n\nPlease fill out this RSVP form {{link}} so that we have a better idea of how many people are coming to Bitcamp 2023.
+    \n\nPlease fill out this RSVP form {{link}} so that we have a better idea of how many people are coming to Bitcamp 2024.
     \n\nSee you by the campfire! The Bitcamp Organizing Team`,
     HtmlPart: main_html,
   }
@@ -29,8 +29,8 @@ let main_template = {
 let minor_template = {
   Template: {
     TemplateName: "MinorTemplate",
-    SubjectPart: "Action Needed, Complete your Minor Application for Bitcamp 2023!",
-    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2023! 
+    SubjectPart: "Action Needed, Complete your Minor Application for Bitcamp 2024!",
+    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2024! 
     \n\nWe noticed that on your registration form you'll be under 18 by the time Bitcamp rolls around. For legal reasons, we'll need you to fill out 
     \n\nthis minors application https://forms.gle/6SS6oFnHFWBEdUYN8 to complete your registration.
     \n\nYou can also find this on our website at bit.camp! If you have any questions, contact us at hello@bit.camp and we'll be happy to help you out!
@@ -227,7 +227,7 @@ const downloadRegistrations = async (stage) => {
 
     const main_params = {
       Destinations: chunk,
-      ConfigurationSetName: 'registration-2023',
+      ConfigurationSetName: 'registration-2024',
       Source: 'hello@bit.camp', // required
       Template: "MainTemplate",
       DefaultTemplateData: JSON.stringify({
@@ -246,7 +246,7 @@ const downloadRegistrations = async (stage) => {
 
     const minor_params = {
       Destinations: chunk,
-      ConfigurationSetName: 'registration-2023',
+      ConfigurationSetName: 'registration-2024',
       Source: '"Bitcamp Team" <hello@bit.camp>', // required
       Template: "MinorTemplate",
       DefaultTemplateData: JSON.stringify({
