@@ -403,7 +403,7 @@
         <!-- Optional quantum selection 1 -->
         <hr />
         <b-form-group v-if="this.form.QUANTUM_SELECTED" class="font-weight-bold"
-          label="Would you like to be placed in the beginner or advanced quantum track.*">
+          label="Would you like to be placed in the beginner or advanced quantum track?*">
           <b-form-radio-group id="quantum-survey-1" v-model="form.selected_quantum_survey_track"
             class="font-weight-normal pt-2" :state="quantum_survey_1">
             <b-form-radio value="r"> Beginner </b-form-radio>
@@ -412,11 +412,12 @@
           <b-form-invalid-feedback :state="quantum_survey_1">
             Please select an answer
           </b-form-invalid-feedback>
+          <hr />
         </b-form-group>
 
         <!-- Optional quantum selection 2 -->
-        <hr />
-        <b-form-group v-if="this.form.QUANTUM_SELECTED" class="font-weight-bold"
+
+        <b-form-group class="font-weight-bold"
           label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack! Would you like us to share this content with you?*">
           <b-form-radio-group id="quantum-survey-2" v-model="form.selected_quantum_survey_guide"
             class="font-weight-normal pt-2" :state="quantum_survey_2">
@@ -1610,7 +1611,7 @@ export default {
         this.quantum_survey_1 = null;
       }
 
-      if (!this.form.selected_quantum_survey_guide && this.form.QUANTUM_SELECTED) {
+      if (!this.form.selected_quantum_survey_guide) {
         this.quantum_survey_2 = false;
         valid_form = false;
       } else {
