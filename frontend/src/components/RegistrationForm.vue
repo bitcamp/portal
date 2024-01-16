@@ -2,22 +2,19 @@
   <b-row>
     <b-col md="1" />
     <b-col md="10">
-      <br>
-      <h1 style="text-align: left">
-        Register for Bitcamp 2023
-      </h1>
+      <br />
+      <h1 style="text-align: left">Register for Bitcamp 2024</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Contact us at
-        <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
+        <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at
+        <a href="https://bit.camp">bit.camp</a>!
       </p>
-      <hr>
+      <hr />
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
-
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2023 at the
-          email you provide.
+          Once you register, you'll receive more info about Bitcamp 2024 at the email you provide.
         </p>
 
         <!-- Name and Age -->
@@ -54,8 +51,8 @@
         <p class="info" v-if="form.age.length > 0 && form.age > 2 && form.age < 18">
           To attend Bitcamp as a minor, please fill out these
           <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
-            forms</a> and email them to
-          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+            forms</a>
+          and email them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
         </p>
 
         <!-- Email and Phone Number-->
@@ -125,9 +122,9 @@
           </b-form-invalid-feedback>
         </b-form-row>
 
-        <hr>
+        <hr />
         <h4>How about your school?</h4>
-        <br>
+        <br />
 
         <!-- School Type -->
         <b-form-row>
@@ -178,11 +175,9 @@
           </b-form-group>
         </b-form-row>
 
-        <hr>
+        <hr />
         <h4>Want to get hired?</h4>
-        <p class="info">
-          Let us know, and we'll pass your info on to our sponsors!
-        </p>
+        <p class="info">Let us know, and we'll pass your info on to our sponsors!</p>
 
         <!-- recruitment info -->
         <b-form-row>
@@ -208,24 +203,24 @@
             <b-form-file id="input-resume" v-model="form.resume" name="resume" accept=".pdf, .doc, .docx, .txt"
               placeholder="Upload Resume" drop-placeholder="Drop file here..." :state="valid_resume" @input="upload" />
             <b-form-invalid-feedback :state="valid_resume">
-              We couldn't upload your resume. Try again later, or check that you
-              entered your name first!
+              We couldn't upload your resume. Try again later, or check that you entered your name
+              first!
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
 
         <!-- Track selection -->
-        <hr>
+        <hr />
         <h4>Choose a track!</h4>
         <TrackSelection :default="'general'" @picked="updateTrack" @waitlisted="updateWaitlistTrack" />
 
         <!-- Shipping Address -->
-        <hr>
+        <hr />
         <h4>Want to give us a shipping address?</h4>
         <p class="info">
-          We plan on handing out all swag in-person at the event, but in case we
-          need to ship swag to you instead, this is where we'll send it to.
-          Please note that we can only ship to the USA.
+          We plan on handing out all swag in-person at the event, but in case we need to ship swag
+          to you instead, this is where we'll send it to. Please note that we can only ship to the
+          USA.
         </p>
         <b-form-group>
           <b-form-row>
@@ -263,155 +258,89 @@
             </b-form-group>
           </b-form-row>
           <b-form-invalid-feedback :state="valid_address" style="margin: 0">
-            Please provide a valid shipping address to apply for the hardware
-            track
+            Please provide a valid shipping address to apply for the hardware track
           </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Bitcamp Campfire Games Survey -->
-        <hr>
+        <hr />
         <h4>Campfire Games Survey</h4>
         <p class="info">
-          This year, you'll once again be put into one of three teams based on
-          your personality and interests. By winning unique challenges and
-          attending workshops and mini-events, you and your fellow hackers will
-          rack up points for your team. At the end of the event, members of the
-          winning team will receive limited edition Bitcamp swag. So what are
-          you waiting for? Take the survey and find your team!
+          This year, you'll once again be put into one of three teams based on your personality and
+          interests. By winning unique challenges and attending workshops and mini-events, you and
+          your fellow hackers will rack up points for your team. At the end of the event, members of
+          the winning team will receive limited edition Bitcamp swag. So what are you waiting for?
+          Take the survey and find your team!
         </p>
-        <b-form-group class="font-weight-bold" label="What animal would you willingly fight for 5 minutes?*">
+        <b-form-group class="font-weight-bold" label="What is your favorite season?*">
           <b-form-radio-group id="survey-1" v-model="form.selected_survey_1" class="font-weight-normal pt-2"
             :state="valid_survey_1">
-            <b-form-radio value="r">
-              A gorilla
-            </b-form-radio>
-            <b-form-radio value="r1">
-              A bear
-            </b-form-radio>
-            <b-form-radio value="g">
-              A giraffe
-            </b-form-radio>
-            <b-form-radio value="b">
-              A snake
-            </b-form-radio>
+            <b-form-radio value="r"> Summer ☀️ </b-form-radio>
+            <b-form-radio value="r1"> Spring ⚡ </b-form-radio>
+            <b-form-radio value="g"> Fall 🍁 </b-form-radio>
+            <b-form-radio value="b"> Winter ❄️ </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_1">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold"
-          label="If you were running out of time to finish a project, what would you do?*">
+        <b-form-group class="font-weight-bold" label="How early do you finish classwork?*">
           <b-form-radio-group id="survey-2" v-model="form.selected_survey_2" class="font-weight-normal pt-2"
             :state="valid_survey_2">
             <b-form-radio value="b">
-              Focus on priorities and speed up
+              The minute before it’s due. I like to live life on the edge
             </b-form-radio>
-            <b-form-radio value="r">
-              Continue working and following the same tempo
-            </b-form-radio>
-            <b-form-radio value="g">
-              Ask for help from colleagues
-            </b-form-radio>
-            <b-form-radio value="b1">
-              Ask for an extended deadline
-            </b-form-radio>
+            <b-form-radio value="r"> As soon as possible, I’m a machine </b-form-radio>
+            <b-form-radio value="g"> Relaxingly, I spread the work out until its due </b-form-radio>
+            <b-form-radio value="b1"> Huh!?! I had classwork? </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_2">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold"
-          label="If you could find out one thing about your future using a crystal ball, what would it be that you would want to know?*">
+        <b-form-group class="font-weight-bold" label="Would you rather never be able to...*">
           <b-form-radio-group id="survey-3" v-model="form.selected_survey_3" class="font-weight-normal pt-2"
             :state="valid_survey_3">
-            <b-form-radio value="b">
-              Know how your career unfolds
-            </b-form-radio>
-            <b-form-radio value="g">
-              Know how you die
-            </b-form-radio>
-            <b-form-radio value="r">
-              Know all the places you end up living in
-            </b-form-radio>
-            <b-form-radio value="r1">
-              Know what to invest in
-            </b-form-radio>
+            <b-form-radio value="b"> Listen to music 🎵 </b-form-radio>
+            <b-form-radio value="g"> Watch TV 📺 </b-form-radio>
+            <b-form-radio value="r"> Eat junk food 🍕 </b-form-radio>
+            <b-form-radio value="r1"> Use your phone to text and call 📱 </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_3">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="If we paid you $100 per minute to give a speech in front of 2,000 people about one of your interests/hobbies, how long could you speak without stopping?
-*">
+        <b-form-group class="font-weight-bold" label="What is your go to coffee order?*">
           <b-form-radio-group id="survey-4" v-model="form.selected_survey_4" class="font-weight-normal pt-2"
             :state="valid_survey_4">
-            <b-form-radio value="g">
-              5 minutes
-            </b-form-radio>
-            <b-form-radio value="b">
-              10 minutes
-            </b-form-radio>
-            <b-form-radio value="r">
-              30 minutes
-            </b-form-radio>
-            <b-form-radio value="g1">
-              60 minutes
-            </b-form-radio>
+            <b-form-radio value="g"> Straight black coffee </b-form-radio>
+            <b-form-radio value="b"> Anything with pumpkin spice or matcha in it </b-form-radio>
+            <b-form-radio value="r"> As long as it has enough sugar to taste good </b-form-radio>
+            <b-form-radio value="g1"> Something new every time I order </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="Given the chance to go back in time, you would…*">
+        <b-form-group class="font-weight-bold" label="What is your favorite thing about Bitcamp?*">
           <b-form-radio-group id="survey-5" v-model="form.selected_survey_5" class="font-weight-normal pt-2"
             :state="valid_survey_5">
-            <b-form-radio value="r">
-              Go to a concert of your favorite old musician/band
-            </b-form-radio>
-            <b-form-radio value="g">
-              Go to the first showing of your favorite old movie
-            </b-form-radio>
-            <b-form-radio value="b">
-              Go see a historic event in real time
-            </b-form-radio>
-            <b-form-radio value="g1">
-              Go to an iconic sports event
-            </b-form-radio>
+            <b-form-radio value="r"> Hacking </b-form-radio>
+            <b-form-radio value="g"> Free stuff </b-form-radio>
+            <b-form-radio value="b"> Late night shenanigans </b-form-radio>
+            <b-form-radio value="g1"> First time, I'll find out! </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="When do you get to class?*">
-          <b-form-radio-group id="survey-6" v-model="form.selected_survey_6" class="font-weight-normal pt-2"
-            :state="valid_survey_6">
-            <b-form-radio value="b">
-              10 minutes early
-            </b-form-radio>
-            <b-form-radio value="g">
-              Right on time
-            </b-form-radio>
-            <b-form-radio value="r">
-              5 minutes late
-            </b-form-radio>
-            <b-form-radio value="b1">
-              Wait, I had class today?
-            </b-form-radio>
-          </b-form-radio-group>
-          <b-form-invalid-feedback :state="valid_survey_6">
-            Please select an answer
-          </b-form-invalid-feedback>
-        </b-form-group>
 
-        <hr>
+        <hr />
         <!-- T-Shirt Size -->
-        <h4 class="mb-2">
-          Select a T-shirt size!
-        </h4>
+        <h4 class="mb-2">Select a T-shirt size!</h4>
         <p class="info">
-          We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you
-          like, and your very own Bitcamp 2023 shirt will be given to you once
-          you arrive at UMD.
+          We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you like, and your very
+          own Bitcamp 2024 shirt will be given to you once you arrive at UMD.
         </p>
 
         <b-form-row>
@@ -424,14 +353,12 @@
           </b-form-group>
         </b-form-row>
 
-        <hr>
+        <hr />
         <!-- Short Questions -->
-        <h4 class="mb-2">
-          Why Bitcamp?
-        </h4>
+        <h4 class="mb-2">Why Bitcamp?</h4>
         <p class="info">
-          We'd like to get to know you a little better! Help us learn more about
-          you and make Bitcamp even more amazing by answering some questions!
+          We'd like to get to know you a little better! Help us learn more about you and make
+          Bitcamp even more amazing by answering some questions!
         </p>
 
         <b-form-row>
@@ -473,9 +400,7 @@
                 :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="heard_from_other">
-                Other
-              </b-form-checkbox>
+              <b-form-checkbox v-model="heard_from_other"> Other </b-form-checkbox>
               <b-form-invalid-feedback :state="valid_heard_from">
                 Please select an option
               </b-form-invalid-feedback>
@@ -495,9 +420,7 @@
                 :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a" :disabled="diet_none">
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="diet_other" :disabled="diet_none">
-                Other
-              </b-form-checkbox>
+              <b-form-checkbox v-model="diet_other" :disabled="diet_none"> Other </b-form-checkbox>
               <b-form-invalid-feedback :state="valid_diet">
                 Please select your dietary restrictions ("None" is an option)
               </b-form-invalid-feedback>
@@ -508,18 +431,16 @@
           </b-form-group>
         </b-form-row>
 
-        <hr>
+        <hr />
         <!-- MLH Stuff -->
-        <h4 class="mb-2">
-          Rules and privacy policies
-        </h4>
+        <h4 class="mb-2">Rules and privacy policies</h4>
 
         <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form"
           name="checkbox-0" :state="valid_minors_form" class="checkbox">
           I have filled out the
           <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
-            forms</a> and emailed them to
-          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+            forms</a>
+          and emailed them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
           <b-form-invalid-feedback :state="valid_minors_form">
             Please fill out the minors forms
           </b-form-invalid-feedback>
@@ -527,14 +448,12 @@
 
         <b-form-checkbox id="checkbox-1" v-model="form.MLH_privacy" name="checkbox-1" class="checkbox"
           :state="valid_mlh_privacy">
-          I authorize you to share my application/registration information with
-          Major League Hacking for event administration, ranking, and MLH
-          administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of
-          both
-          the
-          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
-            Contest Terms and Conditions</a>
+          I authorize you to share my application/registration information with Major League Hacking
+          for event administration, ranking, and MLH administration in-line with the
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
+          to the terms of both the
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH Contest Terms and
+            Conditions</a>
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
           <b-form-invalid-feedback :state="valid_mlh_privacy">
@@ -552,17 +471,14 @@
         </b-form-checkbox>
 
         <b-form-checkbox id="checkbox-3" v-model="form.MLH_emails" name="checkbox-3" class="checkbox">
-          I authorize MLH to send me an email where I can further
-          opt into the MLH Hacker, Events, or Organizer Newsletters
-          and other communications from MLH.
+          I authorize MLH to send me an email where I can further opt into the MLH Hacker, Events,
+          or Organizer Newsletters and other communications from MLH.
         </b-form-checkbox>
 
         <!-- Submit -->
         <div>
           <b-button type="submit" class="submit-btn m1 mx-auto" style="center" :disabled="isSending">
-            <h5 class="m-1">
-              Confirm Registration for Bitcamp!
-            </h5>
+            <h5 class="m-1">Confirm Registration for Bitcamp!</h5>
           </b-button>
         </div>
       </b-form>
@@ -575,18 +491,13 @@
 import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
 import Vue from "vue";
-import {
-  BFormTextarea,
-  FormFilePlugin,
-  FormRadioPlugin,
-  IconsPlugin,
-} from "bootstrap-vue";
-import VueBootstrapAutocomplete from '@vue-bootstrap-components/vue-bootstrap-autocomplete';
+import { BFormTextarea, FormFilePlugin, FormRadioPlugin, IconsPlugin } from "bootstrap-vue";
+import VueBootstrapAutocomplete from "@vue-bootstrap-components/vue-bootstrap-autocomplete";
 import TrackSelection from "./TrackSelection.vue";
 import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
 import * as majors_list from "../assets/college-majors.json";
-import * as univ_list from '../assets/university-list.json';
+import * as univ_list from "../assets/university-list.json";
 import * as country_codes from "../assets/country-codes.json";
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
@@ -597,7 +508,7 @@ Vue.use(FormFilePlugin);
 Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueBootstrapAutocomplete", VueBootstrapAutocomplete);
 
-const university_list = univ_list.default
+const university_list = univ_list.default;
 
 const country_list = country_codes.default.map((country) => country["name"]);
 
@@ -607,19 +518,13 @@ const major_map = majors_list["rows"].map((major) => {
     text: major[2]
       .toLowerCase()
       .split(" ")
-      .map((word) =>
-        word === "and" ? word : word.charAt(0).toUpperCase() + word.slice(1)
-      )
+      .map((word) => (word === "and" ? word : word.charAt(0).toUpperCase() + word.slice(1)))
       .join(" "),
   };
 });
 
 major_map.sort((major1, major2) => {
-  return major1["value"] < major2["value"]
-    ? -1
-    : major1["value"] > major2["value"]
-      ? 1
-      : 0;
+  return major1["value"] < major2["value"] ? -1 : major1["value"] > major2["value"] ? 1 : 0;
 });
 
 const DEFAULT_COUNTRY_PHONE = "US";
@@ -708,7 +613,6 @@ export default {
       valid_survey_3: null,
       valid_survey_4: null,
       valid_survey_5: null,
-      valid_survey_6: null,
       valid_question1: null,
       valid_question2: null,
       valid_heard_from: null,
@@ -720,7 +624,10 @@ export default {
         { value: "", text: "Select one...", disabled: true },
         { value: "less than high school", text: "Less than Secondary / High School" },
         { value: "high school", text: "Secondary / High School" },
-        { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+        {
+          value: "undergrad 2 year",
+          text: "Undergraduate University (2 year - community college or similar)",
+        },
         { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
         { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
         { value: "bootcamp", text: "Code School / Bootcamp" },
@@ -797,10 +704,7 @@ export default {
 
       university_options: [...university_list],
 
-      country_options: [
-        { value: "", text: "Select one...", disabled: true },
-        ...country_list
-      ],
+      country_options: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
 
       heard_from_select: [],
       heard_from_other: false,
@@ -831,7 +735,7 @@ export default {
         { text: "Nut Allergy", value: "nut-allergy" },
         { text: "Kosher", value: "kosher" },
         { text: "Halal", value: "halal" },
-      ]
+      ],
     };
   },
 
@@ -866,9 +770,7 @@ export default {
         }
       });
 
-      document
-        .getElementsByClassName("typeahead")[0]
-        .setAttribute("autocomplete", "off");
+      document.getElementsByClassName("typeahead")[0].setAttribute("autocomplete", "off");
 
       // document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
     });
@@ -913,13 +815,11 @@ export default {
             break;
           }
           case "locality":
-            this.form.city = document.getElementById("input-city").value =
-              component.long_name;
+            this.form.city = document.getElementById("input-city").value = component.long_name;
             break;
 
           case "administrative_area_level_1": {
-            this.form.state = document.getElementById("input-state").value =
-              component.short_name;
+            this.form.state = document.getElementById("input-state").value = component.short_name;
             break;
           }
           case "country":
@@ -943,16 +843,13 @@ export default {
       });
     },
     showErrorToast() {
-      this.$bvToast.toast(
-        `Something went wrong. Are you sure you filled everything out?`,
-        {
-          toaster: "b-toaster-top-center",
-          solid: true,
-          appendToast: false,
-          noCloseButton: true,
-          variant: "danger",
-        }
-      );
+      this.$bvToast.toast(`Something went wrong. Are you sure you filled everything out?`, {
+        toaster: "b-toaster-top-center",
+        solid: true,
+        appendToast: false,
+        noCloseButton: true,
+        variant: "danger",
+      });
     },
     showErrorToastCustom(str) {
       this.$bvToast.toast(str, {
@@ -971,7 +868,7 @@ export default {
       }
       if (this.diet_other && this.diet_other_text != "") {
         if (diet_string != "") {
-          diet_string += ","
+          diet_string += ",";
         }
         diet_string = diet_string + "other(" + this.diet_other_text + ")";
       }
@@ -986,7 +883,7 @@ export default {
       }
       if (this.ethnicity_other && this.ethnicity_other_text != "") {
         if (ethnicity_string != "") {
-          ethnicity_string += ","
+          ethnicity_string += ",";
         }
         ethnicity_string = ethnicity_string + "other(" + this.ethnicity_other_text + ")";
       }
@@ -998,7 +895,7 @@ export default {
 
       if (this.heard_from_other && this.heard_from_other_text != "") {
         if (heard_from_string != "") {
-          heard_from_string += ","
+          heard_from_string += ",";
         }
         heard_from_string = heard_from_string + "other(" + this.heard_from_other_text + ")";
       }
@@ -1017,17 +914,14 @@ export default {
       event.preventDefault();
       if (this.formCheck()) {
         // prevent blacklisted hackers from registering
-        if (this.form.name === 'Auran Shereef' || this.form.name === 'Monte James') {
+        if (this.form.name === "Auran Shereef" || this.form.name === "Monte James") {
           this.$router.push({ path: "thanks" });
           return;
         }
 
         // time taken to fill out form in seconds
         this.form.time_taken = (Date.now() - this.form_start) / 1000;
-        const phoneNumber = parsePhoneNumber(
-          this.form.phone,
-          DEFAULT_COUNTRY_PHONE
-        );
+        const phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE);
         this.form.phone = phoneNumber.number;
 
         this.isSending = true; // block double submits
@@ -1053,7 +947,7 @@ export default {
         if (this.heard_from_other) {
           this.track({
             random_id: this.random_id,
-            key: 'hf-other',
+            key: "hf-other",
             value: 1,
           });
         }
@@ -1082,7 +976,6 @@ export default {
         survey_count[this.form.selected_survey_3.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_4.substring(0, 1)] += 1;
         survey_count[this.form.selected_survey_5.substring(0, 1)] += 1;
-        survey_count[this.form.selected_survey_6.substring(0, 1)] += 1;
 
         this.form.red = survey_count["r"];
         this.form.green = survey_count["g"];
@@ -1118,7 +1011,7 @@ export default {
     formCheck() {
       let valid_form = true;
 
-      this.form.name = `${this.form.first_name} ${this.form.last_name}`
+      this.form.name = `${this.form.first_name} ${this.form.last_name}`;
 
       if (this.form.first_name.length === 0) {
         this.valid_first_name = false;
@@ -1143,10 +1036,7 @@ export default {
         this.valid_email = null;
       }
 
-      const phoneNumber = parsePhoneNumber(
-        this.form.phone,
-        DEFAULT_COUNTRY_PHONE
-      );
+      const phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE);
       if (!phoneNumber || !phoneNumber.isValid()) {
         this.valid_phone = false;
         valid_form = false;
@@ -1238,8 +1128,7 @@ export default {
         this.valid_minors_form = null;
       }
 
-      if (this.form.hack_count.length === 0 ||
-        parseInt(this.form.hack_count) < 0) {
+      if (this.form.hack_count.length === 0 || parseInt(this.form.hack_count) < 0) {
         this.valid_hackcount = false;
         valid_form = false;
       } else {
@@ -1325,12 +1214,6 @@ export default {
       } else {
         this.valid_survey_5 = null;
       }
-      if (!this.form.selected_survey_6) {
-        this.valid_survey_6 = false;
-        valid_form = false;
-      } else {
-        this.valid_survey_6 = null;
-      }
 
       return valid_form;
     },
@@ -1376,7 +1259,8 @@ export default {
             .toLowerCase()
             .replace(/_{2,}/g, "_")
             .substring(0, 48) +
-          "_" + this.form.last_name
+          "_" +
+          this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1390,7 +1274,8 @@ export default {
             .toLowerCase()
             .replace(/_{2,}/g, "_")
             .substring(0, 48) +
-          "_" + this.form.last_name
+          "_" +
+          this.form.last_name
             .replace(/[^a-z0-9_-]/gi, "_")
             .toLowerCase()
             .replace(/_{2,}/g, "_")
@@ -1412,9 +1297,7 @@ export default {
       );
 
       if (!(r && r.putUrl)) {
-        this.showErrorToastCustom(
-          "Oops! We couldn't upload your resume, try again later!"
-        );
+        this.showErrorToastCustom("Oops! We couldn't upload your resume, try again later!");
         this.valid_resume = false;
         return;
       }
@@ -1429,9 +1312,7 @@ export default {
       this.form.resume_id = this.random_id;
 
       if (!(r2 && r2.status == 200)) {
-        this.showErrorToastCustom(
-          "Oops! We couldn't upload your resume, try again later!"
-        );
+        this.showErrorToastCustom("Oops! We couldn't upload your resume, try again later!");
         this.valid_resume = false;
         return;
       }
@@ -1674,10 +1555,7 @@ hr {
   text-align: center;
   margin: auto;
 
-  background: radial-gradient(92.62% 25% at 33.31% 0%,
-      #ffaa6c 0.01%,
-      #ff6a37 50.52%,
-      #ff6a37 100%);
+  background: radial-gradient(92.62% 25% at 33.31% 0%, #ffaa6c 0.01%, #ff6a37 50.52%, #ff6a37 100%);
   box-shadow: 0px 10px 30px rgba(176, 148, 132, 0.33);
   border-radius: 6px;
 }
