@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row class="row gx-12" cols="1">
-      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch center">
+      <b-col md="6" class="p-1 col d-flex align-items-stretch center">
         <label>
           <div class="color h-100 w-100">
             <input v-model="card" type="radio" value="general" @click="onSelectTrack('general')" />
@@ -16,72 +16,24 @@
           </div>
         </label>
       </b-col>
-    </b-row>
-
+      <!--
     <br />
     <p class="info">
       The following tracks have been filled. However, you can still join the waitlist if it's your
       top choice and we'll let you know weekend-of if we have space! Otherwise, you'll be placed in
       the general track.
     </p>
-    <b-row class="row gx-12" cols="1">
+    -->
       <b-col md="6" class="p-1 col d-flex align-items-stretch">
         <label>
-          <input
-            v-model="waitlistCard"
-            type="radio"
-            value="beginner"
-            @click="onSelectWaitlistTrack('beginner')"
-          />
           <div class="color h-100 w-100">
-            <b-card class="h-100 w-100 general" :class="{ active: waitlistCard === 'beginner' }">
-              <h4>Beginner</h4>
-              <p>
-                New to hackathons? Don't know how to code? No worries! At Bitcamp, you'll have
-                access to beginner-friendly workshops, helpful mentors, personalized one-on-one
-                sessions, and resources to kickstart your coding journey.
-              </p>
-            </b-card>
-          </div>
-        </label>
-      </b-col>
-
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
-        <label>
-          <input
-            v-model="waitlistCard"
-            type="radio"
-            value="hardware"
-            @click="onSelectWaitlistTrack('hardware')"
-          />
-          <div class="color h-100 w-100">
-            <b-card class="h-100 w-100 general" :class="{ active: waitlistCard === 'hardware' }">
-              <h4>Hardware</h4>
-              <p>
-                Embark on your hardware journey at Bitcamp with access to exclusive hardware
-                materials, mentors, and workshops! We'll provide all the resources needed to build
-                your very own hardware project and master hardware fundamentals.
-              </p>
-            </b-card>
-          </div>
-        </label>
-      </b-col>
-
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
-        <label>
-          <input
-            v-model="waitlistCard"
-            type="radio"
-            value="quantum"
-            @click="onSelectWaitlistTrack('quantum')"
-          />
-          <div class="color h-100 w-100">
-            <b-card class="h-100 w-100 general" :class="{ active: waitlistCard === 'quantum' }">
+            <input v-model="card" type="radio" value="quantum" @click="onSelectTrack('quantum')" />
+            <b-card class="h-100 w-100 general" :class="{ active: card === 'quantum' }">
               <h4>Quantum</h4>
               <p>
                 Hackers will delve into the field of quantum computing with exclusive mentors,
                 sponsors, and workshops! Hackers will use their knowledge of Python and other
-                computing skills on educational and interactive Quantum Track activities. If you’ve
+                computing skills on educational and interactive Quantum Track activities. If you've
                 been a previous participant of the Quantum track, there will be new, challenging
                 prompts for you to tackle!
               </p>
@@ -92,22 +44,60 @@
 
       <b-col md="6" class="p-1 col d-flex align-items-stretch">
         <label>
-          <input
-            v-model="waitlistCard"
-            type="radio"
-            value="machine_learning"
-            @click="onSelectWaitlistTrack('machine_learning')"
-          />
           <div class="color h-100 w-100">
-            <b-card
-              class="h-100 w-100 general"
-              :class="{ active: waitlistCard === 'machine_learning' }"
-            >
+            <input
+              v-model="card"
+              type="radio"
+              value="machine_learning"
+              @click="onSelectTrack('machine_learning')"
+            />
+            <b-card class="h-100 w-100 general" :class="{ active: card === 'machine_learning' }">
               <h4>Machine Learning</h4>
               <p>
-                Our newest track! If you’re wowed by recent AI advancements like ChatGPT, this is
-                the track for you! We will have ML-related workshops, guest speakers, and activities
-                (basic Python programming skills highly recommended).
+                If you're wowed by recent AI advancements like ChatGPT, then this is the track for
+                you! We will expand upon specialized learning experiences by hosting a series of
+                workshops with content related to building and hosting ML models, unsupervised
+                learning, and discussions of recent AI advancements.
+              </p>
+            </b-card>
+          </div>
+        </label>
+      </b-col>
+
+      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+        <label>
+          <div class="color h-100 w-100">
+            <input v-model="card" type="radio" value="app_dev" @click="onSelectTrack('app_dev')" />
+            <b-card class="h-100 w-100 general" :class="{ active: card === 'app_dev' }">
+              <h4>App Dev</h4>
+              <p>
+                Ever wondered how to turn your innovative app idea into a reality? Ready to turn
+                your concepts into cutting-edge applications? One of our new tracks - we'll
+                introduce you to different aspects of development including the software development
+                life cycle, development tools such as Flutter, and full-stack development through
+                access to exclusive workshops and mentors as you work on your hack!
+              </p>
+            </b-card>
+          </div>
+        </label>
+      </b-col>
+
+      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+        <label>
+          <div class="color h-100 w-100">
+            <input
+              v-model="card"
+              type="radio"
+              value="cybersecurity"
+              @click="onSelectTrack('cybersecurity')"
+            />
+            <b-card class="h-100 w-100 general" :class="{ active: card === 'cybersecurity' }">
+              <h4>Cybersecurity</h4>
+              <p>
+                One of our newest tracks! Explore the realm of cybersecurity and understand various
+                aspects of the field through interactive workshops that include discussions of web
+                vulnerabilities, real-world applications of combating security weaknesses, and
+                ethical decision-making.
               </p>
             </b-card>
           </div>
