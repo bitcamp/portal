@@ -1193,14 +1193,14 @@ export default {
 
   methods: {
     updateTrack(value) {
-      this.form.track_selected = value;
-    },
-    updateWaitlistTrack(value) {
       if (value === "quantum") {
         this.form.QUANTUM_SELECTED = true;
       } else {
         this.form.QUANTUM_SELECTED = false;
       }
+      this.form.track_selected = value;
+    },
+    updateWaitlistTrack(value) {
       this.form.waitlist_track_selected = value;
     },
     fillInAddress(place) {
