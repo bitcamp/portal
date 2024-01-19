@@ -23,7 +23,7 @@ let main_template = {
     TextPart: `Hey {{name}} 
     \n\nThank you for registering for Bitcamp! Our hackathon’s only a few weeks away and we hope
     \nyou’re as excited as we are!
-    \n\nTo gear up for Bitcamp 2023, we’re hosting our first community event, Hackathons 101,
+    \n\nTo gear up for Bitcamp 2024, we’re hosting our first community event, Hackathons 101,
     \ntonight in Edward St. John Learning and Teaching Center (ESJ) Room 2204 from 8-9 PM.
     \nJoin us to learn more about Bitcamp, meet some workshop hosts and other hackers, and
     \nsnack on some Insomnia cookies! Fill out this RSVP form if you’re interested:
@@ -125,7 +125,7 @@ const fileName = `./hackathons-101-users.csv`;
 
     const main_params = {
       Destinations: chunk,
-      ConfigurationSetName: 'registration-2023',
+      ConfigurationSetName: 'registration-2024',
       Source: '"Bitcamp Team" <hello@bit.camp>' /* required */,
       Template: 'Hackathons101Template',
       DefaultTemplateData: '{ "name":"Camper" }',

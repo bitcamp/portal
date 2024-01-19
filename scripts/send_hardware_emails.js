@@ -116,7 +116,7 @@ const fileName = `./hardware-users.csv`;
 
     const main_params = {
       Destinations: chunk,
-      ConfigurationSetName: 'registration-2023',
+      ConfigurationSetName: 'registration-2024',
       Source: '"Bitcamp Team" <hello@bit.camp>' /* required */,
       Template: 'HardwareTemplate',
       DefaultTemplateData: '{ "name":"Camper" }',
