@@ -5,7 +5,7 @@
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>Registration for Bitcamp 2023 is now closed - See you April 7-9!</h1>
+            <h1>Registration for Bitcamp 2024 is now closed - See you April 7-9!</h1>
 
             <img style="width: 200px; height: 200px" src="@/assets/bitcamp.gif" />
 

@@ -209,10 +209,61 @@
           </b-form-group>
         </b-form-row>
 
+        <!-- Citizenship question -->
+        <b-form-row>
+          <b-form-group
+            id="input-group-citizen"
+            label="Are you a US citizen?"
+            label-for="input-citizen"
+            class="col-md-7"
+          >
+            <b-form-radio-group
+              id="input-citizen"
+              v-model="form.citizen"
+              class="font-weight-normal pt-2"
+            >
+              <p class="note">
+                This information will be used for recruitment purposes only. Bitcamp will not be sending this data to any third-parties outside of sponsors.
+              </p>
+              <b-form-radio value="yes"> Yes </b-form-radio>
+              <b-form-radio value="no"> No </b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+        </b-form-row>
+
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
         <TrackSelection :default="'general'" @picked="updateTrack" @waitlisted="updateWaitlistTrack" />
+
+        <!-- Optional quantum selection 1 -->
+        <hr />
+        <b-form-group v-if="this.form.QUANTUM_SELECTED" class="font-weight-bold"
+          label="Would you like to be placed in the beginner or advanced quantum track?*">
+          <b-form-radio-group id="quantum-survey-1" v-model="form.selected_quantum_survey_track"
+            class="font-weight-normal pt-2" :state="quantum_survey_1">
+            <b-form-radio value="r"> Beginner </b-form-radio>
+            <b-form-radio value="g"> Advanced </b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="quantum_survey_1">
+            Please select an answer
+          </b-form-invalid-feedback>
+          <hr />
+        </b-form-group>
+
+        <!-- Optional quantum selection 2 -->
+
+        <b-form-group class="font-weight-bold"
+          label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack! Would you like us to share this content with you?*">
+          <b-form-radio-group id="quantum-survey-2" v-model="form.selected_quantum_survey_guide"
+            class="font-weight-normal pt-2" :state="quantum_survey_2">
+            <b-form-radio value="r"> Yes </b-form-radio>
+            <b-form-radio value="g"> No </b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="quantum_survey_2">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
 
         <!-- Shipping Address -->
         <hr />
@@ -539,6 +590,7 @@ export default {
       form: {
         email: this.$route.query.redo != null ? this.$route.query.redo : "",
         phone: "",
+        QUANTUM_SELECTED: false,
         MLH_emails: false,
         MLH_conduct: false,
         MLH_privacy: false,
@@ -608,6 +660,8 @@ export default {
       valid_tshirt_size: null,
       valid_underrepresented_Gender: null,
       valid_hackcount: null,
+      quantum_survey_1: null,
+      quantum_survey_2: null,
       valid_survey_1: null,
       valid_survey_2: null,
       valid_survey_3: null,
@@ -778,6 +832,11 @@ export default {
 
   methods: {
     updateTrack(value) {
+      if (value === "quantum") {
+        this.form.QUANTUM_SELECTED = true;
+      } else {
+        this.form.QUANTUM_SELECTED = false;
+      }
       this.form.track_selected = value;
     },
     updateWaitlistTrack(value) {
@@ -1079,6 +1138,11 @@ export default {
         this.valid_recruit = null;
       }
 
+      console.log('citizenship: ', this.form.citizen)
+      if (this.form.citizen === undefined) {
+        this.form.citizen = null;
+      }
+
       if (this.form.school_year.length === 0) {
         this.valid_school_year = false;
         valid_form = false;
@@ -1182,6 +1246,20 @@ export default {
         valid_form = false;
       } else {
         this.valid_track_selected = null;
+      }
+
+      if (!this.form.selected_quantum_survey_track && this.form.QUANTUM_SELECTED) {
+        this.quantum_survey_1 = false;
+        valid_form = false;
+      } else {
+        this.quantum_survey_1 = null;
+      }
+
+      if (!this.form.selected_quantum_survey_guide) {
+        this.quantum_survey_2 = false;
+        valid_form = false;
+      } else {
+        this.quantum_survey_2 = null;
       }
 
       if (!this.form.selected_survey_1) {
@@ -1469,6 +1547,13 @@ p {
   font-size: 1rem;
   text-align: left !important;
   margin-bottom: 1.25rem;
+}
+
+.note {
+  font-size: 0.75rem;
+  text-align: left !important;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .row {
