@@ -391,6 +391,28 @@
           </b-form-group>
         </b-form-row>
 
+        <!-- Citizenship question -->
+        <b-form-row>
+          <b-form-group
+            id="input-group-citizen"
+            label="Are you a US citizen?"
+            label-for="input-citizen"
+            class="col-md-7"
+          >
+            <b-form-radio-group
+              id="input-citizen"
+              v-model="form.citizen"
+              class="font-weight-normal pt-2"
+            >
+              <p class="note">
+                This information will be used for recruitment purposes only. Bitcamp will not be sending this data to any third-parties outside of sponsors.
+              </p>
+              <b-form-radio value="yes"> Yes </b-form-radio>
+              <b-form-radio value="no"> No </b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+        </b-form-row>
+
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
@@ -1499,6 +1521,11 @@ export default {
         this.valid_recruit = null;
       }
 
+      console.log('citizenship: ', this.form.citizen)
+      if (this.form.citizen === undefined) {
+        this.form.citizen = null;
+      }
+
       if (this.form.school_year.length === 0) {
         this.valid_school_year = false;
         valid_form = false;
@@ -1903,6 +1930,13 @@ p {
   font-size: 1rem;
   text-align: left !important;
   margin-bottom: 1.25rem;
+}
+
+.note {
+  font-size: 0.75rem;
+  text-align: left !important;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .row {
