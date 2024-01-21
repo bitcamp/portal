@@ -25,7 +25,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
   const ddb = new AWS.DynamoDB.DocumentClient();
 
   // Checks if any field is missing
-  if (!body.email || !body.name || !body.phone || !body.school_year) {
+  if (!body.email || !body.name || !body.phone || !body.school_year || !body.tShirtSize) {
     return {
       statusCode: 500,
       body: "/register is missing a field",
@@ -76,6 +76,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       portfolio: body.portfolio,
       school: body.school,
       school_other: body.school_other,
+      school_company: body.school_company,
       age: body.age,
       address: body.address,
       gmaps_place_id: body.gmaps_place_id,
@@ -101,6 +102,10 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_red: body.red,
       survey_blue: body.blue,
       tshirt_size: body.tshirt_size,
+      skills_experience: body.skills_experience,
+      languages_tech: body.languages_tech,
+      mentorship_experience: body.mentorship_experience,
+      track_specific_expertise: body.track_specific_expertise,
     },
   };
 
@@ -144,11 +149,17 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     sendConfirmationEmail(params.Item),
   ]);
 
+  const isMentor = user.role === 'mentor';
+  const redirectUrl = isMentor ? 'https://your-mentor-thank-you-page.com' : 'https://your-normal-thank-you-page.com';
+
   // Returns status code 200 and JSON string of 'result'
   return {
     statusCode: 200,
     body: JSON.stringify(params.Item),
-    headers: HEADERS,
+    headers: {
+      ...HEADERS,
+      'Location': redirectUrl, // Set the Location header for redirection
+    },
   };
 });
 
@@ -198,12 +209,38 @@ const sendConfirmationEmail = async (user) => {
   // All caps t shirt size
   const tShirtSize = user.tshirt_size.toUpperCase();
 
+  const isMentor = user.role === 'mentor';
+
+  let templateData = `{
+    "firstName":"${user.first_name}",
+    "reregisterLink":"${reregisterLink}",
+    "email":"${user.email}",
+    "name":"${user.name}",
+    "pronouns":"${user.pronouns}",
+    "age":"${user.age}",
+    "track":"${track}",
+    "phone":"${user.phone}",
+    "school_type":"${schoolYear}",
+    "school":"${user.school}",
+    "address":"${user.address}",
+    "tshirt_size":"${tShirtSize}"
+  }`;
+
+  if (isMentor) {
+    templateData += `,
+      "skills_experience":"${user.skills_experience}",
+      "languages_tech":"${user.languages_tech}",
+      "mentorship_experience":"${user.mentorship_experience}",
+      "track_specific_expertise":"${user.track_specific_expertise}"
+    `;
+  }
+
   const params = {
     Destination: { ToAddresses: [user.email] },
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
+    TemplateData: templateData,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
