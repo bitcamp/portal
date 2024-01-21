@@ -10,6 +10,7 @@
                 Register for Bitcamp 2024 Mentor
             </h1>
 
+
             <p style="font-size: 0.9rem; opacity: 95%">
                 Questions? Contact us at
                 <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
@@ -21,6 +22,7 @@
                     Once you register, you'll receive more info about Bitcamp 2024 at the
                     email you provide.
                 </p>
+
 
                 <!-- Name  -->
                 <b-form-row>
@@ -34,6 +36,7 @@
                         </b-form-invalid-feedback>
                     </b-form-group>
 
+
                     <!-- Last Name -->
                     <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
                         class="col-12 col-md-12">
@@ -44,6 +47,7 @@
                         </b-form-invalid-feedback>
                     </b-form-group>
                 </b-form-row>
+
 
                 <!-- Email and Phone Number-->
                 <b-form-row>
@@ -56,6 +60,7 @@
                         </b-form-invalid-feedback>
                     </b-form-group>
 
+
                     <!-- Phone Number -->
                     <b-form-group id="input-group-9" label="Phone Number*" label-for="input-9" class="col-5 col-md-5">
                         <b-form-input id="input-9" v-model="form.phone" name="phone" autocomplete="tel"
@@ -65,6 +70,7 @@
                         </b-form-invalid-feedback>
                     </b-form-group>
                 </b-form-row>
+
 
                 <!-- School Type -->
                 <b-form-row>
@@ -82,6 +88,7 @@
                     </b-form-group>
                 </b-form-row>
 
+
                 <b-form-row>
                     <div class="col-md-12">
                         <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
@@ -97,6 +104,7 @@
                     </b-form-group>
                 </b-form-row>
 
+
                 <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
                     class="col-md-6" style="padding: 0rem;">
                     <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
@@ -105,6 +113,7 @@
                         Please select a year
                     </b-form-invalid-feedback>
                 </b-form-group>
+
 
                 <!-- T-Shirt Size -->
                 <h4 class="mb-2">
@@ -116,6 +125,7 @@
                     you arrive at UMD.
                 </p>
 
+
                 <b-form-row>
                     <b-form-group id="input-group-tshirt" label="T-shirt Size*" label-for="input-tshirt" class="col-md-12">
                         <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select"
@@ -126,9 +136,11 @@
                     </b-form-group>
                 </b-form-row>
 
+
                 <h4 class="mb-2">
                     Dietary Restrictions
                 </h4>
+
 
                 <b-form-group id="input-dietary-restrictions" label="Do you have any dietary restrictions?*"
                     label-for="input-dietary-restrictions" class="col-12 col-md-6" style="padding: 0rem;">
@@ -151,6 +163,7 @@
                         </b-form-invalid-feedback>
                     </b-form-group>
                 </b-form-group>
+
 
                 <!-- Skills and Experience -->
                 <b-form-row>
@@ -177,6 +190,7 @@
                         Please select a skill you are familiar with
                     </b-form-invalid-feedback>
                 </b-form-row>
+
 
                 <!-- Languages and Technologies -->
                 <b-form-row>
@@ -205,10 +219,12 @@
                     </b-form-invalid-feedback>
                 </b-form-row>
 
+
                 <!-- Short Questions -->
                 <h4 class="mb-2">
                     Mentorship Experience
                 </h4>
+
 
                 <b-form-group id="input-group-question1" label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
                     to start.*" label-for="input-question1" class="col-md-12" style="padding: 0rem;">
@@ -218,6 +234,7 @@
                         Please summarize your previous mentoring experience
                     </b-form-invalid-feedback>
                 </b-form-group>
+
 
                 <b-form-row>
                     <b-form-group id="input-mentor-tracks"
@@ -231,10 +248,12 @@
                             </b-form-checkbox>
                         </b-form-group>
 
+
                         <b-form-input v-if="mentor_tracks_other" v-model="mentor_tracks_other_text" class="col-12 col-md-12"
                             aria-label="Mentor Tracks Other Text Box" placeholder="Other source" />
                     </b-form-group>
                 </b-form-row>
+
 
                 <b-form-row>
                     <b-form-group id="input-group-question2"
@@ -248,11 +267,13 @@
                     </b-form-group>
                 </b-form-row>
 
+
                 <hr>
                 <!-- MLH Stuff -->
                 <h4 class="mb-2">
                     Rules and privacy policies
                 </h4>
+
 
                 <b-form-checkbox id="checkbox-1" v-model="form.MLH_privacy" name="checkbox-1" class="checkbox"
                     :state="valid_mlh_privacy">
@@ -272,6 +293,7 @@
                     </b-form-invalid-feedback>
                 </b-form-checkbox>
 
+
                 <b-form-checkbox id="checkbox-2" v-model="form.MLH_conduct" name="checkbox-2" :state="valid_code_of_conduct"
                     class="checkbox" style="padding-bottom: 1rem">
                     I have read and agree to the
@@ -282,11 +304,13 @@
                     </b-form-invalid-feedback>
                 </b-form-checkbox>
 
+
                 <b-form-checkbox id="checkbox-3" v-model="form.MLH_emails" name="checkbox-3" class="checkbox">
                     I authorize MLH to send me an email where I can further
                     opt into the MLH Hacker, Events, or Organizer Newsletters
                     and other communications from MLH.
                 </b-form-checkbox>
+
 
                 <!-- Submit -->
                 <div>
@@ -301,7 +325,6 @@
         <b-col md="1" />
     </b-row>
 </template>
-  
 <script>
 import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
@@ -318,19 +341,24 @@ import * as univ_list from '../assets/university-list.json';
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
 
+
 Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 Vue.use(FormFilePlugin);
 Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueBootstrapAutocomplete", VueBootstrapAutocomplete);
 
+
 const university_list = univ_list.default
 
+
 const DEFAULT_COUNTRY_PHONE = "US";
+
 
 export default {
     name: "RegistrationForm",
     mixins: [generalMixin],
+
 
     data() {
         return {
@@ -358,6 +386,7 @@ export default {
                 languages: "",
             },
 
+
             isSending: false,
             random_id: uuid(),
             form_start: Date.now(),
@@ -380,7 +409,9 @@ export default {
             valid_diet: null,
             valid_languages: null,
 
+
             school_class: "typeahead",
+
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
@@ -397,7 +428,9 @@ export default {
                 { value: "prefer not to answer", text: "Prefer not to answer" },
             ],
 
+
             school_other_selected: false,
+
 
             skill_select: [],
             skill_other: false,
@@ -413,6 +446,7 @@ export default {
                 { value: "user-interface-design", text: "User Interface Design" },
                 { value: "hardware", text: "Hardware" },
             ],
+
 
             languages_select: [],
             languages_other: false,
@@ -448,6 +482,7 @@ export default {
                 { value: "amazon-web-services", text: "Amazon Web Services" },
             ],
 
+
             tshirt_size_options: [
                 { value: "", text: "Select one...", disabled: true },
                 //{ value: "no tshirt", text: "I don't want a T-shirt" },
@@ -459,7 +494,9 @@ export default {
                 { value: "2xl", text: "2XL" },
             ],
 
+
             university_options: [...university_list],
+
 
             mentor_tracks_select: [],
             mentor_tracks_other: false,
@@ -470,6 +507,7 @@ export default {
                 { value: "quantum", text: "Quantum Techonology" },
                 { value: "machine_learning", text: "Machine Learning" },
             ],
+
 
             diet_select: [],
             diet_other: false,
@@ -486,6 +524,7 @@ export default {
             ]
         };
     },
+
 
     methods: {
         updateTrack(value) {
@@ -525,6 +564,7 @@ export default {
         createDietaryRestrictionString() {
             let diet_string = this.diet_select.join(",");
 
+
             if (this.diet_none) {
                 return "none";
             }
@@ -535,10 +575,12 @@ export default {
                 diet_string = diet_string + "other(" + this.diet_other_text + ")";
             }
 
+
             return diet_string;
         },
         createSkillString() {
             let skill_string = this.skill_select.join(",");
+
 
             if (this.skill_prefer_no_answer) {
                 return "prefer-not-to-answer";
@@ -550,10 +592,12 @@ export default {
                 skill_string = skill_string + "other(" + this.skill_other_text + ")";
             }
 
+
             return skill_string;
         },
         createLanguagesString() {
             let languages_string = this.languages_select.join(",");
+
 
             if (this.languages_prefer_no_answer) {
                 return "prefer-not-to-answer";
@@ -565,10 +609,12 @@ export default {
                 languages_string = languages_string + "other(" + this.languages_other_text + ")";
             }
 
+
             return languages_string;
         },
         createMentorTracksString() {
             let mentor_tracks_string = this.mentor_tracks_select.join(",");
+
 
             if (this.mentor_tracks_other && this.mentor_tracks_other_text != "") {
                 if (mentor_tracks_string != "") {
@@ -576,6 +622,7 @@ export default {
                 }
                 mentor_tracks_string = mentor_tracks_string + "other(" + this.mentor_tracks_other_text + ")";
             }
+
 
             return mentor_tracks_string;
         },
@@ -592,6 +639,7 @@ export default {
                     return;
                 }
 
+
                 // time taken to fill out form in seconds
                 this.form.time_taken = (Date.now() - this.form_start) / 1000;
                 const phoneNumber = parsePhoneNumber(
@@ -600,7 +648,9 @@ export default {
                 );
                 this.form.phone = phoneNumber.number;
 
+
                 this.isSending = true; // block double submits
+
 
                 if (this.$route.params.referral) {
                     this.$gtag.event("got-referred", { method: "Google" });
@@ -611,6 +661,7 @@ export default {
                         value: this.$route.params.referral,
                     });
                 }
+
 
                 // Track "mentor tracks" statistics
                 for (let mentorTracks of this.mentor_tracks_select) {
@@ -628,6 +679,7 @@ export default {
                     });
                 }
 
+
                 this.$gtag.event("submit-registration", { method: "Google" });
                 this.$gtag.time({
                     name: "completion-time",
@@ -640,15 +692,18 @@ export default {
                     value: this.form.time_taken,
                 });
 
+
                 const d = new Date();
                 this.form.secret =
                     (d.getHours() * d.getDay() * 15).toString() +
                     d.getFullYear().toString().split("").reverse().join("");
 
+
                 this.form.dietary_restrictions = this.createDietaryRestrictionString();
                 this.form.skill = this.createSkillString();
                 this.form.languages = this.createLanguagesString();
                 this.form.mentor_tracks = this.createMentorTracksString();
+
 
                 const resp = await this.performPostRequest(
                     this.getEnvVariable("BACKEND_ENDPOINT"),
@@ -656,8 +711,10 @@ export default {
                     this.form
                 );
 
+
                 console.log(this.form)
                 this.isSending = false; // done submitting
+
 
                 if (resp && resp.referral_id) {
                     this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
@@ -678,7 +735,9 @@ export default {
         formCheck() {
             let valid_form = true;
 
+
             this.form.name = `${this.form.first_name} ${this.form.last_name}`
+
 
             if (this.form.first_name.length === 0) {
                 this.valid_first_name = false;
@@ -688,6 +747,7 @@ export default {
                 this.form.first_name = this.form.first_name.trim();
             }
 
+
             if (this.form.last_name.length === 0) {
                 this.valid_last_name = false;
                 valid_form = false;
@@ -696,12 +756,14 @@ export default {
                 this.form.last_name = this.form.last_name.trim();
             }
 
+
             if (!EmailValidator.validate(this.form.email)) {
                 this.valid_email = false;
                 valid_form = false;
             } else {
                 this.valid_email = null;
             }
+
 
             const phoneNumber = parsePhoneNumber(
                 this.form.phone,
@@ -714,6 +776,7 @@ export default {
                 this.valid_phone = null;
             }
 
+
             if (this.createSkillString().length === 0) {
                 this.valid_skill = false;
                 valid_form = false;
@@ -721,7 +784,9 @@ export default {
                 this.valid_skill = null;
             }
 
+
             console.log(valid_form)
+
 
             if (this.createLanguagesString().length === 0) {
                 this.valid_languages = false;
@@ -729,6 +794,7 @@ export default {
             } else {
                 this.valid_languages = null;
             }
+
 
             if (this.form.school_year.length === 0) {
                 this.valid_school_year = false;
@@ -758,7 +824,9 @@ export default {
                 this.valid_school_other = null;
             }
 
+
             console.log(valid_form)
+
 
             if (this.form.tshirt_size.length === 0) {
                 this.valid_tshirt_size = false;
@@ -767,12 +835,14 @@ export default {
                 this.valid_tshirt_size = null;
             }
 
+
             if (this.form.question1.length === 0) {
                 this.valid_question1 = false;
                 valid_form = false;
             } else {
                 this.valid_question1 = null;
             }
+
 
             if (this.form.question2.length === 0) {
                 this.valid_question2 = false;
@@ -781,12 +851,14 @@ export default {
                 this.valid_question2 = null;
             }
 
+
             if (this.createDietaryRestrictionString().length === 0) {
                 this.valid_diet = false;
                 valid_form = false;
             } else {
                 this.valid_diet = null;
             }
+
 
             if (!this.form.MLH_conduct) {
                 this.valid_code_of_conduct = false;
@@ -795,12 +867,14 @@ export default {
                 this.valid_code_of_conduct = null;
             }
 
+
             if (!this.form.MLH_privacy) {
                 this.valid_mlh_privacy = false;
                 valid_form = false;
             } else {
                 this.valid_mlh_privacy = null;
             }
+
 
             console.log(valid_form)
             return valid_form;
@@ -818,10 +892,10 @@ export default {
     },
 };
 </script>
-  
 <style lang="scss">
 .input-group>.typeahead {
     border-radius: 0.4rem;
+
 
     &.is-invalid {
         color: var(--pale-red);
@@ -830,6 +904,7 @@ export default {
     }
 }
 
+
 .typeahead:focus,
 .typeahead:active {
     border-color: var(--mango-orange) !important;
@@ -837,19 +912,23 @@ export default {
     box-shadow: 0 0 0 0.15rem var(--light-orange) !important;
 }
 
+
 /* checkbox */
 input[type="checkbox"]:hover~.custom-control-label::before {
     box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
 }
 
+
 input[type="checkbox"]:focus~.custom-control-label::before {
     box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
 }
+
 
 input[type="checkbox"]:checked~.custom-control-label::before {
     background-color: var(--light-orange);
     border-color: grey;
 }
+
 
 /* disabled checkbox */
 input[type="checkbox"]:disabled~.custom-control-label::before {
@@ -858,9 +937,11 @@ input[type="checkbox"]:disabled~.custom-control-label::before {
     border-color: lightgrey;
 }
 
+
 input[type="checkbox"]:disabled:checked~.custom-control-label::before {
     background-color: rgba(255, 165, 0, 0.4) !important;
 }
+
 
 /* radio button */
 input[type="radio"]:checked~.custom-control-label::after {
@@ -870,59 +951,69 @@ input[type="radio"]:checked~.custom-control-label::after {
     box-shadow: 0px 0px 0px 10px inset var(--light-orange);
 }
 
+
 input[type="radio"]:checked~.custom-control-label::before {
     background-color: white;
     border-color: orange;
 }
+
 
 input[type="radio"]:hover~.custom-control-label::before {
     box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
     background-color: rgba(255, 165, 0, 0.3);
 }
 
+
 input[type="radio"]:focus~.custom-control-label::before {
     box-shadow: none;
 }
+
 
 input[type="radio"]:active~.custom-control-label::before {
     box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.5);
     background-color: rgba(255, 165, 0, 0.5);
 }
 
+
 /* disabled radio button */
 input[type="radio"]:disabled:hover~.custom-control-label::before {
     box-shadow: none;
 }
+
 
 input[type="radio"]:disabled~.custom-control-label::before {
     border-color: lightgrey;
     background-color: white;
 }
 
+
 input[type="radio"]:disabled:checked~.custom-control-label::before {
     background-color: white !important;
     border-color: rgba(255, 165, 0, 0.4);
 }
 
+
 input[type="radio"]:disabled:checked~.custom-control-label::after {
     box-shadow: 0px 0px 0px 10px inset rgb(255, 165, 0, 0.4);
 }
+
 
 /* Vertically center checkbox and radio */
 .custom-control-label {
     padding-top: 3px;
 }
 </style>
-  
 <style scoped lang="scss">
 h4 {
     margin-top: 1.25rem;
     margin-bottom: 0.25rem;
 }
 
+
 p {
     text-align: left;
 }
+
 
 .info {
     font-size: 1rem;
@@ -930,9 +1021,11 @@ p {
     margin-bottom: 1.25rem;
 }
 
+
 .row {
     overflow: hidden;
 }
+
 
 hr {
     position: relative;
@@ -941,9 +1034,11 @@ hr {
     border-width: 0.125rem;
 }
 
+
 .registration-form {
     text-align: left;
 }
+
 
 .form-control:focus,
 .form-control:active,
@@ -954,10 +1049,12 @@ hr {
     box-shadow: 0 0 0 0.15rem var(--light-orange) !important;
 }
 
+
 .form-control,
 .custom-select {
     color: var(--black);
     border-radius: 0.4rem;
+
 
     &.is-invalid {
         color: var(--pale-red);
@@ -965,15 +1062,18 @@ hr {
         background-color: var(--faded-pale-red);
     }
 
+
     &:disabled {
         &::placeholder {
             color: var(--pale-grey);
         }
 
+
         border-color: var(--faded-red-orange);
         background-color: var(--faded-light-grey);
     }
 }
+
 
 .form-select {
     appearance: none;
@@ -983,12 +1083,14 @@ hr {
     overflow: hidden;
 }
 
+
 .form-select:focus {
     appearance: none;
     background-image: url("../assets/dropdown-icons/dropdown-arrow-up.png");
     background-size: 25px 25px;
     overflow: hidden;
 }
+
 
 .btn-purple {
     background-color: #ed648d;
@@ -998,21 +1100,26 @@ hr {
     align-self: center;
 }
 
+
 .btn-purple:hover {
     color: rgba(255, 255, 255, 1);
     box-shadow: 0px 0px 16px 0px #ed648d;
 }
 
+
 .checkbox {
     padding-bottom: 1rem;
 }
+
 
 .submit-btn {
     width: 100%;
     height: 72px;
 
+
     text-align: center;
     margin: auto;
+
 
     background: radial-gradient(92.62% 25% at 33.31% 0%,
             #ffaa6c 0.01%,
@@ -1022,6 +1129,7 @@ hr {
     border-radius: 6px;
 }
 
+
 @media (min-width: 992px) {
     .submit-btn {
         display: block;
@@ -1029,9 +1137,11 @@ hr {
     }
 }
 
+
 .submit-btn:disabled {
     animation: pulse 2s infinite;
 }
+
 
 @keyframes pulse {
     0% {
@@ -1039,10 +1149,12 @@ hr {
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
     }
 
+
     70% {
         transform: scale(1);
         box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
     }
+
 
     100% {
         transform: scale(0.95);
@@ -1050,3 +1162,5 @@ hr {
     }
 }
 </style>
+  
+ 
