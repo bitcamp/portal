@@ -66,21 +66,8 @@
                     </b-form-group>
                 </b-form-row>
 
-                <h4>Please select your expertise</h4>
-                <b-form-group id="input-group-school-or-job" label-for="input-school-or-job" class="col-md-7"
-                    style="padding: 0rem;">
-                    <b-form-radio-group id="input-school-or-job" v-model="form.school_or_job"
-                        class="font-weight-normal pt-2" :state="valid_school_or_job">
-                        <b-form-radio value="student"> Student </b-form-radio>
-                        <b-form-radio value="job"> Job Person </b-form-radio>
-                    </b-form-radio-group>
-                    <b-form-invalid-feedback :state="valid_school_or_job">
-                        Please select an option from the list
-                    </b-form-invalid-feedback>
-                </b-form-group>
-
                 <!-- School Type -->
-                <b-form-row v-if="form.school_or_job === 'student'">
+                <b-form-row>
                     <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
                         <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
                             input-name="school" placeholder="University of Maryland at College Park"
@@ -95,7 +82,7 @@
                     </b-form-group>
                 </b-form-row>
 
-                <b-form-row v-if="form.school_or_job === 'student'">
+                <b-form-row>
                     <div class="col-md-12">
                         <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
                             My school is not listed above
@@ -110,20 +97,12 @@
                     </b-form-group>
                 </b-form-row>
 
-                <b-form-group v-if="form.school_or_job === 'student'" id="input-group-schoolyear"
-                    label="Current Level of Study*" label-for="input-schoolyear" class="col-md-6" style="padding: 0rem;">
+                <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
+                    class="col-md-6" style="padding: 0rem;">
                     <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
                         class="form-select" :options="school_year_options" :state="valid_school_year" />
                     <b-form-invalid-feedback :state="valid_school_year">
                         Please select a year
-                    </b-form-invalid-feedback>
-                </b-form-group>
-
-                <b-form-group v-if="form.school_or_job === 'job'" id="input-group-job" label="What company do you work for*"
-                    label-for="input-job" class="col-12 col-md-12" style="padding: 0rem;">
-                    <b-form-input id="input-job" v-model="form.job" :state="valid_job" />
-                    <b-form-invalid-feedback :state="valid_job">
-                        Please enter your job experience
                     </b-form-invalid-feedback>
                 </b-form-group>
 
@@ -365,8 +344,6 @@ export default {
                 first_name: "",
                 last_name: "",
                 skill: "",
-                school_or_job: "",
-                job: "",
                 school_year: "",
                 school: "",
                 school_other: "",
@@ -388,8 +365,6 @@ export default {
             valid_last_name: null,
             valid_email: null,
             valid_phone: null,
-            valid_school_or_job: null,
-            valid_job: null,
             valid_school_year: null,
             valid_school: null,
             valid_school_other: null,
@@ -755,59 +730,14 @@ export default {
                 this.valid_languages = null;
             }
 
-            // if (this.form.school_or_job !== null) {
-            //     console.log("inside");
-            //     if (this.form.school_or_job === "student") {
-            //         if (this.form.school_year.length === 0) {
-            //             this.valid_school_year = false;
-            //             valid_form = false;
-            //         } else {
-            //             this.valid_school_year = null;
-            //         }
-            //         console.log("school: " + (!university_list.includes(this.form.school)))
-            //         if (this.school_other_selected) {
-            //             this.school_class = "typeahead";
-            //             this.valid_school = null;
-            //             if (this.form.school_other.length === 0) {
-            //                 this.valid_school_other = false;
-            //                 valid_form = false;
-            //             } else {
-            //                 this.valid_school_other = null;
-            //             }
-            //         } else {
-            //             if (!university_list.includes(this.form.school)) {
-            //                 this.valid_school = false;
-            //                 this.school_class = "typeahead is-invalid";
-            //                 valid_form = false;
-            //             } else {
-            //                 this.school_class = "typeahead";
-            //                 this.valid_school = null;
-            //             }
-            //             this.valid_school_other = null;
-            //         }
-            //     }
-            //     else {
-            //         if (this.form.job.length === 0) {
-            //             this.valid_job = false;
-            //             valid_form = false;
-            //         } else {
-            //             this.valid_job = null;
-            //         }
-            //     }
-            // }
-            // else {
-            //     this.valid_school_or_job = false;
-            //     valid_form = false;
-            // }
-
-            if (this.form.school_or_job === "student" && this.form.school_year.length === 0) {
+            if (this.form.school_year.length === 0) {
                 this.valid_school_year = false;
                 valid_form = false;
             } else {
                 this.valid_school_year = null;
             }
             console.log("school: " + (!university_list.includes(this.form.school)))
-            if (this.form.school_or_job === "student" && this.school_other_selected) {
+            if (this.school_other_selected) {
                 this.school_class = "typeahead";
                 this.valid_school = null;
                 if (this.form.school_other.length === 0) {
@@ -816,7 +746,7 @@ export default {
                 } else {
                     this.valid_school_other = null;
                 }
-            } else if (this.form.school_or_job === "student") {
+            } else {
                 if (!university_list.includes(this.form.school)) {
                     this.valid_school = false;
                     this.school_class = "typeahead is-invalid";
@@ -826,13 +756,6 @@ export default {
                     this.valid_school = null;
                 }
                 this.valid_school_other = null;
-            }
-
-            if (this.form.school_or_job === "job" && this.form.job.length === 0) {
-                this.valid_job = false;
-                valid_form = false;
-            } else {
-                this.valid_job = null;
             }
 
             console.log(valid_form)
@@ -1127,4 +1050,3 @@ hr {
     }
 }
 </style>
-  
