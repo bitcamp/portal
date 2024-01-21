@@ -30,7 +30,8 @@
           </b-form-group>
 
           <!-- Last Name -->
-          <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name" class="col-7 col-md-5">
+          <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
+            class="col-7 col-md-5">
             <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
               placeholder="Wilson" :state="valid_last_name" />
             <b-form-invalid-feedback :state="valid_last_name">
@@ -40,8 +41,8 @@
 
           <!-- Date of Birth -->
           <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-5 col-md-2">
-            <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0" max="120"
-              placeholder="19" :state="valid_age" />
+            <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0"
+              max="120" placeholder="19" :state="valid_age" />
             <b-form-invalid-feedback v-if="form.age.length === 0" :state="valid_age">
               Please enter your age
             </b-form-invalid-feedback>
@@ -50,17 +51,22 @@
 
         <p class="info" v-if="form.age.length > 0 && form.age > 2 && form.age < 18">
           To attend Bitcamp as a minor, please fill out these
+<<<<<<< HEAD
           <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
             forms</a>
           and email them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+=======
+          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors forms</a> and email them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+>>>>>>> parent of eaf20d4 (completed functionality of mentor form)
         </p>
 
         <!-- Email and Phone Number-->
         <b-form-row>
           <!-- Email -->
           <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-7">
-            <b-form-input id="input-2" v-model="form.email" name="email" autocomplete="email" placeholder="hello@bit.camp"
-              :state="valid_email" type="email" @blur="emailFilledOut" />
+            <b-form-input id="input-2" v-model="form.email" name="email" autocomplete="email"
+              placeholder="hello@bit.camp" :state="valid_email" type="email" @blur="emailFilledOut" />
             <b-form-invalid-feedback :state="valid_email">
               Please enter a valid email address
             </b-form-invalid-feedback>
@@ -88,7 +94,8 @@
           </b-form-group>
 
           <!-- Country of Residence -->
-          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country"
+            class="col-md-6">
             <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
               class="form-select" :options="country_options" :state="valid_country" />
             <b-form-invalid-feedback :state="valid_country">
@@ -107,10 +114,12 @@
                 :disabled="ethnicity_prefer_no_answer">
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="ethnicity_prefer_no_answer" :state="valid_ethnicity" @change="uncheckEthnicity()">
+              <b-form-checkbox v-model="ethnicity_prefer_no_answer" :state="valid_ethnicity"
+                @change="uncheckEthnicity()">
                 Prefer Not to Answer
               </b-form-checkbox>
-              <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity" :disabled="ethnicity_prefer_no_answer">
+              <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity"
+                :disabled="ethnicity_prefer_no_answer">
                 Other (Please Specify)
               </b-form-checkbox>
             </b-form-group>
@@ -131,7 +140,8 @@
           <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
             <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
               input-name="school" placeholder="University of Maryland at College Park" :data="university_options"
-              noResultsInfo="No results found." :disabled="school_other_selected" :state="valid_school" />
+              noResultsInfo="No results found." :disabled="school_other_selected"
+              :state="valid_school" />
             <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
               Please enter your school name
             </b-form-invalid-feedback>
@@ -181,8 +191,8 @@
 
         <!-- recruitment info -->
         <b-form-row>
-          <b-form-group id="input-group-recruit" label="Do you want to be recruited for jobs?*" label-for="input-recruit"
-            class="col-md-6">
+          <b-form-group id="input-group-recruit" label="Do you want to be recruited for jobs?*"
+            label-for="input-recruit" class="col-md-6">
             <b-form-select id="input-recruit" v-model="form.recruit" placeholder="Choose an option"
               :options="recruit_options" class="form-select" :state="valid_recruit" />
             <b-form-invalid-feedback :state="valid_recruit">
@@ -234,7 +244,7 @@
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
-        <TrackSelection :default="'general'" @picked="updateTrack" @waitlisted="updateWaitlistTrack" />
+        <TrackSelection :default="'general'" @picked="updateTrack" @waitlisted="updateWaitlistTrack"/>
 
         <!-- Optional quantum selection 1 -->
         <hr />
@@ -289,8 +299,8 @@
           </b-form-row>
           <b-form-row>
             <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-8 col-md-5">
-              <b-form-input id="input-city" v-model="form.city" name="city" autocomplete="off" placeholder="College Park"
-                :state="valid_address" />
+              <b-form-input id="input-city" v-model="form.city" name="city" autocomplete="off"
+                placeholder="College Park" :state="valid_address" />
             </b-form-group>
 
             <b-form-group id="input-group-state" label="State" label-for="input-state" class="col-4 col-md-2">
@@ -304,8 +314,8 @@
             </b-form-group>
 
             <b-form-group id="input-group-country" label="Country" label-for="input-country" class="col-8 col-md-2">
-              <b-form-input id="input-country" v-model="form.country" name="country" autocomplete="off" placeholder="USA"
-                :state="valid_address" />
+              <b-form-input id="input-country" v-model="form.country" name="country" autocomplete="off"
+                placeholder="USA" :state="valid_address" />
             </b-form-group>
           </b-form-row>
           <b-form-invalid-feedback :state="valid_address" style="margin: 0">
@@ -396,8 +406,8 @@
 
         <b-form-row>
           <b-form-group id="input-group-tshirt" label="T-shirt Size*" label-for="input-tshirt" class="col-md-12">
-            <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select" placeholder="Choose a T-shirt size"
-              :options="tshirt_size_options" :state="valid_tshirt_size" />
+            <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select"
+              placeholder="Choose a T-shirt size" :options="tshirt_size_options" :state="valid_tshirt_size" />
             <b-form-invalid-feedback :state="valid_tshirt_size">
               Please select a T-shirt size
             </b-form-invalid-feedback>
@@ -468,7 +478,8 @@
                 None
               </b-form-checkbox>
               <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
-                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a" :disabled="diet_none">
+                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a"
+                :disabled="diet_none">
                 {{ option.text }}
               </b-form-checkbox>
               <b-form-checkbox v-model="diet_other" :disabled="diet_none"> Other </b-form-checkbox>
@@ -486,12 +497,17 @@
         <!-- MLH Stuff -->
         <h4 class="mb-2">Rules and privacy policies</h4>
 
-        <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form"
-          name="checkbox-0" :state="valid_minors_form" class="checkbox">
+        <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form" name="checkbox-0" :state="valid_minors_form"
+          class="checkbox">
           I have filled out the
+<<<<<<< HEAD
           <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
             forms</a>
           and emailed them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+=======
+          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors forms</a> and emailed them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+>>>>>>> parent of eaf20d4 (completed functionality of mentor form)
           <b-form-invalid-feedback :state="valid_minors_form">
             Please fill out the minors forms
           </b-form-invalid-feedback>
