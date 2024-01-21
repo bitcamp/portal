@@ -1,3 +1,5 @@
+<!-- eslint-disable vue/first-attribute-linebreak -->
+<!-- eslint-disable vue/max-attributes-per-line -->
 <!-- eslint-disable no-undef -->
 <template>
     <b-row>
@@ -5,7 +7,7 @@
         <b-col md="10">
             <br>
             <h1 style="text-align: left">
-                Register for Bitcamp 20232 Mentor
+                Register for Bitcamp 2024 Mentor
             </h1>
 
             <p style="font-size: 0.9rem; opacity: 95%">
@@ -16,15 +18,15 @@
             <b-form class="registration-form" autocomplete="on" @submit="registerUser">
                 <h4>Tell us about yourself!</h4>
                 <p class="info">
-                    Once you register, you'll receive more info about Bitcamp 2023 at the
+                    Once you register, you'll receive more info about Bitcamp 2024 at the
                     email you provide.
                 </p>
 
-                <!-- Name and Age -->
+                <!-- Name  -->
                 <b-form-row>
                     <!-- First Name -->
                     <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
-                        class="col-6 col-md-5">
+                        class="col-12 col-md-12">
                         <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
                             autocomplete="firstname" placeholder="Sophie" :state="valid_first_name" />
                         <b-form-invalid-feedback :state="valid_first_name">
@@ -34,7 +36,7 @@
 
                     <!-- Last Name -->
                     <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
-                        class="col-6 col-md-5">
+                        class="col-12 col-md-12">
                         <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
                             placeholder="Wilson" :state="valid_last_name" />
                         <b-form-invalid-feedback :state="valid_last_name">
@@ -64,10 +66,21 @@
                     </b-form-group>
                 </b-form-row>
 
-                <h4>How about your school?</h4>
+                <h4>Please select your expertise</h4>
+                <b-form-group id="input-group-school-or-job" label-for="input-school-or-job" class="col-md-7"
+                    style="padding: 0rem;">
+                    <b-form-radio-group id="input-school-or-job" v-model="form.school_or_job"
+                        class="font-weight-normal pt-2" :state="valid_school_or_job">
+                        <b-form-radio value="student"> Student </b-form-radio>
+                        <b-form-radio value="job"> Job Person </b-form-radio>
+                    </b-form-radio-group>
+                    <b-form-invalid-feedback :state="valid_school_or_job">
+                        Please select an option from the list
+                    </b-form-invalid-feedback>
+                </b-form-group>
 
                 <!-- School Type -->
-                <b-form-row>
+                <b-form-row v-if="form.school_or_job === 'student'">
                     <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
                         <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
                             input-name="school" placeholder="University of Maryland at College Park"
@@ -82,7 +95,7 @@
                     </b-form-group>
                 </b-form-row>
 
-                <b-form-row>
+                <b-form-row v-if="form.school_or_job === 'student'">
                     <div class="col-md-12">
                         <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
                             My school is not listed above
@@ -97,12 +110,20 @@
                     </b-form-group>
                 </b-form-row>
 
-                <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
-                    class="col-md-6" style="padding: 0rem;">
+                <b-form-group v-if="form.school_or_job === 'student'" id="input-group-schoolyear"
+                    label="Current Level of Study*" label-for="input-schoolyear" class="col-md-6" style="padding: 0rem;">
                     <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
                         class="form-select" :options="school_year_options" :state="valid_school_year" />
                     <b-form-invalid-feedback :state="valid_school_year">
                         Please select a year
+                    </b-form-invalid-feedback>
+                </b-form-group>
+
+                <b-form-group v-if="form.school_or_job === 'job'" id="input-group-job" label="What company do you work for*"
+                    label-for="input-job" class="col-12 col-md-12" style="padding: 0rem;">
+                    <b-form-input id="input-job" v-model="form.job" :state="valid_job" />
+                    <b-form-invalid-feedback :state="valid_job">
+                        Please enter your job experience
                     </b-form-invalid-feedback>
                 </b-form-group>
 
@@ -112,7 +133,7 @@
                 </h4>
                 <p class="info">
                     We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you
-                    like, and your very own Bitcamp 2023 shirt will be given to you once
+                    like, and your very own Bitcamp 2024 shirt will be given to you once
                     you arrive at UMD.
                 </p>
 
@@ -158,7 +179,7 @@
                         Skills and Experience
                     </h4>
                     <b-form-group id="input-group-skills"
-                        label="Hackers at Bitcamp may encounter a variety of problems. What skills are you willing to assist with/teach to others? Select all that apply. Add any skills that are not listed below in 'Other'."
+                        label="Hackers at Bitcamp may encounter a variety of problems. What skills are you willing to assist with/teach to others? Select all that apply. Add any skills that are not listed below in 'Other'.*"
                         label-for="input-group-skills" class="col-md-12">
                         <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
                             <b-form-checkbox v-for="option in skill_options" :key="option.value" v-model="skill_select"
@@ -174,7 +195,7 @@
                             aria-label="Skill Other Text Box" placeholder="Other Skill / Experience" />
                     </b-form-group>
                     <b-form-invalid-feedback :state="valid_skill">
-                        Please select a technology you are familiar in
+                        Please select a skill you are familiar with
                     </b-form-invalid-feedback>
                 </b-form-row>
 
@@ -184,7 +205,7 @@
                         Languages and Technologies
                     </h4>
                     <b-form-group id="input-group-languages"
-                        label="What programming languages/technologies are you willing to teach to others? Select all that apply. Add any languages/technologies that are not listed below in 'Other'."
+                        label="What programming languages/technologies are you willing to teach to others? Select all that apply. Add any languages/technologies that are not listed below in 'Other'.*"
                         label-for="input-group-languages" class="col-md-12">
                         <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
                             <b-form-checkbox v-for="option in languages_options" :key="option.value"
@@ -201,7 +222,7 @@
                             aria-label="Language Other Text Box" placeholder="Other Language / Technology" />
                     </b-form-group>
                     <b-form-invalid-feedback :state="valid_languages">
-                        Please select a technology you are familiar in
+                        Please select a language/technology you are familiar with
                     </b-form-invalid-feedback>
                 </b-form-row>
 
@@ -215,7 +236,7 @@
                     <b-form-textarea id="input-question1" v-model="form.question1" name="question1" autocomplete="off"
                         placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question1" />
                     <b-form-invalid-feedback :state="valid_question1">
-                        Please tell us your experience in mentoring.
+                        Please summarize your previous mentoring experience
                     </b-form-invalid-feedback>
                 </b-form-group>
 
@@ -243,7 +264,7 @@
                         <b-form-textarea id="input-question2" v-model="form.question2" name="question2" autocomplete="off"
                             placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question2" />
                         <b-form-invalid-feedback :state="valid_question2">
-                            Please tell us your expereince in mentoring.
+                            Please describe your previous experience in your chosen track(s)
                         </b-form-invalid-feedback>
                     </b-form-group>
                 </b-form-row>
@@ -254,23 +275,13 @@
                     Rules and privacy policies
                 </h4>
 
-                <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form"
-                    name="checkbox-0" :state="valid_minors_form" class="checkbox">
-                    I have filled out the
-                    <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe"
-                        target="_blank">minors forms</a> and emailed them to
-                    <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
-                    <b-form-invalid-feedback :state="valid_minors_form">
-                        Please fill out the minors forms
-                    </b-form-invalid-feedback>
-                </b-form-checkbox>
-
                 <b-form-checkbox id="checkbox-1" v-model="form.MLH_privacy" name="checkbox-1" class="checkbox"
                     :state="valid_mlh_privacy">
                     I authorize you to share my application/registration information with
                     Major League Hacking for event administration, ranking, and MLH
                     administration in-line with the
-                    <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of
+                    <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the
+                    terms of
                     both
                     the
                     <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
@@ -285,7 +296,8 @@
                 <b-form-checkbox id="checkbox-2" v-model="form.MLH_conduct" name="checkbox-2" :state="valid_code_of_conduct"
                     class="checkbox" style="padding-bottom: 1rem">
                     I have read and agree to the
-                    <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.*
+                    <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of
+                        Conduct</a>.*
                     <b-form-invalid-feedback :state="valid_code_of_conduct">
                         Please agree to MLH's code of conduct
                     </b-form-invalid-feedback>
@@ -322,11 +334,8 @@ import {
     IconsPlugin,
 } from "bootstrap-vue";
 import VueBootstrapAutocomplete from '@vue-bootstrap-components/vue-bootstrap-autocomplete';
-import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
-import * as majors_list from "../assets/college-majors.json";
 import * as univ_list from '../assets/university-list.json';
-import * as country_codes from "../assets/country-codes.json";
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
 
@@ -338,34 +347,10 @@ Vue.component("VueBootstrapAutocomplete", VueBootstrapAutocomplete);
 
 const university_list = univ_list.default
 
-const country_list = country_codes.default.map((country) => country["name"]);
-
-const major_map = majors_list["rows"].map((major) => {
-    return {
-        value: major[2].toLowerCase(),
-        text: major[2]
-            .toLowerCase()
-            .split(" ")
-            .map((word) =>
-                word === "and" ? word : word.charAt(0).toUpperCase() + word.slice(1)
-            )
-            .join(" "),
-    };
-});
-
-major_map.sort((major1, major2) => {
-    return major1["value"] < major2["value"]
-        ? -1
-        : major1["value"] > major2["value"]
-            ? 1
-            : 0;
-});
-
 const DEFAULT_COUNTRY_PHONE = "US";
 
 export default {
     name: "RegistrationForm",
-    components: {},
     mixins: [generalMixin],
 
     data() {
@@ -380,28 +365,16 @@ export default {
                 first_name: "",
                 last_name: "",
                 skill: "",
-                major: "",
-                recruit: "",
-                portfolio: "",
+                school_or_job: "",
+                job: "",
                 school_year: "",
                 school: "",
                 school_other: "",
-                resume: "",
-                resume_link: "",
-                resume_id: "",
-                age: "",
-                minors_form: false,
-                address: "",
-                address1: "",
-                address2: "",
-                city: "",
-                state: "",
                 tshirt_size: "",
                 question1: "",
                 question2: "",
                 mentor_tracks: "",
                 dietary_restrictions: "",
-                gmaps_place_id: "",
                 referred_by: "",
                 track_selected: "general",
                 waitlist_track_selected: "",
@@ -415,21 +388,16 @@ export default {
             valid_last_name: null,
             valid_email: null,
             valid_phone: null,
-            valid_resume: null,
+            valid_school_or_job: null,
+            valid_job: null,
             valid_school_year: null,
             valid_school: null,
             valid_school_other: null,
             valid_skill: null,
-            valid_major: null,
-            valid_recruit: null,
-            valid_portfolio: null,
-            valid_age: null,
-            valid_minors_form: null,
             valid_code_of_conduct: null,
             valid_mlh_privacy: null,
             valid_track_selected: null,
             valid_waitlist_track_selected: null,
-            valid_address: null,
             valid_tshirt_size: null,
             valid_question1: null,
             valid_question2: null,
@@ -441,16 +409,16 @@ export default {
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
-                { value: "less than high school", text: "Less than Secondary / High School" },
-                { value: "high school", text: "Secondary / High School" },
                 { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+                { value: "undergrad 3+ year freshman", text: "Undergraduate University (3+ year) - Freshman" },
+                { value: "undergrad 3+ year sophomore", text: "Undergraduate University (3+ year) - Sophomore" },
+                { value: "undergrad 3+ year junior", text: "Undergraduate University (3+ year) - junior" },
+                { value: "undergrad 3+ year senior", text: "Undergraduate University (3+ year) - senior" },
                 { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
                 { value: "bootcamp", text: "Code School / Bootcamp" },
                 { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
                 { value: "postdoc", text: "Post Doctorate" },
                 { value: "other", text: "Other" },
-                { value: "not a student", text: "I’m not currently a student" },
                 { value: "prefer not to answer", text: "Prefer not to answer" },
             ],
 
@@ -516,24 +484,6 @@ export default {
                 { value: "2xl", text: "2XL" },
             ],
 
-            major_options: [
-                { value: "", text: "Select one...", disabled: true },
-                { value: "no major", text: "No Major" },
-                ...major_map,
-                { value: "other", text: "Other" },
-            ],
-
-            recruit_options: [
-                { value: "", text: "Select one...", disabled: true },
-                { value: "yes fte", text: "Yes, for an internship" },
-                { value: "yes intern", text: "Yes, for a full-time position" },
-                {
-                    value: "yes both",
-                    text: "Yes, for an internship or full-time position",
-                },
-                { value: "no", text: "No" },
-            ],
-
             university_options: [...university_list],
 
             mentor_tracks_select: [],
@@ -562,104 +512,12 @@ export default {
         };
     },
 
-    mounted() {
-        // log registration in google analytics
-        this.$gtag.event("open-registration", { method: "Google" });
-        this.track({
-            random_id: this.random_id,
-            key: "open-registration",
-            value: true,
-        });
-        // this.sendAnalyticsEvent("registration_page_visit");
-        document.addEventListener("DOMContentLoaded", () => {
-            const input = document.getElementById("input-5");
-            const autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ["address"],
-            });
-
-            google.maps.event.addListener(autocomplete, "place_changed", () => {
-                const place = autocomplete.getPlace();
-
-                //updates v-model value
-                this.form.gmaps_place_id = place.place_id;
-                this.form.address = place.formatted_address;
-                this.fillInAddress(place);
-            });
-
-            google.maps.event.addDomListener(input, "keydown", function (event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    this.form.gmaps_place_id = place.place_id;
-                }
-            });
-
-            document
-                .getElementsByClassName("typeahead")[0]
-                .setAttribute("autocomplete", "off");
-
-            // document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
-        });
-    },
-
     methods: {
         updateTrack(value) {
             this.form.track_selected = value;
         },
         updateWaitlistTrack(value) {
             this.form.waitlist_track_selected = value;
-        },
-        fillInAddress(place) {
-            let address1 = "";
-            let postcode = "";
-
-            // Get each component of the address from the place details,
-            // and then fill-in the corresponding field on the form.
-            // place.address_components are google.maps.GeocoderAddressComponent objects
-            // which are documented at http://goo.gle/3l5i5Mr
-            for (const component of place.address_components) {
-                const componentType = component.types[0];
-
-                switch (componentType) {
-                    case "street_number": {
-                        address1 = `${component.long_name} ${address1}`;
-                        break;
-                    }
-
-                    case "route": {
-                        address1 += component.short_name;
-                        break;
-                    }
-
-                    case "postal_code": {
-                        postcode = `${component.long_name}${postcode}`;
-                        break;
-                    }
-
-                    case "postal_code_suffix": {
-                        postcode = `${postcode}-${component.long_name}`;
-                        break;
-                    }
-                    case "locality":
-                        this.form.city = document.getElementById("input-city").value =
-                            component.long_name;
-                        break;
-
-                    case "administrative_area_level_1": {
-                        this.form.state = document.getElementById("input-state").value =
-                            component.short_name;
-                        break;
-                    }
-                    case "country":
-                        this.form.country = document.getElementById("input-country").value =
-                            component.short_name;
-                        break;
-                }
-            }
-            this.form.address1 = document.getElementById("input-5").value = address1;
-            // After filling the form with address components from the Autocomplete
-            // prediction, set cursor focus on the second address line to encourage
-            // entry of subpremise information such as apartment, unit, or floor number.
-            document.getElementById("input-address-line2").focus();
         },
         emailFilledOut() {
             this.track({
@@ -823,6 +681,7 @@ export default {
                     this.form
                 );
 
+                console.log(this.form)
                 this.isSending = false; // done submitting
 
                 if (resp && resp.referral_id) {
@@ -836,17 +695,16 @@ export default {
                     this.showErrorToast();
                 }
             } else {
+                console.log("heher")
                 this.showErrorToast();
             }
         },
         // logic goes here so feedback is only shown after submission
         formCheck() {
             let valid_form = true;
-            console.log("\nvalid form" + valid_form)
 
             this.form.name = `${this.form.first_name} ${this.form.last_name}`
 
-            console.log("fname: " + (this.form.first_name.length === 0))
             if (this.form.first_name.length === 0) {
                 this.valid_first_name = false;
                 valid_form = false;
@@ -854,9 +712,7 @@ export default {
                 this.valid_first_name = null;
                 this.form.first_name = this.form.first_name.trim();
             }
-            console.log("\nvalid form" + valid_form)
 
-            console.log("lname: " + (this.form.last_name.length === 0))
             if (this.form.last_name.length === 0) {
                 this.valid_last_name = false;
                 valid_form = false;
@@ -865,7 +721,6 @@ export default {
                 this.form.last_name = this.form.last_name.trim();
             }
 
-            console.log("email: " + (!EmailValidator.validate(this.form.email)))
             if (!EmailValidator.validate(this.form.email)) {
                 this.valid_email = false;
                 valid_form = false;
@@ -873,7 +728,6 @@ export default {
                 this.valid_email = null;
             }
 
-            console.log("phone: " + (!phoneNumber || !phoneNumber.isValid()))
             const phoneNumber = parsePhoneNumber(
                 this.form.phone,
                 DEFAULT_COUNTRY_PHONE
@@ -885,16 +739,15 @@ export default {
                 this.valid_phone = null;
             }
 
-            console.log("skill: " + (this.createSkillString().length === 0))
             if (this.createSkillString().length === 0) {
                 this.valid_skill = false;
                 valid_form = false;
             } else {
                 this.valid_skill = null;
             }
-            console.log("\nvalid form" + valid_form)
 
-            console.log("language: " + (this.createLanguagesString().length === 0))
+            console.log(valid_form)
+
             if (this.createLanguagesString().length === 0) {
                 this.valid_languages = false;
                 valid_form = false;
@@ -902,16 +755,59 @@ export default {
                 this.valid_languages = null;
             }
 
-            console.log("school year: " + (this.form.school_year.length === 0))
-            if (this.form.school_year.length === 0) {
+            // if (this.form.school_or_job !== null) {
+            //     console.log("inside");
+            //     if (this.form.school_or_job === "student") {
+            //         if (this.form.school_year.length === 0) {
+            //             this.valid_school_year = false;
+            //             valid_form = false;
+            //         } else {
+            //             this.valid_school_year = null;
+            //         }
+            //         console.log("school: " + (!university_list.includes(this.form.school)))
+            //         if (this.school_other_selected) {
+            //             this.school_class = "typeahead";
+            //             this.valid_school = null;
+            //             if (this.form.school_other.length === 0) {
+            //                 this.valid_school_other = false;
+            //                 valid_form = false;
+            //             } else {
+            //                 this.valid_school_other = null;
+            //             }
+            //         } else {
+            //             if (!university_list.includes(this.form.school)) {
+            //                 this.valid_school = false;
+            //                 this.school_class = "typeahead is-invalid";
+            //                 valid_form = false;
+            //             } else {
+            //                 this.school_class = "typeahead";
+            //                 this.valid_school = null;
+            //             }
+            //             this.valid_school_other = null;
+            //         }
+            //     }
+            //     else {
+            //         if (this.form.job.length === 0) {
+            //             this.valid_job = false;
+            //             valid_form = false;
+            //         } else {
+            //             this.valid_job = null;
+            //         }
+            //     }
+            // }
+            // else {
+            //     this.valid_school_or_job = false;
+            //     valid_form = false;
+            // }
+
+            if (this.form.school_or_job === "student" && this.form.school_year.length === 0) {
                 this.valid_school_year = false;
                 valid_form = false;
             } else {
                 this.valid_school_year = null;
             }
-
             console.log("school: " + (!university_list.includes(this.form.school)))
-            if (this.school_other_selected) {
+            if (this.form.school_or_job === "student" && this.school_other_selected) {
                 this.school_class = "typeahead";
                 this.valid_school = null;
                 if (this.form.school_other.length === 0) {
@@ -920,7 +816,7 @@ export default {
                 } else {
                     this.valid_school_other = null;
                 }
-            } else {
+            } else if (this.form.school_or_job === "student") {
                 if (!university_list.includes(this.form.school)) {
                     this.valid_school = false;
                     this.school_class = "typeahead is-invalid";
@@ -932,7 +828,15 @@ export default {
                 this.valid_school_other = null;
             }
 
-            console.log("tshirt: " + (this.form.tshirt_size.length === 0))
+            if (this.form.school_or_job === "job" && this.form.job.length === 0) {
+                this.valid_job = false;
+                valid_form = false;
+            } else {
+                this.valid_job = null;
+            }
+
+            console.log(valid_form)
+
             if (this.form.tshirt_size.length === 0) {
                 this.valid_tshirt_size = false;
                 valid_form = false;
@@ -940,15 +844,6 @@ export default {
                 this.valid_tshirt_size = null;
             }
 
-            console.log("minor: " + (this.form.age.length > 0 && this.form.age < 18 && !this.form.minors_form))
-            if (this.form.age.length > 0 && this.form.age < 18 && !this.form.minors_form) {
-                this.valid_minors_form = false;
-                valid_form = false;
-            } else {
-                this.valid_minors_form = null;
-            }
-
-            console.log("q1: " + (this.form.question1.length === 0))
             if (this.form.question1.length === 0) {
                 this.valid_question1 = false;
                 valid_form = false;
@@ -956,7 +851,6 @@ export default {
                 this.valid_question1 = null;
             }
 
-            console.log("q2: " + (this.form.question1.length === 0))
             if (this.form.question2.length === 0) {
                 this.valid_question2 = false;
                 valid_form = false;
@@ -964,7 +858,6 @@ export default {
                 this.valid_question2 = null;
             }
 
-            console.log("diet: " + (this.createDietaryRestrictionString().length === 0))
             if (this.createDietaryRestrictionString().length === 0) {
                 this.valid_diet = false;
                 valid_form = false;
@@ -972,7 +865,6 @@ export default {
                 this.valid_diet = null;
             }
 
-            console.log("mlh1: " + (!this.form.MLH_conduct))
             if (!this.form.MLH_conduct) {
                 this.valid_code_of_conduct = false;
                 valid_form = false;
@@ -980,13 +872,14 @@ export default {
                 this.valid_code_of_conduct = null;
             }
 
-            console.log("mlh2: " + (!this.form.MLH_privacy))
             if (!this.form.MLH_privacy) {
                 this.valid_mlh_privacy = false;
                 valid_form = false;
             } else {
                 this.valid_mlh_privacy = null;
             }
+
+            console.log(valid_form)
             return valid_form;
         },
         resetSchool(other) {
@@ -998,137 +891,6 @@ export default {
                 this.form.school = "";
                 this.form.school_other = "";
             }
-        },
-        async upload(file) {
-            if (this.form.first_name.length == 0 || this.form.last_name.length == 0) {
-                this.showErrorToastCustom(
-                    "Oops! Put in your name first so our marshies make sure your file is in the right place!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            this.valid_resume = null;
-
-            if (
-                this.form.resume.name.slice(-3) != "pdf" &&
-                this.form.resume.name.slice(-3) != "doc" &&
-                this.form.resume.name.slice(-4) != "docx" &&
-                this.form.resume.name.slice(-3) != "txt"
-            ) {
-                this.showErrorToastCustom(
-                    "Oops! Make sure your resume is in pdf, doc, docx, or txt format!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            let cleanname;
-            if (this.form.resume.name.slice(-4) == "docx") {
-                cleanname =
-                    this.form.first_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "_" + this.form.last_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "." +
-                    this.form.resume.name.slice(-4);
-            } else {
-                cleanname =
-                    this.form.first_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "_" + this.form.last_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "." +
-                    this.form.resume.name.slice(-3);
-            }
-
-            const userParams = {
-                id: this.random_id,
-                filename: cleanname,
-                filetype: this.form.resume.name.slice(-3),
-            };
-
-            const r = await this.performPostRequest(
-                this.getEnvVariable("BACKEND_ENDPOINT"),
-                "upload_resume",
-                userParams
-            );
-
-            if (!(r && r.putUrl)) {
-                this.showErrorToastCustom(
-                    "Oops! We couldn't upload your resume, try again later!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            const cleanFile = new File([file], cleanname, {
-                type: file.type,
-                lastModified: file.lastModified,
-            });
-
-            const r2 = await this.performRawPostRequest(r.putUrl, cleanFile);
-            this.form.resume_link = r.uploadUrl;
-            this.form.resume_id = this.random_id;
-
-            if (!(r2 && r2.status == 200)) {
-                this.showErrorToastCustom(
-                    "Oops! We couldn't upload your resume, try again later!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            // below is for resume parsing
-            let text = "";
-            const pdfVersion = "2.10.377";
-            // eslint-disable-next-line no-import-assign
-            PDFJS.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
-
-            const loadingTask = PDFJS.getDocument(this.form.resume_link);
-            await loadingTask.promise.then((doc) => {
-                const { numPages } = doc;
-
-                let lastPromise;
-                lastPromise = doc.getMetadata();
-
-                const loadPage = async (pageNum) => {
-                    const page = await doc.getPage(pageNum);
-
-                    return page.getTextContent().then((content) => {
-                        // we only want the page text (strings)
-                        const strings = content.items.map((item) => item.str);
-                        text += strings.join(" ");
-                    });
-                };
-
-                for (let i = 1; i <= numPages; i += 1) {
-                    lastPromise = lastPromise.then(loadPage.bind(null, i));
-                }
-                return lastPromise;
-            });
-
-            const resumeParams = {
-                user_id: this.random_id,
-                resume_text: text,
-            };
-            await this.performPostRequest(
-                this.getEnvVariable("BACKEND_ENDPOINT"),
-                "upload_text_resume",
-                resumeParams
-            );
         },
     },
 };
