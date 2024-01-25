@@ -5,7 +5,7 @@
         <b-col md="10">
             <br>
             <h1 style="text-align: left">
-                Register for Bitcamp 2024 Mentor
+                Register for Bitcamp 2024 - Mentor
             </h1>
 
             <p style="font-size: 0.9rem; opacity: 95%">
@@ -24,7 +24,7 @@
                 <b-form-row>
                     <!-- First Name -->
                     <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
-                        class="col-12 col-md-12">
+                        class="col-6 col-md-6">
                         <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
                             autocomplete="firstname" placeholder="Sophie" :state="valid_first_name" />
                         <b-form-invalid-feedback :state="valid_first_name">
@@ -34,7 +34,7 @@
 
                     <!-- Last Name -->
                     <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
-                        class="col-12 col-md-12">
+                        class="col-6 col-md-6">
                         <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
                             placeholder="Wilson" :state="valid_last_name" />
                         <b-form-invalid-feedback :state="valid_last_name">
@@ -64,14 +64,14 @@
                     </b-form-group>
                 </b-form-row>
 
-                <h4>School or Company?</h4>
+                <h4>Background</h4>
 
-                <b-form-group label="Are you in School?*" id="input-group-school-or-company"
-                    label-for="input-school-or-company">
+                <b-form-group label="Will you be attending as a student, or do you bring professional experience?*"
+                    id="input-group-school-or-company" label-for="input-school-or-company">
                     <b-form-radio-group id="input-school-or-company" v-model="form.selected_school_or_company"
                         :state="valid_school_or_company">
-                        <b-form-radio value="yes">Yes</b-form-radio>
-                        <b-form-radio value="no"> No </b-form-radio>
+                        <b-form-radio value="stud">Student</b-form-radio>
+                        <b-form-radio value="pro"> Professional </b-form-radio>
                     </b-form-radio-group>
                     <b-form-invalid-feedback :state="valid_school_or_company">
                         Please select an answer
@@ -79,7 +79,7 @@
                 </b-form-group>
 
                 <!-- School Type -->
-                <b-form-row v-if="form.selected_school_or_company === 'yes'">
+                <b-form-row v-if="form.selected_school_or_company === 'stud'">
                     <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
                         <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
                             input-name="school" placeholder="University of Maryland at College Park"
@@ -94,7 +94,7 @@
                     </b-form-group>
                 </b-form-row>
 
-                <b-form-row v-if="form.selected_school_or_company === 'yes'">
+                <b-form-row v-if="form.selected_school_or_company === 'stud'">
                     <div class="col-md-12">
                         <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
                             My school is not listed above
@@ -110,7 +110,7 @@
                 </b-form-row>
 
                 <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
-                    class="col-md-6" style="padding: 0rem;" v-if="form.selected_school_or_company === 'yes'">
+                    class="col-md-6" style="padding: 0rem;" v-if="form.selected_school_or_company === 'stud'">
                     <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
                         class="form-select" :options="school_year_options" :state="valid_school_year" />
                     <b-form-invalid-feedback :state="valid_school_year">
@@ -120,7 +120,7 @@
 
                 <!-- Job -->
                 <b-form-group id="input-group-company" label="Company*" label-for="input-company" class="col-6 col-md-12"
-                    style="padding: 0rem;" v-if="form.selected_school_or_company === 'no'">
+                    style="padding: 0rem;" v-if="form.selected_school_or_company === 'pro'">
                     <b-form-input id="input-company" v-model="form.company" name="compnay" :state="valid_company" />
                     <b-form-invalid-feedback :state="valid_company">
                         Please enter your company name
@@ -195,7 +195,7 @@
                             aria-label="Skill Other Text Box" placeholder="Other Skill / Experience" />
                     </b-form-group>
                     <b-form-invalid-feedback :state="valid_skill">
-                        Please select a technology you are familiar in
+                        Please select a skill you are familiar with
                     </b-form-invalid-feedback>
                 </b-form-row>
 
@@ -222,7 +222,7 @@
                             aria-label="Language Other Text Box" placeholder="Other Language / Technology" />
                     </b-form-group>
                     <b-form-invalid-feedback :state="valid_languages">
-                        Please select a technology you are familiar in
+                        Please select a language/technology you are familiar with
                     </b-form-invalid-feedback>
                 </b-form-row>
 
@@ -236,7 +236,7 @@
                     <b-form-textarea id="input-question1" v-model="form.question1" name="question1" autocomplete="off"
                         placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question1" />
                     <b-form-invalid-feedback :state="valid_question1">
-                        Please tell us your experience in mentoring.
+                        Please summarize your previous mentoring experience
                     </b-form-invalid-feedback>
                 </b-form-group>
 
@@ -264,7 +264,7 @@
                         <b-form-textarea id="input-question2" v-model="form.question2" name="question2" autocomplete="off"
                             placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question2" />
                         <b-form-invalid-feedback :state="valid_question2">
-                            Please tell us your expereince in mentoring.
+                            Please describe your previous experience in your chosen track(s)
                         </b-form-invalid-feedback>
                     </b-form-group>
                 </b-form-row>
@@ -401,32 +401,15 @@ export default {
                 first_name: "",
                 last_name: "",
                 skill: "",
-                major: "",
-                recruit: "",
-                portfolio: "",
                 company: "",
                 school_year: "",
                 school: "",
                 school_other: "",
-                resume: "",
-                resume_link: "",
-                resume_id: "",
-                age: "",
-                minors_form: false,
-                address: "",
-                address1: "",
-                address2: "",
-                city: "",
-                state: "",
                 tshirt_size: "",
                 question1: "",
                 question2: "",
                 mentor_tracks: "",
                 dietary_restrictions: "",
-                gmaps_place_id: "",
-                referred_by: "",
-                track_selected: "general",
-                waitlist_track_selected: "",
                 languages: "",
             },
 
@@ -438,21 +421,15 @@ export default {
             valid_company: null,
             valid_email: null,
             valid_phone: null,
-            valid_resume: null,
             valid_school_year: null,
             valid_school: null,
             valid_school_other: null,
             valid_skill: null,
             valid_major: null,
-            valid_recruit: null,
-            valid_portfolio: null,
             valid_age: null,
-            valid_minors_form: null,
             valid_code_of_conduct: null,
             valid_mlh_privacy: null,
-            valid_track_selected: null,
             valid_school_or_company: null,
-            valid_waitlist_track_selected: null,
             valid_address: null,
             valid_tshirt_size: null,
             valid_question1: null,
@@ -468,13 +445,15 @@ export default {
                 { value: "less than high school", text: "Less than Secondary / High School" },
                 { value: "high school", text: "Secondary / High School" },
                 { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Freshman" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
                 { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
                 { value: "bootcamp", text: "Code School / Bootcamp" },
                 { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
                 { value: "postdoc", text: "Post Doctorate" },
                 { value: "other", text: "Other" },
-                { value: "not a student", text: "I’m not currently a student" },
                 { value: "prefer not to answer", text: "Prefer not to answer" },
             ],
 
@@ -857,6 +836,7 @@ export default {
                         value: resp.referral_id,
                     });
                 } else {
+                    console.log("HERE form")
                     this.showErrorToast();
                 }
             } else {
@@ -866,11 +846,9 @@ export default {
         // logic goes here so feedback is only shown after submission
         formCheck() {
             let valid_form = true;
-            console.log("\nvalid form" + valid_form)
 
             this.form.name = `${this.form.first_name} ${this.form.last_name}`
 
-            console.log("fname: " + (this.form.first_name.length === 0))
             if (this.form.first_name.length === 0) {
                 this.valid_first_name = false;
                 valid_form = false;
@@ -887,7 +865,6 @@ export default {
                 this.form.last_name = this.form.last_name.trim();
             }
 
-            console.log("email: " + (!EmailValidator.validate(this.form.email)))
             if (!EmailValidator.validate(this.form.email)) {
                 this.valid_email = false;
                 valid_form = false;
@@ -895,7 +872,6 @@ export default {
                 this.valid_email = null;
             }
 
-            console.log("phone: " + (!phoneNumber || !phoneNumber.isValid()))
             const phoneNumber = parsePhoneNumber(
                 this.form.phone,
                 DEFAULT_COUNTRY_PHONE
@@ -907,16 +883,13 @@ export default {
                 this.valid_phone = null;
             }
 
-            console.log("skill: " + (this.createSkillString().length === 0))
             if (this.createSkillString().length === 0) {
                 this.valid_skill = false;
                 valid_form = false;
             } else {
                 this.valid_skill = null;
             }
-            console.log("\nvalid form" + valid_form)
 
-            console.log("language: " + (this.createLanguagesString().length === 0))
             if (this.createLanguagesString().length === 0) {
                 this.valid_languages = false;
                 valid_form = false;
@@ -931,14 +904,15 @@ export default {
                 this.valid_school_or_company = null;
             }
 
-            if (this.form.school_year.length === 0 && this.form.selected_school_or_company == "yes") {
+            if (this.form.selected_school_or_company == "stud" && this.form.school_year.length === 0) {
                 this.valid_school_year = false;
                 valid_form = false;
             } else {
                 this.valid_school_year = null;
             }
 
-            if (this.school_other_selected && this.form.selected_school_or_company == "yes") {
+            if (this.school_other_selected && this.form.selected_school_or_company == "stud") {
+                console.log("HERE")
                 this.school_class = "typeahead";
                 this.valid_school = null;
                 if (this.form.school_other.length === 0) {
@@ -947,8 +921,9 @@ export default {
                 } else {
                     this.valid_school_other = null;
                 }
-            } else if (this.form.selected_school_or_company == "yes") {
-                if (!university_list.includes(this.form.school) && this.form.selected_school_or_company == "yes") {
+            } else if (this.form.selected_school_or_company == "stud") {
+                console.log("ALSO HERE")
+                if (!university_list.includes(this.form.school) && this.form.selected_school_or_company == "stud") {
                     this.valid_school = false;
                     this.school_class = "typeahead is-invalid";
                     valid_form = false;
@@ -959,15 +934,15 @@ export default {
                 this.valid_school_other = null;
             }
 
-            if (this.form.company.length === 0 && this.form.selected_school_or_company == "no") {
+            if (this.form.selected_school_or_company == "pro" && this.form.company.length === 0) {
                 this.valid_company = false;
                 valid_form = false;
             } else {
                 this.valid_company = null;
-                this.form.company = this.form.company.trim();
+                this.form.school_year = "never";
+                this.form.school = "University of Maryland, College Park";
             }
 
-            console.log("tshirt: " + (this.form.tshirt_size.length === 0))
             if (this.form.tshirt_size.length === 0) {
                 this.valid_tshirt_size = false;
                 valid_form = false;
@@ -975,7 +950,6 @@ export default {
                 this.valid_tshirt_size = null;
             }
 
-            console.log("minor: " + (this.form.age.length > 0 && this.form.age < 18 && !this.form.minors_form))
             if (this.form.age.length > 0 && this.form.age < 18 && !this.form.minors_form) {
                 this.valid_minors_form = false;
                 valid_form = false;
@@ -983,7 +957,6 @@ export default {
                 this.valid_minors_form = null;
             }
 
-            console.log("q1: " + (this.form.question1.length === 0))
             if (this.form.question1.length === 0) {
                 this.valid_question1 = false;
                 valid_form = false;
@@ -991,7 +964,6 @@ export default {
                 this.valid_question1 = null;
             }
 
-            console.log("q2: " + (this.form.question1.length === 0))
             if (this.form.question2.length === 0) {
                 this.valid_question2 = false;
                 valid_form = false;
@@ -999,7 +971,6 @@ export default {
                 this.valid_question2 = null;
             }
 
-            console.log("diet: " + (this.createDietaryRestrictionString().length === 0))
             if (this.createDietaryRestrictionString().length === 0) {
                 this.valid_diet = false;
                 valid_form = false;
@@ -1007,7 +978,6 @@ export default {
                 this.valid_diet = null;
             }
 
-            console.log("mlh1: " + (!this.form.MLH_conduct))
             if (!this.form.MLH_conduct) {
                 this.valid_code_of_conduct = false;
                 valid_form = false;
@@ -1015,13 +985,13 @@ export default {
                 this.valid_code_of_conduct = null;
             }
 
-            console.log("mlh2: " + (!this.form.MLH_privacy))
             if (!this.form.MLH_privacy) {
                 this.valid_mlh_privacy = false;
                 valid_form = false;
             } else {
                 this.valid_mlh_privacy = null;
             }
+            console.log(valid_form)
             return valid_form;
         },
         resetSchool(other) {
