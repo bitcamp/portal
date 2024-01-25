@@ -1103,7 +1103,6 @@ export default {
         this.valid_recruit = null;
       }
 
-      console.log('citizenship: ', this.form.citizen)
       if (this.form.citizen === undefined) {
         this.form.citizen = null;
       }
