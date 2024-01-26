@@ -5,7 +5,7 @@
         <b-col md="10">
             <br>
             <h1 style="text-align: left">
-                Register for Bitcamp 2024 Mentor
+                Register for Bitcamp 2024 - Mentor
             </h1>
 
             <p style="font-size: 0.9rem; opacity: 95%">
@@ -24,7 +24,7 @@
                 <b-form-row>
                     <!-- First Name -->
                     <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
-                        class="col-12 col-md-12">
+                        class="col-6 col-md-6">
                         <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
                             autocomplete="firstname" placeholder="Sophie" :state="valid_first_name" />
                         <b-form-invalid-feedback :state="valid_first_name">
@@ -34,7 +34,7 @@
 
                     <!-- Last Name -->
                     <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
-                        class="col-12 col-md-12">
+                        class="col-6 col-md-6">
                         <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
                             placeholder="Wilson" :state="valid_last_name" />
                         <b-form-invalid-feedback :state="valid_last_name">
@@ -64,14 +64,14 @@
                     </b-form-group>
                 </b-form-row>
 
-                <h4>School or Company?</h4>
+                <h4>Background</h4>
 
-                <b-form-group label="Are you in School?*" id="input-group-school-or-company"
-                    label-for="input-school-or-company">
+                <b-form-group label="Will you be attending as a student, or do you bring professional experience?*"
+                    id="input-group-school-or-company" label-for="input-school-or-company">
                     <b-form-radio-group id="input-school-or-company" v-model="form.selected_school_or_company"
                         :state="valid_school_or_company">
-                        <b-form-radio value="yes">Yes</b-form-radio>
-                        <b-form-radio value="no"> No </b-form-radio>
+                        <b-form-radio value="yes">Student</b-form-radio>
+                        <b-form-radio value="no"> Professional </b-form-radio>
                     </b-form-radio-group>
                     <b-form-invalid-feedback :state="valid_school_or_company">
                         Please select an answer
@@ -195,7 +195,7 @@
                             aria-label="Skill Other Text Box" placeholder="Other Skill / Experience" />
                     </b-form-group>
                     <b-form-invalid-feedback :state="valid_skill">
-                        Please select a technology you are familiar in
+                        Please select a skill you are familiar with
                     </b-form-invalid-feedback>
                 </b-form-row>
 
@@ -222,7 +222,7 @@
                             aria-label="Language Other Text Box" placeholder="Other Language / Technology" />
                     </b-form-group>
                     <b-form-invalid-feedback :state="valid_languages">
-                        Please select a technology you are familiar in
+                        Please select a language/technology you are familiar with
                     </b-form-invalid-feedback>
                 </b-form-row>
 
@@ -236,7 +236,7 @@
                     <b-form-textarea id="input-question1" v-model="form.question1" name="question1" autocomplete="off"
                         placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question1" />
                     <b-form-invalid-feedback :state="valid_question1">
-                        Please tell us your experience in mentoring.
+                        Please summarize your previous mentoring experience
                     </b-form-invalid-feedback>
                 </b-form-group>
 
@@ -264,7 +264,7 @@
                         <b-form-textarea id="input-question2" v-model="form.question2" name="question2" autocomplete="off"
                             placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question2" />
                         <b-form-invalid-feedback :state="valid_question2">
-                            Please tell us your expereince in mentoring.
+                            Please describe your previous experience in your chosen track(s)
                         </b-form-invalid-feedback>
                     </b-form-group>
                 </b-form-row>
@@ -274,17 +274,6 @@
                 <h4 class="mb-2">
                     Rules and privacy policies
                 </h4>
-
-                <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form"
-                    name="checkbox-0" :state="valid_minors_form" class="checkbox">
-                    I have filled out the
-                    <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe"
-                        target="_blank">minors forms</a> and emailed them to
-                    <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
-                    <b-form-invalid-feedback :state="valid_minors_form">
-                        Please fill out the minors forms
-                    </b-form-invalid-feedback>
-                </b-form-checkbox>
 
                 <b-form-checkbox id="checkbox-1" v-model="form.MLH_privacy" name="checkbox-1" class="checkbox"
                     :state="valid_mlh_privacy">
@@ -402,31 +391,15 @@ export default {
                 last_name: "",
                 skill: "",
                 major: "",
-                recruit: "",
-                portfolio: "",
                 company: "",
                 school_year: "",
                 school: "",
                 school_other: "",
-                resume: "",
-                resume_link: "",
-                resume_id: "",
-                age: "",
-                minors_form: false,
-                address: "",
-                address1: "",
-                address2: "",
-                city: "",
-                state: "",
                 tshirt_size: "",
                 question1: "",
                 question2: "",
                 mentor_tracks: "",
                 dietary_restrictions: "",
-                gmaps_place_id: "",
-                referred_by: "",
-                track_selected: "general",
-                waitlist_track_selected: "",
                 languages: "",
             },
 
@@ -438,22 +411,14 @@ export default {
             valid_company: null,
             valid_email: null,
             valid_phone: null,
-            valid_resume: null,
             valid_school_year: null,
             valid_school: null,
             valid_school_other: null,
             valid_skill: null,
             valid_major: null,
-            valid_recruit: null,
-            valid_portfolio: null,
-            valid_age: null,
-            valid_minors_form: null,
             valid_code_of_conduct: null,
             valid_mlh_privacy: null,
-            valid_track_selected: null,
             valid_school_or_company: null,
-            valid_waitlist_track_selected: null,
-            valid_address: null,
             valid_tshirt_size: null,
             valid_question1: null,
             valid_question2: null,
@@ -973,14 +938,6 @@ export default {
                 valid_form = false;
             } else {
                 this.valid_tshirt_size = null;
-            }
-
-            console.log("minor: " + (this.form.age.length > 0 && this.form.age < 18 && !this.form.minors_form))
-            if (this.form.age.length > 0 && this.form.age < 18 && !this.form.minors_form) {
-                this.valid_minors_form = false;
-                valid_form = false;
-            } else {
-                this.valid_minors_form = null;
             }
 
             console.log("q1: " + (this.form.question1.length === 0))

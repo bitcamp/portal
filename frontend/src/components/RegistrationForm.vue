@@ -53,7 +53,6 @@
           <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
             forms</a> and email them to
           <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
-          >>>>>>> parent of eaf20d4 (completed functionality of mentor form)
         </p>
 
         <!-- Email and Phone Number-->
@@ -456,7 +455,6 @@
           <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
             forms</a> and emailed them to
           <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
-          >>>>>>> parent of eaf20d4 (completed functionality of mentor form)
           <b-form-invalid-feedback :state="valid_minors_form">
             Please fill out the minors forms
           </b-form-invalid-feedback>
