@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Register from '../views/Register.vue';
 import RegistrationClosed from '../components/RegistrationClosed.vue'
 import RegisterMentor from "../views/RegisterMentors.vue";
+import RegisterVolunteer from "../views/volunteerPage.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -28,7 +29,12 @@ const routes = [
   {
     path: '/:referral',
     component: Register,
-  },
+  },{
+    path: '/volunteers',
+    name: 'VolunteerRegistration',
+    component: RegisterVolunteer,
+    props: (route) => ({ default_track: route.query.t })
+  }
 ];
 
 const router = new VueRouter({
