@@ -228,6 +228,51 @@
         <h4>Choose a track!</h4>
         <TrackSelection :default="'general'" @picked="updateTrack" @waitlisted="updateWaitlistTrack" />
 
+        <hr />
+        <h4>Travel and Transportation</h4>
+        <b-form-group label="Would you need travel assistance to the hackathon?*" label-for="transport-bool">
+          <b-form-radio-group id="transport-bool" v-model="form.transport" :state="valid_transport">
+            <b-form-radio v-bind:value="true">Yes</b-form-radio>
+            <b-form-radio v-bind:value="false">No</b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_transport">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group label="What is your preferred method of transportation assistance?*" label-for="transport-options"
+          v-show="Boolean(form.transport)">
+          <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1" id="transport-options"
+            :state="valid_transport_options">
+            <b-form-checkbox v-for="option in transportation_options" :key="option.value"
+              v-model="form.transportation_select" :value="option.value" :aria-describedby="ariaDescribedby"
+              :state="valid_transport_options" name="flavour-3a">
+              {{ option.text }}
+            </b-form-checkbox>
+            <b-form-invalid-feedback :state="valid_transport_options">
+              Please select an option
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <b-form-group
+            label="Would you be willing to pay a small, refundable deposit to secure your seat on any method of travel assistance?*"
+            label-for="transport-deposit">
+            <p class="note">
+              If you are in attendance, we will refund your deposit
+            </p>
+            <b-form-radio-group id="transport-deposit" v-model="form.transport_deposit" :state="valid_transport_deposit">
+              <b-form-radio v-bind:value="true">Yes</b-form-radio>
+              <b-form-radio v-bind:value="false">No</b-form-radio>
+            </b-form-radio-group>
+            <b-form-invalid-feedback :state="valid_transport_deposit">
+              Please select an answer
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <b-form-input v-if="heard_from_other" v-model="heard_from_other_text" class="col-12 col-md-12"
+            aria-label="Heard From Other Text Box" placeholder="Other source" />
+        </b-form-group>
+
         <!-- Shipping Address -->
         <hr />
         <h4>Want to give us a shipping address?</h4>
@@ -576,6 +621,9 @@ export default {
         resume_id: "",
         age: "",
         minors_form: false,
+        transport: undefined,
+        transportation_select: [],
+        transportation_deposit: undefined,
         address: "",
         address1: "",
         address2: "",
@@ -720,6 +768,21 @@ export default {
       ],
 
       university_options: [...university_list],
+
+      transportation_options: [
+        {
+          value: "bus", text: 'Bus'
+        },
+        {
+          value: "train", text: 'Train'
+        },
+        {
+          value: "metro", text: 'Metro'
+        },
+        {
+          value: "uber", text: 'Uber'
+        },
+      ],
 
       country_options: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
 
@@ -1103,6 +1166,20 @@ export default {
 
       if (this.form.citizen === undefined) {
         this.form.citizen = null;
+      }
+
+      if (this.form.transport === undefined) {
+        this.valid_transport = false;
+        valid_form = false;
+      } else if (this.form.transport) {
+        if (this.form.transportation_select.length === 0) {
+          this.valid_transport_options = false;
+          valid_form = false;
+        }
+        if (this.form.transport_deposit === undefined) {
+          this.valid_transport_deposit = false;
+          valid_form = false;
+        }
       }
 
       if (this.form.school_year.length === 0) {
