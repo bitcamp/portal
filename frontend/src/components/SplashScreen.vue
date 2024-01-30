@@ -1,7 +1,7 @@
 <template>
-  <b-container class="screen-container">
+  <b-container class="screen-container mt-3 mt-lg-4 mt-xxl-5" >
     <b-row>
-      <b-col md = "4" class="md-4">
+      <b-col md = "4" class="mb-4">
     <CardButton
       RoleTitle="Hackers"
     RoleDescription="As a hacker, you'll be at the forefront of problem-solving 
@@ -10,7 +10,7 @@
       RoleURL="/hackers"
     />
       </b-col>
-      <b-col md = "4" class="md-4">
+      <b-col md = "4" class="mb-4">
     <CardButton
       RoleTitle="Volunteers"
     RoleDescription="As a Volunteer, your support ensures the smooth execution
@@ -19,7 +19,7 @@
       RoleURL="/volunteer"
     />
   </b-col>
-  <b-col md = "4" class="md-4">
+  <b-col md = "4" class="mb-4">
     <CardButton
       RoleTitle="Mentors"
     RoleDescription="As a Mentor, leverage your expertise to guide and inspire 
@@ -54,15 +54,17 @@ export default {
   align-items: stretch;
 }
 
-.md-4 {
-  padding: 2% 0;
+.role-card {
+  cursor: pointer;
+  flex-direction: column;
+  margin: 10px;
+  padding-top: 1rem;
+  height: 100%;
+  transition: transform 0.3s ease; 
 }
 
-.role-card {
-  margin: 10px;
-  cursor: pointer;
-  height: 100%;
-  flex-direction: column;
-  padding-top: 2rem;
+.role-card:hover {
+  transform: scale(1.05); /* Increase the scale on hover */
 }
+
 </style>
