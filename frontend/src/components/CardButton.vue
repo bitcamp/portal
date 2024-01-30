@@ -34,8 +34,5 @@ export default {
 </script>
 
 <style scoped>
-.role-card{
-  cursor: pointer;
-}
 
 </style>
