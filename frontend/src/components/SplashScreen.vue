@@ -1,9 +1,9 @@
 <template>
-  <b-container class="screen-container mt-3 mt-lg-4 mt-xxl-5" >
+  <b-container class="screen-container " >
     <b-row>
       <b-col md = "4" class="mb-4">
     <CardButton
-      RoleTitle="Hackers"
+      RoleTitle="HACKER"
     RoleDescription="As a hacker, you'll be at the forefront of problem-solving 
     and innovation. Dive into challenging projects, showcase your coding skills, 
       and be part of a community dedicated to pushing the boundaries of technology."
@@ -12,20 +12,21 @@
       </b-col>
       <b-col md = "4" class="mb-4">
     <CardButton
-      RoleTitle="Volunteers"
-    RoleDescription="As a Volunteer, your support ensures the smooth execution
-    of our hackathon. From logistics to participant assistance, your
-    contribution will help create a positive environment for everyone!"
-      RoleURL="/volunteer"
+      RoleTitle="MENTOR"
+      RoleDescription="As a Mentor, leverage your expertise to guide and inspire 
+    the next generation of tech enthusiasts. Become a key figure in shaping the 
+    experience for participants as they navigate through the hackathon challenges."
+
+      RoleURL="/mentor"
     />
   </b-col>
   <b-col md = "4" class="mb-4">
     <CardButton
-      RoleTitle="Mentors"
-    RoleDescription="As a Mentor, leverage your expertise to guide and inspire 
-    the next generation of tech enthusiasts. Become a key figure in shaping the 
-    experience for participants as they navigate through the hackathon challenges."
-      RoleURL="/mentor"
+      RoleTitle="VOLUNTEER"
+      RoleDescription="As a Volunteer, your support ensures the smooth execution
+    of our hackathon. From logistics to participant assistance, your
+    contribution will help create a positive environment for everyone!"
+      RoleURL="/volunteer"
     />
   </b-col>
     </b-row>
@@ -50,21 +51,25 @@ export default {
   height: 100vh; 
 }
 
-.align-items-stretch {
-  align-items: stretch;
-}
-
 .role-card {
+  display: flex;
   cursor: pointer;
   flex-direction: column;
-  margin: 10px;
-  padding-top: 1rem;
+  margin: 20px 0;
+  padding-top: 1.5rem;
   height: 100%;
   transition: transform 0.3s ease; 
 }
 
 .role-card:hover {
   transform: scale(1.05); /* Increase the scale on hover */
+}
+
+@media (max-width: 768px) {
+  .screen-container {
+    display: grid;
+  }
+
 }
 
 </style>

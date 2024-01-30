@@ -9,7 +9,7 @@
     </b-avatar> -->
 
     <!-- Role Title -->
-    <h3 class="role-title">{{ RoleTitle }}</h3>
+    <h2 class="role-title">{{ RoleTitle }}</h2>
 
     <!-- Role Description -->
     <b-card-text class="role-description">{{ RoleDescription }}</b-card-text>
@@ -34,6 +34,10 @@ export default {
 </script>
 
 <style scoped>
+
+.role-title {
+  font-size: calc(0.8rem + 1vw);
+}
 .role-description {
   text-align: left;
 }
