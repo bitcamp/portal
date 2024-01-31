@@ -5,7 +5,7 @@ service: portal-backend
 provider:
   name: aws
   region: us-east-1
-  runtime: nodejs12.x
+  runtime: nodejs18.x
   stage: ${opt:stage, 'dev'}
   deploymentBucket:
     name: bitcamp-portal-backend-${self:provider.stage}-layers-deploymentbucket
