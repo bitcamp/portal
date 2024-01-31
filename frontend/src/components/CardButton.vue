@@ -27,7 +27,7 @@ export default {
   methods: {
     redirectToRole() {
       // Use router to navigate to the specified role path
-      this.$router.push({ path: this.RoleURL });
+      this.$router.push({ path: this.roleURL });
     },
   },
 };
