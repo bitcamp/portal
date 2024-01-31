@@ -150,7 +150,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     body: JSON.stringify(params.Item),
     headers: HEADERS,
   };
-});
+}); 
 
 // makeAddon generates a random string of `length`
 const makeAddon = (length) => {

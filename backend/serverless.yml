@@ -13,6 +13,7 @@ provider:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
     RESUMES_TABLE: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
+    VOLUNTEER_TABLE: ${file(./config/${self:provider.stage}.json):VOLUNTEER_TABLE}
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
     SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME: ${file(./config/${self:provider.stage}.json):SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME}
@@ -22,12 +23,12 @@ provider:
       statements:
         - Effect: "Allow"
           Action:
-          - dynamodb:Query
-          - dynamodb:Scan
-          - dynamodb:GetItem
-          - dynamodb:PutItem
-          - dynamodb:UpdateItem
-          - dynamodb:DeleteItem
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
           Resource: "arn:aws:dynamodb:us-east-1:*"
         - Effect: "Allow"
           Action:
@@ -52,7 +53,7 @@ functions:
     handler: handler.register
     description: Adds a new registration to the database
     events:
-      - http: 
+      - http:
           path: register
           method: post
           cors: true
@@ -63,7 +64,7 @@ functions:
     handler: handler.track
     description: Keeps track of various user actions
     events:
-      - http: 
+      - http:
           path: track
           method: post
           cors: true
@@ -92,7 +93,6 @@ functions:
           path: upload_text_resume
           method: post
           cors: true
-  
 
 resources: # define DynamoDB tables within serverless
   Resources:
@@ -109,15 +109,15 @@ resources: # define DynamoDB tables within serverless
         KeySchema:
           - AttributeName: random_id
             KeyType: HASH
-        GlobalSecondaryIndexes:  # we want to be able to link tracking with referral id
-        - IndexName: referralsIndex
-          KeySchema:
-          - AttributeName: referral_id
-            KeyType: HASH
-          Projection:
-            NonKeyAttributes:
-            - name
-            ProjectionType: INCLUDE
+        GlobalSecondaryIndexes: # we want to be able to link tracking with referral id
+          - IndexName: referralsIndex
+            KeySchema:
+              - AttributeName: referral_id
+                KeyType: HASH
+            Projection:
+              NonKeyAttributes:
+                - name
+              ProjectionType: INCLUDE
       DeletionPolicy: Retain
     resumesTable:
       Type: AWS::DynamoDB::Table
@@ -148,15 +148,15 @@ resources: # define DynamoDB tables within serverless
         KeySchema:
           - AttributeName: email
             KeyType: HASH
-        GlobalSecondaryIndexes:  # we want to be able to get users by referral_id
-        - IndexName: referralsIndex
-          KeySchema:
-          - AttributeName: referral_id
-            KeyType: HASH
-          Projection:
-            NonKeyAttributes:
-            - name
-            ProjectionType: INCLUDE
+        GlobalSecondaryIndexes: # we want to be able to get users by referral_id
+          - IndexName: referralsIndex
+            KeySchema:
+              - AttributeName: referral_id
+                KeyType: HASH
+            Projection:
+              NonKeyAttributes:
+                - name
+              ProjectionType: INCLUDE
       DeletionPolicy: Retain
     statisticsTable:
       Type: AWS::DynamoDB::Table
@@ -172,8 +172,7 @@ resources: # define DynamoDB tables within serverless
       DeletionPolicy: Retain
 
 package:
-  exclude:
-    node_modules/**
+  exclude: node_modules/**
 
 plugins:
   - serverless-sentry
