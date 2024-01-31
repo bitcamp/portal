@@ -241,9 +241,12 @@
                 </b-form-group>
 
                 <b-form-row>
-                    <b-form-group id="input-mentor-tracks"
-                        label="Are you interested in mentoring in any of the following tracks?"
-                        label-for="input-mentor-tracks" class="col-12 col-md-10">
+                    <b-form-group id="input-mentor-tracks" label-for="input-mentor-tracks" class="col-12 col-md-10">
+                        <p style="font-size: 0.9rem; opacity: 100%; margin-bottom: 0rem;">
+                            Are you interested in mentoring in any of the following tracks? For more information about each
+                            track, click
+                            <a href="bit.camp/#tracks">here</a>.
+                        </p>
                         <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
                             <b-form-checkbox v-for="option in mentor_tracks_options" :key="option.value"
                                 v-model="mentor_tracks_select" :value="option.value" :aria-describedby="ariaDescribedby"
@@ -490,7 +493,7 @@ export default {
                 { value: "c++", text: "C++" },
                 { value: "opencv", text: "OpenCV" },
                 { value: "google-cloud", text: "Google Cloud" },
-                { value: "flutter", text: "C++" },
+                { value: "flutter", text: "Flutter" },
                 { value: "amazon-web-services", text: "Amazon Web Services" },
             ],
 
