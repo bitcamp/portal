@@ -7,7 +7,7 @@
           role-description="As a hacker, you'll be at the forefront of problem-solving 
           and innovation. Dive into challenging projects, showcase your coding skills, 
           and be part of a community dedicated to pushing the boundaries of technology."
-          role-u-r-l="/hackers"
+          role-u-r-l="/hacker"
         />
       </b-col>
       <b-col md="4" class="mb-4">
@@ -66,15 +66,13 @@ export default {
   /* Increase the scale on hover */
 }
 
-@media (max-width: 769px) {
+@media (max-width: 768px) {
   .screen-container {
     display: grid;
+    height: 100%;
+    padding: 150px 50px;
   }
 
-  .screen-container {
-    height: 100%;
-    padding: 150px 100px;
-  }
 }
 
 </style>
