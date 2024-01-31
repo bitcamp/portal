@@ -48,6 +48,7 @@ export default {
   justify-content: center;
   display: flex;
   height: 100vh;
+  padding: 0 50px;
 }
 
 .role-card {
@@ -65,9 +66,15 @@ export default {
   /* Increase the scale on hover */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
   .screen-container {
     display: grid;
   }
+
+  .screen-container {
+    height: 100%;
+    padding: 150px 100px;
+  }
 }
+
 </style>
