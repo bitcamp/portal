@@ -82,7 +82,7 @@
         </label>
       </b-col>
 
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch">
         <label>
           <div class="color h-100 w-100">
             <input
