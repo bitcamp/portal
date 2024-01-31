@@ -21,12 +21,12 @@ const routes = [
     props: (route) => ({ referralID: route.query.r })  
   },
   {
-    path: '/mentors',
+    path: '/mentor',
     name: 'MentorRegister',
     component: RegisterMentor,
     props: (route) => ({ default_track: route.query.t })
   },{
-    path: '/volunteers',
+    path: '/volunteer',
     name: 'VolunteerRegister',
     component: RegisterVolunteer,
     props: (route) => ({ default_track: route.query.t })

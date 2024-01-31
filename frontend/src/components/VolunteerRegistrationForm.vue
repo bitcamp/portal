@@ -64,38 +64,68 @@
                     </b-form-group>
                 </b-form-row>
 
-                 <!-- School Type -->
-                <b-form-row>
-                <b-form-group id="input-group-school" label="School name*" label-for="input-school" class="col-md-12">
-                    <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
-                    input-name="school" placeholder="University of Maryland at College Park" :data="university_options"
-                    noResultsInfo="No results found." :disabled="school_other_selected" :state="valid_school" />
-                    <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
-                    Please enter your school name
-                    </b-form-invalid-feedback>
-                    <b-form-invalid-feedback v-else :state="valid_school">
-                    Please select a school from the list
-                    </b-form-invalid-feedback>
-                </b-form-group>
-                </b-form-row>
+                <h4>Background</h4>
 
-                <b-form-row>
-                <div class="col-md-12">
-                    <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
-                    My school is not listed above
-                    </b-form-checkbox>
-                </div>
-                <b-form-group class="col-md-12">
-                    <b-form-input v-if="school_other_selected" v-model="form.school_other" class="col-12 col-md-12"
-                    aria-label="School Other Text Box" placeholder="Other school" :state="valid_school_other" />
-                    <b-form-invalid-feedback :state="valid_school_other">
-                    Please enter your school name
+                <b-form-group label="Will you be attending as a student, or do you bring professional experience?*"
+                    id="input-group-school-or-company" label-for="input-school-or-company">
+                    <b-form-radio-group id="input-school-or-company" v-model="form.selected_school_or_company"
+                        :state="valid_school_or_company">
+                        <b-form-radio value="yes">Student</b-form-radio>
+                        <b-form-radio value="no"> Professional </b-form-radio>
+                    </b-form-radio-group>
+                    <b-form-invalid-feedback :state="valid_school_or_company">
+                        Please select an answer
                     </b-form-invalid-feedback>
                 </b-form-group>
+
+                <!-- School Type -->
+                <b-form-row v-if="form.selected_school_or_company === 'yes'">
+                    <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
+                        <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
+                            input-name="school" placeholder="University of Maryland at College Park"
+                            :data="university_options" no-results-info="No results found." :disabled="school_other_selected"
+                            :state="valid_school" />
+                        <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
+                            Please enter your school name
+                        </b-form-invalid-feedback>
+                        <b-form-invalid-feedback v-else :state="valid_school">
+                            Please select a school from the list
+                        </b-form-invalid-feedback>
+                    </b-form-group>
                 </b-form-row>
 
+                <b-form-row v-if="form.selected_school_or_company === 'yes'">
+                    <div class="col-md-12">
+                        <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
+                            My school is not listed above
+                        </b-form-checkbox>
+                    </div>
+                    <b-form-group class="col-md-12">
+                        <b-form-input v-if="school_other_selected" v-model="form.school_other" class="col-12 col-md-12"
+                            aria-label="School Other Text Box" placeholder="Other school" :state="valid_school_other" />
+                        <b-form-invalid-feedback :state="valid_school_other">
+                            Please enter your school name
+                        </b-form-invalid-feedback>
+                    </b-form-group>
+                </b-form-row>
 
-                
+                <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
+                    class="col-md-6" style="padding: 0rem;" v-if="form.selected_school_or_company === 'yes'">
+                    <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
+                        class="form-select" :options="school_year_options" :state="valid_school_year" />
+                    <b-form-invalid-feedback :state="valid_school_year">
+                        Please select a year
+                    </b-form-invalid-feedback>
+                </b-form-group>
+
+                <!-- Job -->
+                <b-form-group id="input-group-company" label="Company*" label-for="input-company" class="col-6 col-md-12"
+                    style="padding: 0rem;" v-if="form.selected_school_or_company === 'no'">
+                    <b-form-input id="input-company" v-model="form.company" name="compnay" :state="valid_company" />
+                    <b-form-invalid-feedback :state="valid_company">
+                        Please enter your company name
+                    </b-form-invalid-feedback>
+                </b-form-group>
 
                 <!-- T-Shirt Size -->
                 <h4 class="mb-2">
@@ -143,7 +173,7 @@
                     </b-form-group>
                 </b-form-group>
 
-                
+
                 <!-- MLH Stuff -->
                 <h4 class="mb-2">
                     Rules and privacy policies
@@ -753,7 +783,49 @@ export default {
             } else {
                 this.valid_skill = null;
             }
-            console.log("\nvalid form" + valid_form)
+
+            if (!this.form.selected_school_or_company) {
+                this.valid_school_or_company = false;
+                valid_form = false;
+            } else {
+                this.valid_school_or_company = null;
+            }
+
+            if (this.form.school_year.length === 0 && this.form.selected_school_or_company == "yes") {
+                this.valid_school_year = false;
+                valid_form = false;
+            } else {
+                this.valid_school_year = null;
+            }
+
+            if (this.school_other_selected && this.form.selected_school_or_company == "yes") {
+                this.school_class = "typeahead";
+                this.valid_school = null;
+                if (this.form.school_other.length === 0) {
+                    this.valid_school_other = false;
+                    valid_form = false;
+                } else {
+                    this.valid_school_other = null;
+                }
+            } else if (this.form.selected_school_or_company == "yes") {
+                if (!university_list.includes(this.form.school) && this.form.selected_school_or_company == "yes") {
+                    this.valid_school = false;
+                    this.school_class = "typeahead is-invalid";
+                    valid_form = false;
+                } else {
+                    this.school_class = "typeahead";
+                    this.valid_school = null;
+                }
+                this.valid_school_other = null;
+            }
+
+            if (this.form.company.length === 0 && this.form.selected_school_or_company == "no") {
+                this.valid_company = false;
+                valid_form = false;
+            } else {
+                this.valid_company = null;
+                this.form.company = this.form.company.trim();
+            }
 
             console.log("language: " + (this.createLanguagesString().length === 0))
             if (this.createLanguagesString().length === 0) {
@@ -761,13 +833,6 @@ export default {
                 valid_form = false;
             } else {
                 this.valid_languages = null;
-            }
-
-            if (!this.form.selected_school_or_company) {
-                this.valid_school_or_company = false;
-                valid_form = false;
-            } else {
-                this.valid_school_or_company = null;
             }
 
             if (this.form.school_year.length === 0 && this.form.selected_school_or_company == "yes") {
