@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Register from '../views/Register.vue';
 import RegistrationClosed from '../components/RegistrationClosed.vue'
 import RegisterMentor from "../views/RegisterMentors.vue";
+import RegisterVolunteer from "../views/RegisterVolunteers.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
     path: '/mentors',
     name: 'MentorRegister',
     component: RegisterMentor,
+    props: (route) => ({ default_track: route.query.t })
+  },{
+    path: '/volunteers',
+    name: 'VolunteerRegister',
+    component: RegisterVolunteer,
     props: (route) => ({ default_track: route.query.t })
   },
   {
