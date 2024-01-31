@@ -245,7 +245,7 @@
                         <p style="font-size: 0.9rem; opacity: 100%; margin-bottom: 0rem;">
                             Are you interested in mentoring in any of the following tracks? For more information about each
                             track, click
-                            <a href="bit.camp/#tracks">here</a>.
+                            <a href="https://bit.camp/#tracks">here</a>.
                         </p>
                         <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
                             <b-form-checkbox v-for="option in mentor_tracks_options" :key="option.value"
