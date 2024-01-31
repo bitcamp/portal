@@ -1,18 +1,18 @@
 <template>
-  <b-card
-    class="role-card"
-    @click="redirectToRole"
-  >
-
-  <!-- Placeholder for Logo (e.g filled in circle?) -->
+  <b-card class="role-card" @click="redirectToRole">
+    <!-- Placeholder for Logo (e.g filled in circle?) -->
     <!-- <b-avatar
     </b-avatar> -->
 
     <!-- Role Title -->
-    <h2 class="role-title">{{ RoleTitle }}</h2>
+    <h2 class="role-title">
+      {{ roleTitle }}
+    </h2>
 
     <!-- Role Description -->
-    <b-card-text class="role-description">{{ RoleDescription }}</b-card-text>
+    <b-card-text class="role-description">
+      {{ roleDescription }}
+    </b-card-text>
   </b-card>
 </template>
 
@@ -20,9 +20,9 @@
 export default {
   name: "CardButton",
   props: {
-    RoleTitle: String,
-    RoleDescription: String,
-    RoleURL: String, // The route path to redirect when the card is clicked
+    roleTitle: String,
+    roleDescription: String,
+    roleURL: String, // The route path to redirect when the card is clicked
   },
   methods: {
     redirectToRole() {
@@ -34,12 +34,10 @@ export default {
 </script>
 
 <style scoped>
-
 .role-title {
   font-size: calc(0.8rem + 1vw);
 }
 .role-description {
   text-align: left;
 }
-
 </style>
