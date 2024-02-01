@@ -329,15 +329,15 @@ export default {
             valid_volunteer_tracks: null,
             valid_diet: null,
             valid_languages: null,
-
+            
             school_class: "typeahead",
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
                 { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
+                { value: "undergrad 3+ year sophomore", text: "Undergraduate University (3+ year) - Sophomore" },
+                { value: "undergrad 3+ year junior", text: "Undergraduate University (3+ year) - Junior" },
+                { value: "undergrad 3+ year senior", text: "Undergraduate University (3+ year) - Senior" },
                 { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
                 { value: "bootcamp", text: "Code School / Bootcamp" },
                 { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
