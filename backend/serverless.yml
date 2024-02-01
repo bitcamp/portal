@@ -60,6 +60,17 @@ functions:
     memorySize: 256
     timeout: 15
     provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
+  register_volunteer:
+    handler: handler.registerVolunteer
+    description: Adds a new volunteer registration to the database
+    events:
+      - http:
+          path: registerVolunteer
+          method: post
+          cors: true
+    memorySize: 256
+    timeout: 15
+    provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
   track:
     handler: handler.track
     description: Keeps track of various user actions
