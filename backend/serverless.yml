@@ -65,7 +65,7 @@ functions:
     description: Adds a new volunteer registration to the database
     events:
       - http:
-          path: registerVolunteer
+          path: register-volunteer
           method: post
           cors: true
     memorySize: 256
