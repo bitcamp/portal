@@ -5,7 +5,7 @@
         <b-col md="10">
             <br>
             <h1 style="text-align: left">
-                Register for Bitcamp 2024 - Mentor
+                Register for Bitcamp 2024 - Volunteer
             </h1>
 
             <p style="font-size: 0.9rem; opacity: 95%">
@@ -173,106 +173,7 @@
                     </b-form-group>
                 </b-form-group>
 
-                <!-- Skills and Experience -->
-                <b-form-row>
-                    <h4 class="col-md-12">
-                        Skills and Experience
-                    </h4>
-                    <b-form-group id="input-group-skills"
-                        label="Hackers at Bitcamp may encounter a variety of problems. What skills are you willing to assist with/teach to others? Select all that apply. Add any skills that are not listed below in 'Other'.*"
-                        label-for="input-group-skills" class="col-md-12">
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                            <b-form-checkbox v-for="option in skill_options" :key="option.value" v-model="skill_select"
-                                :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_skill"
-                                :disabled="skill_prefer_no_answer">
-                                {{ option.text }}
-                            </b-form-checkbox>
-                            <b-form-checkbox v-model="skill_other" :state="valid_skill" :disabled="skill_prefer_no_answer">
-                                Other (Please Specify)
-                            </b-form-checkbox>
-                        </b-form-group>
-                        <b-form-input v-if="skill_other" v-model="skill_other_text" class="col-12 col-md-5"
-                            aria-label="Skill Other Text Box" placeholder="Other Skill / Experience" />
-                    </b-form-group>
-                    <b-form-invalid-feedback :state="valid_skill">
-                        Please select a skill you are familiar with
-                    </b-form-invalid-feedback>
-                </b-form-row>
 
-                <!-- Languages and Technologies -->
-                <b-form-row>
-                    <h4 class="col-md-12">
-                        Languages and Technologies
-                    </h4>
-                    <b-form-group id="input-group-languages"
-                        label="What programming languages/technologies are you willing to teach to others? Select all that apply. Add any languages/technologies that are not listed below in 'Other'.*"
-                        label-for="input-group-languages" class="col-md-12">
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                            <b-form-checkbox v-for="option in languages_options" :key="option.value"
-                                v-model="languages_select" :value="option.value" :aria-describedby="ariaDescribedby"
-                                :state="valid_languages" :disabled="languages_prefer_no_answer">
-                                {{ option.text }}
-                            </b-form-checkbox>
-                            <b-form-checkbox v-model="languages_other" :state="valid_languages"
-                                :disabled="languages_prefer_no_answer">
-                                Other (Please Specify)
-                            </b-form-checkbox>
-                        </b-form-group>
-                        <b-form-input v-if="languages_other" v-model="languages_other_text" class="col-12 col-md-5"
-                            aria-label="Language Other Text Box" placeholder="Other Language / Technology" />
-                    </b-form-group>
-                    <b-form-invalid-feedback :state="valid_languages">
-                        Please select a language/technology you are familiar with
-                    </b-form-invalid-feedback>
-                </b-form-row>
-
-                <!-- Short Questions -->
-                <h4 class="mb-2">
-                    Mentorship Experience
-                </h4>
-
-                <b-form-group id="input-group-question1" label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
-                    to start.*" label-for="input-question1" class="col-md-12" style="padding: 0rem;">
-                    <b-form-textarea id="input-question1" v-model="form.question1" name="question1" autocomplete="off"
-                        placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question1" />
-                    <b-form-invalid-feedback :state="valid_question1">
-                        Please summarize your previous mentoring experience
-                    </b-form-invalid-feedback>
-                </b-form-group>
-
-                <b-form-row>
-                    <b-form-group id="input-mentor-tracks" label-for="input-mentor-tracks" class="col-12 col-md-10">
-                        <p style="font-size: 0.9rem; opacity: 100%; margin-bottom: 0rem;">
-                            Are you interested in mentoring in any of the following tracks? For more information about each
-                            track, click
-                            <a href="https://bit.camp/#tracks">here</a>.
-                        </p>
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                            <b-form-checkbox v-for="option in mentor_tracks_options" :key="option.value"
-                                v-model="mentor_tracks_select" :value="option.value" :aria-describedby="ariaDescribedby"
-                                name="flavour-3a">
-                                {{ option.text }}
-                            </b-form-checkbox>
-                        </b-form-group>
-
-                        <b-form-input v-if="mentor_tracks_other" v-model="mentor_tracks_other_text" class="col-12 col-md-12"
-                            aria-label="Mentor Tracks Other Text Box" placeholder="Other source" />
-                    </b-form-group>
-                </b-form-row>
-
-                <b-form-row>
-                    <b-form-group id="input-group-question2"
-                        label="Please describe any previous experience you may have in your chosen track(s). We're looking for mentors that have completed coursework, built projects, worked professionally, or otherwise have knowledge in their chosen track(s)! *"
-                        label-for="input-question2" class="col-md-12">
-                        <b-form-textarea id="input-question2" v-model="form.question2" name="question2" autocomplete="off"
-                            placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question2" />
-                        <b-form-invalid-feedback :state="valid_question2">
-                            Please describe your previous experience in your chosen track(s)
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-row>
-
-                <hr>
                 <!-- MLH Stuff -->
                 <h4 class="mb-2">
                     Rules and privacy policies
@@ -401,7 +302,7 @@ export default {
                 tshirt_size: "",
                 question1: "",
                 question2: "",
-                mentor_tracks: "",
+                volunteer_tracks: "",
                 dietary_restrictions: "",
                 languages: "",
             },
@@ -425,10 +326,10 @@ export default {
             valid_tshirt_size: null,
             valid_question1: null,
             valid_question2: null,
-            valid_mentor_tracks: null,
+            valid_volunteer_tracks: null,
             valid_diet: null,
             valid_languages: null,
-
+            
             school_class: "typeahead",
 
             school_year_options: [
@@ -492,7 +393,7 @@ export default {
                 { value: "c++", text: "C++" },
                 { value: "opencv", text: "OpenCV" },
                 { value: "google-cloud", text: "Google Cloud" },
-                { value: "flutter", text: "Flutter" },
+                { value: "flutter", text: "C++" },
                 { value: "amazon-web-services", text: "Amazon Web Services" },
             ],
 
@@ -527,10 +428,10 @@ export default {
 
             university_options: [...university_list],
 
-            mentor_tracks_select: [],
-            mentor_tracks_other: false,
-            mentor_tracks_other_text: "",
-            mentor_tracks_options: [
+            volunteer_tracks_select: [],
+            volunteer_tracks_other: false,
+            volunteer_tracks_other_text: "",
+            volunteer_tracks_options: [
                 { value: "app_dev", text: "App Dev" },
                 { value: "cybersecurity", text: "Cybersecurity" },
                 { value: "quantum", text: "Quantum Techonology" },
@@ -725,17 +626,17 @@ export default {
 
             return languages_string;
         },
-        createMentorTracksString() {
-            let mentor_tracks_string = this.mentor_tracks_select.join(",");
+        createVolunteerTracksString() {
+            let volunteer_tracks_string = this.volunteer_tracks_select.join(",");
 
-            if (this.mentor_tracks_other && this.mentor_tracks_other_text != "") {
-                if (mentor_tracks_string != "") {
-                    mentor_tracks_string += ","
+            if (this.volunteer_tracks_other && this.volunteer_tracks_other_text != "") {
+                if (volunteer_tracks_string != "") {
+                    volunteer_tracks_string += ","
                 }
-                mentor_tracks_string = mentor_tracks_string + "other(" + this.mentor_tracks_other_text + ")";
+                volunteer_tracks_string = volunteer_tracks_string + "other(" + this.volunteer_tracks_other_text + ")";
             }
 
-            return mentor_tracks_string;
+            return volunter_tracks_string;
         },
         uncheckDietaryRestrictions() {
             this.diet_select = [];
@@ -770,15 +671,15 @@ export default {
                     });
                 }
 
-                // Track "mentor tracks" statistics
-                for (let mentorTracks of this.mentor_tracks_select) {
+                // Track "volunteer tracks" statistics
+                for (let volunteerTracks of this.volunteer_tracks_select) {
                     this.track({
                         random_id: this.random_id,
-                        key: `hf-${mentorTracks}`,
+                        key: `hf-${volunteerTracks}`,
                         value: 1,
                     });
                 }
-                if (this.mentor_tracks_other) {
+                if (this.volunteer_tracks_other) {
                     this.track({
                         random_id: this.random_id,
                         key: 'hf-other',
@@ -806,7 +707,7 @@ export default {
                 this.form.dietary_restrictions = this.createDietaryRestrictionString();
                 this.form.skill = this.createSkillString();
                 this.form.languages = this.createLanguagesString();
-                this.form.mentor_tracks = this.createMentorTracksString();
+                this.form.volunteer_tracks = this.createVolunteerTracksString();
 
                 const resp = await this.performPostRequest(
                     this.getEnvVariable("BACKEND_ENDPOINT"),
@@ -881,7 +782,49 @@ export default {
             } else {
                 this.valid_skill = null;
             }
-            console.log("\nvalid form" + valid_form)
+
+            if (!this.form.selected_school_or_company) {
+                this.valid_school_or_company = false;
+                valid_form = false;
+            } else {
+                this.valid_school_or_company = null;
+            }
+
+            if (this.form.school_year.length === 0 && this.form.selected_school_or_company == "yes") {
+                this.valid_school_year = false;
+                valid_form = false;
+            } else {
+                this.valid_school_year = null;
+            }
+
+            if (this.school_other_selected && this.form.selected_school_or_company == "yes") {
+                this.school_class = "typeahead";
+                this.valid_school = null;
+                if (this.form.school_other.length === 0) {
+                    this.valid_school_other = false;
+                    valid_form = false;
+                } else {
+                    this.valid_school_other = null;
+                }
+            } else if (this.form.selected_school_or_company == "yes") {
+                if (!university_list.includes(this.form.school) && this.form.selected_school_or_company == "yes") {
+                    this.valid_school = false;
+                    this.school_class = "typeahead is-invalid";
+                    valid_form = false;
+                } else {
+                    this.school_class = "typeahead";
+                    this.valid_school = null;
+                }
+                this.valid_school_other = null;
+            }
+
+            if (this.form.company.length === 0 && this.form.selected_school_or_company == "no") {
+                this.valid_company = false;
+                valid_form = false;
+            } else {
+                this.valid_company = null;
+                this.form.company = this.form.company.trim();
+            }
 
             console.log("language: " + (this.createLanguagesString().length === 0))
             if (this.createLanguagesString().length === 0) {
@@ -889,13 +832,6 @@ export default {
                 valid_form = false;
             } else {
                 this.valid_languages = null;
-            }
-
-            if (!this.form.selected_school_or_company) {
-                this.valid_school_or_company = false;
-                valid_form = false;
-            } else {
-                this.valid_school_or_company = null;
             }
 
             if (this.form.school_year.length === 0 && this.form.selected_school_or_company == "yes") {
