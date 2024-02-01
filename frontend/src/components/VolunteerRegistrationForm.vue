@@ -334,16 +334,15 @@ export default {
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
-                { value: "less than high school", text: "Less than Secondary / High School" },
-                { value: "high school", text: "Secondary / High School" },
                 { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
                 { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
                 { value: "bootcamp", text: "Code School / Bootcamp" },
                 { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
                 { value: "postdoc", text: "Post Doctorate" },
                 { value: "other", text: "Other" },
-                { value: "not a student", text: "I’m not currently a student" },
                 { value: "prefer not to answer", text: "Prefer not to answer" },
             ],
 
