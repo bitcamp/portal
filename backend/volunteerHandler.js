@@ -23,7 +23,7 @@ module.exports.registerVolunteer = withSentry(withSentryOptions, async (event) =
   const ddb = new AWS.DynamoDB.DocumentClient();
 
   // Checks if any field is missing
-  if (!body.email || !body.name || !body.phone || !body.school_year) {
+  if (!body.email || !body.name || !body.phone) {
     return {
       statusCode: 500,
       body: "/register-volunteer is missing a field",
@@ -71,7 +71,7 @@ module.exports.registerVolunteer = withSentry(withSentryOptions, async (event) =
   };
     
   await Promise.all([
-    logStatistic(ddb, "volunteerRegistrations", 1),
+    // logStatistic(ddb, "volunteerRegistrations", 1),
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
@@ -92,13 +92,13 @@ const sendConfirmationEmail = async (user) => {
 
   // As of right now, Bitcamp does not use a referral link
   // const referralLink = "https://register.gotechnica.org/" + referralID;
-  const reregisterLink = "https://register.bit.camp?redo=" + user.email;
+  const reregisterLink = "https://register.bit.camp/volunteer?redo=" + user.email;
 
   // Capitalize track
-  const track = user.track
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  // const track = user.track
+  //   .split('_')
+  //   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  //   .join(' ');
 
   // Keep this the same as in RegistrationForm.vue
   const school_year_options = [
@@ -127,7 +127,7 @@ const sendConfirmationEmail = async (user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
     Template: "DetailedVolunteerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
+    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${10}\",\"phone\":\"${user.phone}\",\"tshirt_size\":\"${tShirtSize}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
