@@ -26,7 +26,7 @@ module.exports.registerVolunteer = withSentry(withSentryOptions, async (event) =
   if (!body.email || !body.name || !body.phone || !body.school_year) {
     return {
       statusCode: 500,
-      body: "/registerVolunteer is missing a field",
+      body: "/register-volunteer is missing a field",
     };
   }
 
