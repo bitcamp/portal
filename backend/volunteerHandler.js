@@ -35,7 +35,7 @@ module.exports.registerVolunteer = withSentry(withSentryOptions, async (event) =
     Key: {email: body.email.toLowerCase()}
   }).promise()
 
-
+  
   var params = {
     TableName: process.env.VOLUNTEER_TABLE,
     Item: {
@@ -48,18 +48,12 @@ module.exports.registerVolunteer = withSentry(withSentryOptions, async (event) =
       name: body.name,
       first_name: body.first_name,
       last_name: body.last_name,
-      skill: body.skill,
-      major: body.major,
       company: body.company,
       school_year: body.school_year,
       school: body.school,
       school_other: body.school_other,
       tshirt_size: body.tshirt_size,
-      question1: body.question1,
-      question2: body.question2,
-      mentor_tracks: body.mentor_tracks,
       dietary_restrictions: body.dietary_restrictions,
-      languages: body.languages
     },
   };
 
