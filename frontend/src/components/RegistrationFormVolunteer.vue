@@ -448,7 +448,7 @@ export default {
 
                 const resp = await this.performPostRequest(
                     this.getEnvVariable("BACKEND_ENDPOINT"),
-                    "register",
+                    "register-volunteer",
                     this.form
                 );
 
