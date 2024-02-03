@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import RegistrationFormVolunteer from "../components/VolunteerRegistrationForm.vue";
+import RegistrationFormVolunteer from "../components/RegistrationFormVolunteer.vue";
 // import RegistrationClosed from "../components/RegistrationClosed.vue"
 export default {
     name: "RegisterView",
