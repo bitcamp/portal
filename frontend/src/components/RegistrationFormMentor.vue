@@ -231,11 +231,11 @@
                     Mentorship Experience
                 </h4>
 
-                <b-form-group id="input-group-question1" label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
-                    to start.*" label-for="input-question1" class="col-md-12" style="padding: 0rem;">
-                    <b-form-textarea id="input-question1" v-model="form.question1" name="question1" autocomplete="off"
-                        placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question1" />
-                    <b-form-invalid-feedback :state="valid_question1">
+                <b-form-group id="input-group-prev_mentor_experience" label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
+                    to start.*" label-for="input-prev_mentor_experience" class="col-md-12" style="padding: 0rem;">
+                    <b-form-textarea id="input-prev_mentor_experience" v-model="form.prev_mentor_experience" name="prev_mentor_experience" autocomplete="off"
+                        placeholder="Your response here..." rows="3" max-rows="3" :state="valid_prev_mentor_experience" />
+                    <b-form-invalid-feedback :state="valid_prev_mentor_experience">
                         Please summarize your previous mentoring experience
                     </b-form-invalid-feedback>
                 </b-form-group>
@@ -261,12 +261,12 @@
                 </b-form-row>
 
                 <b-form-row>
-                    <b-form-group id="input-group-question2"
+                    <b-form-group id="input-group-prev_track_experience"
                         label="Please describe any previous experience you may have in your chosen track(s). We're looking for mentors that have completed coursework, built projects, worked professionally, or otherwise have knowledge in their chosen track(s)! *"
-                        label-for="input-question2" class="col-md-12">
-                        <b-form-textarea id="input-question2" v-model="form.question2" name="question2" autocomplete="off"
-                            placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question2" />
-                        <b-form-invalid-feedback :state="valid_question2">
+                        label-for="input-prev_track_experience" class="col-md-12">
+                        <b-form-textarea id="input-prev_track_experience" v-model="form.prev_track_experience" name="prev_track_experience" autocomplete="off"
+                            placeholder="Your response here..." rows="3" max-rows="3" :state="valid_prev_track_experience" />
+                        <b-form-invalid-feedback :state="valid_prev_track_experience">
                             Please describe your previous experience in your chosen track(s)
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -399,8 +399,8 @@ export default {
                 school: "",
                 school_other: "",
                 tshirt_size: "",
-                question1: "",
-                question2: "",
+                prev_mentor_experience: "",
+                prev_track_experience: "",
                 mentor_tracks: "",
                 dietary_restrictions: "",
                 languages: "",
@@ -423,8 +423,8 @@ export default {
             valid_mlh_privacy: null,
             valid_school_or_company: null,
             valid_tshirt_size: null,
-            valid_question1: null,
-            valid_question2: null,
+            valid_prev_mentor_experience: null,
+            valid_prev_track_experience: null,
             valid_mentor_tracks: null,
             valid_diet: null,
             valid_languages: null,
@@ -434,9 +434,9 @@ export default {
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
                 { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year sophomore", text: "Undergraduate University (3+ year) - Sophomore" },
-                { value: "undergrad 3+ year junior", text: "Undergraduate University (3+ year) - Junior" },
-                { value: "undergrad 3+ year senior", text: "Undergraduate University (3+ year) - Senior" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
                 { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
                 { value: "bootcamp", text: "Code School / Bootcamp" },
                 { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
@@ -507,24 +507,6 @@ export default {
                 { value: "2xl", text: "2XL" },
             ],
 
-            major_options: [
-                { value: "", text: "Select one...", disabled: true },
-                { value: "no major", text: "No Major" },
-                ...major_map,
-                { value: "other", text: "Other" },
-            ],
-
-            recruit_options: [
-                { value: "", text: "Select one...", disabled: true },
-                { value: "yes fte", text: "Yes, for an internship" },
-                { value: "yes intern", text: "Yes, for a full-time position" },
-                {
-                    value: "yes both",
-                    text: "Yes, for an internship or full-time position",
-                },
-                { value: "no", text: "No" },
-            ],
-
             university_options: [...university_list],
 
             mentor_tracks_select: [],
@@ -553,105 +535,7 @@ export default {
         };
     },
 
-    mounted() {
-        // log registration in google analytics
-        this.$gtag.event("open-registration", { method: "Google" });
-        this.track({
-            random_id: this.random_id,
-            key: "open-registration",
-            value: true,
-        });
-        // this.sendAnalyticsEvent("registration_page_visit");
-        document.addEventListener("DOMContentLoaded", () => {
-            const input = document.getElementById("input-5");
-            const autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ["address"],
-            });
-
-            google.maps.event.addListener(autocomplete, "place_changed", () => {
-                const place = autocomplete.getPlace();
-
-                //updates v-model value
-                this.form.gmaps_place_id = place.place_id;
-                this.form.address = place.formatted_address;
-                this.fillInAddress(place);
-            });
-
-            google.maps.event.addDomListener(input, "keydown", function (event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    this.form.gmaps_place_id = place.place_id;
-                }
-            });
-
-            document
-                .getElementsByClassName("typeahead")[0]
-                .setAttribute("autocomplete", "off");
-
-            // document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
-        });
-    },
-
     methods: {
-        updateTrack(value) {
-            this.form.track_selected = value;
-        },
-        updateWaitlistTrack(value) {
-            this.form.waitlist_track_selected = value;
-        },
-        fillInAddress(place) {
-            let address1 = "";
-            let postcode = "";
-
-            // Get each component of the address from the place details,
-            // and then fill-in the corresponding field on the form.
-            // place.address_components are google.maps.GeocoderAddressComponent objects
-            // which are documented at http://goo.gle/3l5i5Mr
-            for (const component of place.address_components) {
-                const componentType = component.types[0];
-
-                switch (componentType) {
-                    case "street_number": {
-                        address1 = `${component.long_name} ${address1}`;
-                        break;
-                    }
-
-                    case "route": {
-                        address1 += component.short_name;
-                        break;
-                    }
-
-                    case "postal_code": {
-                        postcode = `${component.long_name}${postcode}`;
-                        break;
-                    }
-
-                    case "postal_code_suffix": {
-                        postcode = `${postcode}-${component.long_name}`;
-                        break;
-                    }
-                    case "locality":
-                        this.form.city = document.getElementById("input-city").value =
-                            component.long_name;
-                        break;
-
-                    case "administrative_area_level_1": {
-                        this.form.state = document.getElementById("input-state").value =
-                            component.short_name;
-                        break;
-                    }
-                    case "country":
-                        this.form.country = document.getElementById("input-country").value =
-                            component.short_name;
-                        break;
-                }
-            }
-            this.form.address1 = document.getElementById("input-5").value = address1;
-            // After filling the form with address components from the Autocomplete
-            // prediction, set cursor focus on the second address line to encourage
-            // entry of subpremise information such as apartment, unit, or floor number.
-            document.getElementById("input-address-line2").focus();
-        },
         emailFilledOut() {
             this.track({
                 random_id: this.random_id,
@@ -810,19 +694,19 @@ export default {
 
                 const resp = await this.performPostRequest(
                     this.getEnvVariable("BACKEND_ENDPOINT"),
-                    "register",
+                    "register-mentor",
                     this.form
                 );
 
                 this.isSending = false; // done submitting
 
-                if (resp && resp.referral_id) {
-                    this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
-                    this.track({
-                        random_id: this.random_id,
-                        key: "referral_id",
-                        value: resp.referral_id,
-                    });
+                if (resp) {
+                    this.$router.push({ path: "thanks?type=mentor", query: { r: resp.referral_id } });
+                    // this.track({
+                    //     random_id: this.random_id,
+                    //     key: "referral_id",
+                    //     value: resp.referral_id,
+                    // });
                 } else {
                     this.showErrorToast();
                 }
@@ -942,20 +826,20 @@ export default {
                 this.valid_tshirt_size = null;
             }
 
-            console.log("q1: " + (this.form.question1.length === 0))
-            if (this.form.question1.length === 0) {
-                this.valid_question1 = false;
+            console.log("q1: " + (this.form.prev_mentor_experience.length === 0))
+            if (this.form.prev_mentor_experience.length === 0) {
+                this.valid_prev_mentor_experience = false;
                 valid_form = false;
             } else {
-                this.valid_question1 = null;
+                this.valid_prev_mentor_experience = null;
             }
 
-            console.log("q2: " + (this.form.question1.length === 0))
-            if (this.form.question2.length === 0) {
-                this.valid_question2 = false;
+            console.log("q2: " + (this.form.prev_mentor_experience.length === 0))
+            if (this.form.prev_track_experience.length === 0) {
+                this.valid_prev_track_experience = false;
                 valid_form = false;
             } else {
-                this.valid_question2 = null;
+                this.valid_prev_track_experience = null;
             }
 
             console.log("diet: " + (this.createDietaryRestrictionString().length === 0))
@@ -992,137 +876,6 @@ export default {
                 this.form.school = "";
                 this.form.school_other = "";
             }
-        },
-        async upload(file) {
-            if (this.form.first_name.length == 0 || this.form.last_name.length == 0) {
-                this.showErrorToastCustom(
-                    "Oops! Put in your name first so our marshies make sure your file is in the right place!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            this.valid_resume = null;
-
-            if (
-                this.form.resume.name.slice(-3) != "pdf" &&
-                this.form.resume.name.slice(-3) != "doc" &&
-                this.form.resume.name.slice(-4) != "docx" &&
-                this.form.resume.name.slice(-3) != "txt"
-            ) {
-                this.showErrorToastCustom(
-                    "Oops! Make sure your resume is in pdf, doc, docx, or txt format!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            let cleanname;
-            if (this.form.resume.name.slice(-4) == "docx") {
-                cleanname =
-                    this.form.first_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "_" + this.form.last_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "." +
-                    this.form.resume.name.slice(-4);
-            } else {
-                cleanname =
-                    this.form.first_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "_" + this.form.last_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "." +
-                    this.form.resume.name.slice(-3);
-            }
-
-            const userParams = {
-                id: this.random_id,
-                filename: cleanname,
-                filetype: this.form.resume.name.slice(-3),
-            };
-
-            const r = await this.performPostRequest(
-                this.getEnvVariable("BACKEND_ENDPOINT"),
-                "upload_resume",
-                userParams
-            );
-
-            if (!(r && r.putUrl)) {
-                this.showErrorToastCustom(
-                    "Oops! We couldn't upload your resume, try again later!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            const cleanFile = new File([file], cleanname, {
-                type: file.type,
-                lastModified: file.lastModified,
-            });
-
-            const r2 = await this.performRawPostRequest(r.putUrl, cleanFile);
-            this.form.resume_link = r.uploadUrl;
-            this.form.resume_id = this.random_id;
-
-            if (!(r2 && r2.status == 200)) {
-                this.showErrorToastCustom(
-                    "Oops! We couldn't upload your resume, try again later!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            // below is for resume parsing
-            let text = "";
-            const pdfVersion = "2.10.377";
-            // eslint-disable-next-line no-import-assign
-            PDFJS.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
-
-            const loadingTask = PDFJS.getDocument(this.form.resume_link);
-            await loadingTask.promise.then((doc) => {
-                const { numPages } = doc;
-
-                let lastPromise;
-                lastPromise = doc.getMetadata();
-
-                const loadPage = async (pageNum) => {
-                    const page = await doc.getPage(pageNum);
-
-                    return page.getTextContent().then((content) => {
-                        // we only want the page text (strings)
-                        const strings = content.items.map((item) => item.str);
-                        text += strings.join(" ");
-                    });
-                };
-
-                for (let i = 1; i <= numPages; i += 1) {
-                    lastPromise = lastPromise.then(loadPage.bind(null, i));
-                }
-                return lastPromise;
-            });
-
-            const resumeParams = {
-                user_id: this.random_id,
-                resume_text: text,
-            };
-            await this.performPostRequest(
-                this.getEnvVariable("BACKEND_ENDPOINT"),
-                "upload_text_resume",
-                resumeParams
-            );
         },
     },
 };

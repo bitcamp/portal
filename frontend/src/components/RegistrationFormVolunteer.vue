@@ -20,7 +20,7 @@
                     email you provide.
                 </p>
 
-                <!-- Name and Age -->
+                <!-- Name -->
                 <b-form-row>
                     <!-- First Name -->
                     <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
@@ -236,11 +236,8 @@ import {
     IconsPlugin,
 } from "bootstrap-vue";
 import VueBootstrapAutocomplete from '@vue-bootstrap-components/vue-bootstrap-autocomplete';
-import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
 import "pdfjs-dist/build/pdf.worker.entry";
-import * as majors_list from "../assets/college-majors.json";
 import * as univ_list from '../assets/university-list.json';
-import * as country_codes from "../assets/country-codes.json";
 import * as EmailValidator from "email-validator";
 import parsePhoneNumber from "libphonenumber-js";
 
@@ -251,29 +248,6 @@ Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueBootstrapAutocomplete", VueBootstrapAutocomplete);
 
 const university_list = univ_list.default
-
-const country_list = country_codes.default.map((country) => country["name"]);
-
-const major_map = majors_list["rows"].map((major) => {
-    return {
-        value: major[2].toLowerCase(),
-        text: major[2]
-            .toLowerCase()
-            .split(" ")
-            .map((word) =>
-                word === "and" ? word : word.charAt(0).toUpperCase() + word.slice(1)
-            )
-            .join(" "),
-    };
-});
-
-major_map.sort((major1, major2) => {
-    return major1["value"] < major2["value"]
-        ? -1
-        : major1["value"] > major2["value"]
-            ? 1
-            : 0;
-});
 
 const DEFAULT_COUNTRY_PHONE = "US";
 
@@ -293,18 +267,12 @@ export default {
                 name: "",
                 first_name: "",
                 last_name: "",
-                skill: "",
-                major: "",
                 company: "",
                 school_year: "",
                 school: "",
                 school_other: "",
                 tshirt_size: "",
-                question1: "",
-                question2: "",
-                volunteer_tracks: "",
                 dietary_restrictions: "",
-                languages: "",
             },
 
             isSending: false,
@@ -318,26 +286,19 @@ export default {
             valid_school_year: null,
             valid_school: null,
             valid_school_other: null,
-            valid_skill: null,
-            valid_major: null,
             valid_code_of_conduct: null,
             valid_mlh_privacy: null,
             valid_school_or_company: null,
             valid_tshirt_size: null,
-            valid_question1: null,
-            valid_question2: null,
-            valid_volunteer_tracks: null,
             valid_diet: null,
-            valid_languages: null,
-            
             school_class: "typeahead",
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
                 { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year sophomore", text: "Undergraduate University (3+ year) - Sophomore" },
-                { value: "undergrad 3+ year junior", text: "Undergraduate University (3+ year) - Junior" },
-                { value: "undergrad 3+ year senior", text: "Undergraduate University (3+ year) - Senior" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
+                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
                 { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
                 { value: "bootcamp", text: "Code School / Bootcamp" },
                 { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
@@ -348,55 +309,6 @@ export default {
 
             school_other_selected: false,
 
-            skill_select: [],
-            skill_other: false,
-            skill_other_text: "",
-            skill_prefer_no_answer: false,
-            skill_options: [
-                { value: "web-development", text: "Web Development" },
-                { value: "mobile-application-development", text: "Mobile Application Development" },
-                { value: "game-development", text: "Game Development" },
-                { value: "machine-learning", text: "Machine Learning" },
-                { value: "quantum-computing", text: "Quantum Computing" },
-                { value: "cybersecurity", text: "Cybersecurity" },
-                { value: "user-interface-design", text: "User Interface Design" },
-                { value: "hardware", text: "Hardware" },
-            ],
-
-            languages_select: [],
-            languages_other: false,
-            languages_other_text: "",
-            languages_prefer_no_answer: false,
-            languages_options: [
-                { value: "javascript", text: "JavaScript" },
-                { value: "typescript", text: "Typescript" },
-                { value: "html", text: "HTML" },
-                { value: "css", text: "CSS" },
-                { value: "bootstrap", text: "Bootstrap" },
-                { value: "react", text: "React" },
-                { value: "react-native", text: "React Native" },
-                { value: "angular", text: "Angular" },
-                { value: "express", text: "Express" },
-                { value: "node", text: "Node" },
-                { value: "python", text: "Python" },
-                { value: "java", text: "Java" },
-                { value: "sql", text: "SQL" },
-                { value: "nosql", text: "NoSQL" },
-                { value: "c#", text: "C#" },
-                { value: "rust", text: "Rust" },
-                { value: "servo", text: "Servo" },
-                { value: "perl", text: "Perl" },
-                { value: "go", text: "Go" },
-                { value: "flask", text: "Flask" },
-                { value: "git", text: "Git/Github" },
-                { value: "arduino", text: "Arduino" },
-                { value: "c++", text: "C++" },
-                { value: "opencv", text: "OpenCV" },
-                { value: "google-cloud", text: "Google Cloud" },
-                { value: "flutter", text: "C++" },
-                { value: "amazon-web-services", text: "Amazon Web Services" },
-            ],
-
             tshirt_size_options: [
                 { value: "", text: "Select one...", disabled: true },
                 //{ value: "no tshirt", text: "I don't want a T-shirt" },
@@ -406,13 +318,6 @@ export default {
                 { value: "l", text: "L" },
                 { value: "xl", text: "XL" },
                 { value: "2xl", text: "2XL" },
-            ],
-
-            major_options: [
-                { value: "", text: "Select one...", disabled: true },
-                { value: "no major", text: "No Major" },
-                ...major_map,
-                { value: "other", text: "Other" },
             ],
 
             recruit_options: [
@@ -427,16 +332,6 @@ export default {
             ],
 
             university_options: [...university_list],
-
-            volunteer_tracks_select: [],
-            volunteer_tracks_other: false,
-            volunteer_tracks_other_text: "",
-            volunteer_tracks_options: [
-                { value: "app_dev", text: "App Dev" },
-                { value: "cybersecurity", text: "Cybersecurity" },
-                { value: "quantum", text: "Quantum Techonology" },
-                { value: "machine_learning", text: "Machine Learning" },
-            ],
 
             diet_select: [],
             diet_other: false,
@@ -454,105 +349,7 @@ export default {
         };
     },
 
-    mounted() {
-        // log registration in google analytics
-        this.$gtag.event("open-registration", { method: "Google" });
-        this.track({
-            random_id: this.random_id,
-            key: "open-registration",
-            value: true,
-        });
-        // this.sendAnalyticsEvent("registration_page_visit");
-        document.addEventListener("DOMContentLoaded", () => {
-            const input = document.getElementById("input-5");
-            const autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ["address"],
-            });
-
-            google.maps.event.addListener(autocomplete, "place_changed", () => {
-                const place = autocomplete.getPlace();
-
-                //updates v-model value
-                this.form.gmaps_place_id = place.place_id;
-                this.form.address = place.formatted_address;
-                this.fillInAddress(place);
-            });
-
-            google.maps.event.addDomListener(input, "keydown", function (event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    this.form.gmaps_place_id = place.place_id;
-                }
-            });
-
-            document
-                .getElementsByClassName("typeahead")[0]
-                .setAttribute("autocomplete", "off");
-
-            // document.getElementsByClassName("pac-container")[0].setAttribute("data-tap-disabled", "true");
-        });
-    },
-
     methods: {
-        updateTrack(value) {
-            this.form.track_selected = value;
-        },
-        updateWaitlistTrack(value) {
-            this.form.waitlist_track_selected = value;
-        },
-        fillInAddress(place) {
-            let address1 = "";
-            let postcode = "";
-
-            // Get each component of the address from the place details,
-            // and then fill-in the corresponding field on the form.
-            // place.address_components are google.maps.GeocoderAddressComponent objects
-            // which are documented at http://goo.gle/3l5i5Mr
-            for (const component of place.address_components) {
-                const componentType = component.types[0];
-
-                switch (componentType) {
-                    case "street_number": {
-                        address1 = `${component.long_name} ${address1}`;
-                        break;
-                    }
-
-                    case "route": {
-                        address1 += component.short_name;
-                        break;
-                    }
-
-                    case "postal_code": {
-                        postcode = `${component.long_name}${postcode}`;
-                        break;
-                    }
-
-                    case "postal_code_suffix": {
-                        postcode = `${postcode}-${component.long_name}`;
-                        break;
-                    }
-                    case "locality":
-                        this.form.city = document.getElementById("input-city").value =
-                            component.long_name;
-                        break;
-
-                    case "administrative_area_level_1": {
-                        this.form.state = document.getElementById("input-state").value =
-                            component.short_name;
-                        break;
-                    }
-                    case "country":
-                        this.form.country = document.getElementById("input-country").value =
-                            component.short_name;
-                        break;
-                }
-            }
-            this.form.address1 = document.getElementById("input-5").value = address1;
-            // After filling the form with address components from the Autocomplete
-            // prediction, set cursor focus on the second address line to encourage
-            // entry of subpremise information such as apartment, unit, or floor number.
-            document.getElementById("input-address-line2").focus();
-        },
         emailFilledOut() {
             this.track({
                 random_id: this.random_id,
@@ -596,48 +393,7 @@ export default {
 
             return diet_string;
         },
-        createSkillString() {
-            let skill_string = this.skill_select.join(",");
-
-            if (this.skill_prefer_no_answer) {
-                return "prefer-not-to-answer";
-            }
-            if (this.skill_other && this.skill_other_text != "") {
-                if (skill_string != "") {
-                    skill_string += ","
-                }
-                skill_string = skill_string + "other(" + this.skill_other_text + ")";
-            }
-
-            return skill_string;
-        },
-        createLanguagesString() {
-            let languages_string = this.languages_select.join(",");
-
-            if (this.languages_prefer_no_answer) {
-                return "prefer-not-to-answer";
-            }
-            if (this.languages_other && this.languages_other_text != "") {
-                if (languages_string != "") {
-                    languages_string += ","
-                }
-                languages_string = languages_string + "other(" + this.languages_other_text + ")";
-            }
-
-            return languages_string;
-        },
-        createVolunteerTracksString() {
-            let volunteer_tracks_string = this.volunteer_tracks_select.join(",");
-
-            if (this.volunteer_tracks_other && this.volunteer_tracks_other_text != "") {
-                if (volunteer_tracks_string != "") {
-                    volunteer_tracks_string += ","
-                }
-                volunteer_tracks_string = volunteer_tracks_string + "other(" + this.volunteer_tracks_other_text + ")";
-            }
-
-            return volunter_tracks_string;
-        },
+        
         uncheckDietaryRestrictions() {
             this.diet_select = [];
             this.diet_other = false;
@@ -671,22 +427,6 @@ export default {
                     });
                 }
 
-                // Track "volunteer tracks" statistics
-                for (let volunteerTracks of this.volunteer_tracks_select) {
-                    this.track({
-                        random_id: this.random_id,
-                        key: `hf-${volunteerTracks}`,
-                        value: 1,
-                    });
-                }
-                if (this.volunteer_tracks_other) {
-                    this.track({
-                        random_id: this.random_id,
-                        key: 'hf-other',
-                        value: 1,
-                    });
-                }
-
                 this.$gtag.event("submit-registration", { method: "Google" });
                 this.$gtag.time({
                     name: "completion-time",
@@ -705,29 +445,30 @@ export default {
                     d.getFullYear().toString().split("").reverse().join("");
 
                 this.form.dietary_restrictions = this.createDietaryRestrictionString();
-                this.form.skill = this.createSkillString();
-                this.form.languages = this.createLanguagesString();
-                this.form.volunteer_tracks = this.createVolunteerTracksString();
-
+                
                 const resp = await this.performPostRequest(
                     this.getEnvVariable("BACKEND_ENDPOINT"),
-                    "register",
+                    "register-volunteer",
                     this.form
                 );
 
                 this.isSending = false; // done submitting
 
-                if (resp && resp.referral_id) {
-                    this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
-                    this.track({
-                        random_id: this.random_id,
-                        key: "referral_id",
-                        value: resp.referral_id,
-                    });
+                // console.log(resp);
+
+                if (resp) {
+                    this.$router.push({ path: "thanks?type=volunteer", query: { r: resp.referral_id } });
+                    // this.track({
+                    //     random_id: this.random_id,
+                    //     key: "referral_id",
+                    //     value: resp.referral_id,
+                    // });
                 } else {
+                    // console.log('Error 1');
                     this.showErrorToast();
                 }
             } else {
+                // console.log('Error 2');
                 this.showErrorToast();
             }
         },
@@ -775,14 +516,6 @@ export default {
                 this.valid_phone = null;
             }
 
-            console.log("skill: " + (this.createSkillString().length === 0))
-            if (this.createSkillString().length === 0) {
-                this.valid_skill = false;
-                valid_form = false;
-            } else {
-                this.valid_skill = null;
-            }
-
             if (!this.form.selected_school_or_company) {
                 this.valid_school_or_company = false;
                 valid_form = false;
@@ -824,14 +557,6 @@ export default {
             } else {
                 this.valid_company = null;
                 this.form.company = this.form.company.trim();
-            }
-
-            console.log("language: " + (this.createLanguagesString().length === 0))
-            if (this.createLanguagesString().length === 0) {
-                this.valid_languages = false;
-                valid_form = false;
-            } else {
-                this.valid_languages = null;
             }
 
             if (this.form.school_year.length === 0 && this.form.selected_school_or_company == "yes") {
@@ -878,22 +603,6 @@ export default {
                 this.valid_tshirt_size = null;
             }
 
-            console.log("q1: " + (this.form.question1.length === 0))
-            if (this.form.question1.length === 0) {
-                this.valid_question1 = false;
-                valid_form = false;
-            } else {
-                this.valid_question1 = null;
-            }
-
-            console.log("q2: " + (this.form.question1.length === 0))
-            if (this.form.question2.length === 0) {
-                this.valid_question2 = false;
-                valid_form = false;
-            } else {
-                this.valid_question2 = null;
-            }
-
             console.log("diet: " + (this.createDietaryRestrictionString().length === 0))
             if (this.createDietaryRestrictionString().length === 0) {
                 this.valid_diet = false;
@@ -928,137 +637,6 @@ export default {
                 this.form.school = "";
                 this.form.school_other = "";
             }
-        },
-        async upload(file) {
-            if (this.form.first_name.length == 0 || this.form.last_name.length == 0) {
-                this.showErrorToastCustom(
-                    "Oops! Put in your name first so our marshies make sure your file is in the right place!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            this.valid_resume = null;
-
-            if (
-                this.form.resume.name.slice(-3) != "pdf" &&
-                this.form.resume.name.slice(-3) != "doc" &&
-                this.form.resume.name.slice(-4) != "docx" &&
-                this.form.resume.name.slice(-3) != "txt"
-            ) {
-                this.showErrorToastCustom(
-                    "Oops! Make sure your resume is in pdf, doc, docx, or txt format!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            let cleanname;
-            if (this.form.resume.name.slice(-4) == "docx") {
-                cleanname =
-                    this.form.first_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "_" + this.form.last_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "." +
-                    this.form.resume.name.slice(-4);
-            } else {
-                cleanname =
-                    this.form.first_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "_" + this.form.last_name
-                        .replace(/[^a-z0-9_-]/gi, "_")
-                        .toLowerCase()
-                        .replace(/_{2,}/g, "_")
-                        .substring(0, 48) +
-                    "." +
-                    this.form.resume.name.slice(-3);
-            }
-
-            const userParams = {
-                id: this.random_id,
-                filename: cleanname,
-                filetype: this.form.resume.name.slice(-3),
-            };
-
-            const r = await this.performPostRequest(
-                this.getEnvVariable("BACKEND_ENDPOINT"),
-                "upload_resume",
-                userParams
-            );
-
-            if (!(r && r.putUrl)) {
-                this.showErrorToastCustom(
-                    "Oops! We couldn't upload your resume, try again later!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            const cleanFile = new File([file], cleanname, {
-                type: file.type,
-                lastModified: file.lastModified,
-            });
-
-            const r2 = await this.performRawPostRequest(r.putUrl, cleanFile);
-            this.form.resume_link = r.uploadUrl;
-            this.form.resume_id = this.random_id;
-
-            if (!(r2 && r2.status == 200)) {
-                this.showErrorToastCustom(
-                    "Oops! We couldn't upload your resume, try again later!"
-                );
-                this.valid_resume = false;
-                return;
-            }
-
-            // below is for resume parsing
-            let text = "";
-            const pdfVersion = "2.10.377";
-            // eslint-disable-next-line no-import-assign
-            PDFJS.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
-
-            const loadingTask = PDFJS.getDocument(this.form.resume_link);
-            await loadingTask.promise.then((doc) => {
-                const { numPages } = doc;
-
-                let lastPromise;
-                lastPromise = doc.getMetadata();
-
-                const loadPage = async (pageNum) => {
-                    const page = await doc.getPage(pageNum);
-
-                    return page.getTextContent().then((content) => {
-                        // we only want the page text (strings)
-                        const strings = content.items.map((item) => item.str);
-                        text += strings.join(" ");
-                    });
-                };
-
-                for (let i = 1; i <= numPages; i += 1) {
-                    lastPromise = lastPromise.then(loadPage.bind(null, i));
-                }
-                return lastPromise;
-            });
-
-            const resumeParams = {
-                user_id: this.random_id,
-                resume_text: text,
-            };
-            await this.performPostRequest(
-                this.getEnvVariable("BACKEND_ENDPOINT"),
-                "upload_text_resume",
-                resumeParams
-            );
         },
     },
 };

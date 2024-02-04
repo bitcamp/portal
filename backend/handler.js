@@ -150,7 +150,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     body: JSON.stringify(params.Item),
     headers: HEADERS,
   };
-});
+}); 
 
 // makeAddon generates a random string of `length`
 const makeAddon = (length) => {
@@ -203,7 +203,7 @@ const sendConfirmationEmail = async (user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
+    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
@@ -346,6 +346,7 @@ module.exports.track = withSentry(async (event) => {
     headers: HEADERS,
   };
 });
+
 
 const logStatistic = (ddb, stat) => {
   return ddb
