@@ -291,7 +291,6 @@ export default {
             valid_school_or_company: null,
             valid_tshirt_size: null,
             valid_diet: null,
-
             school_class: "typeahead",
 
             school_year_options: [
@@ -394,6 +393,7 @@ export default {
 
             return diet_string;
         },
+        
         uncheckDietaryRestrictions() {
             this.diet_select = [];
             this.diet_other = false;
@@ -445,7 +445,7 @@ export default {
                     d.getFullYear().toString().split("").reverse().join("");
 
                 this.form.dietary_restrictions = this.createDietaryRestrictionString();
-
+                
                 const resp = await this.performPostRequest(
                     this.getEnvVariable("BACKEND_ENDPOINT"),
                     "register-volunteer",
