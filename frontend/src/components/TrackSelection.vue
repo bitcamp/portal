@@ -71,18 +71,14 @@
             <b-card class="h-100 w-100 general" :class="{ active: card === 'app_dev' }">
               <h4>App Dev</h4>
               <p>
-                Ever wondered how to turn your innovative app idea into a reality? Ready to turn
-                your concepts into cutting-edge applications? One of our new tracks - we'll
-                introduce you to different aspects of development including the software development
-                life cycle, development tools such as Flutter, and full-stack development through
-                access to exclusive workshops and mentors as you work on your hack!
+                Ever wondered how to turn your innovative app idea into a reality? Ready to turn your concepts into cutting-edge applications? Join the App Dev track - we'll introduce you to different aspects of development including the software development life cycle, development tools such as Flutter, and full-stack development through access to exclusive workshops and mentors as you work on your hack!
               </p>
             </b-card>
           </div>
         </label>
       </b-col>
 
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch">
         <label>
           <div class="color h-100 w-100">
             <input

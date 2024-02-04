@@ -20,63 +20,28 @@
         <!-- Name and Age -->
         <b-form-row>
           <!-- First Name -->
-          <b-form-group
-            id="input-group-first-name"
-            label="First Name*"
-            label-for="input-first-name"
-            class="col-12 col-md-5"
-          >
-            <b-form-input
-              id="input-first-name"
-              v-model="form.first_name"
-              name="firstname"
-              autocomplete="firstname"
-              placeholder="Sophie"
-              :state="valid_first_name"
-            />
+          <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
+            class="col-12 col-md-5">
+            <b-form-input id="input-first-name" v-model="form.first_name" name="firstname" autocomplete="firstname"
+              placeholder="Sophie" :state="valid_first_name" />
             <b-form-invalid-feedback :state="valid_first_name">
               Please enter your first name
             </b-form-invalid-feedback>
           </b-form-group>
 
           <!-- Last Name -->
-          <b-form-group
-            id="input-group-last-name"
-            label="Last Name*"
-            label-for="input-last-name"
-            class="col-7 col-md-5"
-          >
-            <b-form-input
-              id="input-last-name"
-              v-model="form.last_name"
-              name="lastname"
-              autocomplete="lastname"
-              placeholder="Wilson"
-              :state="valid_last_name"
-            />
+          <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name" class="col-7 col-md-5">
+            <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
+              placeholder="Wilson" :state="valid_last_name" />
             <b-form-invalid-feedback :state="valid_last_name">
               Please enter your last name
             </b-form-invalid-feedback>
           </b-form-group>
 
           <!-- Date of Birth -->
-          <b-form-group
-            id="input-group-age"
-            label="Age*"
-            label-for="input-age"
-            class="col-5 col-md-2"
-          >
-            <b-form-input
-              id="input-age"
-              v-model="form.age"
-              name="age"
-              autocomplete="age"
-              type="number"
-              min="0"
-              max="120"
-              placeholder="19"
-              :state="valid_age"
-            />
+          <b-form-group id="input-group-age" label="Age*" label-for="input-age" class="col-5 col-md-2">
+            <b-form-input id="input-age" v-model="form.age" name="age" autocomplete="age" type="number" min="0" max="120"
+              placeholder="19" :state="valid_age" />
             <b-form-invalid-feedback v-if="form.age.length === 0" :state="valid_age">
               Please enter your age
             </b-form-invalid-feedback>
@@ -85,54 +50,26 @@
 
         <p class="info" v-if="form.age.length > 0 && form.age > 2 && form.age < 18">
           To attend Bitcamp as a minor, please fill out these
-          <a
-            href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe"
-            target="_blank"
-            >minors forms</a
-          >
-          and email them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
+            forms</a> and email them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
         </p>
 
         <!-- Email and Phone Number-->
         <b-form-row>
           <!-- Email -->
-          <b-form-group
-            id="input-group-2"
-            label="Email*"
-            label-for="input-2"
-            class="col-7 col-md-7"
-          >
-            <b-form-input
-              id="input-2"
-              v-model="form.email"
-              name="email"
-              autocomplete="email"
-              placeholder="hello@bit.camp"
-              :state="valid_email"
-              type="email"
-              @blur="emailFilledOut"
-            />
+          <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-7">
+            <b-form-input id="input-2" v-model="form.email" name="email" autocomplete="email" placeholder="hello@bit.camp"
+              :state="valid_email" type="email" @blur="emailFilledOut" />
             <b-form-invalid-feedback :state="valid_email">
               Please enter a valid email address
             </b-form-invalid-feedback>
           </b-form-group>
 
           <!-- Phone Number -->
-          <b-form-group
-            id="input-group-9"
-            label="Phone Number*"
-            label-for="input-9"
-            class="col-5 col-md-5"
-          >
-            <b-form-input
-              id="input-9"
-              v-model="form.phone"
-              name="phone"
-              autocomplete="tel"
-              placeholder="555-555-5555"
-              :state="valid_phone"
-              type="tel"
-            />
+          <b-form-group id="input-group-9" label="Phone Number*" label-for="input-9" class="col-5 col-md-5">
+            <b-form-input id="input-9" v-model="form.phone" name="phone" autocomplete="tel" placeholder="555-555-5555"
+              :state="valid_phone" type="tel" />
             <b-form-invalid-feedback :state="valid_phone">
               Please enter a valid phone number
             </b-form-invalid-feedback>
@@ -142,40 +79,18 @@
         <!-- Gender and Country of Residence -->
         <b-form-row>
           <!-- Gender -->
-          <b-form-group
-            id="input-group-gender"
-            label="Gender Identity*"
-            label-for="input-gender"
-            class="col-md-6"
-          >
-            <b-form-select
-              id="input-gender"
-              v-model="form.gender"
-              placeholder="Choose a gender identity"
-              class="form-select"
-              :options="gender_options"
-              :state="valid_gender"
-            />
+          <b-form-group id="input-group-gender" label="Gender Identity*" label-for="input-gender" class="col-md-6">
+            <b-form-select id="input-gender" v-model="form.gender" placeholder="Choose a gender identity"
+              class="form-select" :options="gender_options" :state="valid_gender" />
             <b-form-invalid-feedback :state="valid_gender">
               Please select a gender identity
             </b-form-invalid-feedback>
           </b-form-group>
 
           <!-- Country of Residence -->
-          <b-form-group
-            id="input-group-country"
-            label="Country of Residence*"
-            label-for="input-country"
-            class="col-md-6"
-          >
-            <b-form-select
-              id="input-country"
-              v-model="form.country_of_residence"
-              placeholder="Select a country"
-              class="form-select"
-              :options="country_options"
-              :state="valid_country"
-            />
+          <b-form-group id="input-group-country" label="Country of Residence*" label-for="input-country" class="col-md-6">
+            <b-form-select id="input-country" v-model="form.country_of_residence" placeholder="Select a country"
+              class="form-select" :options="country_options" :state="valid_country" />
             <b-form-invalid-feedback :state="valid_country">
               Please select your country of residence
             </b-form-invalid-feedback>
@@ -184,46 +99,23 @@
 
         <!-- Race / Ethnicity -->
         <b-form-row>
-          <b-form-group
-            id="input-group-ethnicity"
-            label="Race / Ethnicity*"
-            label-for="input-group-ethnicity"
-            class="col-md-12"
-          >
+          <b-form-group id="input-group-ethnicity" label="Race / Ethnicity*" label-for="input-group-ethnicity"
+            class="col-md-12">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-              <b-form-checkbox
-                v-for="option in ethnicity_options"
-                :key="option.value"
-                v-model="ethnicity_select"
-                :value="option.value"
-                :aria-describedby="ariaDescribedby"
-                :state="valid_ethnicity"
-                :disabled="ethnicity_prefer_no_answer"
-              >
+              <b-form-checkbox v-for="option in ethnicity_options" :key="option.value" v-model="ethnicity_select"
+                :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_ethnicity"
+                :disabled="ethnicity_prefer_no_answer">
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox
-                v-model="ethnicity_prefer_no_answer"
-                :state="valid_ethnicity"
-                @change="uncheckEthnicity()"
-              >
+              <b-form-checkbox v-model="ethnicity_prefer_no_answer" :state="valid_ethnicity" @change="uncheckEthnicity()">
                 Prefer Not to Answer
               </b-form-checkbox>
-              <b-form-checkbox
-                v-model="ethnicity_other"
-                :state="valid_ethnicity"
-                :disabled="ethnicity_prefer_no_answer"
-              >
+              <b-form-checkbox v-model="ethnicity_other" :state="valid_ethnicity" :disabled="ethnicity_prefer_no_answer">
                 Other (Please Specify)
               </b-form-checkbox>
             </b-form-group>
-            <b-form-input
-              v-if="ethnicity_other"
-              v-model="ethnicity_other_text"
-              class="col-12 col-md-5"
-              aria-label="Ethnicity Other Text Box"
-              placeholder="Other race / ethnicity"
-            />
+            <b-form-input v-if="ethnicity_other" v-model="ethnicity_other_text" class="col-12 col-md-5"
+              aria-label="Ethnicity Other Text Box" placeholder="Other race / ethnicity" />
           </b-form-group>
           <b-form-invalid-feedback :state="valid_ethnicity">
             Please select your race / ethnicity
@@ -236,23 +128,10 @@
 
         <!-- School Type -->
         <b-form-row>
-          <b-form-group
-            id="input-group-school"
-            label="School Name*"
-            label-for="input-school"
-            class="col-md-12"
-          >
-            <vue-bootstrap-autocomplete
-              id="input-school"
-              v-model="form.school"
-              :input-class="school_class"
-              input-name="school"
-              placeholder="University of Maryland at College Park"
-              :data="university_options"
-              noResultsInfo="No results found."
-              :disabled="school_other_selected"
-              :state="valid_school"
-            />
+          <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
+            <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
+              input-name="school" placeholder="University of Maryland at College Park" :data="university_options"
+              noResultsInfo="No results found." :disabled="school_other_selected" :state="valid_school" />
             <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
               Please enter your school name
             </b-form-invalid-feedback>
@@ -264,23 +143,13 @@
 
         <b-form-row>
           <div class="col-md-12">
-            <b-form-checkbox
-              v-model="school_other_selected"
-              :state="valid_school_other"
-              @input="resetSchool"
-            >
+            <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
               My school is not listed above
             </b-form-checkbox>
           </div>
           <b-form-group class="col-md-12">
-            <b-form-input
-              v-if="school_other_selected"
-              v-model="form.school_other"
-              class="col-12 col-md-12"
-              aria-label="School Other Text Box"
-              placeholder="Other school"
-              :state="valid_school_other"
-            />
+            <b-form-input v-if="school_other_selected" v-model="form.school_other" class="col-12 col-md-12"
+              aria-label="School Other Text Box" placeholder="Other school" :state="valid_school_other" />
             <b-form-invalid-feedback :state="valid_school_other">
               Please enter your school name
             </b-form-invalid-feedback>
@@ -289,38 +158,17 @@
 
         <!-- More School Info -->
         <b-form-row>
-          <b-form-group
-            id="input-group-schoolyear"
-            label="Current Level of Study*"
-            label-for="input-schoolyear"
-            class="col-md-6"
-          >
-            <b-form-select
-              id="input-schoolyear"
-              v-model="form.school_year"
-              placeholder="Choose a level of study"
-              class="form-select"
-              :options="school_year_options"
-              :state="valid_school_year"
-            />
+          <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
+            class="col-md-6">
+            <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
+              class="form-select" :options="school_year_options" :state="valid_school_year" />
             <b-form-invalid-feedback :state="valid_school_year">
               Please select a year
             </b-form-invalid-feedback>
           </b-form-group>
-          <b-form-group
-            id="input-group-major"
-            label="Primary Major*"
-            label-for="input-major"
-            class="col-md-6"
-          >
-            <b-form-select
-              id="input-major"
-              v-model="form.major"
-              class="form-select"
-              placeholder="Choose a major"
-              :options="major_options"
-              :state="valid_major"
-            />
+          <b-form-group id="input-group-major" label="Primary Major*" label-for="input-major" class="col-md-6">
+            <b-form-select id="input-major" v-model="form.major" class="form-select" placeholder="Choose a major"
+              :options="major_options" :state="valid_major" />
             <b-form-invalid-feedback :state="valid_major">
               Please select a major
             </b-form-invalid-feedback>
@@ -333,57 +181,27 @@
 
         <!-- recruitment info -->
         <b-form-row>
-          <b-form-group
-            id="input-group-recruit"
-            label="Do you want to be recruited for jobs?*"
-            label-for="input-recruit"
-            class="col-md-6"
-          >
-            <b-form-select
-              id="input-recruit"
-              v-model="form.recruit"
-              placeholder="Choose an option"
-              :options="recruit_options"
-              class="form-select"
-              :state="valid_recruit"
-            />
+          <b-form-group id="input-group-recruit" label="Do you want to be recruited for jobs?*" label-for="input-recruit"
+            class="col-md-6">
+            <b-form-select id="input-recruit" v-model="form.recruit" placeholder="Choose an option"
+              :options="recruit_options" class="form-select" :state="valid_recruit" />
             <b-form-invalid-feedback :state="valid_recruit">
               Please select an option
             </b-form-invalid-feedback>
           </b-form-group>
-          <b-form-group
-            id="input-group-portfolio"
-            label="GitHub or Portfolio Link"
-            label-for="input-portfolio"
-            class="col-md-6"
-          >
-            <b-form-input
-              id="input-portfolio"
-              v-model="form.portfolio"
-              autocomplete="input-portfolio"
-              placeholder="github.com/yourname"
-            />
+          <b-form-group id="input-group-portfolio" label="GitHub or Portfolio Link" label-for="input-portfolio"
+            class="col-md-6">
+            <b-form-input id="input-portfolio" v-model="form.portfolio" autocomplete="input-portfolio"
+              placeholder="github.com/yourname" />
           </b-form-group>
         </b-form-row>
 
         <!-- resume upload -->
         <b-form-row>
-          <b-form-group
-            id="input-group-resume"
-            label="Resume (.pdf .doc .docx)"
-            label-for="input-resume"
-            class="col-md-12"
-          >
-            <b-form-file
-              id="input-resume"
-              v-model="form.resume"
-              name="resume"
-              accept=".pdf, .doc, .docx, .txt"
-              placeholder="Upload Resume"
-              drop-placeholder="Drop file here..."
-              :state="valid_resume"
-              @input="upload"
-            />
+          <b-form-group id="input-group-resume" label="Resume (.pdf .doc .docx)" label-for="input-resume"
+            class="col-md-12">
+            <b-form-file id="input-resume" v-model="form.resume" name="resume" accept=".pdf, .doc, .docx, .txt"
+              placeholder="Upload Resume" drop-placeholder="Drop file here..." :state="valid_resume" @input="upload" />
             <b-form-invalid-feedback :state="valid_resume">
               We couldn't upload your resume. Try again later, or check that you entered your name
               first!
@@ -393,19 +211,11 @@
 
         <!-- Citizenship question -->
         <b-form-row>
-          <b-form-group
-            id="input-group-citizen"
-            label="Are you a US citizen?"
-            label-for="input-citizen"
-            class="col-md-7"
-          >
-            <b-form-radio-group
-              id="input-citizen"
-              v-model="form.citizen"
-              class="font-weight-normal pt-2"
-            >
+          <b-form-group id="input-group-citizen" label="Are you a US citizen?" label-for="input-citizen" class="col-md-7">
+            <b-form-radio-group id="input-citizen" v-model="form.citizen" class="font-weight-normal pt-2">
               <p class="note">
-                This information will be used for recruitment purposes only. Bitcamp will not be sending this data to any third-parties outside of sponsors.
+                This information will be used for recruitment purposes only. Bitcamp will not be sending this data to any
+                third-parties outside of sponsors.
               </p>
               <b-form-radio value="yes"> Yes </b-form-radio>
               <b-form-radio value="no"> No </b-form-radio>
@@ -416,11 +226,7 @@
         <!-- Track selection -->
         <hr />
         <h4>Choose a track!</h4>
-        <TrackSelection
-          :default="'general'"
-          @picked="updateTrack"
-          @waitlisted="updateWaitlistTrack"
-        />
+        <TrackSelection :default="'general'" @picked="updateTrack" @waitlisted="updateWaitlistTrack" />
 
         <!-- Optional quantum selection 1 -->
         <hr />
@@ -437,7 +243,7 @@
           <hr />
         </b-form-group>
 
-        <!-- Optional quantum selection 2 -->
+        <!-- Quantum selection 2 -->
 
         <b-form-group class="font-weight-bold"
           label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack! Would you like us to share this content with you?*">
@@ -461,103 +267,37 @@
         </p>
         <b-form-group>
           <b-form-row>
-            <b-form-group
-              id="input-group-5"
-              label="Shipping Address"
-              label-for="input-5"
-              class="col-md-7"
-            >
-              <b-form-input
-                id="input-5"
-                v-model="form.address1"
-                name="address"
-                autocomplete="off"
-                placeholder="8125 Paint Branch Drive"
-                class="form-input"
-                :state="valid_address"
-              />
+            <b-form-group id="input-group-5" label="Shipping Address" label-for="input-5" class="col-md-7">
+              <b-form-input id="input-5" v-model="form.address1" name="address" autocomplete="off"
+                placeholder="8125 Paint Branch Drive" class="form-input" :state="valid_address" />
             </b-form-group>
 
-            <b-form-group
-              id="input-group-address-line2"
-              label="Shipping Address Line 2"
-              label-for="input-address-line2"
-              class="col-md-5"
-            >
-              <b-form-input
-                id="input-address-line2"
-                v-model="form.address2"
-                name="address-line2"
-                autocomplete="address-line2"
-                placeholder="Apartment or Unit Number (optional)"
-                class="form-input"
-                :state="valid_address"
-              />
+            <b-form-group id="input-group-address-line2" label="Shipping Address Line 2" label-for="input-address-line2"
+              class="col-md-5">
+              <b-form-input id="input-address-line2" v-model="form.address2" name="address-line2"
+                autocomplete="address-line2" placeholder="Apartment or Unit Number (optional)" class="form-input"
+                :state="valid_address" />
             </b-form-group>
           </b-form-row>
           <b-form-row>
-            <b-form-group
-              id="input-group-city"
-              label="City"
-              label-for="input-city"
-              class="col-8 col-md-5"
-            >
-              <b-form-input
-                id="input-city"
-                v-model="form.city"
-                name="city"
-                autocomplete="off"
-                placeholder="College Park"
-                :state="valid_address"
-              />
+            <b-form-group id="input-group-city" label="City" label-for="input-city" class="col-8 col-md-5">
+              <b-form-input id="input-city" v-model="form.city" name="city" autocomplete="off" placeholder="College Park"
+                :state="valid_address" />
             </b-form-group>
 
-            <b-form-group
-              id="input-group-state"
-              label="State"
-              label-for="input-state"
-              class="col-4 col-md-2"
-            >
-              <b-form-input
-                id="input-state"
-                v-model="form.state"
-                name="state"
-                autocomplete="off"
-                placeholder="MD"
-                :state="valid_address"
-              />
+            <b-form-group id="input-group-state" label="State" label-for="input-state" class="col-4 col-md-2">
+              <b-form-input id="input-state" v-model="form.state" name="state" autocomplete="off" placeholder="MD"
+                :state="valid_address" />
             </b-form-group>
 
-            <b-form-group
-              id="input-group-zip"
-              label="Zip Code"
-              label-for="input-zip"
-              class="col-4 col-md-3"
-            >
-              <b-form-input
-                id="input-zip"
-                v-model="form.zip"
-                name="zip"
-                autocomplete="off"
-                placeholder="20740"
-                :state="valid_address"
-              />
+            <b-form-group id="input-group-zip" label="Zip Code" label-for="input-zip" class="col-4 col-md-3">
+              <b-form-input id="input-zip" v-model="form.zip" name="zip" autocomplete="off" placeholder="20740"
+                :state="valid_address" />
             </b-form-group>
 
-            <b-form-group
-              id="input-group-country"
-              label="Country"
-              label-for="input-country"
-              class="col-8 col-md-2"
-            >
-              <b-form-input
-                id="input-country"
-                v-model="form.country"
-                name="country"
-                autocomplete="off"
-                placeholder="USA"
-                :state="valid_address"
-              />
+            <b-form-group id="input-group-country" label="Country" label-for="input-country" class="col-8 col-md-2">
+              <b-form-input id="input-country" v-model="form.country" name="country" autocomplete="off" placeholder="USA"
+                :state="valid_address" />
             </b-form-group>
           </b-form-row>
           <b-form-invalid-feedback :state="valid_address" style="margin: 0">
@@ -576,12 +316,8 @@
           Take the survey and find your team!
         </p>
         <b-form-group class="font-weight-bold" label="What is your favorite season?*">
-          <b-form-radio-group
-            id="survey-1"
-            v-model="form.selected_survey_1"
-            class="font-weight-normal pt-2"
-            :state="valid_survey_1"
-          >
+          <b-form-radio-group id="survey-1" v-model="form.selected_survey_1" class="font-weight-normal pt-2"
+            :state="valid_survey_1">
             <b-form-radio value="r"> Summer ☀️ </b-form-radio>
             <b-form-radio value="r1"> Spring ⚡ </b-form-radio>
             <b-form-radio value="g"> Fall 🍁 </b-form-radio>
@@ -592,12 +328,8 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group class="font-weight-bold" label="How early do you finish classwork?*">
-          <b-form-radio-group
-            id="survey-2"
-            v-model="form.selected_survey_2"
-            class="font-weight-normal pt-2"
-            :state="valid_survey_2"
-          >
+          <b-form-radio-group id="survey-2" v-model="form.selected_survey_2" class="font-weight-normal pt-2"
+            :state="valid_survey_2">
             <b-form-radio value="b">
               The minute before it’s due. I like to live life on the edge
             </b-form-radio>
@@ -610,12 +342,8 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group class="font-weight-bold" label="Would you rather never be able to...*">
-          <b-form-radio-group
-            id="survey-3"
-            v-model="form.selected_survey_3"
-            class="font-weight-normal pt-2"
-            :state="valid_survey_3"
-          >
+          <b-form-radio-group id="survey-3" v-model="form.selected_survey_3" class="font-weight-normal pt-2"
+            :state="valid_survey_3">
             <b-form-radio value="b"> Listen to music 🎵 </b-form-radio>
             <b-form-radio value="g"> Watch TV 📺 </b-form-radio>
             <b-form-radio value="r"> Eat junk food 🍕 </b-form-radio>
@@ -626,12 +354,8 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group class="font-weight-bold" label="What is your go to coffee order?*">
-          <b-form-radio-group
-            id="survey-4"
-            v-model="form.selected_survey_4"
-            class="font-weight-normal pt-2"
-            :state="valid_survey_4"
-          >
+          <b-form-radio-group id="survey-4" v-model="form.selected_survey_4" class="font-weight-normal pt-2"
+            :state="valid_survey_4">
             <b-form-radio value="g"> Straight black coffee </b-form-radio>
             <b-form-radio value="b"> Anything with pumpkin spice or matcha in it </b-form-radio>
             <b-form-radio value="r"> As long as it has enough sugar to taste good </b-form-radio>
@@ -642,12 +366,8 @@
           </b-form-invalid-feedback>
         </b-form-group>
         <b-form-group class="font-weight-bold" label="What is your favorite thing about Bitcamp?*">
-          <b-form-radio-group
-            id="survey-5"
-            v-model="form.selected_survey_5"
-            class="font-weight-normal pt-2"
-            :state="valid_survey_5"
-          >
+          <b-form-radio-group id="survey-5" v-model="form.selected_survey_5" class="font-weight-normal pt-2"
+            :state="valid_survey_5">
             <b-form-radio value="r"> Hacking </b-form-radio>
             <b-form-radio value="g"> Free stuff </b-form-radio>
             <b-form-radio value="b"> Late night shenanigans </b-form-radio>
@@ -667,20 +387,9 @@
         </p>
 
         <b-form-row>
-          <b-form-group
-            id="input-group-tshirt"
-            label="T-shirt Size*"
-            label-for="input-tshirt"
-            class="col-md-12"
-          >
-            <b-form-select
-              id="input-4"
-              v-model="form.tshirt_size"
-              class="form-select"
-              placeholder="Choose a T-shirt size"
-              :options="tshirt_size_options"
-              :state="valid_tshirt_size"
-            />
+          <b-form-group id="input-group-tshirt" label="T-shirt Size*" label-for="input-tshirt" class="col-md-12">
+            <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select" placeholder="Choose a T-shirt size"
+              :options="tshirt_size_options" :state="valid_tshirt_size" />
             <b-form-invalid-feedback :state="valid_tshirt_size">
               Please select a T-shirt size
             </b-form-invalid-feedback>
@@ -696,43 +405,19 @@
         </p>
 
         <b-form-row>
-          <b-form-group
-            id="input-group-hackcount"
-            label="How many hackathons have you participated in before?*"
-            label-for="input-hackcount"
-            class="col-md-12"
-          >
-            <b-form-input
-              id="input-hackcount"
-              v-model="form.hack_count"
-              name="input-hackcount"
-              autocomplete="off"
-              placeholder="Number of Hackathons here..."
-              class="form-input"
-              :state="valid_hackcount"
-              type="number"
-              min="0"
-            />
+          <b-form-group id="input-group-hackcount" label="How many hackathons have you participated in before?*"
+            label-for="input-hackcount" class="col-md-12">
+            <b-form-input id="input-hackcount" v-model="form.hack_count" name="input-hackcount" autocomplete="off"
+              placeholder="Number of Hackathons here..." class="form-input" :state="valid_hackcount" type="number"
+              min="0" />
             <b-form-invalid-feedback :state="valid_hackcount">
               Please enter a valid number
             </b-form-invalid-feedback>
           </b-form-group>
-          <b-form-group
-            id="input-group-question1"
-            label="Why are you interested in attending Bitcamp?*"
-            label-for="input-question1"
-            class="col-md-12"
-          >
-            <b-form-textarea
-              id="input-question1"
-              v-model="form.question1"
-              name="question1"
-              autocomplete="off"
-              placeholder="Your response here..."
-              rows="3"
-              max-rows="3"
-              :state="valid_question1"
-            />
+          <b-form-group id="input-group-question1" label="Why are you interested in attending Bitcamp?*"
+            label-for="input-question1" class="col-md-12">
+            <b-form-textarea id="input-question1" v-model="form.question1" name="question1" autocomplete="off"
+              placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question1" />
             <b-form-invalid-feedback :state="valid_question1">
               Please tell us why you are interested in attending Bitcamp
             </b-form-invalid-feedback>
@@ -740,22 +425,10 @@
         </b-form-row>
 
         <b-form-row>
-          <b-form-group
-            id="input-group-question2"
-            label="What do you plan on doing or building at Bitcamp?*"
-            label-for="input-question2"
-            class="col-md-12"
-          >
-            <b-form-textarea
-              id="input-question2"
-              v-model="form.question2"
-              name="question2"
-              autocomplete="off"
-              placeholder="Your response here..."
-              rows="3"
-              max-rows="3"
-              :state="valid_question2"
-            />
+          <b-form-group id="input-group-question2" label="What do you plan on doing or building at Bitcamp?*"
+            label-for="input-question2" class="col-md-12">
+            <b-form-textarea id="input-question2" v-model="form.question2" name="question2" autocomplete="off"
+              placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question2" />
             <b-form-invalid-feedback :state="valid_question2">
               Please tell us what you plan on doing/building at Bitcamp
             </b-form-invalid-feedback>
@@ -763,21 +436,11 @@
         </b-form-row>
 
         <b-form-row>
-          <b-form-group
-            id="input-heard-from"
-            label="Where did you hear about us?*"
-            label-for="input-heard-from"
-            class="col-12 col-md-6"
-          >
+          <b-form-group id="input-heard-from" label="Where did you hear about us?*" label-for="input-heard-from"
+            class="col-12 col-md-6">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-              <b-form-checkbox
-                v-for="option in heard_from_options"
-                :key="option.value"
-                v-model="heard_from_select"
-                :value="option.value"
-                :aria-describedby="ariaDescribedby"
-                name="flavour-3a"
-              >
+              <b-form-checkbox v-for="option in heard_from_options" :key="option.value" v-model="heard_from_select"
+                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a">
                 {{ option.text }}
               </b-form-checkbox>
               <b-form-checkbox v-model="heard_from_other"> Other </b-form-checkbox>
@@ -786,34 +449,18 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-form-input
-              v-if="heard_from_other"
-              v-model="heard_from_other_text"
-              class="col-12 col-md-12"
-              aria-label="Heard From Other Text Box"
-              placeholder="Other source"
-            />
+            <b-form-input v-if="heard_from_other" v-model="heard_from_other_text" class="col-12 col-md-12"
+              aria-label="Heard From Other Text Box" placeholder="Other source" />
           </b-form-group>
 
-          <b-form-group
-            id="input-dietary-restrictions"
-            label="Do you have any dietary restrictions?*"
-            label-for="input-dietary-restrictions"
-            class="col-12 col-md-6"
-          >
+          <b-form-group id="input-dietary-restrictions" label="Do you have any dietary restrictions?*"
+            label-for="input-dietary-restrictions" class="col-12 col-md-6">
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox v-model="diet_none" @change="uncheckDietaryRestrictions()">
                 None
               </b-form-checkbox>
-              <b-form-checkbox
-                v-for="option in diet_options"
-                :key="option.value"
-                v-model="diet_select"
-                :value="option.value"
-                :aria-describedby="ariaDescribedby"
-                name="flavour-3a"
-                :disabled="diet_none"
-              >
+              <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
+                :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a" :disabled="diet_none">
                 {{ option.text }}
               </b-form-checkbox>
               <b-form-checkbox v-model="diet_other" :disabled="diet_none"> Other </b-form-checkbox>
@@ -822,13 +469,8 @@
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-form-input
-              v-if="diet_other"
-              v-model="diet_other_text"
-              class="col-12 col-md-12"
-              aria-label="Dietary Restriction Other Text Box"
-              placeholder="Other dietary restriction"
-            />
+            <b-form-input v-if="diet_other" v-model="diet_other_text" class="col-12 col-md-12"
+              aria-label="Dietary Restriction Other Text Box" placeholder="Other dietary restriction" />
           </b-form-group>
         </b-form-row>
 
@@ -836,40 +478,25 @@
         <!-- MLH Stuff -->
         <h4 class="mb-2">Rules and privacy policies</h4>
 
-        <b-form-checkbox
-          v-if="form.age.length > 0 && form.age < 18"
-          id="checkbox-0"
-          v-model="form.minors_form"
-          name="checkbox-0"
-          :state="valid_minors_form"
-          class="checkbox"
-        >
+        <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form"
+          name="checkbox-0" :state="valid_minors_form" class="checkbox">
           I have filled out the
-          <a
-            href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe"
-            target="_blank"
-            >minors forms</a
-          >
-          and emailed them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
+            forms</a> and emailed them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
           <b-form-invalid-feedback :state="valid_minors_form">
             Please fill out the minors forms
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox
-          id="checkbox-1"
-          v-model="form.MLH_privacy"
-          name="checkbox-1"
-          class="checkbox"
-          :state="valid_mlh_privacy"
-        >
+        <b-form-checkbox id="checkbox-1" v-model="form.MLH_privacy" name="checkbox-1" class="checkbox"
+          :state="valid_mlh_privacy">
           I authorize you to share my application/registration information with Major League Hacking
           for event administration, ranking, and MLH administration in-line with the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
           to the terms of both the
-          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank"
-            >MLH Contest Terms and Conditions</a
-          >
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH Contest Terms and
+            Conditions</a>
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
           <b-form-invalid-feedback :state="valid_mlh_privacy">
@@ -877,41 +504,23 @@
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox
-          id="checkbox-2"
-          v-model="form.MLH_conduct"
-          name="checkbox-2"
-          :state="valid_code_of_conduct"
-          class="checkbox"
-          style="padding-bottom: 1rem"
-        >
+        <b-form-checkbox id="checkbox-2" v-model="form.MLH_conduct" name="checkbox-2" :state="valid_code_of_conduct"
+          class="checkbox" style="padding-bottom: 1rem">
           I have read and agree to the
-          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank"
-            >MLH Code of Conduct</a
-          >.*
+          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.*
           <b-form-invalid-feedback :state="valid_code_of_conduct">
             Please agree to MLH's code of conduct
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox
-          id="checkbox-3"
-          v-model="form.MLH_emails"
-          name="checkbox-3"
-          class="checkbox"
-        >
+        <b-form-checkbox id="checkbox-3" v-model="form.MLH_emails" name="checkbox-3" class="checkbox">
           I authorize MLH to send me an email where I can further opt into the MLH Hacker, Events,
           or Organizer Newsletters and other communications from MLH.
         </b-form-checkbox>
 
         <!-- Submit -->
         <div>
-          <b-button
-            type="submit"
-            class="submit-btn m1 mx-auto"
-            style="center"
-            :disabled="isSending"
-          >
+          <b-button type="submit" class="submit-btn m1 mx-auto" style="center" :disabled="isSending">
             <h5 class="m-1">Confirm Registration for Bitcamp!</h5>
           </b-button>
         </div>
@@ -1215,13 +824,16 @@ export default {
 
   methods: {
     updateTrack(value) {
+
       if (value === "quantum") {
         this.form.QUANTUM_SELECTED = true;
       } else {
+        this.form.selected_quantum_survey_track = null;
         this.form.QUANTUM_SELECTED = false;
       }
       this.form.track_selected = value;
     },
+
     updateWaitlistTrack(value) {
       this.form.waitlist_track_selected = value;
     },
@@ -1521,7 +1133,6 @@ export default {
         this.valid_recruit = null;
       }
 
-      console.log('citizenship: ', this.form.citizen)
       if (this.form.citizen === undefined) {
         this.form.citizen = null;
       }
@@ -1822,7 +1433,7 @@ export default {
 </script>
 
 <style lang="scss">
-.input-group > .typeahead {
+.input-group>.typeahead {
   border-radius: 0.4rem;
 
   &.is-invalid {
@@ -1840,73 +1451,73 @@ export default {
 }
 
 /* checkbox */
-input[type="checkbox"]:hover ~ .custom-control-label::before {
+input[type="checkbox"]:hover~.custom-control-label::before {
   box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
 }
 
-input[type="checkbox"]:focus ~ .custom-control-label::before {
+input[type="checkbox"]:focus~.custom-control-label::before {
   box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
 }
 
-input[type="checkbox"]:checked ~ .custom-control-label::before {
+input[type="checkbox"]:checked~.custom-control-label::before {
   background-color: var(--light-orange);
   border-color: grey;
 }
 
 /* disabled checkbox */
-input[type="checkbox"]:disabled ~ .custom-control-label::before {
+input[type="checkbox"]:disabled~.custom-control-label::before {
   box-shadow: none !important;
   background-color: white;
   border-color: lightgrey;
 }
 
-input[type="checkbox"]:disabled:checked ~ .custom-control-label::before {
+input[type="checkbox"]:disabled:checked~.custom-control-label::before {
   background-color: rgba(255, 165, 0, 0.4) !important;
 }
 
 /* radio button */
-input[type="radio"]:checked ~ .custom-control-label::after {
+input[type="radio"]:checked~.custom-control-label::after {
   background-image: none;
   transform: scale(0.7);
   border-radius: 50%;
   box-shadow: 0px 0px 0px 10px inset var(--light-orange);
 }
 
-input[type="radio"]:checked ~ .custom-control-label::before {
+input[type="radio"]:checked~.custom-control-label::before {
   background-color: white;
   border-color: orange;
 }
 
-input[type="radio"]:hover ~ .custom-control-label::before {
+input[type="radio"]:hover~.custom-control-label::before {
   box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.3);
   background-color: rgba(255, 165, 0, 0.3);
 }
 
-input[type="radio"]:focus ~ .custom-control-label::before {
+input[type="radio"]:focus~.custom-control-label::before {
   box-shadow: none;
 }
 
-input[type="radio"]:active ~ .custom-control-label::before {
+input[type="radio"]:active~.custom-control-label::before {
   box-shadow: 0 0 0 0.1rem rgba(255, 165, 0, 0.5);
   background-color: rgba(255, 165, 0, 0.5);
 }
 
 /* disabled radio button */
-input[type="radio"]:disabled:hover ~ .custom-control-label::before {
+input[type="radio"]:disabled:hover~.custom-control-label::before {
   box-shadow: none;
 }
 
-input[type="radio"]:disabled ~ .custom-control-label::before {
+input[type="radio"]:disabled~.custom-control-label::before {
   border-color: lightgrey;
   background-color: white;
 }
 
-input[type="radio"]:disabled:checked ~ .custom-control-label::before {
+input[type="radio"]:disabled:checked~.custom-control-label::before {
   background-color: white !important;
   border-color: rgba(255, 165, 0, 0.4);
 }
 
-input[type="radio"]:disabled:checked ~ .custom-control-label::after {
+input[type="radio"]:disabled:checked~.custom-control-label::after {
   box-shadow: 0px 0px 0px 10px inset rgb(255, 165, 0, 0.4);
 }
 
