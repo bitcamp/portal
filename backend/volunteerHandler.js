@@ -128,7 +128,7 @@ const sendConfirmationEmail = async (user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
     Template: "DetailedVolunteerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${10}\",\"phone\":\"${user.phone}\",\"tshirt_size\":\"${tShirtSize}\"},\"school_company\":\"${schoolOrCompany}\"`,
+    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${10}\",\"phone\":\"${user.phone}\",\"tshirt_size\":\"${tShirtSize}\",\"school_company\":\"${schoolOrCompany}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
