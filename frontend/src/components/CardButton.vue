@@ -44,13 +44,16 @@ export default {
   overflow: hidden;
 }
 
+.card-body {
+  padding: 0;
+}
+
 .title-container {
   display: inline-block;
   position: relative;
   cursor: pointer;
   padding: 3px 4px;
   border-radius: 10px;
-  margin: 20px;
 }
 
 .effect-box {
@@ -84,6 +87,7 @@ export default {
 .role-card[data-role="hacker"] .title-container {
   background-color: #FFB169;
   border: 3px solid #E03728;
+  margin: 20px;
 }
 
 .role-card[data-role="mentor"] .role-title {
@@ -100,6 +104,7 @@ export default {
 .role-card[data-role="mentor"] .title-container {
   background-color: #DBF2FF;
   border: 3px solid #51BEFA;
+  margin: 20px;
 }
 
 .role-card[data-role="volunteer"] .role-title {
@@ -116,6 +121,7 @@ export default {
 .role-card[data-role="volunteer"] .title-container {
   background-color: #E9FFE6;
   border: 3px solid #3A9D63;
+  margin: 20px 0 !important;
 }
 
 .role-description {
