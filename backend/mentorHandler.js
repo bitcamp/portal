@@ -90,7 +90,7 @@ const sendConfirmationEmail = async (user) => {
   // const schoolYear = school_year_options
   //   .find(option => option.value === user.school_year).text;
 
-  const schoolOrCompany = user.school || user.company;
+  const schoolOrCompany = user.school_other || user.school || user.company;
   // All caps t shirt size
   const tShirtSize = user.tshirt_size.toUpperCase();
 
