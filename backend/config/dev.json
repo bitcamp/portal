@@ -3,6 +3,7 @@
     "PLATFORM_BASE_URL": "localhost:8080",
     "REGISTRATION_TABLE": "portal-dev-registration",
     "VOLUNTEER_TABLE": "portal-dev-volunteers",
+    "MENTOR_TABLE": "portal-dev-mentors",
     "STATISTICS_TABLE": "portal-dev-statistics",
     "TRACKING_TABLE": "portal-dev-tracking",
     "RESUMES_TABLE": "portal-dev-resumes",
