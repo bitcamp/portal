@@ -101,24 +101,25 @@ const sendConfirmationEmail = async (user) => {
   //   .join(' ');
 
   // Keep this the same as in RegistrationForm.vue
-  const school_year_options = [
-    { value: "less than high school", text: "Less than Secondary / High School" },
-    { value: "high school", text: "Secondary / High School" },
-    { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-    { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
-    { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
-    { value: "bootcamp", text: "Code School / Bootcamp" },
-    { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
-    { value: "postdoc", text: "Post Doctorate" },
-    { value: "other", text: "Other" },
-    { value: "not a student", text: "I’m not currently a student" },
-    { value: "prefer not to answer", text: "Prefer not to answer" },
-  ];
+  // const school_year_options = [
+  //   { value: "less than high school", text: "Less than Secondary / High School" },
+  //   { value: "high school", text: "Secondary / High School" },
+  //   { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+  //   { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+  //   { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+  //   { value: "bootcamp", text: "Code School / Bootcamp" },
+  //   { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+  //   { value: "postdoc", text: "Post Doctorate" },
+  //   { value: "other", text: "Other" },
+  //   { value: "not a student", text: "I’m not currently a student" },
+  //   { value: "prefer not to answer", text: "Prefer not to answer" },
+  // ];
 
-  // School year text
-  const schoolYear = school_year_options
-    .find(option => option.value === user.school_year).text;
+  // // School year text
+  // const schoolYear = school_year_options
+  //   .find(option => option.value === user.school_year).text;
 
+  const schoolOrCompany = user.school || user.company;
   // All caps t shirt size
   const tShirtSize = user.tshirt_size.toUpperCase();
 
@@ -127,7 +128,7 @@ const sendConfirmationEmail = async (user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
     Template: "DetailedVolunteerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${10}\",\"phone\":\"${user.phone}\",\"tshirt_size\":\"${tShirtSize}\"}`,
+    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${10}\",\"phone\":\"${user.phone}\",\"tshirt_size\":\"${tShirtSize}\"},\"school_company\":\"${schoolOrCompany}\"`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
