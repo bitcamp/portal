@@ -61,7 +61,7 @@ functions:
     timeout: 15
     provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
   register_volunteer:
-    handler: handler.registerVolunteer
+    handler: volunteerHandler.registerVolunteer
     description: Adds a new volunteer registration to the database
     events:
       - http:
