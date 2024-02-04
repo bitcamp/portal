@@ -457,7 +457,7 @@ export default {
                 // console.log(resp);
 
                 if (resp) {
-                    this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
+                    this.$router.push({ path: "thanks?type=volunteer", query: { r: resp.referral_id } });
                     // this.track({
                     //     random_id: this.random_id,
                     //     key: "referral_id",

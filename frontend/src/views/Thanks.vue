@@ -5,7 +5,11 @@
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>You're registered for Bitcamp 2024!</h1>
+            <h1>You're registered
+              <span v-if="type">
+                as a {{ type }}
+              </span>
+              for Bitcamp 2024!</h1>
 
             <img style="width: 200px; height 200px;" src="@/assets/bitcamp.gif" />
 
@@ -95,6 +99,7 @@ export default {
   data() {
     return {
       copyBtnText: "Copy Link",
+      type: "your mom",
     };
   },
 
@@ -123,6 +128,8 @@ export default {
     this.sleep(3000).then(() => {
       this.$confetti.stop();
     });
+
+    this.type = this.$route.query.type;
     // this.sendAnalyticsEvent('completed_registration');
     // gtag('event', 'conversion', {'send_to': this.getEnvVariable('GOOGLE_AD_ANALYTICS_ID')});
   },

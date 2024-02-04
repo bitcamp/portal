@@ -701,7 +701,7 @@ export default {
                 this.isSending = false; // done submitting
 
                 if (resp) {
-                    this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
+                    this.$router.push({ path: "thanks?type=mentor", query: { r: resp.referral_id } });
                     // this.track({
                     //     random_id: this.random_id,
                     //     key: "referral_id",
