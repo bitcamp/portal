@@ -231,11 +231,11 @@
                     Mentorship Experience
                 </h4>
 
-                <b-form-group id="input-group-question1" label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
-                    to start.*" label-for="input-question1" class="col-md-12" style="padding: 0rem;">
-                    <b-form-textarea id="input-question1" v-model="form.question1" name="question1" autocomplete="off"
-                        placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question1" />
-                    <b-form-invalid-feedback :state="valid_question1">
+                <b-form-group id="input-group-prev_mentor_experience" label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
+                    to start.*" label-for="input-prev_mentor_experience" class="col-md-12" style="padding: 0rem;">
+                    <b-form-textarea id="input-prev_mentor_experience" v-model="form.prev_mentor_experience" name="prev_mentor_experience" autocomplete="off"
+                        placeholder="Your response here..." rows="3" max-rows="3" :state="valid_prev_mentor_experience" />
+                    <b-form-invalid-feedback :state="valid_prev_mentor_experience">
                         Please summarize your previous mentoring experience
                     </b-form-invalid-feedback>
                 </b-form-group>
@@ -261,12 +261,12 @@
                 </b-form-row>
 
                 <b-form-row>
-                    <b-form-group id="input-group-question2"
+                    <b-form-group id="input-group-prev_track_experience"
                         label="Please describe any previous experience you may have in your chosen track(s). We're looking for mentors that have completed coursework, built projects, worked professionally, or otherwise have knowledge in their chosen track(s)! *"
-                        label-for="input-question2" class="col-md-12">
-                        <b-form-textarea id="input-question2" v-model="form.question2" name="question2" autocomplete="off"
-                            placeholder="Your response here..." rows="3" max-rows="3" :state="valid_question2" />
-                        <b-form-invalid-feedback :state="valid_question2">
+                        label-for="input-prev_track_experience" class="col-md-12">
+                        <b-form-textarea id="input-prev_track_experience" v-model="form.prev_track_experience" name="prev_track_experience" autocomplete="off"
+                            placeholder="Your response here..." rows="3" max-rows="3" :state="valid_prev_track_experience" />
+                        <b-form-invalid-feedback :state="valid_prev_track_experience">
                             Please describe your previous experience in your chosen track(s)
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -399,8 +399,8 @@ export default {
                 school: "",
                 school_other: "",
                 tshirt_size: "",
-                question1: "",
-                question2: "",
+                prev_mentor_experience: "",
+                prev_track_experience: "",
                 mentor_tracks: "",
                 dietary_restrictions: "",
                 languages: "",
@@ -423,8 +423,8 @@ export default {
             valid_mlh_privacy: null,
             valid_school_or_company: null,
             valid_tshirt_size: null,
-            valid_question1: null,
-            valid_question2: null,
+            valid_prev_mentor_experience: null,
+            valid_prev_track_experience: null,
             valid_mentor_tracks: null,
             valid_diet: null,
             valid_languages: null,
@@ -826,20 +826,20 @@ export default {
                 this.valid_tshirt_size = null;
             }
 
-            console.log("q1: " + (this.form.question1.length === 0))
-            if (this.form.question1.length === 0) {
-                this.valid_question1 = false;
+            console.log("q1: " + (this.form.prev_mentor_experience.length === 0))
+            if (this.form.prev_mentor_experience.length === 0) {
+                this.valid_prev_mentor_experience = false;
                 valid_form = false;
             } else {
-                this.valid_question1 = null;
+                this.valid_prev_mentor_experience = null;
             }
 
-            console.log("q2: " + (this.form.question1.length === 0))
-            if (this.form.question2.length === 0) {
-                this.valid_question2 = false;
+            console.log("q2: " + (this.form.prev_mentor_experience.length === 0))
+            if (this.form.prev_track_experience.length === 0) {
+                this.valid_prev_track_experience = false;
                 valid_form = false;
             } else {
-                this.valid_question2 = null;
+                this.valid_prev_track_experience = null;
             }
 
             console.log("diet: " + (this.createDietaryRestrictionString().length === 0))
