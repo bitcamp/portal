@@ -12,7 +12,7 @@ const routes = [
     component: SplashScreen,
   },
   {
-    path: '/hackers',
+    path: '/hacker',
     name: 'Register',
     // component: RegistrationClosed
     component: Register,

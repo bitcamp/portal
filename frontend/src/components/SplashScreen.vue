@@ -5,38 +5,35 @@
     </b-row>
     <b-container class="card-container">
       <b-row>
-        <b-col md="4" class="mb-4">
-          <!-- Description-placeholder (insert below) : As a hacker, you'll be at the forefront of problem-solving 
-            and innovation. Dive into challenging projects, showcase your coding skills, 
-            and be part of a community dedicated to pushing the boundaries of technology. -->
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4">
           <CardButton
             data-role="hacker"
             role-title="HACKER"
-            role-description=""
+            role-description="[PLACEHOLDER TEXT] As a hacker, you'll be at the forefront of problem-solving 
+            and innovation. Dive into challenging projects, showcase your coding skills, 
+            and be part of a community dedicated to pushing the boundaries of technology."
             role-u-r-l="/hacker"
             svg-image-path="red-marshie.svg"
           />
         </b-col>
-        <b-col md="4" class="mb-4">
-          <!-- As a Mentor, leverage your expertise to guide and inspire 
-            the next generation of tech enthusiasts. Become a key figure in shaping the 
-            experience for participants as they navigate through the hackathon challenges. -->
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4">
           <CardButton
             data-role="mentor"
             role-title="MENTOR"
-            role-description=""
+            role-description="[PLACEHOLDER TEXT] As a Mentor, leverage your expertise to guide and inspire 
+            the next generation of tech enthusiasts. Become a key figure in shaping the 
+            experience for participants as they navigate through the hackathon challenges."
             role-u-r-l="/mentor"
             svg-image-path="blue-marshie.svg"
           />
         </b-col>
-        <b-col md="4" class="mb-4">
-          <!-- As a Volunteer, your support ensures the smooth execution
-            of our hackathon. From logistics to participant assistance, your
-            contribution will help create a positive environment for everyone! -->
+        <b-col :md="screenWidth >= 768 ? 12 : 4" class="mb-4">
           <CardButton
             data-role="volunteer"
             role-title="VOLUNTEER"
-            role-description=""
+            role-description="[PLACEHOLDER TEXT] ]s a Volunteer, your support ensures the smooth execution
+            of our hackathon. From logistics to participant assistance, your
+            contribution will help create a positive environment for everyone!"
             role-u-r-l="/volunteer"
             svg-image-path="green-marshie.svg"
           />
@@ -59,13 +56,11 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500&display=swap");
 .screen-container {
-  max-width: 900px;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 0 50px;
 }
 
 .card-container {
@@ -75,6 +70,8 @@ export default {
 
 .register-logo {
   width: 100%;
+  height: 100%;
+  margin: 0 7.5vw;
 }
 
 .role-card {
@@ -82,19 +79,26 @@ export default {
   flex-direction: column;
   margin: 20px 0;
   height: 100%;
-  transition: transform 0.3s ease;
+}
+
+.mb-4 {
+  margin-bottom: 0 !important;
 }
 
 @media (max-width: 768px) {
   .screen-container {
     display: grid;
     height: 100%;
-    margin-top: 10vw;
+    margin-top: 3vw;
+    padding: 0 7vh 10vw;
   }
 
   .register-logo {
-    width: 80%;
     margin: auto;
+  }
+
+  .mb-4 {
+    padding: 0;
   }
 
 }

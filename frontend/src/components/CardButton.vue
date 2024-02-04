@@ -46,6 +46,7 @@ export default {
 
 .card-body {
   padding: 0;
+  height: 100%;
 }
 
 .title-container {
@@ -54,6 +55,7 @@ export default {
   cursor: pointer;
   padding: 3px 4px;
   border-radius: 10px;
+  transition:all .3s ease;
 }
 
 .effect-box {
@@ -62,6 +64,7 @@ export default {
   border-radius: 10px;
   right: 1px;
   height: 110%;
+  transition:all .3s ease;
 }
 
 .role-title {
@@ -70,6 +73,13 @@ export default {
   border-radius: 5px;
   padding: 5px 20px;
   margin-bottom: 0;
+  transition:all .3s ease;
+}
+
+
+.role-description {
+  font-size: calc(0.8rem + 0.2vw);
+  font-family: "M PLUS Rounded 1c", sans-serif;
 }
 
 /* Specific styles for each button */
@@ -77,6 +87,11 @@ export default {
   background-color: #B42F2F;
   color: #FFB169;
   border: 3px solid #E03728;
+}
+
+.role-card[data-role="hacker"] .role-title:hover {
+  background-color: #FFB169;
+  color: #E03728;
 }
 
 .role-card[data-role="hacker"] .effect-box {
@@ -96,6 +111,11 @@ export default {
   border: 3px solid #51BEFA;
 }
 
+.role-card[data-role="mentor"] .role-title:hover {
+  background-color: #DBF2FF;
+  color: #51BEFA;
+}
+
 .role-card[data-role="mentor"] .effect-box {
   background-color: #52A4D2;
   width: 105%;
@@ -111,6 +131,11 @@ export default {
   background-color: #368D5A;
   color: #E9FFE6;
   border: 3px solid #3A9D63;
+}
+
+.role-card[data-role="volunteer"] .role-title:hover {
+  background-color: #E9FFE6;
+  color: #3A9D63;
 }
 
 .role-card[data-role="volunteer"] .effect-box {
@@ -131,6 +156,26 @@ export default {
 .role-logo {
   width: 100%;
   height: auto;
-  margin-bottom: 10px; /* Add margin between image and title */
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+
+  .role-card[data-role="mentor"] {
+    padding-top: 10px;
+  }
+
+  .role-card[data-role="volunteer"] {
+    padding-top: 15px;
+  }
+
+  .role-logo {
+    width: 80%;
+    padding-right: 10px;
+  }
+
+  .role-description{
+    text-align: center;
+  }
 }
 </style>
