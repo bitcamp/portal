@@ -1599,11 +1599,26 @@ export default {
         this.form.citizen = null;
       }
 
-      this.valid_transport = this.form.transport !== undefined;
-      this.valid_transport_options = this.form.transportation_select.length > 0;
-      this.valid_transport_deposit = this.form.transport_deposit !== undefined;
-      valid_form =
-        valid_form && this && this.valid_transport_options && this.valid_transport_deposit;
+      if (this.form.transport !== undefined) {
+        this.valid_transport = false;
+        valid_form = false;
+      } else {
+        this.valid_transport = null;
+      }
+
+      if (this.form.transport && this.form.transportation_select.length === 0) {
+        this.valid_transport_options = false;
+        valid_form = false;
+      } else {
+        this.valid_transport_options = null;
+      }
+
+      if (this.form.transport && this.form.transport_deposit === undefined) {
+        this.valid_transport_deposit = false;
+        valid_form = false;
+      } else {
+        this.valid_transport_deposit = null;
+      }
 
       if (this.form.school_year.length === 0) {
         this.valid_school_year = false;
