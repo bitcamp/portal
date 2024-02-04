@@ -1,0 +1,9 @@
+{
+    "Template": {
+      "TemplateName": "DetailedMentorRegistrationConfirmation",
+      "SubjectPart": "You're registered for Bitcamp 2024!",
+      "HtmlPart": "<h1>Hello {{name}}, you're looking pretty cool today</h1>",
+      "TextPart": "Hey {{firstName}},\r\n\r\nThank you for registering as a mentor for Bitcamp 2024!\r\nLooking forward to seeing you in April,\r\n\r\nThe Bitcamp Organizing Team"
+    }
+  }
+  

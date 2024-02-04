@@ -14,6 +14,7 @@ provider:
     RESUMES_TABLE: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
     VOLUNTEER_TABLE: ${file(./config/${self:provider.stage}.json):VOLUNTEER_TABLE}
+    MENTOR_TABLE: ${file(./config/${self:provider.stage}.json):MENTOR_TABLE}
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
     SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME: ${file(./config/${self:provider.stage}.json):SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME}
@@ -66,6 +67,17 @@ functions:
     events:
       - http:
           path: register-volunteer
+          method: post
+          cors: true
+    memorySize: 256
+    timeout: 15
+    provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
+  register_mentor:
+    handler: mentorHandler.registerMentor
+    description: Adds a new mentor registration to the database
+    events:
+      - http:
+          path: register-mentor
           method: post
           cors: true
     memorySize: 256
