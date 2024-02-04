@@ -694,19 +694,19 @@ export default {
 
                 const resp = await this.performPostRequest(
                     this.getEnvVariable("BACKEND_ENDPOINT"),
-                    "register",
+                    "register-mentor",
                     this.form
                 );
 
                 this.isSending = false; // done submitting
 
-                if (resp && resp.referral_id) {
+                if (resp) {
                     this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
-                    this.track({
-                        random_id: this.random_id,
-                        key: "referral_id",
-                        value: resp.referral_id,
-                    });
+                    // this.track({
+                    //     random_id: this.random_id,
+                    //     key: "referral_id",
+                    //     value: resp.referral_id,
+                    // });
                 } else {
                     this.showErrorToast();
                 }
