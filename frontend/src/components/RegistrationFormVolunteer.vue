@@ -454,17 +454,21 @@ export default {
 
                 this.isSending = false; // done submitting
 
-                if (resp && resp.referral_id) {
+                // console.log(resp);
+
+                if (resp) {
                     this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
-                    this.track({
-                        random_id: this.random_id,
-                        key: "referral_id",
-                        value: resp.referral_id,
-                    });
+                    // this.track({
+                    //     random_id: this.random_id,
+                    //     key: "referral_id",
+                    //     value: resp.referral_id,
+                    // });
                 } else {
+                    // console.log('Error 1');
                     this.showErrorToast();
                 }
             } else {
+                // console.log('Error 2');
                 this.showErrorToast();
             }
         },
