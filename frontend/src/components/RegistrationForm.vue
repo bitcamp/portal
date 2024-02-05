@@ -407,8 +407,8 @@
                 This information will be used for recruitment purposes only. Bitcamp will not be
                 sending this data to any third-parties outside of sponsors.
               </p>
-              <b-form-radio value="true"> Yes </b-form-radio>
-              <b-form-radio value="false"> No </b-form-radio>
+              <b-form-radio v-bind:value="true"> Yes </b-form-radio>
+              <b-form-radio v-bind:value="false"> No </b-form-radio>
             </b-form-radio-group>
           </b-form-group>
         </b-form-row>
@@ -422,23 +422,67 @@
           @waitlisted="updateWaitlistTrack"
         />
 
-        <div v-show="!no_transport_unis.includes(form.school)">
-          <hr />
-          <h4>Travel and Transportation</h4>
+        <!-- Optional quantum selection 1 -->
+        <hr />
+        <b-form-row>
+          <b-form-group 
+            v-if="this.form.QUANTUM_SELECTED" 
+            label="Would you like to be placed in the beginner or advanced quantum track?*"
+            class="col-md-12"
+            label-for="quantum-survey"
+          >
+            <b-form-radio-group id="quantum-survey" v-model="form.selected_quantum_survey_track"
+              class="font-weight pt-2" :state="quantum_survey_1">
+              <b-form-radio value="r"> Beginner </b-form-radio>
+              <b-form-radio value="g"> Advanced </b-form-radio>
+            </b-form-radio-group>
+            <b-form-invalid-feedback :state="quantum_survey_1">
+              Please select an answer
+            </b-form-invalid-feedback>
+          </b-form-group>
 
-          <b-form-row>
+          <!-- Quantum selection 2 -->
+
+          <b-form-group 
+            label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a 
+                  hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops 
+                  are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how 
+                  to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack! 
+                  Would you like us to share this content with you?*"
+            label-for="beginner-question"
+            class="col-md-12 pt-2"
+          >
+            <b-form-radio-group id="beginner-question" v-model="form.selected_quantum_survey_guide"
+              class="font-weight-normal pt-2" :state="quantum_survey_2">
+              <b-form-radio value="r"> Yes </b-form-radio>
+              <b-form-radio value="g"> No </b-form-radio>
+            </b-form-radio-group>
+            <b-form-invalid-feedback :state="quantum_survey_2">
+              Please select an answer
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+        
+        <!-- Travel and Transportation -->
+        <div v-if="!no_transport_unis.includes(form.school)">
+          <h4>Travel and Transportation</h4>
+          
+          <b-form-row
+            class="pt-3"
+          > 
             <b-form-group
               label="Would you need travel assistance to the hackathon?*"
-              label-for="transport-bool"
               class="col-md-7"
+              label-for="transport-bool"
             >
               <b-form-radio-group
                 id="transport-bool"
                 v-model="form.transport"
                 :state="valid_transport"
+                class="pt-2"
               >
-                <b-form-radio value=true>Yes</b-form-radio>
-                <b-form-radio value=false>No</b-form-radio>
+                <b-form-radio v-bind:value="true">Yes</b-form-radio>
+                <b-form-radio v-bind:value="false">No</b-form-radio>
               </b-form-radio-group>
               <b-form-invalid-feedback :state="valid_transport">
                 Please select an answer
@@ -446,7 +490,7 @@
             </b-form-group>
 
             <b-form-group
-              v-show="form.transport"
+              v-if="form.transport"
               label="What is your preferred method of transportation assistance?*"
               label-for="transport-options"
               class="col-md-12"
@@ -454,7 +498,7 @@
               <b-form-group
                 id="transport-options"
                 v-slot="{ ariaDescribedby }"
-                class="mt-2 mb-1"
+                class="mt-3 mb-1"
                 :state="valid_transport_options"
               >
                 <b-form-checkbox
@@ -475,7 +519,7 @@
               <b-form-group
                 label="Would you be willing to pay a small, refundable deposit to secure your seat on any method of travel assistance?*"
                 label-for="transport-deposit"
-                class="mt-2 mb-1"
+                class="mt-3"
 
               >
                 <b-form-radio-group
@@ -495,35 +539,6 @@
             </b-form-group>
           </b-form-row>
         </div>
-
-        <!-- Optional quantum selection 1 -->
-        <hr />
-        <b-form-group v-if="this.form.QUANTUM_SELECTED" class="font-weight-bold"
-          label="Would you like to be placed in the beginner or advanced quantum track?*">
-          <b-form-radio-group id="quantum-survey-1" v-model="form.selected_quantum_survey_track"
-            class="font-weight-normal pt-2" :state="quantum_survey_1">
-            <b-form-radio value="r"> Beginner </b-form-radio>
-            <b-form-radio value="g"> Advanced </b-form-radio>
-          </b-form-radio-group>
-          <b-form-invalid-feedback :state="quantum_survey_1">
-            Please select an answer
-          </b-form-invalid-feedback>
-          <hr />
-        </b-form-group>
-
-        <!-- Quantum selection 2 -->
-
-        <b-form-group class="font-weight-bold"
-          label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack! Would you like us to share this content with you?*">
-          <b-form-radio-group id="quantum-survey-2" v-model="form.selected_quantum_survey_guide"
-            class="font-weight-normal pt-2" :state="quantum_survey_2">
-            <b-form-radio value="r"> Yes </b-form-radio>
-            <b-form-radio value="g"> No </b-form-radio>
-          </b-form-radio-group>
-          <b-form-invalid-feedback :state="quantum_survey_2">
-            Please select an answer
-          </b-form-invalid-feedback>
-        </b-form-group>
 
         <!-- Shipping Address -->
         <hr />
