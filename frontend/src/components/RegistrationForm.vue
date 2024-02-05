@@ -461,7 +461,7 @@
                 <b-form-checkbox
                   v-for="option in transportation_options"
                   :key="option.value"
-                  v-model="form.transport_select"
+                  v-model="transport_select"
                   :value="option.value"
                   :aria-describedby="ariaDescribedby"
                   :state="valid_transport_options"
@@ -1246,6 +1246,7 @@ export default {
         { text: "Kosher", value: "kosher" },
         { text: "Halal", value: "halal" },
       ],
+      transport_select: [],
     };
   },
 
@@ -1417,6 +1418,9 @@ export default {
 
       return heard_from_string;
     },
+    createTransportString() {
+      return this.transport_select.join(",");
+    },
     uncheckDietaryRestrictions() {
       this.diet_select = [];
       this.diet_other = false;
@@ -1499,6 +1503,7 @@ export default {
         this.form.dietary_restrictions = this.createDietaryRestrictionString();
         this.form.ethnicity = this.createEthnicityString();
         this.form.heard_from = this.createHeardFromString();
+        this.form.transport_select = this.createTransportString();
 
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
@@ -1605,7 +1610,7 @@ export default {
         this.valid_transport = null;
       }
 
-      if (this.form.transport && this.form.transport_select.length === 0) {
+      if (this.form.transport && this.transport_select.length === 0) {
         this.valid_transport_options = false;
         valid_form = false;
       } else {
