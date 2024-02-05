@@ -408,8 +408,8 @@
                 This information will be used for recruitment purposes only. Bitcamp will not be
                 sending this data to any third-parties outside of sponsors.
               </p>
-              <b-form-radio value="yes"> Yes </b-form-radio>
-              <b-form-radio value="no"> No </b-form-radio>
+              <b-form-radio value="true"> Yes </b-form-radio>
+              <b-form-radio value="false"> No </b-form-radio>
             </b-form-radio-group>
           </b-form-group>
         </b-form-row>
@@ -438,8 +438,8 @@
                 v-model="form.transport"
                 :state="valid_transport"
               >
-                <b-form-radio v-bind:value="true">Yes</b-form-radio>
-                <b-form-radio v-bind:value="false">No</b-form-radio>
+                <b-form-radio value=true>Yes</b-form-radio>
+                <b-form-radio value=false>No</b-form-radio>
               </b-form-radio-group>
               <b-form-invalid-feedback :state="valid_transport">
                 Please select an answer
@@ -486,8 +486,8 @@
                   class="pt-2"
                 >
                   <p class="note">If you are in attendance, we will refund your deposit</p>
-                  <b-form-radio v-bind:value=true>Yes</b-form-radio>
-                  <b-form-radio v-bind:value=false>No</b-form-radio>
+                  <b-form-radio value=true>Yes</b-form-radio>
+                  <b-form-radio value=false>No</b-form-radio>
                 </b-form-radio-group>
                 <b-form-invalid-feedback :state="valid_transport_deposit">
                   Please select an answer
@@ -1062,6 +1062,7 @@ export default {
         referred_by: "",
         track_selected: "general",
         waitlist_track_selected: "",
+        citizen: null,
       },
 
       isSending: false,
@@ -1599,9 +1600,9 @@ export default {
         this.valid_recruit = null;
       }
 
-      if (this.form.citizen === undefined) {
-        this.form.citizen = null;
-      }
+      // if (this.form.citizen === null) {
+      //   this.form.citizen = null;
+      // }
 
       if (this.form.transport === null) {
         this.valid_transport = false;
