@@ -397,7 +397,7 @@
             id="input-group-citizen"
             label="Are you a US citizen?"
             label-for="input-citizen"
-            class="col-md-7"
+            class="col-md-12"
           >
             <b-form-radio-group
               id="input-citizen"
@@ -426,76 +426,75 @@
         <div v-show="!no_transport_unis.includes(form.school)">
           <hr />
           <h4>Travel and Transportation</h4>
-          <b-form-group
-            label="Would you need travel assistance to the hackathon?*"
-            label-for="transport-bool"
-          >
-            <b-form-radio-group
-              id="transport-bool"
-              v-model="form.transport"
-              :state="valid_transport"
-            >
-              <b-form-radio v-bind:value="true">Yes</b-form-radio>
-              <b-form-radio v-bind:value="false">No</b-form-radio>
-            </b-form-radio-group>
-            <b-form-invalid-feedback :state="valid_transport">
-              Please select an answer
-            </b-form-invalid-feedback>
-          </b-form-group>
 
-          <b-form-group
-            v-show="form.transport"
-            label="What is your preferred method of transportation assistance?*"
-            label-for="transport-options"
-          >
+          <b-form-row>
             <b-form-group
-              id="transport-options"
-              v-slot="{ ariaDescribedby }"
-              class="mt-2 mb-1"
-              :state="valid_transport_options"
+              label="Would you need travel assistance to the hackathon?*"
+              label-for="transport-bool"
+              class="col-md-7"
             >
-              <b-form-checkbox
-                v-for="option in transportation_options"
-                :key="option.value"
-                v-model="form.transportation_select"
-                :value="option.value"
-                :aria-describedby="ariaDescribedby"
-                :state="valid_transport_options"
-                name="flavour-3a"
-              >
-                {{ option.text }}
-              </b-form-checkbox>
-              <b-form-invalid-feedback :state="valid_transport_options">
-                Please select an option
-              </b-form-invalid-feedback>
-            </b-form-group>
-
-            <b-form-group
-              label="Would you be willing to pay a small, refundable deposit to secure your seat on any method of travel assistance?*"
-              label-for="transport-deposit"
-            >
-              <p class="note">If you are in attendance, we will refund your deposit</p>
               <b-form-radio-group
-                id="transport-deposit"
-                v-model="form.transport_deposit"
-                :state="valid_transport_deposit"
+                id="transport-bool"
+                v-model="form.transport"
+                :state="valid_transport"
               >
                 <b-form-radio v-bind:value="true">Yes</b-form-radio>
                 <b-form-radio v-bind:value="false">No</b-form-radio>
               </b-form-radio-group>
-              <b-form-invalid-feedback :state="valid_transport_deposit">
+              <b-form-invalid-feedback :state="valid_transport">
                 Please select an answer
               </b-form-invalid-feedback>
             </b-form-group>
 
-            <b-form-input
-              v-if="heard_from_other"
-              v-model="heard_from_other_text"
-              class="col-12 col-md-12"
-              aria-label="Heard From Other Text Box"
-              placeholder="Other source"
-            />
-          </b-form-group>
+            <b-form-group
+              v-show="form.transport"
+              label="What is your preferred method of transportation assistance?*"
+              label-for="transport-options"
+              class="col-md-12"
+            >
+              <b-form-group
+                id="transport-options"
+                v-slot="{ ariaDescribedby }"
+                class="mt-2 mb-1"
+                :state="valid_transport_options"
+              >
+                <b-form-checkbox
+                  v-for="option in transportation_options"
+                  :key="option.value"
+                  v-model="form.transport_select"
+                  :value="option.value"
+                  :aria-describedby="ariaDescribedby"
+                  :state="valid_transport_options"
+                  name="flavour-3a"
+                >
+                  {{ option.text }}
+                </b-form-checkbox>
+                <b-form-invalid-feedback :state="valid_transport_options">
+                  Please select an option
+                </b-form-invalid-feedback>
+              </b-form-group>
+              <b-form-group
+                label="Would you be willing to pay a small, refundable deposit to secure your seat on any method of travel assistance?*"
+                label-for="transport-deposit"
+                class="mt-2 mb-1"
+
+              >
+                <b-form-radio-group
+                  id="transport-deposit"
+                  v-model="form.transport_deposit"
+                  :state="valid_transport_deposit"
+                  class="pt-2"
+                >
+                  <p class="note">If you are in attendance, we will refund your deposit</p>
+                  <b-form-radio v-bind:value=true>Yes</b-form-radio>
+                  <b-form-radio v-bind:value=false>No</b-form-radio>
+                </b-form-radio-group>
+                <b-form-invalid-feedback :state="valid_transport_deposit">
+                  Please select an answer
+                </b-form-invalid-feedback>
+              </b-form-group>
+            </b-form-group>
+          </b-form-row>
         </div>
 
         <!-- Shipping Address -->
@@ -1024,7 +1023,7 @@ export default {
         MLH_emails: false,
         MLH_conduct: false,
         MLH_privacy: false,
-        underrepresented_Gender: false,
+        // underrepresented_Gender: false,
         name: "",
         first_name: "",
         last_name: "",
@@ -1043,9 +1042,9 @@ export default {
         resume_id: "",
         age: "",
         minors_form: false,
-        transport: undefined,
-        transportation_select: [],
-        transportation_deposit: undefined,
+        transport: null,
+        transport_select: "",
+        transport_deposit: null,
         address: "",
         address1: "",
         address2: "",
@@ -1091,7 +1090,7 @@ export default {
       valid_waitlist_track_selected: null,
       valid_address: null,
       valid_tshirt_size: null,
-      valid_underrepresented_Gender: null,
+      // valid_underrepresented_Gender: null,
       valid_hackcount: null,
       quantum_survey_1: null,
       quantum_survey_2: null,
@@ -1599,21 +1598,21 @@ export default {
         this.form.citizen = null;
       }
 
-      if (this.form.transport !== undefined) {
+      if (this.form.transport === null) {
         this.valid_transport = false;
         valid_form = false;
       } else {
         this.valid_transport = null;
       }
 
-      if (this.form.transport && this.form.transportation_select.length === 0) {
+      if (this.form.transport && this.form.transport_select.length === 0) {
         this.valid_transport_options = false;
         valid_form = false;
       } else {
         this.valid_transport_options = null;
       }
 
-      if (this.form.transport && this.form.transport_deposit === undefined) {
+      if (this.form.transport && this.form.transport_deposit === null) {
         this.valid_transport_deposit = false;
         valid_form = false;
       } else {
