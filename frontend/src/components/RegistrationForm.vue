@@ -389,11 +389,10 @@
               first!
             </b-form-invalid-feedback>
           </b-form-group>
-        </b-form-row>
 
-        <!-- Citizenship question -->
-        <b-form-row>
+          <!-- Citizen Question -->
           <b-form-group
+            v-if="agreeToRecruitment()"
             id="input-group-citizen"
             label="Are you a US citizen?"
             label-for="input-citizen"
@@ -1289,6 +1288,9 @@ export default {
   },
 
   methods: {
+    agreeToRecruitment() {
+      return ["yes fte", "yes both", "yes intern"].includes(this.form.recruit);
+    },
     updateTrack(value) {
       if (value === "quantum") {
         this.form.QUANTUM_SELECTED = true;
