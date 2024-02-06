@@ -464,9 +464,8 @@
         </b-form-row>
         
         <!-- Travel and Transportation -->
-        <div v-if="!no_transport_unis.includes(form.school)">
+        <div v-if="!atNoTransportUnis()">
           <h4>Travel and Transportation</h4>
-          
           <b-form-row
             class="pt-3"
           > 
@@ -529,8 +528,8 @@
                   class="pt-2"
                 >
                   <p class="note">If you are in attendance, we will refund your deposit</p>
-                  <b-form-radio value=true>Yes</b-form-radio>
-                  <b-form-radio value=false>No</b-form-radio>
+                  <b-form-radio v-bind:value=true>Yes</b-form-radio>
+                  <b-form-radio v-bind:value=false>No</b-form-radio>
                 </b-form-radio-group>
                 <b-form-invalid-feedback :state="valid_transport_deposit">
                   Please select an answer
@@ -1348,6 +1347,12 @@ export default {
   },
 
   methods: {
+    atNoTransportUnis() {
+      if (!this.form.school) {
+        return false;
+      }
+      return this.no_transport_unis.includes(this.form.school);
+    },
     selectedQuantumTrack() {
       return this.form.track_selected === "quantum";
     },
@@ -1665,21 +1670,21 @@ export default {
       //   this.form.citizen = null;
       // }
 
-      if (this.form.transport === null) {
+      if (!this.atNoTransportUnis() && this.form.transport === null) {
         this.valid_transport = false;
         valid_form = false;
       } else {
         this.valid_transport = null;
       }
 
-      if (this.form.transport && this.transport_select.length === 0) {
+      if (!this.atNoTransportUnis() && this.form.transport && this.transport_select.length === 0) {
         this.valid_transport_options = false;
         valid_form = false;
       } else {
         this.valid_transport_options = null;
       }
 
-      if (this.form.transport && this.form.transport_deposit === null) {
+      if (!this.atNoTransportUnis() && this.form.transport && this.form.transport_deposit === null) {
         this.valid_transport_deposit = false;
         valid_form = false;
       } else {
