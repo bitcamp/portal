@@ -83,7 +83,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       // different from front-end
       transport_assistance: body.transport,
       transport_select: body.transport_select,
-      transport_deposit: transport_deposit,
+      transport_deposit: body.transport_deposit,
       address: body.address,
       address1: body.address1,
       address2: body.address2,
