@@ -154,15 +154,16 @@
                 <b-form-group id="input-dietary-restrictions" label="Do you have any dietary restrictions?*"
                     label-for="input-dietary-restrictions" class="col-12 col-md-6" style="padding: 0rem;">
                     <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                        <b-form-checkbox v-model="diet_none" @change="uncheckDietaryRestrictions()">
+                        <b-form-checkbox v-model="diet_none" @change="uncheckDietaryRestrictions()" :state="valid_diet">
                             None
                         </b-form-checkbox>
                         <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
                             :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a"
-                            :disabled="diet_none">
+                            :disabled="diet_none"
+                            :state="valid_diet">
                             {{ option.text }}
                         </b-form-checkbox>
-                        <b-form-checkbox v-model="diet_other" :disabled="diet_none">
+                        <b-form-checkbox v-model="diet_other" :disabled="diet_none" :state="valid_diet">
                             Other
                         </b-form-checkbox>
                         <b-form-input v-if="diet_other" v-model="diet_other_text" class="col-12 col-md-12"
