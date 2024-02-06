@@ -206,9 +206,7 @@
                 </b-form-checkbox>
 
                 <b-form-checkbox id="checkbox-3" v-model="form.MLH_emails" name="checkbox-3" class="checkbox">
-                    I authorize MLH to send me an email where I can further
-                    opt into the MLH Hacker, Events, or Organizer Newsletters
-                    and other communications from MLH.
+                    I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.
                 </b-form-checkbox>
 
                 <!-- Submit -->
