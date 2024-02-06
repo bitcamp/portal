@@ -86,7 +86,7 @@
         <p class="info" v-if="form.age.length > 0 && form.age > 2 && form.age < 18">
           To attend Bitcamp as a minor, please fill out these
           <a
-            href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe"
+            href="https://drive.google.com/drive/folders/1XxyI8NuVOzgh0Ezu-2aEG1bRH9aA8MQ5?usp=drive_link"
             target="_blank"
             >minors forms</a
           >
