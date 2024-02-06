@@ -1348,9 +1348,6 @@ export default {
 
   methods: {
     atNoTransportUnis() {
-      if (!this.form.school) {
-        return false;
-      }
       return this.no_transport_unis.includes(this.form.school);
     },
     selectedQuantumTrack() {
