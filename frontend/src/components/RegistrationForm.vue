@@ -1084,7 +1084,7 @@ export default {
         name: "",
         first_name: "",
         last_name: "",
-        pronouns: "",
+        // pronouns: "",
         country_of_residence: "",
         gender: "",
         ethnicity: "",
