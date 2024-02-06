@@ -426,17 +426,17 @@
         <hr />
         <b-form-row>
           <b-form-group 
-            v-if="this.form.QUANTUM_SELECTED" 
+            v-if="this.selectedQuantumTrack()" 
             label="Would you like to be placed in the beginner or advanced quantum track?*"
             class="col-md-12"
             label-for="quantum-survey"
           >
-            <b-form-radio-group id="quantum-survey" v-model="form.selected_quantum_survey_track"
-              class="font-weight pt-2" :state="quantum_survey_1">
-              <b-form-radio value="r"> Beginner </b-form-radio>
-              <b-form-radio value="g"> Advanced </b-form-radio>
+            <b-form-radio-group id="quantum-survey" v-model="form.quantum_track"
+              class="font-weight pt-2" :state="valid_quantum_survey">
+              <b-form-radio value="beginner"> Beginner </b-form-radio>
+              <b-form-radio value="advanced"> Advanced </b-form-radio>
             </b-form-radio-group>
-            <b-form-invalid-feedback :state="quantum_survey_1">
+            <b-form-invalid-feedback :state="valid_quantum_survey">
               Please select an answer
             </b-form-invalid-feedback>
           </b-form-group>
@@ -452,12 +452,12 @@
             label-for="beginner-question"
             class="col-md-12 pt-2"
           >
-            <b-form-radio-group id="beginner-question" v-model="form.selected_quantum_survey_guide"
-              class="font-weight-normal pt-2" :state="quantum_survey_2">
-              <b-form-radio value="r"> Yes </b-form-radio>
-              <b-form-radio value="g"> No </b-form-radio>
+            <b-form-radio-group id="beginner-question" v-model="form.beginner_content_opt_in"
+              class="font-weight-normal pt-2" :state="valid_beginner_survey">
+              <b-form-radio v-bind:value="true"> Yes </b-form-radio>
+              <b-form-radio v-bind:value="false"> No </b-form-radio>
             </b-form-radio-group>
-            <b-form-invalid-feedback :state="quantum_survey_2">
+            <b-form-invalid-feedback :state="valid_beginner_survey">
               Please select an answer
             </b-form-invalid-feedback>
           </b-form-group>
@@ -866,10 +866,11 @@
                 :value="option.value"
                 :aria-describedby="ariaDescribedby"
                 name="flavour-3a"
+                :state="valid_heard_from"
               >
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="heard_from_other"> Other </b-form-checkbox>
+              <b-form-checkbox v-model="heard_from_other" :state="valid_heard_from"> Other </b-form-checkbox>
               <b-form-invalid-feedback :state="valid_heard_from">
                 Please select an option
               </b-form-invalid-feedback>
@@ -890,8 +891,15 @@
             label-for="input-dietary-restrictions"
             class="col-12 col-md-6"
           >
-            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-              <b-form-checkbox v-model="diet_none" @change="uncheckDietaryRestrictions()">
+            <b-form-group 
+              v-slot="{ ariaDescribedby }" 
+              class="mt-2 mb-1"
+            >
+              <b-form-checkbox 
+                v-model="diet_none" 
+                @change="uncheckDietaryRestrictions()"
+                :state="valid_diet"
+              >
                 None
               </b-form-checkbox>
               <b-form-checkbox
@@ -902,10 +910,17 @@
                 :aria-describedby="ariaDescribedby"
                 name="flavour-3a"
                 :disabled="diet_none"
+                :state="valid_diet"
               >
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="diet_other" :disabled="diet_none"> Other </b-form-checkbox>
+              <b-form-checkbox 
+                v-model="diet_other" 
+                :disabled="diet_none"
+                :state="valid_diet"
+              > 
+                Other 
+              </b-form-checkbox>
               <b-form-invalid-feedback :state="valid_diet">
                 Please select your dietary restrictions ("None" is an option)
               </b-form-invalid-feedback>
@@ -1062,7 +1077,6 @@ export default {
       form: {
         email: this.$route.query.redo != null ? this.$route.query.redo : "",
         phone: "",
-        QUANTUM_SELECTED: false,
         MLH_emails: false,
         MLH_conduct: false,
         MLH_privacy: false,
@@ -1106,6 +1120,8 @@ export default {
         track_selected: "general",
         waitlist_track_selected: "",
         citizen: null,
+        quantum_track: null,
+        beginner_content_opt_in: null,
       },
 
       isSending: false,
@@ -1136,8 +1152,8 @@ export default {
       valid_tshirt_size: null,
       // valid_underrepresented_Gender: null,
       valid_hackcount: null,
-      quantum_survey_1: null,
-      quantum_survey_2: null,
+      valid_quantum_survey: null,
+      valid_beginner_survey: null,
       valid_survey_1: null,
       valid_survey_2: null,
       valid_survey_3: null,
@@ -1332,17 +1348,13 @@ export default {
   },
 
   methods: {
+    selectedQuantumTrack() {
+      return this.form.track_selected === "quantum";
+    },
     agreeToRecruitment() {
       return ["yes fte", "yes both", "yes intern"].includes(this.form.recruit);
     },
     updateTrack(value) {
-
-      if (value === "quantum") {
-        this.form.QUANTUM_SELECTED = true;
-      } else {
-        this.form.selected_quantum_survey_track = null;
-        this.form.QUANTUM_SELECTED = false;
-      }
       this.form.track_selected = value;
     },
 
@@ -1779,18 +1791,18 @@ export default {
         this.valid_track_selected = null;
       }
 
-      if (!this.form.selected_quantum_survey_track && this.form.QUANTUM_SELECTED) {
-        this.quantum_survey_1 = false;
+      if (this.selectedQuantumTrack() && this.form.quantum_track === null) {
+        this.valid_quantum_survey = false;
         valid_form = false;
       } else {
-        this.quantum_survey_1 = null;
+        this.valid_quantum_survey = null;
       }
 
-      if (!this.form.selected_quantum_survey_guide) {
-        this.quantum_survey_2 = false;
+      if (this.form.beginner_content_opt_in === null) {
+        this.valid_beginner_survey = false;
         valid_form = false;
       } else {
-        this.quantum_survey_2 = null;
+        this.valid_beginner_survey = null;
       }
 
       if (!this.form.selected_survey_1) {
