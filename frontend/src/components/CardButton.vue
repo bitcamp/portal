@@ -56,6 +56,7 @@ export default {
   padding: 3px 4px;
   border-radius: 10px;
   transition:all .3s ease;
+  /*max-width: 100%; */
 }
 
 .effect-box {
@@ -68,7 +69,7 @@ export default {
 }
 
 .role-title {
-  font-size: calc(0.8rem + 1vw);
+  font-size: calc(0.8rem + 0.7vw);
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
   border-radius: 5px;
   padding: 5px 20px;
