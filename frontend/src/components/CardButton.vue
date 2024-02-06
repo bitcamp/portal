@@ -69,7 +69,7 @@ export default {
 
 .role-title {
   font-size: calc(0.8rem + 1vw);
-  font-family: "M PLUS Rounded 1c", sans-serif;
+  /* font-family: "M PLUS Rounded 1c", sans-serif; */
   border-radius: 5px;
   padding: 5px 20px;
   margin-bottom: 0;
@@ -79,7 +79,7 @@ export default {
 
 .role-description {
   font-size: calc(0.8rem + 0.2vw);
-  font-family: "M PLUS Rounded 1c", sans-serif;
+  /* font-family: "M PLUS Rounded 1c", sans-serif; */
 }
 
 /* Specific styles for each button */
@@ -155,7 +155,7 @@ export default {
 
 .role-logo {
   width: 100%;
-  height: auto;
+  max-height: 120px;
   margin-bottom: 10px;
 }
 
