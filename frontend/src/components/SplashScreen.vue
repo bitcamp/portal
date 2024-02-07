@@ -13,7 +13,7 @@
             the next generation of tech enthusiasts. Become a key figure in shaping the 
             experience for participants as they navigate through the hackathon challenges."
             role-u-r-l="/mentor"
-            svg-image-path="blue-marshie.svg"
+            svg-image-path="splash-screen/blue-marshie.svg"
           />
         </b-col>
         <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-2">
@@ -24,7 +24,7 @@
             and innovation. Dive into challenging projects, showcase your coding skills, 
             and be part of a community dedicated to pushing the boundaries of technology."
             role-u-r-l="/hacker"
-            svg-image-path="red-marshie.svg"
+            svg-image-path="splash-screen/red-marshie.svg"
           />
         </b-col>
         <b-col :md="screenWidth >= 768 ? 12 : 4" class="mb-4 marshie-card order-sm-3">
@@ -35,7 +35,7 @@
             of our hackathon. From logistics to participant assistance, your
             contribution will help create a positive environment for everyone!"
             role-u-r-l="/volunteer"
-            svg-image-path="green-marshie.svg"
+            svg-image-path="splash-screen/green-marshie.svg"
           />
         </b-col>
       </b-row>
