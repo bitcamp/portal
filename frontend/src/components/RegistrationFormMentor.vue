@@ -82,7 +82,7 @@
                 <b-form-row v-if="form.selected_school_or_company === 'yes'">
                     <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
                         <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
-                            input-name="school" placeholder="University of Maryland at College Park"
+                            input-name="school" placeholder="University of Maryland, College Park"
                             :data="university_options" no-results-info="No results found." :disabled="school_other_selected"
                             :state="valid_school" />
                         <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">

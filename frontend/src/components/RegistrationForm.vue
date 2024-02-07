@@ -244,7 +244,7 @@
               v-model="form.school"
               :input-class="school_class"
               input-name="school"
-              placeholder="University of Maryland at College Park"
+              placeholder="University of Maryland, College Park"
               :data="university_options"
               noResultsInfo="No results found."
               :disabled="school_other_selected"
