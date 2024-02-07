@@ -85,12 +85,9 @@
 
         <p class="info" v-if="form.age.length > 0 && form.age > 2 && form.age < 18">
           To attend Bitcamp as a minor, please fill out these
-          <a
-            href="https://drive.google.com/drive/folders/1XxyI8NuVOzgh0Ezu-2aEG1bRH9aA8MQ5?usp=drive_link"
-            target="_blank"
-            >minors forms</a
-          >
-          and email them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+          <a href="https://drive.google.com/drive/folders/1fVcfhQ7AfGJZ_m-QnVgXmE5ghgtxr9vr?usp=drive_link" target="_blank">minors
+            forms</a> and email them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
         </p>
 
         <!-- Email and Phone Number-->
@@ -948,12 +945,9 @@
           class="checkbox"
         >
           I have filled out the
-          <a
-            href="https://drive.google.com/drive/folders/1XxyI8NuVOzgh0Ezu-2aEG1bRH9aA8MQ5?usp=drive_link"
-            target="_blank"
-            >minors forms</a
-          >
-          and emailed them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+          <a href="https://drive.google.com/drive/folders/1fVcfhQ7AfGJZ_m-QnVgXmE5ghgtxr9vr?usp=drive_link" target="_blank">minors
+            forms</a> and emailed them to
+          <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
           <b-form-invalid-feedback :state="valid_minors_form">
             Please fill out the minors forms
           </b-form-invalid-feedback>
@@ -997,14 +991,8 @@
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox
-          id="checkbox-3"
-          v-model="form.MLH_emails"
-          name="checkbox-3"
-          class="checkbox"
-        >
-          I authorize MLH to send me an email where I can further opt into the MLH Hacker, Events,
-          or Organizer Newsletters and other communications from MLH.
+        <b-form-checkbox id="checkbox-3" v-model="form.MLH_emails" name="checkbox-3" class="checkbox">
+          I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.
         </b-form-checkbox>
 
         <!-- Submit -->
