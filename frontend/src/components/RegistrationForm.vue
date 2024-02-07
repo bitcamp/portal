@@ -376,14 +376,14 @@
               v-model="form.resume"
               name="resume"
               accept=".pdf, .doc, .docx, .txt"
-              placeholder="Upload Resume"
+              placeholder="Upload Resume (size limit: 5MB)"
               drop-placeholder="Drop file here..."
               :state="valid_resume"
               @input="upload"
             />
             <b-form-invalid-feedback :state="valid_resume">
-              We couldn't upload your resume. Try again later, or check that you entered your name
-              first!
+              We couldn't upload your resume. Check that you entered your name
+              first, and make sure your file size is less than 5MB!
             </b-form-invalid-feedback>
           </b-form-group>
 
