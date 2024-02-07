@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import SplashScreen from '../components/SplashScreen.vue'
 import Register from '../views/Register.vue';
 import RegistrationClosed from '../components/RegistrationClosed.vue'
 import RegisterMentor from "../views/RegisterMentors.vue";
@@ -7,6 +8,11 @@ import RegisterVolunteer from "../views/RegisterVolunteers.vue"
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: '/',
+    name: 'Splash Screen',
+    component: SplashScreen,
+  },
   {
     path: '/hacker',
     name: 'Register',
