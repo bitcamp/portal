@@ -90,6 +90,10 @@ export default {
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
 }
 
+.tooltip { 
+  top: 0; 
+}
+
 /* Specific styles for each button */
 .role-card[data-role="hacker"] .role-title {
   background-color: #B42F2F;
