@@ -1,7 +1,7 @@
 <!-- CardButton.vue -->
 <template>
   <b-card class="role-card">
-    <div>
+    <div class="role-body">
       <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
 
       <div
@@ -53,11 +53,23 @@ export default {
   border: none;
   position: relative;
   overflow: hidden;
+  height: fit-content;
 }
 
 .card-body {
-  padding: 0;
-  height: 100%;
+  padding: 1rem;
+  height: 18rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.role-body {
+  height: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title-container {
@@ -67,7 +79,15 @@ export default {
   padding: 3px 4px;
   border-radius: 10px;
   transition: all 0.3s ease;
-  /*max-width: 100%; */
+  margin: 0.4rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 1007px) {
+  .title-container {
+    width: 13rem;
+  }
 }
 
 .effect-box {
@@ -75,17 +95,24 @@ export default {
   z-index: -1;
   border-radius: 10px;
   right: 1px;
-  height: 110%;
+  height: calc(100% + 0.4rem);
+  width: calc(100% + 0.4rem);
   transition: all 0.3s ease;
 }
 
 .role-title {
-  font-size: calc(0.8rem + 0.7vw);
+  font-size: 1.5rem;
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
   border-radius: 5px;
-  padding: 5px 20px;
+  padding: 5px;
   margin-bottom: 0;
   transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 1007px) {
+  .role-title {
+    font-size: 1.1rem;
+  }
 }
 
 .role-description {
@@ -111,13 +138,11 @@ export default {
 
 .role-card[data-role="hacker"] .effect-box {
   background-color: #b42f2f;
-  width: 106%;
 }
 
 .role-card[data-role="hacker"] .title-container {
   background-color: #ffb169;
   border: 3px solid #e03728;
-  margin: 20px;
 }
 
 .role-card[data-role="mentor"] .role-title {
@@ -133,13 +158,11 @@ export default {
 
 .role-card[data-role="mentor"] .effect-box {
   background-color: #52a4d2;
-  width: 105%;
 }
 
 .role-card[data-role="mentor"] .title-container {
   background-color: #dbf2ff;
   border: 3px solid #51befa;
-  margin: 20px;
 }
 
 .role-card[data-role="volunteer"] .role-title {
@@ -155,13 +178,11 @@ export default {
 
 .role-card[data-role="volunteer"] .effect-box {
   background-color: #368d5a;
-  width: 104%;
 }
 
 .role-card[data-role="volunteer"] .title-container {
   background-color: #e9ffe6;
   border: 3px solid #3a9d63;
-  margin: 20px 0 !important;
 }
 
 .role-description {
@@ -184,7 +205,6 @@ export default {
   }
 
   .role-logo {
-    width: 80%;
     padding-right: 10px;
   }
 
