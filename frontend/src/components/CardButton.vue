@@ -4,7 +4,11 @@
     <div>
       <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
 
-      <div class="title-container" :style="{ backgroundColor: titleBackgroundColor }" @click="redirectToRole">
+      <div
+        class="title-container"
+        :style="{ backgroundColor: titleBackgroundColor }"
+        @click="redirectToRole"
+      >
         <div class="effect-box"></div>
         <div>
           <h2 class="role-title">
@@ -20,11 +24,11 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { VBTooltipPlugin } from 'bootstrap-vue'
-import { IconsPlugin } from 'bootstrap-vue'
-Vue.use(IconsPlugin)
-Vue.use(VBTooltipPlugin)
+import Vue from "vue";
+import { VBTooltipPlugin } from "bootstrap-vue";
+import { IconsPlugin } from "bootstrap-vue";
+Vue.use(IconsPlugin);
+Vue.use(VBTooltipPlugin);
 
 export default {
   name: "CardButtonComponent",
@@ -62,7 +66,7 @@ export default {
   cursor: pointer;
   padding: 3px 4px;
   border-radius: 10px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   /*max-width: 100%; */
 }
 
@@ -72,7 +76,7 @@ export default {
   border-radius: 10px;
   right: 1px;
   height: 110%;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 .role-title {
@@ -81,83 +85,82 @@ export default {
   border-radius: 5px;
   padding: 5px 20px;
   margin-bottom: 0;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
-
 
 .role-description {
   font-size: calc(0.8rem + 0.2vw);
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
 }
 
-.tooltip { 
-  top: 0; 
+.tooltip {
+  top: 0;
 }
 
 /* Specific styles for each button */
 .role-card[data-role="hacker"] .role-title {
-  background-color: #B42F2F;
-  color: #FFB169;
-  border: 3px solid #E03728;
+  background-color: #b42f2f;
+  color: #ffb169;
+  border: 3px solid #e03728;
 }
 
 .role-card[data-role="hacker"] .role-title:hover {
-  background-color: #FFB169;
-  color: #E03728;
+  background-color: #ffb169;
+  color: #e03728;
 }
 
 .role-card[data-role="hacker"] .effect-box {
-  background-color: #B42F2F;
+  background-color: #b42f2f;
   width: 106%;
 }
 
 .role-card[data-role="hacker"] .title-container {
-  background-color: #FFB169;
-  border: 3px solid #E03728;
+  background-color: #ffb169;
+  border: 3px solid #e03728;
   margin: 20px;
 }
 
 .role-card[data-role="mentor"] .role-title {
-  background-color: #52A4D2;
-  color: #DBF2FF;
-  border: 3px solid #51BEFA;
+  background-color: #52a4d2;
+  color: #dbf2ff;
+  border: 3px solid #51befa;
 }
 
 .role-card[data-role="mentor"] .role-title:hover {
-  background-color: #DBF2FF;
-  color: #51BEFA;
+  background-color: #dbf2ff;
+  color: #51befa;
 }
 
 .role-card[data-role="mentor"] .effect-box {
-  background-color: #52A4D2;
+  background-color: #52a4d2;
   width: 105%;
 }
 
 .role-card[data-role="mentor"] .title-container {
-  background-color: #DBF2FF;
-  border: 3px solid #51BEFA;
+  background-color: #dbf2ff;
+  border: 3px solid #51befa;
   margin: 20px;
 }
 
 .role-card[data-role="volunteer"] .role-title {
-  background-color: #368D5A;
-  color: #E9FFE6;
-  border: 3px solid #3A9D63;
+  background-color: #368d5a;
+  color: #e9ffe6;
+  border: 3px solid #3a9d63;
 }
 
 .role-card[data-role="volunteer"] .role-title:hover {
-  background-color: #E9FFE6;
-  color: #3A9D63;
+  background-color: #e9ffe6;
+  color: #3a9d63;
 }
 
 .role-card[data-role="volunteer"] .effect-box {
-  background-color: #368D5A;
+  background-color: #368d5a;
   width: 104%;
 }
 
 .role-card[data-role="volunteer"] .title-container {
-  background-color: #E9FFE6;
-  border: 3px solid #3A9D63;
+  background-color: #e9ffe6;
+  border: 3px solid #3a9d63;
   margin: 20px 0 !important;
 }
 
@@ -172,7 +175,6 @@ export default {
 }
 
 @media (max-width: 768px) {
-
   .role-card[data-role="mentor"] {
     padding-top: 10px;
   }
