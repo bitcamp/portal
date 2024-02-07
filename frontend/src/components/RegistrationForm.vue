@@ -50,7 +50,7 @@
 
         <p class="info" v-if="form.age.length > 0 && form.age > 2 && form.age < 18">
           To attend Bitcamp as a minor, please fill out these
-          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
+          <a href="https://drive.google.com/drive/folders/1fVcfhQ7AfGJZ_m-QnVgXmE5ghgtxr9vr?usp=drive_link" target="_blank">minors
             forms</a> and email them to
           <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
         </p>
@@ -481,7 +481,7 @@
         <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form"
           name="checkbox-0" :state="valid_minors_form" class="checkbox">
           I have filled out the
-          <a href="https://drive.google.com/drive/folders/1Hh98d0fhBS7RfUGwFsOf33wBE7QGhRpe" target="_blank">minors
+          <a href="https://drive.google.com/drive/folders/1fVcfhQ7AfGJZ_m-QnVgXmE5ghgtxr9vr?usp=drive_link" target="_blank">minors
             forms</a> and emailed them to
           <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
           <b-form-invalid-feedback :state="valid_minors_form">

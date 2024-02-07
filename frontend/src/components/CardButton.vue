@@ -1,24 +1,31 @@
 <!-- CardButton.vue -->
 <template>
   <b-card class="role-card">
-    <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
+    <div>
+      <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
 
-    <!-- Role Title -->
-    <div class="title-container" :style="{ backgroundColor: titleBackgroundColor }" @click="redirectToRole">
-      <div class="effect-box"></div>
-      <h2 class="role-title">
-        {{ roleTitle }}
-      </h2>
+      <div class="title-container" :style="{ backgroundColor: titleBackgroundColor }" @click="redirectToRole">
+        <div class="effect-box"></div>
+        <div>
+          <h2 class="role-title">
+            {{ roleTitle }}
+          </h2>
+        </div>
+      </div>
     </div>
-
-    <!-- Role Description -->
-    <b-card-text class="role-description">
-      {{ roleDescription }}
-    </b-card-text>
+    <div v-b-tooltip.hover.bottom :title="roleDescription">
+      <b-icon scale="1.5" icon="info-circle"></b-icon>
+    </div>
   </b-card>
 </template>
 
 <script>
+import Vue from 'vue';
+import { VBTooltipPlugin } from 'bootstrap-vue'
+import { IconsPlugin } from 'bootstrap-vue'
+Vue.use(IconsPlugin)
+Vue.use(VBTooltipPlugin)
+
 export default {
   name: "CardButtonComponent",
   props: {
@@ -55,7 +62,7 @@ export default {
   cursor: pointer;
   padding: 3px 4px;
   border-radius: 10px;
-  transition:all .3s ease;
+  transition: all .3s ease;
   /*max-width: 100%; */
 }
 
@@ -65,7 +72,7 @@ export default {
   border-radius: 10px;
   right: 1px;
   height: 110%;
-  transition:all .3s ease;
+  transition: all .3s ease;
 }
 
 .role-title {
@@ -74,7 +81,7 @@ export default {
   border-radius: 5px;
   padding: 5px 20px;
   margin-bottom: 0;
-  transition:all .3s ease;
+  transition: all .3s ease;
 }
 
 
@@ -175,7 +182,7 @@ export default {
     padding-right: 10px;
   }
 
-  .role-description{
+  .role-description {
     text-align: center;
   }
 }

@@ -1,17 +1,17 @@
 <template>
   <b-container class="screen-container">
-    <b-row class="mb-4">
+    <b-row class="mb-4 pb-5">
       <img src="@/assets/sign.svg" alt="Register Sign" class="register-logo" />
     </b-row>
-    <b-container class="card-container">
+    <b-container class="card-container mb-5">
       <b-row>
         <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="mentor"
             role-title="MENTOR"
-            role-description="As a hacker, you'll be at the forefront of problem-solving 
-            and innovation. Dive into challenging projects, showcase your coding skills, 
-            and be part of a community dedicated to pushing the boundaries of technology."
+            role-description="As a mentor, leverage your expertise to guide and inspire 
+            the next generation of tech enthusiasts. Become a key figure in shaping the 
+            experience for participants as they navigate through the hackathon challenges."
             role-u-r-l="/mentor"
             svg-image-path="blue-marshie.svg"
           />
@@ -31,7 +31,7 @@
           <CardButton
             data-role="volunteer"
             role-title="VOLUNTEER"
-            role-description="As a Volunteer, your support ensures the smooth execution
+            role-description="As a volunteer, your support ensures the smooth execution
             of our hackathon. From logistics to participant assistance, your
             contribution will help create a positive environment for everyone!"
             role-u-r-l="/volunteer"
