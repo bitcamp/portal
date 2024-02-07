@@ -59,48 +59,56 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     TableName: process.env.REGISTRATION_TABLE,
     Item: {
       timestamp: new Date().toISOString(),
+
       email: body.email.toLowerCase(),
+      phone: body.phone,
+      MLH_emails: body.MLH_emails,
+      MLH_conduct: body.MLH_conduct,
+      MLH_privacy: body.MLH_privacy,
       name: body.name,
       first_name: body.first_name,
       last_name: body.last_name,
-      track: body.track_selected,
-      track_waitlist: body.waitlist_track_selected,
-      referred_by: body.referred_by,
-      referral_id: referralID,
-      // pronouns: body.pronouns,
+      country_of_residence: body.country_of_residence,
       gender: body.gender,
       ethnicity: body.ethnicity,
-      school_year: body.school_year,
       major: body.major,
       recruit: body.recruit,
       portfolio: body.portfolio,
+      school_year: body.school_year,
       school: body.school,
       school_other: body.school_other,
+      resume_link: body.resume_link,
+      resume_id: body.resume_id,
       age: body.age,
+      // different from front-end
+      transport_assistance: body.transport,
+      transport_select: body.transport_select,
+      transport_deposit: body.transport_deposit,
       address: body.address,
-      gmaps_place_id: body.gmaps_place_id,
       address1: body.address1,
       address2: body.address2,
       city: body.city,
       state: body.state,
-      zip: body.zip,
       country: body.country,
-      country_of_residence: body.country_of_residence,
-      phone: body.phone,
-      resume_link: body.resume_link,
-      resume_id: body.resume_id,
-      MLH_emails: body.MLH_emails,
-      MLH_conduct: body.MLH_conduct,
-      MLH_privacy: body.MLH_privacy,
+      zip: body.zip,
+      tshirt_size: body.tshirt_size,
       hack_count: body.hack_count,
       question1: body.question1,
       question2: body.question2,
       heard_from: body.heard_from,
       dietary_restrictions: body.dietary_restrictions,
+      gmaps_place_id: body.gmaps_place_id,
+      referred_by: body.referred_by,
+      track: body.track_selected,
+      track_waitlist: body.waitlist_track_selected,
+      citizen: body.citizen,
+      quantum_track: body.quantum_track,
+      beginner_content_opt_in: body.beginner_content_opt_in,
+
+      referral_id: referralID,
       survey_green: body.green,
       survey_red: body.red,
       survey_blue: body.blue,
-      tshirt_size: body.tshirt_size,
     },
   };
 
@@ -150,7 +158,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     body: JSON.stringify(params.Item),
     headers: HEADERS,
   };
-});
+}); 
 
 // makeAddon generates a random string of `length`
 const makeAddon = (length) => {
@@ -203,7 +211,7 @@ const sendConfirmationEmail = async (user) => {
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
     Template: "DetailedHackerRegistrationConfirmation",
-    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"pronouns\":\"${user.pronouns}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
+    TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
   };
 
   return await ses.sendTemplatedEmail(params).promise();
@@ -346,6 +354,7 @@ module.exports.track = withSentry(async (event) => {
     headers: HEADERS,
   };
 });
+
 
 const logStatistic = (ddb, stat) => {
   return ddb
