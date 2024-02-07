@@ -1861,6 +1861,14 @@ export default {
         this.valid_resume = false;
         return;
       }
+      // 5MB upload limit
+      if (this.form.resume.size > 1024 * 1024 * 5) {
+        this.showErrorToastCustom(
+          "Please ensure that your resume file size does not exceed 5MB."
+        );
+        this.valid_resume = false;
+        return;
+      }
 
       let cleanname;
       if (this.form.resume.name.slice(-4) == "docx") {
