@@ -51,7 +51,7 @@ export default {
       if (window.location.hostname === "register.bit.camp") {
         return "prd";
       }
-      if (window.location.hostname === "register.beta.bit.camp") {
+      if (window.location.hostname === "beta.register.bit.camp") {
         return "stg";
       }
       return "dev";
