@@ -422,8 +422,8 @@
         <!-- Optional quantum selection 1 -->
         <hr />
         <b-form-row>
-          <b-form-group 
-            v-if="this.selectedQuantumTrack()" 
+          <b-form-group
+            v-if="this.selectedQuantumTrack()"
             label="Would you like to be placed in the beginner or advanced quantum track?*"
             class="col-md-12"
             label-for="quantum-survey"
@@ -440,11 +440,11 @@
 
           <!-- Quantum selection 2 -->
 
-          <b-form-group 
-            label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a 
-                  hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops 
-                  are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how 
-                  to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack! 
+          <b-form-group
+            label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a
+                  hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops
+                  are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how
+                  to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack!
                   Would you like us to share this content with you?*"
             label-for="beginner-question"
             class="col-md-12 pt-2"
@@ -459,13 +459,13 @@
             </b-form-invalid-feedback>
           </b-form-group>
         </b-form-row>
-        
+
         <!-- Travel and Transportation -->
         <div v-if="!atNoTransportUnis()">
           <h4>Travel and Transportation</h4>
           <b-form-row
             class="pt-3"
-          > 
+          >
             <b-form-group
               label="Would you need travel assistance to the hackathon?*"
               class="col-md-7"
@@ -476,6 +476,7 @@
                 v-model="form.transport"
                 :state="valid_transport"
                 class="pt-2"
+                @change="resetTransport"
               >
                 <b-form-radio v-bind:value="true">Yes</b-form-radio>
                 <b-form-radio v-bind:value="false">No</b-form-radio>
@@ -887,12 +888,12 @@
             label-for="input-dietary-restrictions"
             class="col-12 col-md-6"
           >
-            <b-form-group 
-              v-slot="{ ariaDescribedby }" 
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
               class="mt-2 mb-1"
             >
-              <b-form-checkbox 
-                v-model="diet_none" 
+              <b-form-checkbox
+                v-model="diet_none"
                 @change="uncheckDietaryRestrictions()"
                 :state="valid_diet"
               >
@@ -910,12 +911,12 @@
               >
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox 
-                v-model="diet_other" 
+              <b-form-checkbox
+                v-model="diet_other"
                 :disabled="diet_none"
                 :state="valid_diet"
-              > 
-                Other 
+              >
+                Other
               </b-form-checkbox>
               <b-form-invalid-feedback :state="valid_diet">
                 Please select your dietary restrictions ("None" is an option)
@@ -1335,6 +1336,10 @@ export default {
   },
 
   methods: {
+    resetTransport() {
+      this.transport_select = [];
+      this.form.transport_deposit = null;
+    },
     atNoTransportUnis() {
       return this.no_transport_unis.includes(this.form.school);
     },
