@@ -5,7 +5,7 @@
     </b-row>
     <b-container class="card-container mb-5">
       <b-row>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-1">
           <CardButton
             data-role="mentor"
             role-title="MENTOR"
@@ -16,7 +16,7 @@
             svg-image-path="blue-marshie.svg"
           />
         </b-col>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-2">
           <CardButton
             data-role="hacker"
             role-title="HACKER"
@@ -27,7 +27,7 @@
             svg-image-path="red-marshie.svg"
           />
         </b-col>
-        <b-col :md="screenWidth >= 768 ? 12 : 4" class="mb-4 marshie-card">
+        <b-col :md="screenWidth >= 768 ? 12 : 4" class="mb-4 marshie-card order-sm-3">
           <CardButton
             data-role="volunteer"
             role-title="VOLUNTEER"
@@ -103,6 +103,15 @@ export default {
 
   .mb-4 {
     padding: 0;
+  }
+    .order-sm-1{
+    order:2;
+  }
+  .order-sm-2{
+    order:1;
+  }
+  .order-sm-3{
+    order:3;
   }
 
 }
