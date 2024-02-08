@@ -82,7 +82,7 @@ export default {
 }
 
 .marshie-card {
-  padding: 0 2vw;
+  padding: 0 0vw;
 }
 
 .mb-4 {
