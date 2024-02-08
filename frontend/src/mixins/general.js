@@ -48,7 +48,10 @@ export default {
     //   }
     // },
     getCurrentEnvironment() {
-      if (window.location.hostname === "register.bit.camp") {
+      if (
+        window.location.hostname === "register.bit.camp" ||
+        window.location.hostname === "www.register.bit.camp"
+      ) {
         return "prd";
       }
       if (window.location.hostname === "beta.register.bit.camp") {
