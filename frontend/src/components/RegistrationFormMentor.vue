@@ -514,7 +514,7 @@ export default {
             mentor_tracks_options: [
                 { value: "app_dev", text: "App Dev" },
                 { value: "cybersecurity", text: "Cybersecurity" },
-                { value: "quantum", text: "Quantum Techonology" },
+                { value: "quantum", text: "Quantum Technology" },
                 { value: "machine_learning", text: "Machine Learning" },
             ],
 
