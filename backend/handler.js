@@ -402,9 +402,21 @@ module.exports.update = withSentry(async () => {
   const ddb = new AWS.DynamoDB.DocumentClient();
   const statsTable = process.env.STATISTICS_TABLE;
   const registrationTable = process.env.REGISTRATION_TABLE;
+  const mentorTable = process.env.MENTOR_TABLE;
+  const volunteerTable = process.env.VOLUNTEER_TABLE;
 
-  const uniqueRegs = await ddb.scan({
+  const hackers = await ddb.scan({
     TableName: registrationTable,
+    Select: "COUNT",
+  }).promise();
+
+  const mentors = await ddb.scan({
+    TableName: mentorTable,
+    Select: "COUNT",
+  }).promise();
+
+  const volunteers = await ddb.scan({
+    TableName: volunteerTable,
     Select: "COUNT",
   }).promise();
 
@@ -422,10 +434,15 @@ module.exports.update = withSentry(async () => {
   const hfArr = [];
   let registrations = 0;
   let pageViews = 0;
+  let volunteerRegistrations = 0;
+  let mentorRegistrations = 0;
+
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
     if (stat.statistic === "registrations") { // save for later
-      registrations = uniqueRegs.Count;
+      registrations = hackers.Count;
+      volunteerRegistrations = volunteers.Count;
+      mentorRegistrations = mentors.Count;
     } else if (stat.statistic === "page-view") {
       pageViews = stat.value;
     } else if (stat.statistic.startsWith("track-")) {
@@ -460,7 +477,9 @@ module.exports.update = withSentry(async () => {
 
   // Format statistic update
   let statArr = [];
-  statArr.push(`*${registrations} Registrations*`);
+  statArr.push(`*${registrations} Hacker Registrations*`);
+  statArr.push(`*${mentorRegistrations} Mentor Registrations*`);
+  statArr.push(`*${volunteerRegistrations} Volunteer Registrations*`);
   statArr.push("~~~~~~~~~~~");
   statArr = statArr.concat(trackArr.sort(sortWithoutStatisticValue));
   statArr.push("~~~~~~~~~~~");
