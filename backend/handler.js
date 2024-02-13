@@ -401,6 +401,13 @@ const logReferral = async (ddb, referred_by, referralName) => {
 module.exports.update = withSentry(async () => {
   const ddb = new AWS.DynamoDB.DocumentClient();
   const statsTable = process.env.STATISTICS_TABLE;
+  const registrationTable = process.env.REGISTRATION_TABLE;
+
+  const uniqueRegs = await ddb.scan({
+    TableName: registrationTable,
+    Select: "COUNT",
+  }).promise();
+
   const params = {
     TableName: statsTable,
     Select: "ALL_ATTRIBUTES",
@@ -418,7 +425,7 @@ module.exports.update = withSentry(async () => {
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
     if (stat.statistic === "registrations") { // save for later
-      registrations = stat.value;
+      registrations = uniqueRegs.Count;
     } else if (stat.statistic === "page-view") {
       pageViews = stat.value;
     } else if (stat.statistic.startsWith("track-")) {
