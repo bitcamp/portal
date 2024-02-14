@@ -514,7 +514,7 @@ export default {
             mentor_tracks_options: [
                 { value: "app_dev", text: "App Dev" },
                 { value: "cybersecurity", text: "Cybersecurity" },
-                { value: "quantum", text: "Quantum Technology" },
+                { value: "quantum", text: "Quantum Technology (familiarity with Qiskit, or a comparable quantum language is expected)" },
                 { value: "machine_learning", text: "Machine Learning" },
             ],
 
