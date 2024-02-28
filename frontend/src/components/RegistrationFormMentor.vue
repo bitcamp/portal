@@ -9,6 +9,9 @@
             </h1>
 
             <p style="font-size: 0.9rem; opacity: 95%">
+                As a mentor, you will assist attendees with their projects and provide any additional guidance. Be prepared to answer any questions hackers may have, ranging from hardware to front-end and back-end.
+            </p>
+            <p style="font-size: 0.9rem; opacity: 95%">
                 Questions? Contact us at
                 <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
             </p>

@@ -7,7 +7,10 @@
             <h1 style="text-align: left">
                 Register for Bitcamp 2024 - Volunteer
             </h1>
-
+            
+            <p style="font-size: 0.9rem; opacity: 95%">
+                As a volunteer, you will take on shifts to serve food, help run workshops, guide attendees around the venue, and more!
+            </p>
             <p style="font-size: 0.9rem; opacity: 95%">
                 Questions? Contact us at
                 <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
