@@ -405,10 +405,30 @@ module.exports.update = withSentry(async () => {
   const mentorTable = process.env.MENTOR_TABLE;
   const volunteerTable = process.env.VOLUNTEER_TABLE;
 
-  const hackers = await ddb.scan({
+  // Can't simply scan a table to get the count once it's over 1mb in size (~950 registrations)
+  // must use pagination instead, so the following doesn't work:
+  
+  // const hackers = await ddb.scan({
+  //   TableName: registrationTable,
+  //   Select: "COUNT",
+  // }).promise();
+  
+  
+  let scanParams = {
     TableName: registrationTable,
     Select: "COUNT",
-  }).promise();
+  };
+
+  let hackersCount = 0;
+  let hackers;
+  
+  // must use pagination to get full size of hacker registration table
+  // "LastEvaluatedKey" is where the last scan left off, so it keeps going until this doesn't exist
+  do {
+    hackers = await ddb.scan(scanParams).promise();
+    hackersCount += hackers.Count;
+    scanParams.ExclusiveStartKey = hackers.LastEvaluatedKey;
+  } while (hackers.LastEvaluatedKey);
 
   const mentors = await ddb.scan({
     TableName: mentorTable,
@@ -440,7 +460,7 @@ module.exports.update = withSentry(async () => {
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
     if (stat.statistic === "registrations") { // save for later
-      registrations = hackers.Count;
+      registrations = hackersCount;
       volunteerRegistrations = volunteers.Count;
       mentorRegistrations = mentors.Count;
     } else if (stat.statistic === "page-view") {
