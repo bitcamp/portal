@@ -9,6 +9,7 @@ const HEADERS = {
   'Access-Control-Allow-Headers': '*',
 };
 
+
 const withSentryOptions = {
   captureErrors: true,
   captureUnhandledRejections: true,
