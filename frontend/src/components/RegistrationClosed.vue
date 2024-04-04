@@ -8,7 +8,7 @@
           <b-col>
             <h1>
               {{ type === 'hacker' ? 'Hacker' : type === 'volunteer' ? 'Volunteer' : type === 'mentor' ? 'Mentor' : 'Registration' }} 
-              registration for Bitcamp 2024 is now closed - See you April 19-21
+              registration for Bitcamp 2024 is now closed - See you April 19-21!
             </h1>
             <img style="width: 200px; height: 200px" src="@/assets/bitcamp.gif" />
 
