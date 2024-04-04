@@ -3,7 +3,7 @@
         <b-container>
             <b-card class="main-card mt-3 mt-lg-4 mt-xxl-5">
                 <registration-form-mentor />
-                <!-- <registration-closed-other /> -->
+                <!-- <registration-closed type="mentor" /> -->
             </b-card>
         </b-container>
     </div>
@@ -11,11 +11,11 @@
 
 <script>
 import RegistrationFormMentor from "../components/RegistrationFormMentor.vue";
-// import RegistrationClosedOther from "../components/RegistrationClosedOther.vue"
+// import RegistrationClosed from "../components/RegistrationClosed.vue"
 export default {
     name: "RegisterView",
     components: { RegistrationFormMentor },
-    // components: { RegistrationClosedOther },
+    // components: { RegistrationClosed },
     props: {
         default_track: {
             type: String,
