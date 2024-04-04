@@ -1,3 +1,4 @@
+<!-- takes in type prop to determine what to show -->
 <template>
   <div class="about">
     <b-container>
@@ -5,21 +6,38 @@
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>Registration for Bitcamp 2024 is now closed - See you April 7-9!</h1>
-
+            <h1>
+              {{ type === 'hacker' ? 'Hacker' : type === 'volunteer' ? 'Volunteer' : type === 'mentor' ? 'Mentor' : 'Registration' }} 
+              registration for Bitcamp 2024 is now closed - See you April 19-21!
+            </h1>
             <img style="width: 200px; height: 200px" src="@/assets/bitcamp.gif" />
 
             <div class="py-3">
-              <p class="mb-4">
-                If you'd like to join the waitlist, please fill out
-                <a href="https://forms.gle/C31xLjHLnLkBNRSXA">this form</a> and keep an eye out for
-                an email Friday night or Saturday morning.
-              </p>
-              <p class="mb-4">
-                If you have any questions, be sure to reach out to
-                <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
-              </p>
-
+              <template v-if="type === 'hacker'">
+                <p class="mb-4">
+                  If you'd like to join the waitlist, please fill out
+                  <a href="https://forms.gle/C31xLjHLnLkBNRSXA">this form</a> and keep an eye out for
+                  an email Friday night or Saturday morning.
+                </p>
+              </template>
+              <template v-else-if="type === 'mentor'">
+                <p class="mb-4">
+                  You can still register as a 
+                  <a href="/volunteer"> volunteer</a> or <a href="/hacker">hacker</a>!
+                </p>
+              </template>
+              <template v-else-if="type === 'volunteer'">
+                <p class="mb-4">
+                  You can still register as a 
+                  <a href="/mentor">mentor</a> or a <a href="/hacker">hacker</a>!
+                </p>
+              </template>
+              <template v-else>
+                <p class="mb-4">
+                  If you have any questions, be sure to reach out to
+                  <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
+                </p>
+              </template>
               <p>Follow us on social media to make sure you don't miss any updates from Bitcamp.</p>
               <!-- Social links -->
               <div class="pb-3">
@@ -42,10 +60,23 @@ export default {
   name: "ThanksView",
   components: { SocialLinks },
   mixins: [generalMixin],
+  props: {
+    type: {
+      type: String,
+      required: true,
+    },
+  },
 };
 </script>
 
 <style scoped>
+.main-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.6);
+}
 .about {
   display: flex;
   height: 100vh;

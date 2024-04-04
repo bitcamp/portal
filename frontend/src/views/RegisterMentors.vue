@@ -3,7 +3,7 @@
         <b-container>
             <b-card class="main-card mt-3 mt-lg-4 mt-xxl-5">
                 <registration-form-mentor />
-                <!-- <registration-closed /> -->
+                <!-- <registration-closed type="mentor" /> -->
             </b-card>
         </b-container>
     </div>
