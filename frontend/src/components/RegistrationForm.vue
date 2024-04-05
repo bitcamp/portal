@@ -5,6 +5,12 @@
       <br />
       <h1 style="text-align: left">Register for Bitcamp 2024</h1>
 
+      <!-- <p style="font-size: 0.9rem; opacity: 95%"> -->
+      <b-alert show variant="danger">
+        At the moment, you can still register to join the waitlist, but registration to <b>guarantee</b> a spot for Bitcamp is <b>closed</b>. We will notify you on Friday night (4/19) if you can attend.
+      </b-alert>
+      <!-- </p> -->
+
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Contact us at
         <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at
@@ -1017,7 +1023,7 @@
 import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
 import Vue from "vue";
-import { BFormTextarea, FormFilePlugin, FormRadioPlugin, IconsPlugin } from "bootstrap-vue";
+import { BFormTextarea, FormFilePlugin, FormRadioPlugin, IconsPlugin, AlertPlugin } from "bootstrap-vue";
 import VueBootstrapAutocomplete from "@vue-bootstrap-components/vue-bootstrap-autocomplete";
 import TrackSelection from "./TrackSelection.vue";
 import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
@@ -1031,6 +1037,7 @@ import parsePhoneNumber from "libphonenumber-js";
 Vue.use(FormRadioPlugin);
 Vue.use(IconsPlugin);
 Vue.use(FormFilePlugin);
+Vue.use(AlertPlugin);
 Vue.component("BFormTextarea", BFormTextarea);
 Vue.component("VueBootstrapAutocomplete", VueBootstrapAutocomplete);
 
@@ -1110,6 +1117,7 @@ export default {
         citizen: null,
         quantum_track: null,
         beginner_content_opt_in: null,
+        waitlist: true,
       },
 
       isSending: false,
