@@ -109,6 +109,9 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_green: body.green,
       survey_red: body.red,
       survey_blue: body.blue,
+
+      // remove this after 2024 season
+      waitlist: body.waitlist, 
     },
   };
 
