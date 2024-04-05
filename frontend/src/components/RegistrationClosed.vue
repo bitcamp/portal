@@ -8,7 +8,7 @@
           <b-col>
             <h1>
               {{ type === 'hacker' ? 'Hacker' : type === 'volunteer' ? 'Volunteer' : type === 'mentor' ? 'Mentor' : 'Registration' }} 
-              registration for Bitcamp 2024 is now closed - See you April 19-21
+              registration for Bitcamp 2024 is now closed - See you April 19-21!
             </h1>
             <img style="width: 200px; height: 200px" src="@/assets/bitcamp.gif" />
 
@@ -22,14 +22,12 @@
               </template>
               <template v-else-if="type === 'mentor'">
                 <p class="mb-4">
-                  You can still register as a 
-                  <a href="/volunteer"> volunteer</a> or <a href="/hacker">hacker</a>!
+                  You can still register as a <a href="/hacker">hacker</a>!
                 </p>
               </template>
               <template v-else-if="type === 'volunteer'">
                 <p class="mb-4">
-                  You can still register as a 
-                  <a href="/mentor">mentor</a> or a <a href="/hacker">hacker</a>!
+                  You can still register as a <a href="/hacker">hacker</a>!
                 </p>
               </template>
               <template v-else>
