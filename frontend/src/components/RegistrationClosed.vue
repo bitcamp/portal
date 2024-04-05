@@ -22,14 +22,12 @@
               </template>
               <template v-else-if="type === 'mentor'">
                 <p class="mb-4">
-                  You can still register as a 
-                  <a href="/volunteer"> volunteer</a> or <a href="/hacker">hacker</a>!
+                  You can still register as a <a href="/hacker">hacker</a>!
                 </p>
               </template>
               <template v-else-if="type === 'volunteer'">
                 <p class="mb-4">
-                  You can still register as a 
-                  <a href="/mentor">mentor</a> or a <a href="/hacker">hacker</a>!
+                  You can still register as a <a href="/hacker">hacker</a>!
                 </p>
               </template>
               <template v-else>

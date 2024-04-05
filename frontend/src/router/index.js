@@ -29,8 +29,8 @@ const routes = [
   {
     path: '/mentor',
     name: 'MentorRegister',
-    // component: RegistrationClosed,
-    component: RegisterMentor,
+    component: RegistrationClosed,
+    // component: RegisterMentor,
     props: (route) => ({ default_track: route.query.t, type: 'mentor' })
   },{
     path: '/volunteer',
