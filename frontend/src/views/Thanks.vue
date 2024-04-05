@@ -6,12 +6,16 @@
           <b-col md="1" />
           <b-col>
             <h1>You're registered
+
               <span v-if="type">
                 as a {{ type }}
               </span>
+              <span v-else>
+                for the waitlist
+              </span>
               for Bitcamp 2024!</h1>
 
-            <img style="width: 200px; height 200px;" src="@/assets/bitcamp.gif" />
+            <img style="width: 200px; height: 200px;" src="@/assets/bitcamp.gif" />
 
             <div class="py-3">
               <p class="mb-4">
@@ -99,7 +103,7 @@ export default {
   data() {
     return {
       copyBtnText: "Copy Link",
-      type: "your mom",
+      type: "",
     };
   },
 
