@@ -19,6 +19,62 @@ const withSentryOptions = {
   captureTimeouts: true,
 };
 
+// add announcements into table from slack messages in channel
+module.exports.add_announcement = withSentry(async (slackEvent) => {
+  const body = JSON.parse(slackEvent.body);
+  if (body.challenge) {
+    return {
+      statusCode: 200,
+      body: body.challenge,
+      headers: HEADERS,
+    };
+  }
+
+  // Fail if there is no valid slack message
+  if (!body || body.event.channel || !body.event.text) {
+    return {
+      statusCode: 500,
+      body: 'add_announcement expects keys "event.channel" and "event.text"',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      }
+    };
+  }
+
+   // Fail if the message wasn't a (non-subtyped) message from the announcements channel
+   if (body.event.channel !== process.env.ANNOUNCEMENTS_CHANNEL) {
+    return {
+      statusCode: 403,
+      body: 'Only messages in the #announcements channel can be added',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+    };
+  }
+
+  // Otherwise, write the announcement to the DB
+  const ddb = new AWS.DynamoDB.DocumentClient();
+
+  const params = {
+    TableName: process.env.ANNOUNCEMENTS_TABLE,
+    Item: {
+      id: UUID.v4(),
+      timestamp: new Date().toISOString(),
+      text: parseSlackMessage(body.event.text),
+    },
+  };
+
+  await ddb.put(params).promise();
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(params.Item),
+    headers: HEADERS,
+  };
+});
+
 // POST /register - Adds a new registration to the database
 module.exports.register = withSentry(withSentryOptions, async (event) => {
   const body = JSON.parse(event.body);

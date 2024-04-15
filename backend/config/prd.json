@@ -3,9 +3,11 @@
     "PLATFORM_BASE_URL": "register.bit.camp",
     "REGISTRATION_TABLE": "portal-prd-registration",
     "VOLUNTEER_TABLE": "portal-prd-volunteers",
+    "ANNOUNCEMENTS_TABLE": "portal-prd-announcements",
     "MENTOR_TABLE": "portal-prd-mentors",
     "STATISTICS_TABLE": "portal-prd-statistics",
     "TRACKING_TABLE": "portal-prd-tracking",
     "RESUMES_TABLE": "portal-prd-resumes",
-    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot"
+    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot",
+    "ANNOUNCEMENTS_CHANNEL": "C06TVTFPRQD"
 }

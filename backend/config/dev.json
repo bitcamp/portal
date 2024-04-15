@@ -6,6 +6,8 @@
     "MENTOR_TABLE": "portal-dev-mentors",
     "STATISTICS_TABLE": "portal-dev-statistics",
     "TRACKING_TABLE": "portal-dev-tracking",
+    "ANNOUNCEMENTS_TABLE": "portal-dev-announcements",
     "RESUMES_TABLE": "portal-dev-resumes",
-    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot"
+    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot",
+    "ANNOUNCEMENTS_CHANNEL": "C06TVTFPRQD"
 }
