@@ -16,8 +16,8 @@ const routes = [
   {
     path: '/hacker',
     name: 'Register',
-    // component: RegistrationClosed,
-    component: Register,
+    component: RegistrationClosed,
+    // component: Register,
     props: (route) => ({ default_track: route.query.t, type: 'hacker' })  
   },
   {

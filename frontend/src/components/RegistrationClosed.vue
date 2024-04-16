@@ -13,29 +13,10 @@
             <img style="width: 200px; height: 200px" src="@/assets/bitcamp.gif" />
 
             <div class="py-3">
-              <template v-if="type === 'hacker'">
-                <p class="mb-4">
-                  If you'd like to join the waitlist, please fill out
-                  <a href="https://forms.gle/C31xLjHLnLkBNRSXA">this form</a> and keep an eye out for
-                  an email Friday night or Saturday morning.
-                </p>
-              </template>
-              <template v-else-if="type === 'mentor'">
-                <p class="mb-4">
-                  You can still register as a <a href="/hacker">hacker</a>!
-                </p>
-              </template>
-              <template v-else-if="type === 'volunteer'">
-                <p class="mb-4">
-                  You can still register as a <a href="/hacker">hacker</a>!
-                </p>
-              </template>
-              <template v-else>
                 <p class="mb-4">
                   If you have any questions, be sure to reach out to
                   <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
                 </p>
-              </template>
               <p>Follow us on social media to make sure you don't miss any updates from Bitcamp.</p>
               <!-- Social links -->
               <div class="pb-3">
