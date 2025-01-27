@@ -10,15 +10,13 @@
 
 body {
   background-color: #ffaf3f;
-  background-image: radial-gradient(
-    50% 49.08% at 0% 50.92%,
-    #ff793f 48.23%,
-    #ffaf3f 100%
-  );
+  background-image: url("Brownandpurplecaves.png");
+  background-size:cover;
+  
   /* background-image: url("./hero-clouds.png");
   background-size: cover; */
   /*centered on x, starting 56px lower than top for y so that the navbar doesn't cover image*/
-  background-position: center 56px;
+  /*background-position: center 56px;*/
   background-repeat: no-repeat;
   /* height: 100vh; */
 }
