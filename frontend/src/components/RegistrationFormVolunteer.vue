@@ -5,7 +5,7 @@
         <b-col md="10">
             <br>
             <h1 style="text-align: left">
-                Register for Bitcamp 2024 - Volunteer
+                Register for Bitcamp 2025 - Volunteer
             </h1>
             
             <p style="font-size: 0.9rem; opacity: 95%">
@@ -19,7 +19,7 @@
             <b-form class="registration-form" autocomplete="on" @submit="registerUser">
                 <h4>Tell us about yourself!</h4>
                 <p class="info">
-                    Once you register, you'll receive more info about Bitcamp 2024 at the
+                    Once you register, you'll receive more info about Bitcamp 2025 at the
                     email you provide.
                 </p>
 
@@ -135,8 +135,8 @@
                     Select a T-shirt size!
                 </h4>
                 <p class="info">
-                    We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you
-                    like, and your very own Bitcamp 2024 shirt will be given to you once
+                    We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
+                    like, and your very own Bitcamp 2025 shirt will be given to you once
                     you arrive at UMD.
                 </p>
 
@@ -297,14 +297,11 @@ export default {
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
-                { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
-                { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
-                { value: "bootcamp", text: "Code School / Bootcamp" },
-                { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
-                { value: "postdoc", text: "Post Doctorate" },
+                { value: "sophomore", text: "Sophomore" },
+                { value: "junior", text: "Junior" },
+                { value: "senior", text: "Senior" },
+                { value: "graduate", text: "Graduate" },
+                { value: "post graduate", text: "Post Graduate" },
                 { value: "other", text: "Other" },
                 { value: "prefer not to answer", text: "Prefer not to answer" },
             ],
@@ -319,7 +316,6 @@ export default {
                 { value: "m", text: "M" },
                 { value: "l", text: "L" },
                 { value: "xl", text: "XL" },
-                { value: "2xl", text: "2XL" },
             ],
 
             recruit_options: [
@@ -343,8 +339,6 @@ export default {
                 { text: "Vegan", value: "vegan" },
                 { text: "Vegetarian", value: "vegetarian" },
                 { text: "Gluten Free", value: "gluten-free" },
-                { text: "Dairy Free", value: "dairy-free" },
-                { text: "Nut Allergy", value: "nut-allergy" },
                 { text: "Kosher", value: "kosher" },
                 { text: "Halal", value: "halal" },
             ]
