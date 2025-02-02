@@ -3,7 +3,7 @@
     <b-container>
       <b-card class="main-card mt-3 mt-lg-4 mt-xxl-5">
         <registration-form :default_track="default_track" />
-        <!-- <registration-closed type="hacker"/> -->
+         <!--<registration-closed type="hacker"/> -->
       </b-card>
     </b-container>
   </div>
