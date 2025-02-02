@@ -2,20 +2,20 @@
     <div class="home">
         <b-container>
             <b-card class="main-card mt-3 mt-lg-4 mt-xxl-5">
-                <!-- <registration-form-mentor /> -->
-                <registration-closed type="mentor"/>
+                <registration-form-mentor />
+                <!-- <registration-closed type="mentor"/> -->
             </b-card>
         </b-container>
     </div>
 </template>
 
 <script>
-// import RegistrationFormMentor from "../components/RegistrationFormMentor.vue";
-import RegistrationClosed from "../components/RegistrationClosed.vue"
+// import RegistrationClosed from "../components/RegistrationClosed.vue"
+import RegistrationFormMentor from "../components/RegistrationFormMentor.vue"
 export default {
     name: "RegisterView",
-    // components: { RegistrationFormMentor },
-    components: { RegistrationClosed },
+    // components: { RegistrationClosed },
+    components: { RegistrationFormMentor },
     props: {
         default_track: {
             type: String,
