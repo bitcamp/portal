@@ -3,7 +3,7 @@
     <b-col md="1" />
     <b-col md="10">
       <br />
-      <h1 style="text-align: left">Register for Bitcamp 2024</h1>
+      <h1 style="text-align: left">Register for Bitcamp 2025</h1>
 
       <!-- <p style="font-size: 0.9rem; opacity: 95%"> -->
       <b-alert show variant="danger">
@@ -20,7 +20,7 @@
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2024 at the email you provide.
+          Once you register, you'll receive more info about Bitcamp 2025 at the email you provide.
         </p>
 
         <!-- Name and Age -->
@@ -754,8 +754,8 @@
         <!-- T-Shirt Size -->
         <h4 class="mb-2">Select a T-shirt size!</h4>
         <p class="info">
-          We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you like, and your very
-          own Bitcamp 2024 shirt will be given to you once you arrive at UMD.
+          We've got unisex T-shirts in XS-XL sizes! Choose whichever size you like, and your very
+          own Bitcamp 2025 shirt will be given to you once you arrive at UMD.
         </p>
 
         <b-form-row>
