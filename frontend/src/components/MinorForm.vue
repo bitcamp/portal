@@ -10,6 +10,7 @@
 
             
             <hr>
+            <!-- Photo Consent Form-->
             <b-form class="registration-form" autocomplete="on" @submit="registerUser">
                 <h4><u>Photography Consent Form</u></h4>
                 <br>
@@ -26,9 +27,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- First Name -->
                     <b-form-group id="input-group-full-name" label="Minor Full Name*" label-for="input-first-name"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
-                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_first_name" style="width: 735px;"/>
-                        <b-form-invalid-feedback :state="valid_first_name">
+                        <b-form-input id="input-first-name" v-model="form.photo_name" name="firstname"
+                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_photo_name" style="width: 735px;"/>
+                        <b-form-invalid-feedback :state="valid_photo_name">
                             Please enter your first name
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -41,9 +42,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Date -->
                     <b-form-group id="input-group-date" label="Date*" label-for="input-date"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-date" v-model="form.first_name" name="firstname"
-                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_date">
+                        <b-form-input id="input-date" v-model="form.photo_date" name="firstname"
+                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_photo_date" />
+                        <b-form-invalid-feedback :state="valid_photo_date">
                             Please enter your date
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -51,9 +52,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Signature -->
                     <b-form-group id="input-group-signature" label="Signature*" label-for="input-signature"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-signature" v-model="form.last_name" name="signaure" autocomplete="signaure"
-                            placeholder="Full Name" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_signature">
+                        <b-form-input id="input-signature" v-model="form.photo_signature" name="signaure" autocomplete="signaure"
+                            placeholder="Full Name" :state="valid_photo_signature" />
+                        <b-form-invalid-feedback :state="valid_photo_signature">
                             Please enter your signature
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -67,9 +68,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Parent Full Name -->
                     <b-form-group id="input-group-full-name" label="Parent/Guardian Full Name*" label-for="input-first-name"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
-                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_first_name" style="width: 735px;" />
-                        <b-form-invalid-feedback :state="valid_first_name">
+                        <b-form-input id="input-first-name" v-model="form.p_photo_name" name="firstname"
+                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_p_photo_name" style="width: 735px;" />
+                        <b-form-invalid-feedback :state="valid_p_photo_name">
                             Please enter your first name
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -81,9 +82,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Parent Date -->
                     <b-form-group id="input-group-date" label="Date*" label-for="input-date"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-date" v-model="form.first_name" name="firstname"
-                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_date">
+                        <b-form-input id="input-date" v-model="form.p_photo_date" name="firstname"
+                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_p_photo_date" />
+                        <b-form-invalid-feedback :state="valid_p_photo_date">
                             Please enter your date
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -91,9 +92,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Parent Signature -->
                     <b-form-group id="input-group-signature" label="Signature*" label-for="input-signature"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-signature" v-model="form.last_name" name="signaure" autocomplete="signature"
-                            placeholder="Full Name" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_signature">
+                        <b-form-input id="input-signature" v-model="form.p_photo_signature" name="signature" autocomplete="signature"
+                            placeholder="Full Name" :state="valid_p_photo_signature" />
+                        <b-form-invalid-feedback :state="valid_p_photo_signature">
                             Please enter your signature
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -104,19 +105,31 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                 <br>
 
 
+
+                <!--Chaperone Agreement Form-->
                  <b-form class="registration-form" autocomplete="on" @submit="registerUser">
                 <h4><u>Chaperone Agreement Form</u></h4>
                 <br>
 
-                <div class="p-4 max-w-md mx-auto bg-white shadow-md rounded-lg">
-                <h5 class="text-xl font-semibold mb-4">Checklist for Minor Supervision</h5>
+                <b-form-row>
+                  
+                    <b-form-group id="input-group-languages" label-for="input-group-languages" class="col-md-12">
+                        <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+                            <b-form-checkbox v-for="option in checklistItems" :key="option.text"
+                                v-model="chap_responsibilities":value="option.text" :aria-describedby="ariaDescribedby"
+                                :state="validChecklist">
+                                {{ option.text }}
+                            </b-form-checkbox>
+                            
+                        </b-form-group>
+                        
+                    <b-form-invalid-feedback :state="validChecklist">
+                        Please select an option
+                    </b-form-invalid-feedback>
+                </b-form-group>
+                </b-form-row>
                 
-                <div v-for="(item, index) in checklistItems" :key="index" class="flex items-center mb-2">
-                    <input type="checkbox" v-model="item.checked" class="mr-2 w-5 h-5">
-                    <span :class="{ 'line-through text-gray-500': item.checked }">{{ item.text }}</span>
-                </div>
-                
-            </div>
+            
 
             <div>
             <br>
@@ -137,9 +150,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- First Name -->
                     <b-form-group id="input-group-full-name" label="Minor Full Name*" label-for="input-first-name"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
-                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_first_name" style="width: 735px;"/>
-                        <b-form-invalid-feedback :state="valid_first_name">
+                        <b-form-input id="input-first-name" v-model="form.chap_name" name="firstname"
+                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_chap_name" style="width: 735px;"/>
+                        <b-form-invalid-feedback :state="valid_chap_name">
                             Please enter your first name
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -149,9 +162,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Date -->
                     <b-form-group id="input-group-date" label="Date*" label-for="input-date"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-date" v-model="form.first_name" name="firstname"
-                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_date">
+                        <b-form-input id="input-date" v-model="form.chap_date" name="firstname"
+                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_chap_date" />
+                        <b-form-invalid-feedback :state="valid_chap_date">
                             Please enter your date
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -159,9 +172,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Signature -->
                     <b-form-group id="input-group-signature" label="Signature*" label-for="input-signature"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-signature" v-model="form.last_name" name="signaure" autocomplete="signaure"
-                            placeholder="Full Name" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_signature">
+                        <b-form-input id="input-signature" v-model="form.chap_signature" name="signature" autocomplete="signature"
+                            placeholder="Full Name" :state="valid_chap_signature" />
+                        <b-form-invalid-feedback :state="valid_chap_signature">
                             Please enter your signature
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -175,9 +188,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Parent Full Name -->
                     <b-form-group id="input-group-full-name" label="Chaperone Full Name*" label-for="input-first-name"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
-                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_first_name" style="width: 735px;" />
-                        <b-form-invalid-feedback :state="valid_first_name">
+                        <b-form-input id="input-first-name" v-model="form.p_chap_name" name="firstname"
+                            autocomplete="firstname" placeholder="Sophie Wilson" :state="valid_p_chap_name" style="width: 735px;" />
+                        <b-form-invalid-feedback :state="valid_p_chap_name">
                             Please enter your first name
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -189,9 +202,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Parent Date -->
                     <b-form-group id="input-group-date" label="Date*" label-for="input-date"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-date" v-model="form.first_name" name="firstname"
-                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_date">
+                        <b-form-input id="input-date" v-model="form.p_chap_date" name="firstname"
+                            autocomplete="date" placeholder="MM/DD/YYYY" :state="valid_p_chap_date" />
+                        <b-form-invalid-feedback :state="valid_p_chap_date">
                             Please enter your date
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -199,9 +212,9 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <!-- Parent Signature -->
                     <b-form-group id="input-group-signature" label="Signature*" label-for="input-signature"
                         class="col-6 col-md-6">
-                        <b-form-input id="input-signature" v-model="form.last_name" name="signaure" autocomplete="signature"
-                            placeholder="Full Name" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_signature">
+                        <b-form-input id="input-signature" v-model="form.p_chap_signature" name="signaure" autocomplete="signature"
+                            placeholder="Full Name" :state="valid_p_chap_signature" />
+                        <b-form-invalid-feedback :state="valid_p_chap_signature">
                             Please enter your signature
                         </b-form-invalid-feedback>
                     </b-form-group>
@@ -211,27 +224,6 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                </b-form>
 
 
-               
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-
-
-                
 
             <!-- Submit -->
         <div>
@@ -310,52 +302,44 @@ export default {
     data() {
         return {
             form: {
-                email: this.$route.query.redo != null ? this.$route.query.redo : "",
-                phone: "",
-                MLH_emails: false,
-                MLH_conduct: false,
-                MLH_privacy: false,
-                name: "",
-                first_name: "",
-                last_name: "",
-                skill: "",
-                major: "",
-                company: "",
-                school_year: "",
-                school: "",
-                school_other: "",
-                tshirt_size: "",
-                prev_mentor_experience: "",
-                prev_track_experience: "",
-                mentor_tracks: "",
-                dietary_restrictions: "",
-                languages: "",
+                
+                
+                
+                photo_name: "",
+                
+                photo_date:"",
+                photo_signature:"",
+                p_photo_name: "",
+                p_photo_date:"",
+                p_photo_signature:"",
+
+                chap_name:"",
+                chap_date:"",
+                chap_signature:"",
+                p_chap_name:"",
+                p_chap_date:"",
+                p_chap_signature:"",
+
+                
+               
             },
 
-            isSending: false,
-            random_id: uuid(),
-            form_start: Date.now(),
-            valid_first_name: null,
-            valid_last_name: null,
-            valid_signature:null,
-            valid_date:null,
-            valid_company: null,
-            valid_email: null,
-            valid_phone: null,
-            valid_school_year: null,
-            valid_school: null,
-            valid_school_other: null,
-            valid_skill: null,
-            valid_major: null,
-            valid_code_of_conduct: null,
-            valid_mlh_privacy: null,
-            valid_school_or_company: null,
-            valid_tshirt_size: null,
-            valid_prev_mentor_experience: null,
-            valid_prev_track_experience: null,
-            valid_mentor_tracks: null,
-            valid_diet: null,
-            valid_languages: null,
+            chap_responsibilities: [],
+            
+            valid_photo_name: null,
+            valid_photo_date: null,
+            valid_photo_signature: null,
+            valid_p_photo_name: null,
+            valid_p_photo_date: null,
+            valid_p_photo_signature: null,
+
+            valid_chap_name: null,
+            valid_chap_date: null,
+            valid_chap_signature: null,
+            valid_p_chap_name: null,
+            valid_p_chap_date: null,
+            valid_p_chap_signature: null,
+            
 
             responsibilities: [
         "Responsible for their minor(s) for the entire time they are on the University of Maryland, College Park campus, including inside the Armory.",
@@ -370,124 +354,26 @@ export default {
 
             school_class: "typeahead",
 
-            school_year_options: [
-                { value: "", text: "Select one...", disabled: true },
-                { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
-                { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
-                { value: "bootcamp", text: "Code School / Bootcamp" },
-                { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
-                { value: "postdoc", text: "Post Doctorate" },
-                { value: "other", text: "Other" },
-                { value: "prefer not to answer", text: "Prefer not to answer" },
-            ],
+            
 
             checklistItems: [
-        { text: "A Teacher from the minor’s school that has a background check (one teacher for every 15 minors)", checked: false },
-        { text: "Family member that is 18+", checked: false },
-        { text: "Adult that is approved by minor’s parent/guardian (adult can take one minor in addition to their own child/sibling)", checked: false }
+        { text: "A Teacher from the minor’s school that has a background check (one teacher for every 15 minors)", value: false },
+        { text: "Family member that is 18+", value: false },
+        { text: "Adult that is approved by minor’s parent/guardian (adult can take one minor in addition to their own child/sibling)", value: false }
       ],
+      validChecklist:null,
 
-            school_other_selected: false,
+           
 
-            skill_select: [],
-            skill_other: false,
-            skill_other_text: "",
-            skill_prefer_no_answer: false,
-            skill_options: [
-                { value: "web-development", text: "Web Development" },
-                { value: "mobile-application-development", text: "Mobile Application Development" },
-                { value: "game-development", text: "Game Development" },
-                { value: "machine-learning", text: "Machine Learning" },
-                { value: "quantum-computing", text: "Quantum Computing" },
-                { value: "cybersecurity", text: "Cybersecurity" },
-                { value: "user-interface-design", text: "User Interface Design" },
-                { value: "hardware", text: "Hardware" },
-            ],
-
-            languages_select: [],
-            languages_other: false,
-            languages_other_text: "",
-            languages_prefer_no_answer: false,
-            languages_options: [
-                { value: "javascript", text: "JavaScript" },
-                { value: "typescript", text: "Typescript" },
-                { value: "html", text: "HTML" },
-                { value: "css", text: "CSS" },
-                { value: "bootstrap", text: "Bootstrap" },
-                { value: "react", text: "React" },
-                { value: "react-native", text: "React Native" },
-                { value: "angular", text: "Angular" },
-                { value: "express", text: "Express" },
-                { value: "node", text: "Node" },
-                { value: "python", text: "Python" },
-                { value: "java", text: "Java" },
-                { value: "sql", text: "SQL" },
-                { value: "nosql", text: "NoSQL" },
-                { value: "c#", text: "C#" },
-                { value: "rust", text: "Rust" },
-                { value: "servo", text: "Servo" },
-                { value: "perl", text: "Perl" },
-                { value: "go", text: "Go" },
-                { value: "flask", text: "Flask" },
-                { value: "git", text: "Git/Github" },
-                { value: "arduino", text: "Arduino" },
-                { value: "c++", text: "C++" },
-                { value: "opencv", text: "OpenCV" },
-                { value: "google-cloud", text: "Google Cloud" },
-                { value: "flutter", text: "Flutter" },
-                { value: "amazon-web-services", text: "Amazon Web Services" },
-            ],
-
-            tshirt_size_options: [
-                { value: "", text: "Select one...", disabled: true },
-                //{ value: "no tshirt", text: "I don't want a T-shirt" },
-                { value: "xs", text: "XS" },
-                { value: "s", text: "S" },
-                { value: "m", text: "M" },
-                { value: "l", text: "L" },
-                { value: "xl", text: "XL" },
-                { value: "2xl", text: "2XL" },
-            ],
-
-            university_options: [...university_list],
-
-            mentor_tracks_select: [],
-            mentor_tracks_other: false,
-            mentor_tracks_other_text: "",
-            mentor_tracks_options: [
-                { value: "app_dev", text: "App Dev" },
-                { value: "cybersecurity", text: "Cybersecurity" },
-                { value: "quantum", text: "Quantum Technology (familiarity with Qiskit, or a comparable quantum language is expected)" },
-                { value: "machine_learning", text: "Machine Learning" },
-            ],
-
-            diet_select: [],
-            diet_other: false,
-            diet_other_text: "",
-            diet_none: false,
-            diet_options: [
-                { text: "Vegan", value: "vegan" },
-                { text: "Vegetarian", value: "vegetarian" },
-                { text: "Gluten Free", value: "gluten-free" },
-                { text: "Dairy Free", value: "dairy-free" },
-                { text: "Nut Allergy", value: "nut-allergy" },
-                { text: "Kosher", value: "kosher" },
-                { text: "Halal", value: "halal" },
-            ]
+           
         };
     },
+    
 
     methods: {
-        emailFilledOut() {
-            this.track({
-                random_id: this.random_id,
-                key: "filled-email",
-                value: this.form.email,
-            });
-        },
+
+        
+        
         showErrorToast() {
             this.$bvToast.toast(
                 `Something went wrong. Are you sure you filled everything out?`,
@@ -509,319 +395,175 @@ export default {
                 variant: "danger",
             });
         },
-        createDietaryRestrictionString() {
-            let diet_string = this.diet_select.join(",");
-
-            if (this.diet_none) {
-                return "none";
-            }
-            if (this.diet_other && this.diet_other_text != "") {
-                if (diet_string != "") {
-                    diet_string += ","
-                }
-                diet_string = diet_string + "other(" + this.diet_other_text + ")";
-            }
-
-            return diet_string;
-        },
-        createSkillString() {
-            let skill_string = this.skill_select.join(",");
-
-            if (this.skill_prefer_no_answer) {
-                return "prefer-not-to-answer";
-            }
-            if (this.skill_other && this.skill_other_text != "") {
-                if (skill_string != "") {
-                    skill_string += ","
-                }
-                skill_string = skill_string + "other(" + this.skill_other_text + ")";
-            }
-
-            return skill_string;
-        },
-        createLanguagesString() {
-            let languages_string = this.languages_select.join(",");
-
-            if (this.languages_prefer_no_answer) {
-                return "prefer-not-to-answer";
-            }
-            if (this.languages_other && this.languages_other_text != "") {
-                if (languages_string != "") {
-                    languages_string += ","
-                }
-                languages_string = languages_string + "other(" + this.languages_other_text + ")";
-            }
-
-            return languages_string;
-        },
-        createMentorTracksString() {
-            let mentor_tracks_string = this.mentor_tracks_select.join(",");
-
-            if (this.mentor_tracks_other && this.mentor_tracks_other_text != "") {
-                if (mentor_tracks_string != "") {
-                    mentor_tracks_string += ","
-                }
-                mentor_tracks_string = mentor_tracks_string + "other(" + this.mentor_tracks_other_text + ")";
-            }
-
-            return mentor_tracks_string;
-        },
-        uncheckDietaryRestrictions() {
-            this.diet_select = [];
-            this.diet_other = false;
-        },
+        
+        
         async registerUser(event) {
-            event.preventDefault();
-            if (this.formCheck()) {
-                // prevent blacklisted hackers from registering
-                if (this.form.name === 'Auran Shereef' || this.form.name === 'Monte James') {
-                    this.$router.push({ path: "thanks" });
-                    return;
-                }
+        // Prevent form submission from reloading the page
+        event.preventDefault();
 
-                // time taken to fill out form in seconds
-                this.form.time_taken = (Date.now() - this.form_start) / 1000;
-                const phoneNumber = parsePhoneNumber(
-                    this.form.phone,
-                    DEFAULT_COUNTRY_PHONE
-                );
-                this.form.phone = phoneNumber.number;
+        // Reset validity states
+        this.valid_photo_name= null;
+        this.valid_photo_date= null;
+        this. valid_photo_signature= null;
+        this.valid_p_photo_name= null;
+        this.valid_p_photo_date= null;
+        this.valid_p_photo_signature= null;
+        this.valid_chap_name= null;
+        this.valid_chap_date= null;
+        this.valid_chap_signature= null;
+        this.valid_p_chap_name= null;
+        this.valid_p_chap_date=null;
+        this.valid_p_chap_signature= null;
+        this.validChecklist = null;
+        
 
-                this.isSending = true; // block double submits
+   
 
-                if (this.$route.params.referral) {
-                    this.$gtag.event("got-referred", { method: "Google" });
-                    this.form.referred_by = this.$route.params.referral;
-                    this.track({
-                        random_id: this.random_id,
-                        key: "got-referred",
-                        value: this.$route.params.referral,
-                    });
-                }
+        // Basic validation
+        let isValid = true;
+        
+        console.log('Selected Responsibilities:', this.chap_responsibilities);
+        if (this.chap_responsibilities.length !== 0) {
+                this.validChecklist = true; // Mark as invalid if no checkboxes are selected
+                
+                
+            } else {
+                this.validChecklist = false; // Mark as valid if any checkbox is selected
+                // Proceed with form submission logic
+             
+                isValid = false;
+                
+            }
 
-                // Track "mentor tracks" statistics
-                for (let mentorTracks of this.mentor_tracks_select) {
-                    this.track({
-                        random_id: this.random_id,
-                        key: `hf-${mentorTracks}`,
-                        value: 1,
-                    });
-                }
-                if (this.mentor_tracks_other) {
-                    this.track({
-                        random_id: this.random_id,
-                        key: 'hf-other',
-                        value: 1,
-                    });
-                }
+        // Validate photo consent form fields
+        if (!this.form.photo_name) {
+            this.valid_photo_name = false;
+            isValid = false;
+        } else {
+            this.valid_photo_name = true;
+        }
 
-                this.$gtag.event("submit-registration", { method: "Google" });
-                this.$gtag.time({
-                    name: "completion-time",
-                    value: this.form.time_taken,
-                    event_category: "Form completion duration",
-                });
-                this.track({
-                    random_id: this.random_id,
-                    key: "form-submitted",
-                    value: this.form.time_taken,
-                });
+        if (!this.form.photo_date) {
+            this.valid_photo_date = false;
+            isValid = false;
+        } else {
+            this.valid_photo_date = true;
+        }
 
-                const d = new Date();
-                this.form.secret =
-                    (d.getHours() * d.getDay() * 15).toString() +
-                    d.getFullYear().toString().split("").reverse().join("");
+        if (!this.form.photo_signature) {
+            this.valid_photo_signature = false;
+            isValid = false;
+        } else {
+            this.valid_photo_signature = true;
+        }
 
-                this.form.dietary_restrictions = this.createDietaryRestrictionString();
-                this.form.skill = this.createSkillString();
-                this.form.languages = this.createLanguagesString();
-                this.form.mentor_tracks = this.createMentorTracksString();
+        // Validate parent/guardian form fields
+        if (!this.form.p_photo_name) {
+            this.valid_p_photo_name = false;
+            isValid = false;
+        } else {
+            this.valid_p_photo_name = true;
+        }
 
-                const resp = await this.performPostRequest(
-                    this.getEnvVariable("BACKEND_ENDPOINT"),
-                    "register-mentor",
-                    this.form
-                );
+        if (!this.form.p_photo_date) {
+            this.valid_p_photo_date = false;
+            isValid = false;
+        } else {
+            this.valid_p_photo_date = true;
+        }
 
-                this.isSending = false; // done submitting
+        if (!this.form.p_photo_signature) {
+            this.valid_p_photo_signature = false;
+            isValid = false;
+        } else {
+            this.valid_p_photo_signature = true;
+        }
 
-                if (resp) {
-                    this.$router.push({ path: "thanks?type=mentor", query: { r: resp.referral_id } });
-                    // this.track({
-                    //     random_id: this.random_id,
-                    //     key: "referral_id",
-                    //     value: resp.referral_id,
-                    // });
+        // Validate chaperone agreement form fields
+        if (!this.form.chap_name) {
+            this.valid_chap_name = false;
+            isValid = false;
+        } else {
+            this.valid_chap_name = true;
+        }
+
+        if (!this.form.chap_date) {
+            this.valid_chap_date = false;
+            isValid = false;
+        } else {
+            this.valid_chap_date = true;
+        }
+
+        if (!this.form.chap_signature) {
+            this.valid_chap_signature = false;
+            isValid = false;
+        } else {
+            this.valid_chap_signature = true;
+        }
+
+        // Validate parent chaperone form fields
+        if (!this.form.p_chap_name) {
+            this.valid_p_chap_name = false;
+            isValid = false;
+        } else {
+            this.valid_p_chap_name = true;
+        }
+
+        if (!this.form.p_chap_date) {
+            this.valid_p_chap_date = false;
+            isValid = false;
+        } else {
+            this.valid_p_chap_date = true;
+        }
+
+        if (!this.form.p_chap_signature) {
+            this.valid_p_chap_signature = false;
+            isValid = false;
+        } else {
+            this.valid_p_chap_signature = true;
+        }
+
+        // If the form is valid, proceed with submitting
+    
+        if (isValid) {
+            this.isSending = true;
+
+            // Simulate form submission (e.g., make an API call)
+            try {
+                // Example: API call to submit form data
+                const response = await this.submitFormData();
+                console.log(this.form)
+
+
+                if (response.success) {
+                    // Handle success (e.g., display success message, redirect)
+                    alert("Form submitted successfully!");
+                    
                 } else {
-                    this.showErrorToast();
+                    // Handle error (e.g., display error message)
+                    alert("Error submitting form, please try again.");
                 }
-            } else {
-                this.showErrorToast();
+            } catch (error) {
+                // Handle any unexpected errors
+                alert("An unexpected error occurred.");
+            } finally {
+                this.isSending = false;
             }
-        },
-        // logic goes here so feedback is only shown after submission
-        formCheck() {
-            let valid_form = true;
-            console.log("\nvalid form" + valid_form)
+        } else {
+            // If form is not valid, show validation feedback
+            alert("Please fill out all required fields.");
+        }
+    },
 
-            this.form.name = `${this.form.first_name} ${this.form.last_name}`
-
-            console.log("fname: " + (this.form.first_name.length === 0))
-            if (this.form.first_name.length === 0) {
-                this.valid_first_name = false;
-                valid_form = false;
-            } else {
-                this.valid_first_name = null;
-                this.form.first_name = this.form.first_name.trim();
-            }
-
-            if (this.form.last_name.length === 0) {
-                this.valid_last_name = false;
-                valid_form = false;
-            } else {
-                this.valid_last_name = null;
-                this.form.last_name = this.form.last_name.trim();
-            }
-
-            console.log("email: " + (!EmailValidator.validate(this.form.email)))
-            if (!EmailValidator.validate(this.form.email)) {
-                this.valid_email = false;
-                valid_form = false;
-            } else {
-                this.valid_email = null;
-            }
-
-            console.log("phone: " + (!phoneNumber || !phoneNumber.isValid()))
-            const phoneNumber = parsePhoneNumber(
-                this.form.phone,
-                DEFAULT_COUNTRY_PHONE
-            );
-            if (!phoneNumber || !phoneNumber.isValid()) {
-                this.valid_phone = false;
-                valid_form = false;
-            } else {
-                this.valid_phone = null;
-            }
-
-            console.log("skill: " + (this.createSkillString().length === 0))
-            if (this.createSkillString().length === 0) {
-                this.valid_skill = false;
-                valid_form = false;
-            } else {
-                this.valid_skill = null;
-            }
-            console.log("\nvalid form" + valid_form)
-
-            console.log("language: " + (this.createLanguagesString().length === 0))
-            if (this.createLanguagesString().length === 0) {
-                this.valid_languages = false;
-                valid_form = false;
-            } else {
-                this.valid_languages = null;
-            }
-
-            if (!this.form.selected_school_or_company) {
-                this.valid_school_or_company = false;
-                valid_form = false;
-            } else {
-                this.valid_school_or_company = null;
-            }
-
-            if (this.form.school_year.length === 0 && this.form.selected_school_or_company == "yes") {
-                this.valid_school_year = false;
-                valid_form = false;
-            } else {
-                this.valid_school_year = null;
-            }
-
-            if (this.school_other_selected && this.form.selected_school_or_company == "yes") {
-                this.school_class = "typeahead";
-                this.valid_school = null;
-                if (this.form.school_other.length === 0) {
-                    this.valid_school_other = false;
-                    valid_form = false;
-                } else {
-                    this.valid_school_other = null;
-                }
-            } else if (this.form.selected_school_or_company == "yes") {
-                if (!university_list.includes(this.form.school) && this.form.selected_school_or_company == "yes") {
-                    this.valid_school = false;
-                    this.school_class = "typeahead is-invalid";
-                    valid_form = false;
-                } else {
-                    this.school_class = "typeahead";
-                    this.valid_school = null;
-                }
-                this.valid_school_other = null;
-            }
-
-            if (this.form.company.length === 0 && this.form.selected_school_or_company == "no") {
-                this.valid_company = false;
-                valid_form = false;
-            } else {
-                this.valid_company = null;
-                this.form.company = this.form.company.trim();
-            }
-
-            console.log("tshirt: " + (this.form.tshirt_size.length === 0))
-            if (this.form.tshirt_size.length === 0) {
-                this.valid_tshirt_size = false;
-                valid_form = false;
-            } else {
-                this.valid_tshirt_size = null;
-            }
-
-            console.log("q1: " + (this.form.prev_mentor_experience.length === 0))
-            if (this.form.prev_mentor_experience.length === 0) {
-                this.valid_prev_mentor_experience = false;
-                valid_form = false;
-            } else {
-                this.valid_prev_mentor_experience = null;
-            }
-
-            console.log("q2: " + (this.form.prev_mentor_experience.length === 0))
-            if (this.form.prev_track_experience.length === 0) {
-                this.valid_prev_track_experience = false;
-                valid_form = false;
-            } else {
-                this.valid_prev_track_experience = null;
-            }
-
-            console.log("diet: " + (this.createDietaryRestrictionString().length === 0))
-            if (this.createDietaryRestrictionString().length === 0) {
-                this.valid_diet = false;
-                valid_form = false;
-            } else {
-                this.valid_diet = null;
-            }
-
-            console.log("mlh1: " + (!this.form.MLH_conduct))
-            if (!this.form.MLH_conduct) {
-                this.valid_code_of_conduct = false;
-                valid_form = false;
-            } else {
-                this.valid_code_of_conduct = null;
-            }
-
-            console.log("mlh2: " + (!this.form.MLH_privacy))
-            if (!this.form.MLH_privacy) {
-                this.valid_mlh_privacy = false;
-                valid_form = false;
-            } else {
-                this.valid_mlh_privacy = null;
-            }
-            return valid_form;
-        },
-        resetSchool(other) {
-            console.log(other);
-            if (other) {
-                this.form.school = "Other";
-                this.form.school_other = "";
-            } else {
-                this.form.school = "";
-                this.form.school_other = "";
-            }
-        },
+    // Mock function to simulate form submission (e.g., via API)
+    async submitFormData() {
+        // Simulate a delay for API call (e.g., 2 seconds)
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({ success: true });
+            }, 2000);
+        });
+    }
     },
 };
 </script>
