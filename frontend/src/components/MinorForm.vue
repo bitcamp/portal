@@ -116,7 +116,7 @@ I represent that I am between the ages of 10 and 18 years, and that I have read 
                     <b-form-group id="input-group-languages" label-for="input-group-languages" class="col-md-12">
                         <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
                             <b-form-checkbox v-for="option in checklistItems" :key="option.text"
-                                v-model="chap_responsibilities":value="option.text" :aria-describedby="ariaDescribedby"
+                                v-model="form.chap_responsibilities":value="option.text" :aria-describedby="ariaDescribedby"
                                 :state="validChecklist">
                                 {{ option.text }}
                             </b-form-checkbox>
@@ -319,12 +319,13 @@ export default {
                 p_chap_name:"",
                 p_chap_date:"",
                 p_chap_signature:"",
+                chap_responsibilities: [],
 
                 
                
             },
 
-            chap_responsibilities: [],
+            
             
             valid_photo_name: null,
             valid_photo_date: null,
@@ -422,8 +423,8 @@ export default {
         // Basic validation
         let isValid = true;
         
-        console.log('Selected Responsibilities:', this.chap_responsibilities);
-        if (this.chap_responsibilities.length !== 0) {
+        console.log('Selected Responsibilities:', this.form.chap_responsibilities);
+        if (this.form.chap_responsibilities.length !== 0) {
                 this.validChecklist = true; // Mark as invalid if no checkboxes are selected
                 
                 
