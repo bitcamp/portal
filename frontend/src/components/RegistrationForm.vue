@@ -3,7 +3,7 @@
     <b-col md="1" />
     <b-col md="10">
       <br />
-      <h1 style="text-align: left">Register for Bitcamp 2024</h1>
+      <h1 style="text-align: left">Register for Bitcamp 2025</h1>
 
       <!-- <p style="font-size: 0.9rem; opacity: 95%"> -->
       <b-alert show variant="danger">
@@ -20,7 +20,7 @@
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2024 at the email you provide.
+          Once you register, you'll receive more info about Bitcamp 2025 at the email you provide.
         </p>
 
         <!-- Name and Age -->
@@ -667,23 +667,23 @@
           the winning team will receive limited edition Bitcamp swag. So what are you waiting for?
           Take the survey and find your team!
         </p>
-        <b-form-group class="font-weight-bold" label="What is your favorite season?*">
+        <b-form-group class="font-weight-bold" label="Which dino do you most identify with?*">
           <b-form-radio-group
             id="survey-1"
             v-model="form.selected_survey_1"
             class="font-weight-normal pt-2"
             :state="valid_survey_1"
           >
-            <b-form-radio value="r"> Summer ☀️ </b-form-radio>
-            <b-form-radio value="r1"> Spring ⚡ </b-form-radio>
-            <b-form-radio value="g"> Fall 🍁 </b-form-radio>
-            <b-form-radio value="b"> Winter ❄️ </b-form-radio>
+            <b-form-radio value="r"> Triceratops </b-form-radio>
+            <b-form-radio value="r1"> Velociraptor </b-form-radio>
+            <b-form-radio value="g"> Ankylosaurus </b-form-radio>
+            <b-form-radio value="b"> Stegosaurus </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_1">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="How early do you finish classwork?*">
+        <b-form-group class="font-weight-bold" label="You are stuck in a cave with nothing but stones; what's your first move?*">
           <b-form-radio-group
             id="survey-2"
             v-model="form.selected_survey_2"
@@ -691,59 +691,59 @@
             :state="valid_survey_2"
           >
             <b-form-radio value="b">
-              The minute before it’s due. I like to live life on the edge
+              Grind the stones into paste and make a picasso
             </b-form-radio>
-            <b-form-radio value="r"> As soon as possible, I’m a machine </b-form-radio>
-            <b-form-radio value="g"> Relaxingly, I spread the work out until its due </b-form-radio>
-            <b-form-radio value="b1"> Huh!?! I had classwork? </b-form-radio>
+            <b-form-radio value="r"> Strike the stones and make a fire </b-form-radio>
+            <b-form-radio value="g"> Kick the stones and invent the earliest prehistoric version of soccer </b-form-radio>
+            <b-form-radio value="b1"> Line the stones and embrace your territory as a homebody </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_2">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="Would you rather never be able to...*">
+        <b-form-group class="font-weight-bold" label="If you could bring back one of these animals, which one would you choose?*">
           <b-form-radio-group
             id="survey-3"
             v-model="form.selected_survey_3"
             class="font-weight-normal pt-2"
             :state="valid_survey_3"
           >
-            <b-form-radio value="b"> Listen to music 🎵 </b-form-radio>
-            <b-form-radio value="g"> Watch TV 📺 </b-form-radio>
-            <b-form-radio value="r"> Eat junk food 🍕 </b-form-radio>
-            <b-form-radio value="r1"> Use your phone to text and call 📱 </b-form-radio>
+            <b-form-radio value="b"> Woolly Mammoths </b-form-radio>
+            <b-form-radio value="g"> Dodo Birds </b-form-radio>
+            <b-form-radio value="r"> Saber-Toothed Tigers </b-form-radio>
+            <b-form-radio value="r1"> Megalodon Sharks </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_3">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="What is your go to coffee order?*">
+        <b-form-group class="font-weight-bold" label="What’s your favorite part of Bitcamp?*">
           <b-form-radio-group
             id="survey-4"
             v-model="form.selected_survey_4"
             class="font-weight-normal pt-2"
             :state="valid_survey_4"
           >
-            <b-form-radio value="g"> Straight black coffee </b-form-radio>
-            <b-form-radio value="b"> Anything with pumpkin spice or matcha in it </b-form-radio>
-            <b-form-radio value="r"> As long as it has enough sugar to taste good </b-form-radio>
-            <b-form-radio value="g1"> Something new every time I order </b-form-radio>
+            <b-form-radio value="g"> Hunting and gathering food and swag </b-form-radio>
+            <b-form-radio value="b"> Hacking <strong>with axes</strong> </b-form-radio>
+            <b-form-radio value="r"> Late night shenanigans </b-form-radio>
+            <b-form-radio value="g1"> First time, I'll find out! </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="What is your favorite thing about Bitcamp?*">
+        <b-form-group class="font-weight-bold" label="What would be your favorite way to unwind?*">
           <b-form-radio-group
             id="survey-5"
             v-model="form.selected_survey_5"
             class="font-weight-normal pt-2"
             :state="valid_survey_5"
           >
-            <b-form-radio value="r"> Hacking </b-form-radio>
-            <b-form-radio value="g"> Free stuff </b-form-radio>
-            <b-form-radio value="b"> Late night shenanigans </b-form-radio>
-            <b-form-radio value="g1"> First time, I'll find out! </b-form-radio>
+            <b-form-radio value="r"> Play some tunes on an ivory flute </b-form-radio>
+            <b-form-radio value="g"> A day trip hunting bison & fishing by hand </b-form-radio>
+            <b-form-radio value="b"> Stargaze with a fellow neanderthal </b-form-radio>
+            <b-form-radio value="g1"> Munch on roots, berries, and leaves! </b-form-radio>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
             Please select an answer
@@ -754,8 +754,8 @@
         <!-- T-Shirt Size -->
         <h4 class="mb-2">Select a T-shirt size!</h4>
         <p class="info">
-          We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you like, and your very
-          own Bitcamp 2024 shirt will be given to you once you arrive at UMD.
+          We've got unisex T-shirts in XS-XL sizes! Choose whichever size you like, and your very
+          own Bitcamp 2025 shirt will be given to you once you arrive at UMD.
         </p>
 
         <b-form-row>
