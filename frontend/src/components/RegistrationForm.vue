@@ -6,10 +6,10 @@
       <h1 style="text-align: left">Register for Bitcamp 2024</h1>
 
       <!-- <p style="font-size: 0.9rem; opacity: 95%"> -->
-      <b-alert show variant="danger">
+      <!-- <b-alert show variant="danger">
         At the moment, you can still register to join the waitlist, but registration to <b>guarantee</b> a spot for
         Bitcamp is <b>closed</b>. We will notify you on Friday night (4/19) if you can attend.
-      </b-alert>
+      </b-alert> -->
       <!-- </p> -->
 
       <p style="font-size: 0.9rem; opacity: 95%">
@@ -788,9 +788,22 @@
             </b-form-row>
           </div>
 
+          <div v-if="form.age.length > 0 && Number(form.age) < 18">
+            <h4><u>Conditional Form Question</u></h4>
+            <b-form-group label="Please select your waiver type:" label-for="waiver-type">
+              <b-form-radio-group id="waiver-type" v-model="form.waiverType" :state="valid_waiverType"
+                name="waiver-type">
+                <b-form-radio value="chaperone">I have a Chaperone Agreement</b-form-radio>
+                <b-form-radio value="school">I have a School Waiver</b-form-radio>
+              </b-form-radio-group>
+              <b-form-invalid-feedback :state="valid_waiverType">
+                Please select a waiver type.
+              </b-form-invalid-feedback>
+            </b-form-group>
+          </div>
 
           <!-- Chaperone Agreement Form -->
-          <div v-if="form.age.length > 0 && Number(form.age) < 18">
+          <div v-if="form.age.length > 0 && Number(form.age) < 18 && form.waiverType === 'chaperone'">
             <h4><u>Chaperone Agreement Form</u></h4>
 
             <br>
@@ -860,7 +873,7 @@
         </div>
 
         <!-- School Agreement Form Section -->
-        <div v-if="form.age.length > 0 && Number(form.age) < 18">
+        <div v-if="form.age.length > 0 && Number(form.age) < 18 && form.waiverType === 'school'">
           <h4>School Agreement Form</h4>
           <p>
             ________________________________________________ <strong>[Chaperone]</strong> is authorized by
@@ -1236,6 +1249,8 @@ export default {
       ],
 
       school_class: "typeahead",
+
+      valid_waiverType: null,
 
       school_year_options: [
         { value: "", text: "Select one...", disabled: true },
@@ -1912,177 +1927,185 @@ export default {
         this.valid_survey_5 = null;
       }
 
-      // If the applicant is a minor, validate the waiver fields.
+      // If the applicant is a minor, validate the waiver type selection.
       if (this.form.age.length > 0 && Number(this.form.age) < 18) {
-        // Photography Consent Validation
+        if (!this.form.waiverType) {
+          this.valid_waiverType = false;
+          valid_form = false;
+        } else {
+          this.valid_waiverType = true;
+          // Now validate only the fields for the selected waiver type.
+          if (this.form.waiverType === "chaperone") {
+            // Validate Chaperone Agreement fields
+            if (!this.form.chap_name) {
+              this.valid_chap_name = false;
+              valid_form = false;
+            } else {
+              this.valid_chap_name = null;
+            }
+            if (!this.form.chap_date) {
+              this.valid_chap_date = false;
+              valid_form = false;
+            } else {
+              this.valid_chap_date = null;
+            }
+            if (!this.form.chap_signature) {
+              this.valid_chap_signature = false;
+              valid_form = false;
+            } else {
+              this.valid_chap_signature = null;
+            }
+            if (!this.form.p_chap_name) {
+              this.valid_p_chap_name = false;
+              valid_form = false;
+            } else {
+              this.valid_p_chap_name = null;
+            }
+            if (!this.form.p_chap_date) {
+              this.valid_p_chap_date = false;
+              valid_form = false;
+            } else {
+              this.valid_p_chap_date = null;
+            }
+            if (!this.form.p_chap_signature) {
+              this.valid_p_chap_signature = false;
+              valid_form = false;
+            } else {
+              this.valid_p_chap_signature = null;
+            }
+          } else if (this.form.waiverType === "school") {
+            // Validate School Agreement fields
+            if (!this.form.school_minor_name) {
+              this.valid_school_minor_name = false;
+              valid_form = false;
+            } else {
+              this.valid_school_minor_name = null;
+            }
+            if (!this.form.school_minor_date) {
+              this.valid_school_minor_date = false;
+              valid_form = false;
+            } else {
+              this.valid_school_minor_date = null;
+            }
+            if (!this.form.school_minor_signature) {
+              this.valid_school_minor_signature = false;
+              valid_form = false;
+            } else {
+              this.valid_school_minor_signature = null;
+            }
+            if (!this.form.school_teacher_name) {
+              this.valid_school_teacher_name = false;
+              valid_form = false;
+            } else {
+              this.valid_school_teacher_name = null;
+            }
+            if (!this.form.school_teacher_date) {
+              this.valid_school_teacher_date = false;
+              valid_form = false;
+            } else {
+              this.valid_school_teacher_date = null;
+            }
+            if (!this.form.school_teacher_signature) {
+              this.valid_school_teacher_signature = false;
+              valid_form = false;
+            } else {
+              this.valid_school_teacher_signature = null;
+            }
+            if (!this.form.school_principal_name) {
+              this.valid_school_principal_name = false;
+              valid_form = false;
+            } else {
+              this.valid_school_principal_name = null;
+            }
+            if (!this.form.school_principal_date) {
+              this.valid_school_principal_date = false;
+              valid_form = false;
+            } else {
+              this.valid_school_principal_date = null;
+            }
+            if (!this.form.school_principal_signature) {
+              this.valid_school_principal_signature = false;
+              valid_form = false;
+            } else {
+              this.valid_school_principal_signature = null;
+            }
+          }
+        }
         if (!this.form.photo_name) {
           this.valid_photo_name = false;
           valid_form = false;
         } else {
-          this.valid_photo_name = true;
+          this.valid_photo_name = null;
         }
         if (!this.form.photo_date) {
           this.valid_photo_date = false;
           valid_form = false;
         } else {
-          this.valid_photo_date = true;
+          this.valid_photo_date = null;
         }
         if (!this.form.photo_signature) {
           this.valid_photo_signature = false;
           valid_form = false;
         } else {
-          this.valid_photo_signature = true;
+          this.valid_photo_signature = null;
         }
         if (!this.form.p_photo_name) {
           this.valid_p_photo_name = false;
           valid_form = false;
         } else {
-          this.valid_p_photo_name = true;
+          this.valid_p_photo_name = null;
         }
         if (!this.form.p_photo_date) {
           this.valid_p_photo_date = false;
           valid_form = false;
         } else {
-          this.valid_p_photo_date = true;
+          this.valid_p_photo_date = null;
         }
         if (!this.form.p_photo_signature) {
           this.valid_p_photo_signature = false;
           valid_form = false;
         } else {
-          this.valid_p_photo_signature = true;
+          this.valid_p_photo_signature = null;
         }
-        // Chaperone Agreement Validation
-        if (!this.form.chap_name) {
-          this.valid_chap_name = false;
-          valid_form = false;
-        } else {
-          this.valid_chap_name = true;
-        }
-        if (!this.form.chap_date) {
-          this.valid_chap_date = false;
-          valid_form = false;
-        } else {
-          this.valid_chap_date = true;
-        }
-        if (!this.form.chap_signature) {
-          this.valid_chap_signature = false;
-          valid_form = false;
-        } else {
-          this.valid_chap_signature = true;
-        }
-        if (!this.form.p_chap_name) {
-          this.valid_p_chap_name = false;
-          valid_form = false;
-        } else {
-          this.valid_p_chap_name = true;
-        }
-        if (!this.form.p_chap_date) {
-          this.valid_p_chap_date = false;
-          valid_form = false;
-        } else {
-          this.valid_p_chap_date = true;
-        }
-        if (!this.form.p_chap_signature) {
-          this.valid_p_chap_signature = false;
-          valid_form = false;
-        } else {
-          this.valid_p_chap_signature = true;
-        }
+
         if (!this.form.terms_minor_name) {
           this.valid_terms_minor_name = false;
           valid_form = false;
         } else {
-          this.valid_terms_minor_name = true;
+          this.valid_terms_minor_name = null;
         }
         if (!this.form.terms_minor_date) {
           this.valid_terms_minor_date = false;
           valid_form = false;
         } else {
-          this.valid_terms_minor_date = true;
+          this.valid_terms_minor_date = null;
         }
         if (!this.form.terms_minor_signature) {
           this.valid_terms_minor_signature = false;
           valid_form = false;
         } else {
-          this.valid_terms_minor_signature = true;
+          this.valid_terms_minor_signature = null;
         }
         if (!this.form.terms_parent_name) {
           this.valid_terms_parent_name = false;
           valid_form = false;
         } else {
-          this.valid_terms_parent_name = true;
+          this.valid_terms_parent_name = null;
         }
         if (!this.form.terms_parent_date) {
           this.valid_terms_parent_date = false;
           valid_form = false;
         } else {
-          this.valid_terms_parent_date = true;
+          this.valid_terms_parent_date = null;
         }
         if (!this.form.terms_parent_signature) {
           this.valid_terms_parent_signature = false;
           valid_form = false;
         } else {
-          this.valid_terms_parent_signature = true;
+          this.valid_terms_parent_signature = null;
         }
-        if (!this.form.school_minor_name) {
-          this.valid_school_minor_name = false;
-          valid_form = false;
-        } else {
-          this.valid_school_minor_name = true;
-        }
-        if (!this.form.school_minor_date) {
-          this.valid_school_minor_date = false;
-          valid_form = false;
-        } else {
-          this.valid_school_minor_date = true;
-        }
-        if (!this.form.school_minor_signature) {
-          this.valid_school_minor_signature = false;
-          valid_form = false;
-        } else {
-          this.valid_school_minor_signature = true;
-        }
-        // Validate Teacher's Information
-        if (!this.form.school_teacher_name) {
-          this.valid_school_teacher_name = false;
-          valid_form = false;
-        } else {
-          this.valid_school_teacher_name = true;
-        }
-        if (!this.form.school_teacher_date) {
-          this.valid_school_teacher_date = false;
-          valid_form = false;
-        } else {
-          this.valid_school_teacher_date = true;
-        }
-        if (!this.form.school_teacher_signature) {
-          this.valid_school_teacher_signature = false;
-          valid_form = false;
-        } else {
-          this.valid_school_teacher_signature = true;
-        }
-        // Validate Principal's Information
-        if (!this.form.school_principal_name) {
-          this.valid_school_principal_name = false;
-          valid_form = false;
-        } else {
-          this.valid_school_principal_name = true;
-        }
-        if (!this.form.school_principal_date) {
-          this.valid_school_principal_date = false;
-          valid_form = false;
-        } else {
-          this.valid_school_principal_date = true;
-        }
-        if (!this.form.school_principal_signature) {
-          this.valid_school_principal_signature = false;
-          valid_form = false;
-        } else {
-          this.valid_school_principal_signature = true;
-        }
-      }
 
-      console.log(valid_form)
+      }
       return valid_form;
     },
     resetSchool(other) {

@@ -1,0 +1,57 @@
+{
+  "service": {
+    "service": "frontend",
+    "serviceObject": {
+      "name": "frontend"
+    },
+    "provider": {
+      "name": "aws",
+      "stage": "dev",
+      "region": "us-east-1",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {},
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-89eeb5a8-31b0",
+            "Export": {
+              "Name": "sls-frontend-dev-ServerlessDeploymentBucketName"
+            }
+          }
+        }
+      }
+    },
+    "pluginsData": {},
+    "functions": {},
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless",
+    "initialServerlessConfig": {
+      "org": "bitcamp",
+      "app": "portal",
+      "service": "frontend",
+      "name": "portal-frontend",
+      "component": "website",
+      "inputs": {
+        "src": {
+          "src": "./src",
+          "hook": "npm run build-prod",
+          "dist": "./dist"
+        }
+      },
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      }
+    },
+    "app": "portal",
+    "appId": null,
+    "org": "bitcamp",
+    "orgId": null,
+    "layers": {}
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/frontend/dev/1738700747207-2025-02-04T20:25:47.207Z",
+    "artifact": ""
+  }
+}
