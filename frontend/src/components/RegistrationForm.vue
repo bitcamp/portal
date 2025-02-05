@@ -1156,7 +1156,7 @@ export default {
         citizen: null,
         quantum_track: null,
         beginner_content_opt_in: null,
-        waitlist: true,
+        waitlist: false,
         photo_name: "",
         photo_date: "",
         photo_signature: "",
