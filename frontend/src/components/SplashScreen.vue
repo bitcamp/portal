@@ -40,7 +40,7 @@
             of our hackathon. From logistics to participant assistance, your
             contribution will help create a positive environment for everyone!"
             role-u-r-l="/volunteer"
-            svg-image-path="splash-screen/green-dino.svg"
+            svg-image-path="splash-screen/Green Dino.svg"
           />
         </b-col>
         
@@ -94,9 +94,9 @@ export default {
 }
 
 .register-logo {
-  width: 80%;
+  width: 65%;
   height: auto; /* Maintain aspect ratio */
-  margin: 0 0;
+  margin: 0px 0;
 }
 
 .logos {
@@ -138,6 +138,12 @@ export default {
   display: flex;
   flex-direction: row;
   margin-top: 10px; /* Adjusted top margin to fine-tune spacing */
+}
+.bitcamp-logo {
+  width: 50%;
+  height: auto; /* Maintain aspect ratio */
+  margin-top: 100px;
+  margin-bottom: 20px;
 }
   
 
