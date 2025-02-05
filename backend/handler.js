@@ -34,7 +34,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
 
   const existingReg = await ddb.get({
     TableName: process.env.REGISTRATION_TABLE,
-    Key: {email: body.email.toLowerCase()}
+    Key: { email: body.email.toLowerCase() }
   }).promise()
 
   // Generate referral ID
@@ -110,8 +110,8 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_red: body.red,
       survey_blue: body.blue,
 
-      // remove this after 2024 season
-      waitlist: body.waitlist, 
+      // remove this after 2025 season
+      // waitlist: body.waitlist, 
     },
   };
 
@@ -139,29 +139,58 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     }
   }
 
-  const logWaitlistTrack = () => {
-    if (body.waitlist_track_selected.length > 0) {
-      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1)
-    }
+  if (body.age && Number(body.age) < 18) {
+    const minorData = {
+      "Chaperone E-Signature (School)": body.chap_signature,
+      "Date Signed (Chaperone) (School)": body.chap_date,
+      "Date Signed (Minor)": body.photo_date,
+      "Date Signed (Principal) (School)": body.school_principal_date,
+      "Date Signed (Terms)": body.terms_parent_date,
+      "E-Signature (Terms)": body.terms_parent_signature,
+      email: body.email.toLowerCase(),
+      "Guardian E-Signature (Chap)": body.p_chap_signature,
+      "Guardian E-Signature (Minor)": body.p_photo_signature,
+      "Guardian Name (Chap)": body.p_chap_name,
+      "Guardian Relationship (Chap)": body.p_chap_relationship,
+      "Name (Terms)": body.terms_parent_name,
+      "Principal E-Signature (School)": body.school_principal_signature,
+      created_at: new Date().toISOString(),
+    };
+    console.log("HELO")
+    console.log(minorData)
+    const minorParams = {
+      
+      TableName: process.env.MINORS_TABLE,
+      Item: minorData,
+    };
+
   }
+});
 
-  await Promise.all([
-    logStatistic(ddb, "track-" + body.track_selected, 1),
-    logWaitlistTrack(),
-    logStatistic(ddb, "registrations", 1),
-    // Call DynamoDB to add the item to the table
-    ddb.put(params).promise(),
-    // Send confirmation email
-    sendConfirmationEmail(params.Item),
-  ]);
+const logWaitlistTrack = () => {
+  if (body.waitlist_track_selected.length > 0) {
+    logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1)
+  }
+}
 
-  // Returns status code 200 and JSON string of 'result'
-  return {
-    statusCode: 200,
-    body: JSON.stringify(params.Item),
-    headers: HEADERS,
-  };
-}); 
+await Promise.all([
+  logStatistic(ddb, "track-" + body.track_selected, 1),
+  logWaitlistTrack(),
+  logStatistic(ddb, "registrations", 1),
+  // Call DynamoDB to add the item to the table
+  ddb.put(params).promise(),
+  ddb.put(minorParams).promise(),
+  // Send confirmation email
+  sendConfirmationEmail(params.Item),
+]);
+
+// Returns status code 200 and JSON string of 'result'
+return {
+  statusCode: 200,
+  body: JSON.stringify(params.Item),
+  headers: HEADERS,
+};
+
 
 // makeAddon generates a random string of `length`
 const makeAddon = (length) => {
@@ -373,9 +402,9 @@ const logStatistic = (ddb, stat) => {
 };
 
 const normalizeReferral = (referred_by) => {
-    // check for illegal characters
-    const givenChunks = referred_by.split('-');
-    return (givenChunks[0] + '-' + givenChunks[1].substring(0,3));  
+  // check for illegal characters
+  const givenChunks = referred_by.split('-');
+  return (givenChunks[0] + '-' + givenChunks[1].substring(0, 3));
 }
 
 const logReferral = async (ddb, referred_by, referralName) => {
@@ -410,13 +439,13 @@ module.exports.update = withSentry(async () => {
 
   // Can't simply scan a table to get the count once it's over 1mb in size (~950 registrations)
   // must use pagination instead, so the following doesn't work:
-  
+
   // const hackers = await ddb.scan({
   //   TableName: registrationTable,
   //   Select: "COUNT",
   // }).promise();
-  
-  
+
+
   let scanParams = {
     TableName: registrationTable,
     Select: "COUNT",
@@ -424,7 +453,7 @@ module.exports.update = withSentry(async () => {
 
   let hackersCount = 0;
   let hackers;
-  
+
   // must use pagination to get full size of hacker registration table
   // "LastEvaluatedKey" is where the last scan left off, so it keeps going until this doesn't exist
   do {
@@ -492,7 +521,7 @@ module.exports.update = withSentry(async () => {
   });
 
   // Sort strings ignoring the statistic value
-  const sortWithoutStatisticValue = ((a,b) => {
+  const sortWithoutStatisticValue = ((a, b) => {
     a = a.replace(/[0-9]/g, '');
     b = b.replace(/[0-9]/g, '');
     return a.localeCompare(b);

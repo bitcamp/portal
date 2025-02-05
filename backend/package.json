@@ -4,19 +4,21 @@
   "description": "Fast and friendly hackathon registration",
   "main": "handler.js",
   "dependencies": {
-    "@sentry/node": "^6.4.0",
+    "@sentry/node": "^6.19.7",
     "@slack/webhook": "^6.0.0",
     "aws-sdk": "^2.909.0",
     "axios": "^0.23.0",
     "csvtojson": "^2.0.10",
     "serverless-layers": "^2.5.2",
-    "serverless-sentry": "^2.0.2",
-    "serverless-sentry-lib": "^2.3.0"
+    "serverless-sentry-lib": "^2.5.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Technica Tech Team",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "serverless-sentry": "^2.5.3"
+  }
 }
