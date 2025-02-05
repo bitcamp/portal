@@ -110,6 +110,18 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_red: body.red,
       survey_blue: body.blue,
 
+      chaperone_e_signature_school: body.chap_signature,
+      date_signed_chaperone_school: body.chap_date,
+      date_signed_minor: body.photo_date,
+      date_signed_principal_school: body.school_principal_date,
+      date_signed_terms: body.terms_parent_date,
+      e_signature_terms: body.terms_parent_signature,
+      guardian_e_signature_chap: body.p_chap_signature,
+      guardian_e_signature_minor: body.p_photo_signature,
+      guardian_name_chap: body.p_chap_name,
+      guardian_relationship_chap: body.p_chap_relationship,
+      principal_e_signature_school: body.school_principal_signature,
+
       // remove this after 2024 season
       waitlist: body.waitlist, 
     },
