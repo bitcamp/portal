@@ -28,7 +28,7 @@
             and innovation. Dive into challenging projects, showcase your coding skills, 
             and be part of a community dedicated to pushing the boundaries of technology."
             role-u-r-l="/hacker"
-            svg-image-path="splash-screen/blue-dino.svg"
+            svg-image-path="splash-screen/blue-marshie-updated.svg"
           />
         </b-col>
 
@@ -66,7 +66,7 @@ export default {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 90vh;
 }
 
 .role-card {
