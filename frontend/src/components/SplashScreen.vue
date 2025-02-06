@@ -115,7 +115,6 @@ export default {
 
 }
 
-
 @media (max-width: 768px) {
   .screen-container {
     display: grid;
