@@ -1589,13 +1589,7 @@
           :state="valid_minors_form"
           class="checkbox"
         >
-          I have filled out the
-          <a
-            href="https://drive.google.com/drive/folders/1fVcfhQ7AfGJZ_m-QnVgXmE5ghgtxr9vr?usp=drive_link"
-            target="_blank"
-            >minors forms</a
-          >
-          and emailed them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
+          I have filled out the minors forms.*
           <b-form-invalid-feedback :state="valid_minors_form">
             Please fill out the minors forms
           </b-form-invalid-feedback>
