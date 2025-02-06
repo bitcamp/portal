@@ -435,6 +435,7 @@ export default {
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
+                { value: "freshman", text: "Freshman" },
                 { value: "sophomore", text: "Sophomore" },
                 { value: "junior", text: "Junior" },
                 { value: "senior", text: "Senior" },
