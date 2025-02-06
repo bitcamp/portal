@@ -499,54 +499,6 @@
                 Please select an answer
               </b-form-invalid-feedback>
             </b-form-group>
-
-            <b-form-group
-              v-if="form.transport"
-              label="What is your preferred method of transportation assistance?*"
-              label-for="transport-options"
-              class="col-md-12"
-            >
-              <b-form-group
-                id="transport-options"
-                v-slot="{ ariaDescribedby }"
-                class="mt-3 mb-1"
-                :state="valid_transport_options"
-              >
-                <b-form-checkbox
-                  v-for="option in transportation_options"
-                  :key="option.value"
-                  v-model="transport_select"
-                  :value="option.value"
-                  :aria-describedby="ariaDescribedby"
-                  :state="valid_transport_options"
-                  name="flavour-3a"
-                >
-                  {{ option.text }}
-                </b-form-checkbox>
-                <b-form-invalid-feedback :state="valid_transport_options">
-                  Please select an option
-                </b-form-invalid-feedback>
-              </b-form-group>
-              <b-form-group
-                label="Would you be willing to pay a small, refundable deposit to secure your seat on any method of travel assistance?*"
-                label-for="transport-deposit"
-                class="mt-3"
-              >
-                <b-form-radio-group
-                  id="transport-deposit"
-                  v-model="form.transport_deposit"
-                  :state="valid_transport_deposit"
-                  class="pt-2"
-                >
-                  <p class="note">If you are in attendance, we will refund your deposit</p>
-                  <b-form-radio :value="true"> Yes </b-form-radio>
-                  <b-form-radio :value="false"> No </b-form-radio>
-                </b-form-radio-group>
-                <b-form-invalid-feedback :state="valid_transport_deposit">
-                  Please select an answer
-                </b-form-invalid-feedback>
-              </b-form-group>
-            </b-form-group>
           </b-form-row>
         </div>
 
@@ -1332,14 +1284,10 @@
           <div v-if="form.age.length > 0 && Number(form.age) < 18">
             <h4><u>Conditional Form Question</u></h4>
             <b-form-group label="Please select your waiver type:" label-for="waiver-type">
-              <b-form-radio-group
-                id="waiver-type"
-                v-model="form.waiverType"
-                :state="valid_waiverType"
-                name="waiver-type"
-              >
-                <b-form-radio value="chaperone"> I have a Chaperone Agreement </b-form-radio>
-                <b-form-radio value="school"> I have a School Waiver </b-form-radio>
+              <b-form-radio-group id="waiver-type" v-model="form.waiverType" :state="valid_waiverType"
+                name="waiver-type">
+                <b-form-radio value="chaperone">I have a chaperone</b-form-radio>
+                <b-form-radio value="school">I'm coming with my school</b-form-radio>
               </b-form-radio-group>
               <b-form-invalid-feedback :state="valid_waiverType">
                 Please select a waiver type.
@@ -1362,20 +1310,12 @@
             </ul>
 
             <b-form-row>
-              <b-form-group
-                id="input-group-chap-name"
-                label="Chaperone Full Name*"
-                label-for="input-chap-name"
-                class="col-6 col-md-6"
-              >
-                <b-form-input
-                  id="input-chap-name"
-                  v-model="form.chap_name"
-                  placeholder="Chaperone Full Name"
-                  :state="valid_chap_name"
-                />
+              <b-form-group id="input-group-chap-name" label="Minor Full Name*" label-for="input-chap-name"
+                class="col-6 col-md-6">
+                <b-form-input id="input-chap-name" v-model="form.chap_name" placeholder="Minor Full Name"
+                  :state="valid_chap_name" />
                 <b-form-invalid-feedback :state="valid_chap_name">
-                  Please enter your chaperone's full name
+                  Please enter your full name
                 </b-form-invalid-feedback>
               </b-form-group>
               <b-form-group
@@ -1399,38 +1339,22 @@
               </b-form-group>
             </b-form-row>
             <b-form-row>
-              <b-form-group
-                id="input-group-chap-signature"
-                label="Signature*"
-                label-for="input-chap-signature"
-                class="col-6 col-md-6"
-              >
-                <b-form-input
-                  id="input-chap-signature"
-                  v-model="form.chap_signature"
-                  placeholder="Signature"
-                  :state="valid_chap_signature"
-                />
+              <b-form-group id="input-group-chap-signature" label="Signature*" label-for="input-chap-signature"
+                class="col-6 col-md-6">
+                <b-form-input id="input-chap-signature" v-model="form.chap_signature" placeholder="e-Signature"
+                  :state="valid_chap_signature" />
                 <b-form-invalid-feedback :state="valid_chap_signature">
                   Please enter your signature
                 </b-form-invalid-feedback>
               </b-form-group>
             </b-form-row>
             <b-form-row>
-              <b-form-group
-                id="input-group-p-chap-name"
-                label="Parent/Guardian Full Name*"
-                label-for="input-p-chap-name"
-                class="col-6 col-md-6"
-              >
-                <b-form-input
-                  id="input-p-chap-name"
-                  v-model="form.p_chap_name"
-                  placeholder="Parent/Guardian Full Name"
-                  :state="valid_p_chap_name"
-                />
+              <b-form-group id="input-group-p-chap-name" label="Chaperone Full Name*"
+                label-for="input-p-chap-name" class="col-6 col-md-6">
+                <b-form-input id="input-p-chap-name" v-model="form.p_chap_name" placeholder="Chaperone Full Name"
+                  :state="valid_p_chap_name" />
                 <b-form-invalid-feedback :state="valid_p_chap_name">
-                  Please enter your parent/guardian's full name
+                  Please enter your chaperone's full name
                 </b-form-invalid-feedback>
               </b-form-group>
               <b-form-group
@@ -1454,20 +1378,12 @@
               </b-form-group>
             </b-form-row>
             <b-form-row>
-              <b-form-group
-                id="input-group-p-chap-signature"
-                label="Signature*"
-                label-for="input-p-chap-signature"
-                class="col-6 col-md-6"
-              >
-                <b-form-input
-                  id="input-p-chap-signature"
-                  v-model="form.p_chap_signature"
-                  placeholder="Signature"
-                  :state="valid_p_chap_signature"
-                />
+              <b-form-group id="input-group-p-chap-signature" label="Signature*" label-for="input-p-chap-signature"
+                class="col-6 col-md-6">
+                <b-form-input id="input-p-chap-signature" v-model="form.p_chap_signature" placeholder="e-Signature"
+                  :state="valid_p_chap_signature" />
                 <b-form-invalid-feedback :state="valid_p_chap_signature">
-                  Please enter your parent/guardian's signature
+                  Please enter your chaperone's signature
                 </b-form-invalid-feedback>
               </b-form-group>
             </b-form-row>
@@ -2059,24 +1975,24 @@ export default {
 
       no_transport_unis: ["The University of Maryland, College Park"],
 
-      transportation_options: [
-        {
-          value: "bus",
-          text: "Bus",
-        },
-        {
-          value: "train",
-          text: "Train",
-        },
-        {
-          value: "metro",
-          text: "Metro",
-        },
-        {
-          value: "uber",
-          text: "Uber",
-        },
-      ],
+      // transportation_options: [
+      //   {
+      //     value: "bus",
+      //     text: "Bus",
+      //   },
+      //   {
+      //     value: "train",
+      //     text: "Train",
+      //   },
+      //   {
+      //     value: "metro",
+      //     text: "Metro",
+      //   },
+      //   {
+      //     value: "uber",
+      //     text: "Uber",
+      //   },
+      // ],
 
       country_options: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
 
