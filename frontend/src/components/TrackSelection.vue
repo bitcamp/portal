@@ -53,11 +53,9 @@
             <b-card class="h-100 w-100 general" :class="{ active: card === 'machine_learning' }">
               <h4>Machine Learning</h4>
               <p>
-                If you're wowed by recent AI advancements like ChatGPT, then
-                this is the track for you! We will expand upon specialized
-                learning experiences by hosting a series of workshops with
-                content related to building and hosting ML models, unsupervised
-                learning, and discussions of recent AI advancements.
+                If you are amazed by AI breakthroughs like ChatGPT and driven to create something just as impactful, then this is your track! 
+                Dive into hands-on workshops where you’ll learn to build and deploy machine learning models, gain proficiency in essential ML techniques, and discuss innovations reshaping the AI landscape. 
+                By the end of this track, you’ll have a portfolio-ready project to showcase!
               </p>
             </b-card>
           </div>
