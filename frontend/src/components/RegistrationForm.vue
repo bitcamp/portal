@@ -244,7 +244,7 @@
         <hr />
         <b-form-row>
           <b-form-group v-if="selectedQuantumTrack()"
-            label="Would you like to be placed in the beginner or advanced quantum track?*" class="col-md-12"
+            label="Would you like to be placed in the beginner quantum or advanced quantum track?*" class="col-md-12"
             label-for="quantum-survey">
             <b-form-radio-group id="quantum-survey" v-model="form.quantum_track" class="font-weight pt-2"
               :state="valid_quantum_survey">
@@ -258,7 +258,7 @@
 
           <!-- Quantum selection 2 -->
 
-          <b-form-group label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a
+          <b-form-group label="Although we are not offering a beginner (general) track this year, Bitcamp remains committed to being a
                   hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops
                   are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how
                   to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack!
