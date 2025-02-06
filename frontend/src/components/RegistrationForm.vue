@@ -1884,8 +1884,6 @@ export default {
       if (this.heard_from_other && !this.heard_from_other_text.trim()) {
         this.valid_heard_from = false;
         valid_form = false;
-      } else {
-        this.valid_heard_from = null;
       }
 
       if (this.createDietaryRestrictionString().length === 0) {
@@ -1898,8 +1896,6 @@ export default {
       if (this.diet_other && !this.diet_other_text.trim()) {
         this.valid_diet = false;
         valid_form = false;
-      } else {
-        this.valid_diet = null;
       }
 
       if (!this.form.MLH_conduct) {
