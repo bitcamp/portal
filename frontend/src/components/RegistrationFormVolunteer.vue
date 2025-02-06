@@ -12,8 +12,8 @@
                 As a volunteer, you will take on shifts to serve food, help run workshops, guide attendees around the venue, and more!
             </p>
             <p style="font-size: 0.9rem; opacity: 95%">
-                Questions? Contact us at
-                <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
+                Questions about volunteering? Contact us at 
+                <a href="mailto:personnel@bit.camp">personnel@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
             </p>
             <hr>
             <b-form class="registration-form" autocomplete="on" @submit="registerUser">

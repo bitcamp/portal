@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-b-tooltip.hover.bottom :title="roleDescription">
-      <b-icon scale="1.5" icon="info-circle"></b-icon>
+      <b-icon style="color: white;" scale="1.5" icon="info-circle"></b-icon>
     </div>
   </b-card>
 </template>
@@ -64,8 +64,8 @@ export default {
   padding: 4px 7px;
   border-radius: 10px;
   transition: all .3s ease;
-  
-  
+
+
   /*max-width: 100%; */
 }
 
@@ -78,7 +78,7 @@ export default {
   padding: 5px 20px;
   margin-bottom: 0;
   transition: all .3s ease;
-  
+
 }
 
 
@@ -87,8 +87,8 @@ export default {
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
 }
 
-.tooltip { 
-  top: 0; 
+.tooltip {
+  top: 0;
 }
 
 /* Specific styles for each button */
@@ -99,8 +99,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  margin-bottom:10px;
+
+  margin-bottom: 10px;
   height: 50px;
   width: 200px;
   text-align: center;
