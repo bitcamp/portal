@@ -5,21 +5,21 @@
         <b-col md="10">
             <br>
             <h1 style="text-align: left">
-                Register for Bitcamp 2024 - Mentor
+                Register for Bitcamp 2025 - Mentor
             </h1>
 
             <p style="font-size: 0.9rem; opacity: 95%">
                 As a mentor, you will assist attendees with their projects and provide any additional guidance. Be prepared to answer any questions hackers may have, ranging from hardware to front-end and back-end.
             </p>
             <p style="font-size: 0.9rem; opacity: 95%">
-                Questions? Contact us at
-                <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
+                Questions about mentoring? Contact us at
+                <a href="mailto:personnel@bit.camp">personnel@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
             </p>
             <hr>
             <b-form class="registration-form" autocomplete="on" @submit="registerUser">
                 <h4>Tell us about yourself!</h4>
                 <p class="info">
-                    Once you register, you'll receive more info about Bitcamp 2024 at the
+                    Once you register, you'll receive more info about Bitcamp 2025 at the
                     email you provide.
                 </p>
 
@@ -135,8 +135,8 @@
                     Select a T-shirt size!
                 </h4>
                 <p class="info">
-                    We've got unisex T-shirts in XS-2XL sizes! Choose whichever size you
-                    like, and your very own Bitcamp 2024 shirt will be given to you once
+                    We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
+                    like, and your very own Bitcamp 2025 shirt will be given to you once
                     you arrive at UMD.
                 </p>
 
@@ -435,16 +435,22 @@ export default {
 
             school_year_options: [
                 { value: "", text: "Select one...", disabled: true },
-                { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
-                { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
-                { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
-                { value: "bootcamp", text: "Code School / Bootcamp" },
-                { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
-                { value: "postdoc", text: "Post Doctorate" },
+                { value: "freshman", text: "Freshman" },
+                { value: "sophomore", text: "Sophomore" },
+                { value: "junior", text: "Junior" },
+                { value: "senior", text: "Senior" },
+                { value: "graduate", text: "Graduate" },
+                { value: "post graduate", text: "Post Graduate" },
                 { value: "other", text: "Other" },
                 { value: "prefer not to answer", text: "Prefer not to answer" },
+                // { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+                // { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Sophomore" },
+                // { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Junior" },
+                // { value: "undergrad 3+ year", text: "Undergraduate University (3+ year) - Senior" },
+                // { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+                // { value: "bootcamp", text: "Code School / Bootcamp" },
+                // { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+                // { value: "postdoc", text: "Post Doctorate" },
             ],
 
             school_other_selected: false,
@@ -456,12 +462,21 @@ export default {
             skill_options: [
                 { value: "web-development", text: "Web Development" },
                 { value: "mobile-application-development", text: "Mobile Application Development" },
-                { value: "game-development", text: "Game Development" },
+                { value: "ar-vr", text: "AR/VR" },
+                { value: "artificial-intelligence", text: "Artificial Intelligence" },
                 { value: "machine-learning", text: "Machine Learning" },
-                { value: "quantum-computing", text: "Quantum Computing" },
-                { value: "cybersecurity", text: "Cybersecurity" },
-                { value: "user-interface-design", text: "User Interface Design" },
+                { value: "data-science-and-visualization", text: "Data Science and Visualization" },
+                { value: "aws", text: "AWS" },
+                { value: "databases", text: "Databases" },
+                { value: "backend-engineering", text: "Backend Engineering" },
+                { value: "linux-systems", text: "Linux Systems" },
                 { value: "hardware", text: "Hardware" },
+                { value: "ui-ux", text: "UI/UX" },
+                { value: "git-github-and-version-control", text: "Git/GitHub and Version Control" },
+                // { value: "game-development", text: "Game Development" },
+                // { value: "quantum-computing", text: "Quantum Computing" },
+                // { value: "cybersecurity", text: "Cybersecurity" },
+                // { value: "user-interface-design", text: "User Interface Design" },
             ],
 
             languages_select: [],
@@ -475,27 +490,28 @@ export default {
                 { value: "css", text: "CSS" },
                 { value: "bootstrap", text: "Bootstrap" },
                 { value: "react", text: "React" },
-                { value: "react-native", text: "React Native" },
+                { value: "java", text: "Java" },
+                { value: "python", text: "Python" },
+                { value: "sql", text: "SQL" },
+                { value: "c", text: "C"},
+                { value: "c#", text: "C#" },
+                { value: "arduino", text: "Arduino" },
                 { value: "angular", text: "Angular" },
                 { value: "express", text: "Express" },
                 { value: "node", text: "Node" },
-                { value: "python", text: "Python" },
-                { value: "java", text: "Java" },
-                { value: "sql", text: "SQL" },
-                { value: "nosql", text: "NoSQL" },
-                { value: "c#", text: "C#" },
-                { value: "rust", text: "Rust" },
-                { value: "servo", text: "Servo" },
-                { value: "perl", text: "Perl" },
-                { value: "go", text: "Go" },
-                { value: "flask", text: "Flask" },
-                { value: "git", text: "Git/Github" },
-                { value: "arduino", text: "Arduino" },
                 { value: "c++", text: "C++" },
-                { value: "opencv", text: "OpenCV" },
-                { value: "google-cloud", text: "Google Cloud" },
-                { value: "flutter", text: "Flutter" },
-                { value: "amazon-web-services", text: "Amazon Web Services" },
+                { value: "go", text: "Go" },
+                { value: "perl", text: "Perl" },
+                { value: "aws", text: "AWS" },
+                // { value: "react-native", text: "React Native" },
+                // { value: "nosql", text: "NoSQL" },
+                // { value: "rust", text: "Rust" },
+                // { value: "servo", text: "Servo" },
+                // { value: "flask", text: "Flask" },
+                // { value: "git", text: "Git/Github" },
+                // { value: "opencv", text: "OpenCV" },
+                // { value: "google-cloud", text: "Google Cloud" },
+                // { value: "flutter", text: "Flutter" },
             ],
 
             tshirt_size_options: [
@@ -506,7 +522,7 @@ export default {
                 { value: "m", text: "M" },
                 { value: "l", text: "L" },
                 { value: "xl", text: "XL" },
-                { value: "2xl", text: "2XL" },
+                //{ value: "2xl", text: "2XL" },
             ],
 
             university_options: [...university_list],
@@ -529,10 +545,10 @@ export default {
                 { text: "Vegan", value: "vegan" },
                 { text: "Vegetarian", value: "vegetarian" },
                 { text: "Gluten Free", value: "gluten-free" },
-                { text: "Dairy Free", value: "dairy-free" },
-                { text: "Nut Allergy", value: "nut-allergy" },
                 { text: "Kosher", value: "kosher" },
                 { text: "Halal", value: "halal" },
+                // { text: "Dairy Free", value: "dairy-free" },
+                // { text: "Nut Allergy", value: "nut-allergy" },
             ]
         };
     },

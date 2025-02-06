@@ -4,7 +4,7 @@
     <div>
       <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
 
-      <div class="title-container" :style="{ backgroundColor: titleBackgroundColor }" @click="redirectToRole">
+      <div class="title-container" @click="redirectToRole">
         <div class="effect-box"></div>
         <div>
           <h2 class="role-title">
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-b-tooltip.hover.bottom :title="roleDescription">
-      <b-icon scale="1.5" icon="info-circle"></b-icon>
+      <b-icon style="color: white;" scale="1.5" icon="info-circle"></b-icon>
     </div>
   </b-card>
 </template>
@@ -49,6 +49,7 @@ export default {
   border: none;
   position: relative;
   overflow: hidden;
+  margin: 0;
 }
 
 .card-body {
@@ -60,20 +61,15 @@ export default {
   display: inline-block;
   position: relative;
   cursor: pointer;
-  padding: 3px 4px;
+  padding: 4px 7px;
   border-radius: 10px;
   transition: all .3s ease;
+
+
   /*max-width: 100%; */
 }
 
-.effect-box {
-  position: absolute;
-  z-index: -1;
-  border-radius: 10px;
-  right: 1px;
-  height: 110%;
-  transition: all .3s ease;
-}
+
 
 .role-title {
   font-size: calc(0.8rem + 0.7vw);
@@ -82,6 +78,7 @@ export default {
   padding: 5px 20px;
   margin-bottom: 0;
   transition: all .3s ease;
+
 }
 
 
@@ -90,75 +87,28 @@ export default {
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
 }
 
-.tooltip { 
-  top: 0; 
+.tooltip {
+  top: 0;
 }
 
 /* Specific styles for each button */
-.role-card[data-role="hacker"] .role-title {
-  background-color: #B42F2F;
-  color: #FFB169;
-  border: 3px solid #E03728;
+.role-card .role-title {
+  background: linear-gradient(90deg, #ea1d9b, #fca5a5);
+
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 10px;
+  height: 50px;
+  width: 200px;
+  text-align: center;
 }
 
-.role-card[data-role="hacker"] .role-title:hover {
+.role-card .role-title:hover {
   background-color: #FFB169;
-  color: #E03728;
-}
-
-.role-card[data-role="hacker"] .effect-box {
-  background-color: #B42F2F;
-  width: 106%;
-}
-
-.role-card[data-role="hacker"] .title-container {
-  background-color: #FFB169;
-  border: 3px solid #E03728;
-  margin: 20px;
-}
-
-.role-card[data-role="mentor"] .role-title {
-  background-color: #52A4D2;
-  color: #DBF2FF;
-  border: 3px solid #51BEFA;
-}
-
-.role-card[data-role="mentor"] .role-title:hover {
-  background-color: #DBF2FF;
-  color: #51BEFA;
-}
-
-.role-card[data-role="mentor"] .effect-box {
-  background-color: #52A4D2;
-  width: 105%;
-}
-
-.role-card[data-role="mentor"] .title-container {
-  background-color: #DBF2FF;
-  border: 3px solid #51BEFA;
-  margin: 20px;
-}
-
-.role-card[data-role="volunteer"] .role-title {
-  background-color: #368D5A;
-  color: #E9FFE6;
-  border: 3px solid #3A9D63;
-}
-
-.role-card[data-role="volunteer"] .role-title:hover {
-  background-color: #E9FFE6;
-  color: #3A9D63;
-}
-
-.role-card[data-role="volunteer"] .effect-box {
-  background-color: #368D5A;
-  width: 104%;
-}
-
-.role-card[data-role="volunteer"] .title-container {
-  background-color: #E9FFE6;
-  border: 3px solid #3A9D63;
-  margin: 20px 0 !important;
+  color: #d1c2c1;
 }
 
 .role-description {
@@ -166,8 +116,8 @@ export default {
 }
 
 .role-logo {
-  width: 100%;
-  max-height: 120px;
+  width: 110%;
+  max-height: 250px;
   margin-bottom: 10px;
 }
 

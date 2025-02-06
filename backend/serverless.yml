@@ -195,11 +195,11 @@ resources: # define DynamoDB tables within serverless
       DeletionPolicy: Retain
 
 package:
-  exclude: node_modules/**
+  exclude: node_modules/aws/**
 
 plugins:
   - serverless-sentry
-  - serverless-layers
+  # - serverless-layers
 
 custom:
   provisionedConcurrency:

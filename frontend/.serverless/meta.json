@@ -1,0 +1,107 @@
+{
+  "/Users/sai_pranav_theerthala/Desktop/School/Clubs/Bitcamp/Bitcamp_2025/portal/frontend/serverless.yml": {
+    "versionFramework": "4.6.0",
+    "servicePath": "/Users/sai_pranav_theerthala/Desktop/School/Clubs/Bitcamp/Bitcamp_2025/portal/frontend/serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "org": "bitcamp",
+      "app": "portal",
+      "service": "frontend",
+      "name": "portal-frontend",
+      "component": "website",
+      "inputs": {
+        "src": {
+          "src": "./src",
+          "hook": "npm run build-prod",
+          "dist": "./dist"
+        }
+      },
+      "provider": {
+        "name": "aws",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {},
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-89eeb5a8-31b0",
+              "Export": {
+                "Name": "sls-frontend-dev-ServerlessDeploymentBucketName"
+              }
+            }
+          }
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "stage": "dev",
+      "region": "us-east-1",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {},
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-89eeb5a8-31b0",
+            "Export": {
+              "Name": "sls-frontend-dev-ServerlessDeploymentBucketName"
+            }
+          }
+        }
+      }
+    },
+    "dashboard": {
+      "isEnabledForService": true,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": {
+        "providers": true,
+        "monitoring": true
+      },
+      "orgObservabilityIntegrations": [
+        {
+          "integrationId": "fssV2hiwvY7HvHevMdEJm4",
+          "awsAccountId": "123574527805",
+          "status": "alive"
+        }
+      ],
+      "serviceAppId": "B6DV1yRpfdFp2dxzcg",
+      "serviceProvider": {
+        "accessKeyId": "<REDACTED>",
+        "secretAccessKey": "<REDACTED>",
+        "sessionToken": "<REDACTED>",
+        "$source": {
+          "CREDENTIALS_CODE": "<REDACTED>"
+        }
+      },
+      "instanceParameters": null
+    },
+    "error": {
+      "message": "The CloudFormation template is invalid: Template format error: At least one Resources member must be defined.",
+      "stack": "ServerlessError2: The CloudFormation template is invalid: Template format error: At least one Resources member must be defined.\n    at file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:982:21740\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async aws:deploy:deploy:validateTemplate (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:993:5760)\n    at async PluginManager.runHooks (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:1184:9557)\n    at async PluginManager.invoke (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:1184:10328)\n    at async PluginManager.spawn (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:1184:10689)\n    at async PluginManager.runHooks (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:1184:9557)\n    at async PluginManager.invoke (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:1184:10328)\n    at async PluginManager.run (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:1184:11059)\n    at async Serverless.run (file:///Users/sai_pranav_theerthala/.serverless/releases/4.6.0/package/dist/sf-core.js:1191:10661)",
+      "code": "INVALID_AWS_CLOUDFORMATION_TEMPLATE"
+    },
+    "serviceRawFile": "org: bitcamp\napp: portal\nservice: frontend\nname: portal-frontend\ncomponent: website\ninputs:\n  src:\n    src: ./src\n    hook: npm run build-prod\n    dist: ./dist\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {
+      "force": true,
+      "stage": "dev"
+    },
+    "orgId": "6fee829a-2d8a-4197-bc4d-a95304b2a552",
+    "orgName": "bitcamp",
+    "userId": "HKr7Gm4Gz15svXTbBc",
+    "userName": "bitcamp",
+    "serviceProviderAwsAccountId": "123574527805",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

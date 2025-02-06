@@ -1,31 +1,42 @@
 @font-face {
   font-family: 'Avenir';
   font-style: normal;
-  font-weight: 300;
+  font-weight: 301;
   font-display: auto;
   font-display: swap;
   src: local('Avenir'), url('./AvenirLTStd-Light.otf') format('opentype');
 }
-@import url('https://fonts.googleapis.com/css2?family=Aleo'); /* Aleo */
+
+@import url('https://fonts.googleapis.com/css2?family=Aleo');
+/* Aleo */
 
 body {
-  background-color: #ffaf3f;
-  background-image: radial-gradient(
-    50% 49.08% at 0% 50.92%,
-    #ff793f 48.23%,
-    #ffaf3f 100%
-  );
+  background-color: #34045b;
+  background-image: url("Brownandpurplecaves.svg");
+  background-size: cover;
+
   /* background-image: url("./hero-clouds.png");
   background-size: cover; */
   /*centered on x, starting 56px lower than top for y so that the navbar doesn't cover image*/
-  background-position: center 56px;
+  /*background-position: center 56px;*/
   background-repeat: no-repeat;
   /* height: 100vh; */
 }
 
 @media (max-width: 768px) {
   body {
-    background-position: center;
+    background-repeat: no-repeat;
+    height: auto;
+    background-image: url("Purplecavestretchedevenmore-new.svg");
+    max-height: 100vh;
+  }
+}
+@media (max-width: 564px) {
+  body {
+    background-repeat: no-repeat;
+    height: auto;
+    background-image: url("Purplecavestretchedevenmore.svg");
+    max-height: 100vh;
   }
 }
 
@@ -45,11 +56,9 @@ body {
   --asphalt-grey: #2d2d2d;
   --charcoal-grey: #464343;
   --dark-hero-blue: #087f8a;
-  --orange_grad: radial-gradient(
-    50% 49.08% at 0% 50.92%,
-    #ff793f 48.23%,
-    #ffaf3f 100%
-  );
+  --orange_grad: radial-gradient(50% 49.08% at 0% 50.92%,
+      #ff793f 48.23%,
+      #ffaf3f 100%);
   --light-orange: #ff6f3f;
   --mango-orange: #ffaf3f;
   --flame-red: #ff3f46;
@@ -92,7 +101,7 @@ h1 {
 
 p {
   color: var(--asphalt-grey);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 a {

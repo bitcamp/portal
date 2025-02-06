@@ -10,10 +10,10 @@
               <span v-if="type">
                 as a {{ type }}
               </span>
-              <span v-else>
+              <!-- <span v-else>
                 for the waitlist
-              </span>
-              for Bitcamp 2024!</h1>
+              </span> -->
+              for Bitcamp 2025!</h1>
 
             <img style="width: 200px; height: 200px;" src="@/assets/bitcamp.gif" />
 

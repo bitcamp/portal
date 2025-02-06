@@ -1,11 +1,15 @@
 <template>
   <b-container class="screen-container">
     <b-row class="mb-4 pb-5">
-      <img src="@/assets/sign.svg" alt="Register Sign" class="register-logo" />
+      <div class = "logos">
+        <img src="@/assets/logotype.svg" alt="Bitcamp logo" class="bitcamp-logo" />
+      <img src="@/assets/register.svg" alt="Register Sign" class="register-logo" />
+      </div>
+      
     </b-row>
     <b-container class="card-container mb-5">
       <b-row>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-1">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="mentor"
             role-title="MENTOR"
@@ -13,10 +17,10 @@
             the next generation of tech enthusiasts. Become a key figure in shaping the 
             experience for participants as they navigate through the hackathon challenges."
             role-u-r-l="/mentor"
-            svg-image-path="splash-screen/blue-marshie.svg"
+            svg-image-path="splash-screen/red-dino.svg"
           />
         </b-col>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-2">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="hacker"
             role-title="HACKER"
@@ -24,10 +28,11 @@
             and innovation. Dive into challenging projects, showcase your coding skills, 
             and be part of a community dedicated to pushing the boundaries of technology."
             role-u-r-l="/hacker"
-            svg-image-path="splash-screen/red-marshie.svg"
+            svg-image-path="splash-screen/blue-marshie-updated.svg"
           />
         </b-col>
-        <b-col :md="screenWidth >= 768 ? 12 : 4" class="mb-4 marshie-card order-sm-3">
+
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="volunteer"
             role-title="VOLUNTEER"
@@ -35,9 +40,10 @@
             of our hackathon. From logistics to participant assistance, your
             contribution will help create a positive environment for everyone!"
             role-u-r-l="/volunteer"
-            svg-image-path="splash-screen/green-marshie.svg"
+            svg-image-path="splash-screen/Green Dino.svg"
           />
         </b-col>
+        
       </b-row>
     </b-container>
   </b-container>
@@ -60,18 +66,7 @@ export default {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-}
-
-.card-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.register-logo {
-  width: 100%;
-  height: 100%;
-  margin: 0 7.5vw;
+  height: 90vh;
 }
 
 .role-card {
@@ -87,31 +82,66 @@ export default {
 
 .mb-4 {
   margin-bottom: 0 !important;
+  
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px; /* Adds space below the register logo */
+}
+
+.register-logo {
+  width: 65%;
+  height: auto; /* Maintain aspect ratio */
+  margin: 0px 0;
+}
+
+.logos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logos img {
+  padding: 10px;
+  margin-top: 2%;
+}
+
+.bitcamp-logo {
+  width: 20%;
+  height: auto; /* Maintain aspect ratio */
+  margin-top: 100px;
+  margin-bottom: 20px;
+
 }
 
 @media (max-width: 768px) {
   .screen-container {
     display: grid;
-    height: 100%;
     margin-top: 3vw;
     padding: 0 7vh 10vw;
   }
 
   .register-logo {
-    margin: auto;
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 7.5vw 10px; /* Reduced bottom margin to bring it closer to the card container */
   }
 
+  .card-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px; /* Adjusted top margin to fine-tune spacing */
+  }
+  .bitcamp-logo {
+    width: 50%;
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 100px;
+    margin-bottom: 20px;
+  }
   .mb-4 {
     padding: 0;
-  }
-    .order-sm-1{
-    order:2;
-  }
-  .order-sm-2{
-    order:1;
-  }
-  .order-sm-3{
-    order:3;
   }
 
 }

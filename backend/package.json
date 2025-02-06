@@ -10,7 +10,7 @@
     "axios": "^0.23.0",
     "csvtojson": "^2.0.10",
     "serverless-layers": "^2.5.2",
-    "serverless-sentry": "^2.0.2",
+    "serverless-sentry": "^2.5.3",
     "serverless-sentry-lib": "^2.3.0"
   },
   "scripts": {

@@ -19,7 +19,11 @@ export default {
     async performPostRequest(baseUrl, endpoint, params) {
       const stage = this.getCurrentEnvironment();
       try {
+        console.log("PARAMS:");
+        console.log(params);
         const result = await Axios.post(`${baseUrl}/${stage}/${endpoint}`, params);
+        console.log("RESULT");
+        console.log(result.data);
         return result.data;
       } catch (e) {
         console.error(e);
