@@ -9,7 +9,7 @@
     </b-row>
     <b-container class="card-container mb-5">
       <b-row>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-1">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="mentor"
             role-title="MENTOR"
@@ -20,7 +20,7 @@
             svg-image-path="splash-screen/red-dino.svg"
           />
         </b-col>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-2">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="hacker"
             role-title="HACKER"
@@ -32,7 +32,7 @@
           />
         </b-col>
 
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-3">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="volunteer"
             role-title="VOLUNTEER"
@@ -68,8 +68,6 @@ export default {
   flex-direction: column;
   height: 100vh;
 }
-
-
 
 .role-card {
   display: flex;
@@ -107,6 +105,7 @@ export default {
 
 .logos img {
   padding: 10px;
+  margin-top: 2%;
 }
 
 .bitcamp-logo {
@@ -117,10 +116,6 @@ export default {
 
 }
 
-
-
-
-
 @media (max-width: 768px) {
   .screen-container {
     display: grid;
@@ -129,35 +124,24 @@ export default {
   }
 
   .register-logo {
-  width: 100%;
-  height: auto; /* Maintain aspect ratio */
-  margin: 0 7.5vw 10px; /* Reduced bottom margin to bring it closer to the card container */
-}
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 7.5vw 10px; /* Reduced bottom margin to bring it closer to the card container */
+  }
 
-.card-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px; /* Adjusted top margin to fine-tune spacing */
-}
-.bitcamp-logo {
-  width: 50%;
-  height: auto; /* Maintain aspect ratio */
-  margin-top: 100px;
-  margin-bottom: 20px;
-}
-  
-
+  .card-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px; /* Adjusted top margin to fine-tune spacing */
+  }
+  .bitcamp-logo {
+    width: 50%;
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 100px;
+    margin-bottom: 20px;
+  }
   .mb-4 {
     padding: 0;
-  }
-    .order-sm-1{
-    order:2;
-  }
-  .order-sm-2{
-    order:1;
-  }
-  .order-sm-3{
-    order:3;
   }
 
 }

@@ -12,7 +12,7 @@
 
 body {
   background-color: #34045b;
-  background-image: url("Brownandpurplecaves.png");
+  background-image: url("Brownandpurplecaves.svg");
   background-size: cover;
 
   /* background-image: url("./hero-clouds.png");
@@ -25,7 +25,18 @@ body {
 
 @media (max-width: 768px) {
   body {
-    background-position: center;
+    background-repeat: no-repeat;
+    height: auto;
+    background-image: url("Purplecavestretchedevenmore-new.svg");
+    max-height: 100vh;
+  }
+}
+@media (max-width: 564px) {
+  body {
+    background-repeat: no-repeat;
+    height: auto;
+    background-image: url("Purplecavestretchedevenmore.svg");
+    max-height: 100vh;
   }
 }
 
