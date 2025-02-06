@@ -20,7 +20,7 @@
             svg-image-path="splash-screen/red-dino.svg"
           />
         </b-col>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-2 blue-dino">
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card order-sm-2">
           <CardButton
             data-role="hacker"
             role-title="HACKER"
@@ -68,8 +68,6 @@ export default {
   flex-direction: column;
   height: 90vh;
 }
-
-
 
 .role-card {
   display: flex;
