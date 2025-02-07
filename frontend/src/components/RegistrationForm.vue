@@ -978,24 +978,9 @@
         <!-- MLH Stuff -->
         <h4 class="mb-2">Rules and privacy policies</h4>
 
-<<<<<<< HEAD
         <b-form-checkbox v-if="form.age.length > 0 && form.age < 18" id="checkbox-0" v-model="form.minors_form"
           name="checkbox-0" :state="valid_minors_form" class="checkbox">
-          I have filled out the
-          <a href="https://drive.google.com/drive/folders/1fVcfhQ7AfGJZ_m-QnVgXmE5ghgtxr9vr?usp=drive_link"
-            target="_blank">minors forms</a>
-          and emailed them to <a href="mailto:minors@bit.camp">minors@bit.camp</a>.*
-=======
-        <b-form-checkbox
-          v-if="form.age.length > 0 && form.age < 18"
-          id="checkbox-0"
-          v-model="form.minors_form"
-          name="checkbox-0"
-          :state="valid_minors_form"
-          class="checkbox"
-        >
           I have filled out the minors forms.*
->>>>>>> d268fbe5d67003e5935f1166d347631932974c25
           <b-form-invalid-feedback :state="valid_minors_form">
             Please fill out the minors forms
           </b-form-invalid-feedback>
@@ -1007,7 +992,8 @@
           for event administration, ranking, and MLH administration in-line with the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
           to the terms of both the
-          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH Contest Terms and
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH Contest Terms
+            and
             Conditions</a>
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
