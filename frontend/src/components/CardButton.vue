@@ -116,7 +116,8 @@ export default {
 }
 
 .role-logo {
-  width: 110%;
+  width: 100%;
+  height: 100%;
   max-height: 250px;
   margin-bottom: 10px;
 }
