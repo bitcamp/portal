@@ -66,7 +66,7 @@ export default {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 100vh;
 }
 
 .role-card {
