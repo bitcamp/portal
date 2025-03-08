@@ -7,5 +7,5 @@
     "STATISTICS_TABLE": "portal-prd-statistics",
     "TRACKING_TABLE": "portal-prd-tracking",
     "RESUMES_TABLE": "portal-prd-resumes",
-    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "TechnicaPortalBot"
+    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot"
 }
