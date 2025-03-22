@@ -538,6 +538,22 @@
         <div v-if="form.age.length > 0 && Number(form.age) < 18">
           <h4>Minor Waivers</h4>
 
+          <!-- Minor Agreement Form -->
+          <h4><u>Student Organization Release and Informed Consent Form</u></h4>
+          <br />
+          <p class="info">
+            I am a participant of Bitcamp 2025 (Activity), a student organization recognized by the Stamp Student Union (Union) at the University of Maryland, College Park (University). I desire to participate in the Activity from April 11, 2025- April 13, 2025 including. In consideration of being permitted to participate in such Activity, I, for myself, my heirs, personal representative(s) and assigns hereby represent and agree as follows: <br/>
+            1. I fully recognize and understand that there are risks and hazards, minor and serious, associated with participation in the Activity, ranging from scrapes, bruises, lacerations, broken bones to concussions, spinal cord injuries, paralysis and, even, death. These injuries may result from crashing with other participants, being hit by equipment, or environmental conditions. <br/>
+            2. I understand that protective equipment, including but not limited to, headgear, pads, eyewear and mouthpieces may be recommended for the safety and protection of participants, and I agree to wear such equipment when participating in the Activity. However, I understand that wearing such equipment will not eliminate the risks of participation. <br/>
+            3. To the extent they exist, I understand that the rules and regulations of the Activity’s organizers are designed, in part, for the safety and protection of participants and I agree to abide by those rules and regulations. <br/>
+            4. I understand that any physical activity requires a minimum level of fitness for safe participation. I also understand that the University advises that participants in the Activity carry personal health and accident insurance. I further understand that the University and Bitcamp 2023 do not provide medical, health or other insurance for participants in the Activity. <br/>
+            5. In the event of a medical emergency, I hereby give my consent to emergency transportation and medical treatment arising out of or related to participation in the Activity. I understand that I am solely responsible for any and all costs associated with any medical care received. <br/>
+            6. Knowing the dangers, hazards and risks associated with student organization activities, I voluntarily assume all responsibility and risk of loss, damage, illness and/or injury to my person or property in any way associated with my participation in the Activity. <br/>
+            7. To the fullest extent permitted by law, I hereby release and forever discharge, and agree to indemnify and hold harmless the State of Maryland, the University of Maryland, and their departments, officers, agents, employees, and volunteers (Released Parties) and Bitcamp 2023 from and against any and all liabilities, claims, demands, causes of 
+            action, costs and expenses, (including attorneys’ fees and related litigation costs) incurred by any of the Released Parties arising out of or relating to my participation in or involvement with student organization activities, or use of University equipment and facilities, including travel thereto and therefrom, whether due to the negligence, default or other action or inaction of any person or entity, including the Released Parties. <br/>
+            I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14 AND 18 AND THAT I HAVE READ AND FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS SIGNIFICANCE. AS A MINOR, THE SIGNATURE BELOW IS THAT OF A PARENT OR LEGAL GUARDIAN AUTHORIZED TO SIGN ON MY BEHALF. 
+          </p>
+
           <!-- Photography Consent Form -->
           <h4><u>Photography Consent Form</u></h4>
           <br />
