@@ -123,7 +123,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       principal_e_signature_school: body.school_principal_signature,
 
       // remove this after 2024 season
-      // waitlist: body.waitlist, 
+      waitlist: body.waitlist, 
     },
   };
 
