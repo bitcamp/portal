@@ -5,12 +5,12 @@
       <br />
       <h1 style="text-align: left">Register for Bitcamp 2025</h1>
 
-      <!-- <p style="font-size: 0.9rem; opacity: 95%"> -->
-      <!-- <b-alert show variant="danger">
-        At the moment, you can still register to join the waitlist, but registration to <b>guarantee</b> a spot for
-        Bitcamp is <b>closed</b>. We will notify you on Friday night (4/19) if you can attend.
-      </b-alert> -->
-      <!-- </p> -->
+      <p style="font-size: 0.9rem; opacity: 95%">
+        <b-alert show variant="danger">
+          At the moment, you can still register to join the waitlist, but registration to <b>guarantee</b> a spot for
+          Bitcamp is <b>closed</b>. We will notify you on Friday night (4/11) if you can attend.
+        </b-alert>
+      </p>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         Questions? Contact us at
@@ -1151,7 +1151,7 @@ export default {
         citizen: null,
         quantum_track: null,
         beginner_content_opt_in: null,
-        waitlist: false,
+        waitlist: true,
         photo_name: "",
         photo_date: "",
         photo_signature: "",
