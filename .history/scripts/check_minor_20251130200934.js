@@ -71,7 +71,7 @@ let minor_template = {
 
 // if you're 18 by the first day of bitcamp that means you were born <= Apr 8 2004
 // monthIndex for April is 3
-let cutoff = new Date(2007, 3, 8);
+let cutoff = new Date(2004, 3, 8);
 
 let main_emails = [];
 let main_users = [];
