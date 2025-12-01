@@ -5,6 +5,7 @@
     "STATISTICS_TABLE": "portal-stg-statistics",
     "VOLUNTEER_TABLE": "portal-stg-volunteers",
     "MENTOR_TABLE": "portal-stg-mentors",
+    "MINOR_TABLE": "minor-stg-waiver-forms",
     "TRACKING_TABLE": "portal-stg-tracking",
     "RESUMES_TABLE": "portal-stg-resumes",
     "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot"

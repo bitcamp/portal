@@ -9,5 +9,8 @@
       "version": "1.0.0",
       "license": "ISC"
     }
+  },
+  "dependencies": {
+    "sls": "^0.1.0"
   }
 }

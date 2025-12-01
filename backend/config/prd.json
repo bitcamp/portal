@@ -5,6 +5,7 @@
     "VOLUNTEER_TABLE": "portal-prd-volunteers",
     "MENTOR_TABLE": "portal-prd-mentors",
     "STATISTICS_TABLE": "portal-prd-statistics",
+    "MINOR_TABLE": "minor-prd-waiver-forms",
     "TRACKING_TABLE": "portal-prd-tracking",
     "RESUMES_TABLE": "portal-prd-resumes",
     "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot"
