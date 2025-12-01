@@ -84,17 +84,6 @@ functions:
     memorySize: 256
     timeout: 15
     provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
-  register_minor:
-    handler: minorHandler.registerMinor
-    description: Adds a new minor to the minor waiver form ddb
-    events:
-      - http:
-          path: register-minor
-          method: post
-          cors: true
-    memorySize: 256
-    timeout: 15
-    provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
   track:
     handler: handler.track
     description: Keeps track of various user actions
