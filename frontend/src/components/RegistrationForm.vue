@@ -1613,7 +1613,7 @@ export default {
         this.form.phone = phoneNumber.number;
 
         this.isSending = true; // block double submits
-
+        
         if (this.$route.params.referral) {
           this.$gtag.event("got-referred", { method: "Google" });
           this.form.referred_by = this.$route.params.referral;
@@ -1674,11 +1674,16 @@ export default {
         this.form.heard_from = this.createHeardFromString();
         this.form.transport_select = this.createTransportString();
 
+        //modify endpoint based on if minor or not
+        const isMinor = this.form.age.length > 0 && Number(this.form.age) < 18;
+        const endpoint = isMinor ? 'register_minor' : 'register';
+
         const resp = await this.performPostRequest(
           this.getEnvVariable("BACKEND_ENDPOINT"),
-          "register",
+          endpoint,
           this.form
         );
+
 
         this.isSending = false; // done submitting
 
