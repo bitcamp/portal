@@ -1,9 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import SplashScreen from '../components/SplashScreen.vue'
-// import Register from '../views/Register.vue';
-// import RegisterMentor from "../views/RegisterMentors.vue";
-// import RegisterVolunteer from "../views/RegisterVolunteers.vue"
+import RegistrationFormParent from '../components/RegistrationFormParent.vue'
 import RegistrationClosed from '../components/RegistrationClosed.vue'
 Vue.use(VueRouter);
 
@@ -16,8 +14,7 @@ const routes = [
   {
     path: '/hacker',
     name: 'Register',
-    component: RegistrationClosed,
-    //component: Register,
+    component: RegistrationFormParent,
     props: (route) => ({ default_track: route.query.t, type: 'hacker' })  
   },
   {
@@ -28,7 +25,7 @@ const routes = [
   },
   {
     path: '/mentor',
-    //name: 'MentorRegister',
+    name: 'MentorRegister',
     component: RegistrationClosed,
     // component: RegisterMentor,
     props: (route) => ({ default_track: route.query.t, type: 'mentor' })
