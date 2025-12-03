@@ -26,6 +26,26 @@
       />
 
       <!-- Page 4 and beyond would go here as needed -->
+      <CampfireGames
+        v-if="currentPage === 4"
+        :form-data="formData"
+        @next="goToPage(5)"
+        @previous="goToPage(3)"
+      />
+
+      <TeamMatching
+        v-if="currentPage === 5"
+        :form-data="formData"
+        @next="goToPage(6)"
+        @previous="goToPage(4)"
+      />
+
+      <Submit
+        v-if="currentPage === 6"
+        :form-data="formData"
+        @next="goToPage(7)"
+        @previous="goToPage(5)"
+      />
       <!-- For now, this could be a summary or additional forms page -->
     </b-card>
   </b-container>
@@ -35,6 +55,9 @@
 import Page1 from "./Page1.vue";
 import Page2 from "./Page2.vue";
 import Page3 from "./Page3.vue";
+import CampfireGames from "./CampfireGames.vue";
+import TeamMatching from "./TeamMatching.vue";
+import Submit from "./Submit.vue";
 import { v4 as uuid } from "uuid";
 
 export default {
@@ -43,6 +66,9 @@ export default {
     Page1,
     Page2,
     Page3,
+    CampfireGames,
+    TeamMatching,
+    Submit
   },
   props: {
     default_track: {
