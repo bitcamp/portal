@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import SplashScreen from '../components/SplashScreen.vue'
-import RegistrationFormParent from '../components/RegistrationFormParent.vue'
-import RegistrationClosed from '../components/RegistrationClosed.vue'
+
+import SplashScreen from '../components/SplashScreen.vue';
+import RegistrationFormParent from '../components/RegistrationFormParent.vue';
+import RegistrationClosed from '../components/RegistrationClosed.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -15,30 +17,42 @@ const routes = [
     path: '/hacker',
     name: 'Register',
     component: RegistrationFormParent,
-    props: (route) => ({ default_track: route.query.t, type: 'hacker' })  
+    props: (route) => ({
+      default_track: route.query.t,
+      type: 'hacker'
+    })
   },
   {
     path: '/thanks',
     name: 'Thanks',
     component: () => import('../views/Thanks.vue'),
-    props: (route) => ({ referralID: route.query.r })  
+    props: (route) => ({
+      referralID: route.query.r
+    })
   },
   {
     path: '/mentor',
     name: 'MentorRegister',
     component: RegistrationClosed,
     // component: RegisterMentor,
-    props: (route) => ({ default_track: route.query.t, type: 'mentor' })
-  },{
+    props: (route) => ({
+      default_track: route.query.t,
+      type: 'mentor'
+    })
+  },
+  {
     path: '/volunteer',
     name: 'VolunteerRegister',
     component: RegistrationClosed,
     // component: RegisterVolunteer,
-    props: (route) => ({ default_track: route.query.t, type: 'volunteer' })
+    props: (route) => ({
+      default_track: route.query.t,
+      type: 'volunteer'
+    })
   },
   {
     path: '/:referral',
-    // component: Register,
+    // intentionally left empty
   },
 ];
 
