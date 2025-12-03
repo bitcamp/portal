@@ -11,8 +11,9 @@
 /* Aleo */
 
 body {
-  background-color: #34045b;
-  background-image: url("Brownandpurplecaves.svg");
+  background-color: #FFAF3F;
+  /*background-image: url("Brownandpurplecaves.svg");*/
+  background: radial-gradient(ellipse at left, #FF793F 30%, #FFAF3F 70%);
   background-size: cover;
 
   /* background-image: url("./hero-clouds.png");

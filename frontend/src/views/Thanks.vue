@@ -5,17 +5,9 @@
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>You're registered
+            <h1>You're registered!</h1>
 
-              <span v-if="type">
-                as a {{ type }}
-              </span>
-              <span v-else>
-                for the waitlist
-              </span>
-              for Bitcamp 2025!</h1>
-
-            <img style="width: 200px; height: 200px;" src="@/assets/bitcamp.gif" />
+            <img style="width: 200px; height: 180px;" src="@/assets/marshy.png" />
 
             <div class="py-3">
               <p class="mb-4">
@@ -71,6 +63,7 @@
               <div class="pb-3">
                 <social-links />
               </div>
+              <orange-p>You may now close this tab</orange-p>
             </div>
           </b-col>
           <b-col md="1" />
@@ -114,25 +107,6 @@ export default {
   },
 
   mounted() {
-    this.$confetti.start({
-      defaultType: "rect",
-      particlesPerFrame: 0.25,
-      defaultColors: [
-        "#FF3F46",
-        "#FF6F3F",
-        "#FFAF3F",
-        "#FFEF3F",
-        "#CBF2FF",
-        "#FFFFFF",
-        "#528CA5",
-        "#528CA5",
-      ],
-    });
-
-    this.sleep(3000).then(() => {
-      this.$confetti.stop();
-    });
-
     this.type = this.$route.query.type;
     // this.sendAnalyticsEvent('completed_registration');
     // gtag('event', 'conversion', {'send_to': this.getEnvVariable('GOOGLE_AD_ANALYTICS_ID')});
@@ -178,6 +152,18 @@ h1 {
 
 p {
   font-size: 1.05rem;
+}
+
+orange-p {
+  font-family: Avenir;
+  font-weight: 800;
+  font-style: Heavy;
+  font-size: 24px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0.25px;
+  text-align: center;
+  color: #FF6F00;
 }
 
 .btn-cyan {
