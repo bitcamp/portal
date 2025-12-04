@@ -1,11 +1,11 @@
 <template>
   <div class="minors-page">
     <div class="big-rectangle">
+    <div class="text-element">Register for Bitcamp 2026</div>
       <div class="rectangle-title1"></div>
-      <div class="rectangle-title2"></div>
-      <div class="rectangle-title3"></div>
-      <div class="rectangle-title4"></div>
-      <div class="text-element">Register for Bitcamp 2026</div>
+      <div class="rectangle2"></div>
+      <div class="rectangle3"></div>
+      <div class="rectangle4"></div>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   position: relative;
 }
 
-.rectangle-title {
+.rectangle-title1 {
   width: 828px;
   height: 55px;
   border-bottom: 4px solid rgba(0,0,0,0.1);
@@ -53,8 +53,10 @@ export default {
   box-shadow: 0px 0px 10px 0px #FF6F3FBF;
   opacity: 1;
   margin: 368px auto 0 auto; 
+  position: absolute;
 }
-.rectangle-title2 {
+
+.rectangle2 {
   width: 828px;
   height: 55px;
   border-bottom: 4px solid rgba(0,0,0,0.1);
@@ -63,9 +65,11 @@ export default {
   background-color: #FF6F3F;
   box-shadow: 0px 0px 10px 0px #FF6F3FBF;
   opacity: 1;
-  margin: 1253px; 
+  margin: 1253px auto 0 auto; 
+  position: absolute;
 }
-.rectangle-title3 {
+
+.rectangle3 {
   width: 828px;
   height: 55px;
   border-bottom: 4px solid rgba(0,0,0,0.1);
@@ -74,9 +78,12 @@ export default {
   background-color: #FF6F3F;
   box-shadow: 0px 0px 10px 0px #FF6F3FBF;
   opacity: 1;
-  margin: 2066px; 
+  margin: 2066px auto 0 auto; 
+  position: absolute;
+
 }
-.rectangle-title4 {
+
+.rectangle4 {
   width: 828px;
   height: 55px;
   border-bottom: 4px solid rgba(0,0,0,0.1);
@@ -85,7 +92,8 @@ export default {
   background-color: #FF6F3F;
   box-shadow: 0px 0px 10px 0px #FF6F3FBF;
   opacity: 1;
-  margin: 4019px; 
+  margin: 4019px auto 0 auto; 
+  position: absolute;
 }
 
 .text-element {
