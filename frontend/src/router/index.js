@@ -5,9 +5,16 @@ import SplashScreen from '../components/SplashScreen.vue'
 // import RegisterMentor from "../views/RegisterMentors.vue";
 // import RegisterVolunteer from "../views/RegisterVolunteers.vue"
 import RegistrationClosed from '../components/RegistrationClosed.vue'
+//  Minors form 
+import Minors from '../views/Minors.vue'
 Vue.use(VueRouter);
 
 const routes = [
+  {
+  path: '/minors',
+  name: 'Minors',
+  component: Minors
+  },
   {
     path: '/',
     name: 'Splash Screen',
