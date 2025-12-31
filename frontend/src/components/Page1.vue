@@ -422,7 +422,7 @@ body {
 }
 
 .page-subtitle {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #333;
 }
 

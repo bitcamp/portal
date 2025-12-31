@@ -406,7 +406,7 @@ export default {
 }
 
 .page-subtitle {
-  font-size: 0.9rem;
+  font-size: 1rem;
   opacity: 0.95;
   color: #555;
   margin-bottom: 22px;
@@ -426,10 +426,15 @@ export default {
 }
 
 .info {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   opacity: 0.9;
   color: #777;
   margin-bottom: 18px;
+}
+
+label.form-label {
+  font-size: 0.9rem;
+  color: #666;
 }
 
 /* Stepper */

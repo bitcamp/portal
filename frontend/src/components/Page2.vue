@@ -209,7 +209,7 @@
       <hr class="mt-4" />
       <h4 class="section-title">Why Bitcamp?</h4>
       <p class="info">
-        Once you register, you'll receive more info about Bitcamp 2026 at the email you provide.
+        We'd like to get to know you a little better! Help us learn more about you and make Bitcamp even more amazing by answering some questions!
       </p>
 
       <b-form-group
@@ -489,7 +489,7 @@ body {
 }
 
 .page-subtitle {
-  font-size: 0.9rem;
+  font-size: 1rem;
   opacity: 0.95;
   color: #555;
   margin-bottom: 22px;
@@ -509,7 +509,7 @@ body {
 }
 
 .info {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   opacity: 0.9;
   color: #777;
   margin-bottom: 18px;
@@ -631,7 +631,7 @@ body {
 
 /* Form typography */
 label.form-label {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: #666;
   margin-bottom: 4px;
 }
