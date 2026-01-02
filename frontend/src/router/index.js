@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import SplashScreen from '../components/SplashScreen.vue'
- import Register from '../views/Register.vue';
+import Register from '../views/Register.vue';
 // import RegisterMentor from "../views/RegisterMentors.vue";
 // import RegisterVolunteer from "../views/RegisterVolunteers.vue"
 import RegistrationClosed from '../components/RegistrationClosed.vue'
@@ -18,13 +18,13 @@ const routes = [
     name: 'Register',
     // component: RegistrationClosed,
     component: Register,
-    props: (route) => ({ default_track: route.query.t, type: 'hacker' })  
+    props: (route) => ({ default_track: route.query.t, type: 'hacker' })
   },
   {
     path: '/thanks',
     name: 'Thanks',
     component: () => import('../views/Thanks.vue'),
-    props: (route) => ({ referralID: route.query.r })  
+    props: (route) => ({ referralID: route.query.r })
   },
   {
     path: '/mentor',
@@ -32,7 +32,7 @@ const routes = [
     component: RegistrationClosed,
     // component: RegisterMentor,
     props: (route) => ({ default_track: route.query.t, type: 'mentor' })
-  },{
+  }, {
     path: '/volunteer',
     name: 'VolunteerRegister',
     component: RegistrationClosed,

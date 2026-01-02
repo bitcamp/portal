@@ -89,7 +89,7 @@ functions:
     description: Adds a new minor to the minor waiver form ddb
     events:
       - http:
-          path: register-minor
+          path: register_minor
           method: post
           cors: true
     memorySize: 256
