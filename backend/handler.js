@@ -34,7 +34,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
 
   const existingReg = await ddb.get({
     TableName: process.env.REGISTRATION_TABLE,
-    Key: {email: body.email.toLowerCase()}
+    Key: { email: body.email.toLowerCase() }
   }).promise()
 
   // Generate referral ID
@@ -110,20 +110,20 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_red: body.red,
       survey_blue: body.blue,
 
-      chaperone_e_signature_school: body.chap_signature,
-      date_signed_chaperone_school: body.chap_date,
-      date_signed_minor: body.photo_date,
-      date_signed_principal_school: body.school_principal_date,
-      date_signed_terms: body.terms_parent_date,
-      e_signature_terms: body.terms_parent_signature,
-      guardian_e_signature_chap: body.p_chap_signature,
-      guardian_e_signature_minor: body.p_photo_signature,
-      guardian_name_chap: body.p_chap_name,
-      guardian_relationship_chap: body.p_chap_relationship,
-      principal_e_signature_school: body.school_principal_signature,
+      // chaperone_e_signature_school: body.chap_signature,
+      // date_signed_chaperone_school: body.chap_date,
+      // date_signed_minor: body.photo_date,
+      // date_signed_principal_school: body.school_principal_date,
+      // date_signed_terms: body.terms_parent_date,
+      // e_signature_terms: body.terms_parent_signature,
+      // guardian_e_signature_chap: body.p_chap_signature,
+      // guardian_e_signature_minor: body.p_photo_signature,
+      // guardian_name_chap: body.p_chap_name,
+      // guardian_relationship_chap: body.p_chap_relationship,
+      // principal_e_signature_school: body.school_principal_signature,
 
       // remove this after 2024 season
-      waitlist: body.waitlist, 
+      waitlist: body.waitlist,
     },
   };
 
@@ -173,7 +173,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     body: JSON.stringify(params.Item),
     headers: HEADERS,
   };
-}); 
+});
 
 // makeAddon generates a random string of `length`
 const makeAddon = (length) => {
@@ -385,9 +385,9 @@ const logStatistic = (ddb, stat) => {
 };
 
 const normalizeReferral = (referred_by) => {
-    // check for illegal characters
-    const givenChunks = referred_by.split('-');
-    return (givenChunks[0] + '-' + givenChunks[1].substring(0,3));  
+  // check for illegal characters
+  const givenChunks = referred_by.split('-');
+  return (givenChunks[0] + '-' + givenChunks[1].substring(0, 3));
 }
 
 const logReferral = async (ddb, referred_by, referralName) => {
@@ -418,32 +418,38 @@ module.exports.update = withSentry(async () => {
   const statsTable = process.env.STATISTICS_TABLE;
   const registrationTable = process.env.REGISTRATION_TABLE;
   const mentorTable = process.env.MENTOR_TABLE;
+  const minorTable = process.env.MINOR_TABLE
   const volunteerTable = process.env.VOLUNTEER_TABLE;
 
   // Can't simply scan a table to get the count once it's over 1mb in size (~950 registrations)
   // must use pagination instead, so the following doesn't work:
-  
+
   // const hackers = await ddb.scan({
   //   TableName: registrationTable,
   //   Select: "COUNT",
   // }).promise();
-  
-  
-  let scanParams = {
-    TableName: registrationTable,
-    Select: "COUNT",
-  };
 
-  let hackersCount = 0;
-  let hackers;
-  
-  // must use pagination to get full size of hacker registration table
-  // "LastEvaluatedKey" is where the last scan left off, so it keeps going until this doesn't exist
-  do {
-    hackers = await ddb.scan(scanParams).promise();
-    hackersCount += hackers.Count;
-    scanParams.ExclusiveStartKey = hackers.LastEvaluatedKey;
-  } while (hackers.LastEvaluatedKey);
+
+  const countTable = async (tableName) => {
+    let scanParams = {
+      TableName: tableName,
+      Select: "COUNT",
+    };
+
+    let statCount = 0;
+    let stat;
+
+    do {
+      stat = await ddb.scan(scanParams).promise();
+      statCount += stat.Count;
+      scanParams.ExclusiveStartKey = stat.LastEvaluatedKey
+    } while (stat.LastEvaluatedKey);
+    return statCount;
+  }
+
+
+  const hackersCount = await countTable(registrationTable);
+  const minorsCount = await countTable(minorTable);
 
   const mentors = await ddb.scan({
     TableName: mentorTable,
@@ -475,7 +481,7 @@ module.exports.update = withSentry(async () => {
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
     if (stat.statistic === "registrations") { // save for later
-      registrations = hackersCount;
+      registrations = hackersCount + minorsCount;
       volunteerRegistrations = volunteers.Count;
       mentorRegistrations = mentors.Count;
     } else if (stat.statistic === "page-view") {
@@ -504,7 +510,7 @@ module.exports.update = withSentry(async () => {
   });
 
   // Sort strings ignoring the statistic value
-  const sortWithoutStatisticValue = ((a,b) => {
+  const sortWithoutStatisticValue = ((a, b) => {
     a = a.replace(/[0-9]/g, '');
     b = b.replace(/[0-9]/g, '');
     return a.localeCompare(b);
@@ -513,6 +519,8 @@ module.exports.update = withSentry(async () => {
   // Format statistic update
   let statArr = [];
   statArr.push(`*${registrations} Hacker Registrations*`);
+  statArr.push(`*${hackersCount} Adult Hacker Registrations*`);
+  statArr.push(`*${minorsCount} Minor Hacker Registrations*`);
   statArr.push(`*${mentorRegistrations} Mentor Registrations*`);
   statArr.push(`*${volunteerRegistrations} Volunteer Registrations*`);
   statArr.push("~~~~~~~~~~~");

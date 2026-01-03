@@ -9,5 +9,9 @@
       "version": "1.0.0",
       "license": "ISC"
     }
+  },
+  "dependencies": {
+    "serverless": "^4.26.1",
+    "sls": "^0.1.0"
   }
 }

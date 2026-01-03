@@ -6,6 +6,7 @@
     "MENTOR_TABLE": "portal-dev-mentors",
     "STATISTICS_TABLE": "portal-dev-statistics",
     "TRACKING_TABLE": "portal-dev-tracking",
+    "MINOR_TABLE": "minor-dev-waiver-forms",
     "RESUMES_TABLE": "portal-dev-resumes",
     "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot"
 }

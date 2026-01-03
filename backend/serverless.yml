@@ -13,6 +13,7 @@ provider:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
     RESUMES_TABLE: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
+    MINOR_TABLE: ${file(./config/${self:provider.stage}.json):MINOR_TABLE}
     VOLUNTEER_TABLE: ${file(./config/${self:provider.stage}.json):VOLUNTEER_TABLE}
     MENTOR_TABLE: ${file(./config/${self:provider.stage}.json):MENTOR_TABLE}
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
@@ -78,6 +79,17 @@ functions:
     events:
       - http:
           path: register-mentor
+          method: post
+          cors: true
+    memorySize: 256
+    timeout: 15
+    provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
+  register_minor:
+    handler: minorHandler.registerMinor
+    description: Adds a new minor to the minor waiver form ddb
+    events:
+      - http:
+          path: register_minor
           method: post
           cors: true
     memorySize: 256

@@ -71,7 +71,7 @@ let minor_template = {
 
 // if you're 18 by the first day of bitcamp that means you were born <= Apr 8 2004
 // monthIndex for April is 3
-let cutoff = new Date(2004, 3, 8);
+let cutoff = new Date(2007, 3, 8);
 
 let main_emails = [];
 let main_users = [];
@@ -84,43 +84,11 @@ function sleep(ms) {
  })
 }
 
-const downloadRegistrations = async (stage) => {
-  const fullTableName = `portal-${stage}-registration`;
-  let params = {
-    TableName: fullTableName,
-  };
-
-  registrationResults = [];
-
-  // We'll be looping through repeatedly, appending
-  done = false;
-  do {
-    ddb.scan(params, (err, data) => {
-      if (err) console.log(err);
-      else {
-        registrationResults = [
-          registrationResults,
-          ...data.Items,
-        ];
-      }
-      // If we reached the 1MB limit, we scan some more with the old startKey
-      if (typeof data.LastEvalutedKey !== 'undefined') {
-        params.ExclusiveStartKey = data.LastEvalutedKey;
-      } else {
-        done = true;
-      }
-    });
-    await sleep(1000)
-  } while (!done);
-
-  return registrationResults;
-};
-
 const mainFile = `./rsvp-users.csv`;
 const minorsFile = `./rsvp-minors-users.csv`;
 
 const downloadRegistrations = async (stage) => {
-  const fullTableName = `portal-${stage}-registration`;
+  const fullTableName = `minor-${stage}-waiver-forms`;
   let params = {
     TableName: fullTableName,
   };
@@ -152,9 +120,9 @@ const downloadRegistrations = async (stage) => {
 };
 
 (async function () {
-  const result = await downloadRegistrations('prd');
+  const result = await downloadRegistrations('dev');
 
-  // let temp = await downloadRegistrations('prd');
+  // let temp = await downloadRegistrations('dev');
   // temp.forEach(element => {
   //   console.log(new Date(element.birthday));
   // })
