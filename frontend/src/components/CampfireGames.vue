@@ -3,7 +3,7 @@
     <b-row class="justify-content-center">
       <b-col md="12" lg="12">
         <div class="page-content">
-          <h1 class="page-title">Register for Bitcamp 2026</h1>
+          <h1 class="page-title">Registser for Bitcamp 2026</h1>
 
           <p class="page-subtitle">
             Questions? Chat with us in the bottom right hand corner or email
@@ -28,9 +28,9 @@
           <b-form @submit.prevent="handleNext">
             <h4 class="section-title">Campfire Games Survey</h4>
             <p class="info">
-              This year, you'll once again be put into one of three teams based on your personality and interests. By 
-              winning unique challenges and attending workshops and mini-events, you and your fellow hackers will rack 
-              up points for your team. At the end of the event, members of the winning team will receive limited edition 
+              This year, you'll once again be put into one of three teams based on your personality and interests. By
+              winning unique challenges and attending workshops and mini-events, you and your fellow hackers will rack
+              up points for your team. At the end of the event, members of the winning team will receive limited edition
               Bitcamp swag. So what are you waiting for? Take the survey and find your team!
             </p>
 
