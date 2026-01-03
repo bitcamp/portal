@@ -3,7 +3,7 @@
     <b-row class="justify-content-center">
       <b-col md="12" lg="12">
         <div class="page-content">
-          <h1 class="page-title">Registser for Bitcamp 2026</h1>
+          <h1 class="page-title">Register for Bitcamp 2026</h1>
 
           <p class="page-subtitle">
             Questions? Chat with us in the bottom right hand corner or email
