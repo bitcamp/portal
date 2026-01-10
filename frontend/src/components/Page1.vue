@@ -332,6 +332,7 @@ export default {
       ],
 
       schoolYearOptions: [
+        { value: "", text: "Select one...", disabled: true },
         { value: "less than high school", text: "Less than Secondary / High School" },
         { value: "high school", text: "Secondary / High School" },
         { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
