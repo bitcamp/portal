@@ -28,7 +28,10 @@
 
           <hr />
 
-          <b-form @submit.prevent="handleNext">
+          <b-form
+            :disabled="isSending"
+            @submit.prevent="handleNext"
+          >
             <h4 class="section-title">Rules and privacy policies</h4>
             <p class="info">
               Please read and agree to the necessary terms and conditions to proceed with your registration.
@@ -73,17 +76,31 @@
                 </b-form-invalid-feedback>
               </b-form-checkbox>
 
-              <b-form-checkbox id="checkbox-3" v-model="formData.MLH_emails" name="checkbox-3" class="checkbox">
+              <b-form-checkbox
+                id="checkbox-3"
+                v-model="formData.MLH_emails"
+                name="checkbox-3"
+                class="checkbox"
+              >
                 I authorize MLH to send me occasional emails about relevant events, career opportunities,
                 and community announcements.
               </b-form-checkbox>
             </div>
 
             <div class="actions">
-              <b-button type="button" @click="handlePrevious" class="submit-btn" style="margin-right: 10px">
+              <b-button
+                type="button"
+                class="submit-btn"
+                style="margin-right: 10px"
+                @click="handlePrevious"
+              >
                 <b-icon icon="arrow-left" /> Previous
               </b-button>
-              <b-button type="submit" class="submit-btn">
+              <b-button
+                type="submit"
+                class="submit-btn"
+                :disabled="isSending"
+              >
                 Submit
                 <b-icon icon="arrow-right" class="ml-1" />
               </b-button>
@@ -98,12 +115,14 @@
 <script>
 import Vue from "vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import generalMixin from "../mixins/general";
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 export default {
   name: "RulesAndPolicies",
+  mixins: [generalMixin],
   props: {
     formData: {
       type: Object,
@@ -126,6 +145,8 @@ export default {
         valid_mlh_privacy: null,
         valid_code_of_conduct: null,
       },
+
+      isSending: false,
     };
   },
 
@@ -146,6 +167,140 @@ export default {
       }
     },
 
+    async handleNext(event) {
+      event.preventDefault();
+
+      if (!this.validateForm()) {
+        this.$bvToast.toast("Please fill out all required fields", {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        });
+
+        return;
+      }
+
+      const response = await this.registerUser();
+
+      if (response && response.referral_id) {
+        this.$router.push({ path: "thanks", query: { r: response.referral_id } });
+      } else {
+        this.$bvToast.toast("Something went wrong when submitting your registration", {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        });
+      }
+    },
+
+    async registerUser() {
+      if (this.isSending) return;
+
+      this.isSending = true;
+
+      this.formData.name = `${this.formData.first_name} ${this.formData.last_name}`;
+
+      // prevent blacklisted hackers from registering
+      if (this.formData.name === "Auran Shereef" || this.formData.name === "Monte James") {
+        this.$router.push({ path: "thanks" });
+        return;
+      }
+
+      // time taken to fill out form in seconds
+      this.formData.time_taken = (Date.now() - this.form_start) / 1000;
+
+      if (this.$route.params.referral) {
+        this.$gtag.event("got-referred", { method: "Google" });
+        this.formData.referred_by = this.$route.params.referral;
+        this.track({
+          random_id: this.random_id,
+          key: "got-referred",
+          value: this.$route.params.referral,
+        });
+      }
+
+      // Track "heard from" statistics
+      // TODO - Uncomment this once we fixed the frontend for that
+      // for (let heardFrom of this.heard_from_select) {
+      //   this.track({
+      //     random_id: this.random_id,
+      //     key: `hf-${heardFrom}`,
+      //     value: 1,
+      //   });
+      // }
+      // for now will use what works with frontend atm
+      this.track({
+        random_id: this.random_id,
+        key: `hf-${this.heard_from}`,
+        value: 1,
+      });
+
+      if (this.heard_from_other) {
+        this.track({
+          random_id: this.random_id,
+          key: "hf-other",
+          value: 1,
+        });
+      }
+
+      this.$gtag.event("submit-registration", { method: "Google" });
+      this.$gtag.time({
+        name: "completion-time",
+        value: this.formData.time_taken,
+        event_category: "Form completion duration",
+      });
+      this.track({
+        random_id: this.random_id,
+        key: "form-submitted",
+        value: this.formData.time_taken,
+      });
+
+      const d = new Date();
+      this.formData.secret =
+        (d.getHours() * d.getDay() * 15).toString() +
+        d.getFullYear().toString().split("").reverse().join("");
+
+      const survey_count = { r: 0, b: 0, g: 0 };
+      survey_count[this.formData.q1.substring(0, 1)] += 1;
+      survey_count[this.formData.q2.substring(0, 1)] += 1;
+      survey_count[this.formData.q3.substring(0, 1)] += 1;
+      survey_count[this.formData.q4.substring(0, 1)] += 1;
+      survey_count[this.formData.q5.substring(0, 1)] += 1;
+      this.formData.red = survey_count["r"];
+      this.formData.green = survey_count["g"];
+      this.formData.blue = survey_count["b"];
+
+      this.formData.dietary_restrictions = this.createDietaryRestrictionString();
+
+      // TODO - Fix frontend to support this, atm it just uses ethnicity with no
+      // multiselect
+      // this.formData.ethnicity = this.createEthnicityString();
+
+      // TODO - Heard from with the current frontend is not compatible with old frontend code
+      // so will just use what works with the frontend for now
+      // this.formData.heard_from = this.createHeardFromString();
+
+      // TODO - From what I can tell this seems unused? Should check
+      // this.formData.transport_select = this.createTransportString();
+
+      const isMinor = this.formData.age.length > 0 && Number(this.formData.age) < 18;
+      const endpoint = isMinor ? "register_minor" : "register";
+
+      const response = await this.performPostRequest(
+        this.getEnvVariable("BACKEND_ENDPOINT"),
+        endpoint,
+        this.formData,
+      );
+      
+      this.isSending = false;
+      return response;
+    },
+
+    // Should probably revalidate previous page fields too
     validateForm() {
       let valid = true;
       const form = this.formData;
@@ -167,19 +322,58 @@ export default {
       return valid;
     },
 
-    handleNext() {
-      if (this.validateForm()) {
-        this.$emit("next");
-        return;
+    createDietaryRestrictionString() {
+      let diet_string = this.formData.diet_select.join(",");
+
+      if (this.formData.diet_none) {
+        return "none";
+      }
+      if (this.formData.diet_other && this.formData.diet_other_text != "") {
+        if (diet_string != "") {
+          diet_string += ",";
+        }
+        diet_string = diet_string + "other(" + this.formData.diet_other_text + ")";
       }
 
-      this.$bvToast.toast("Please fill out all required fields", {
-        toaster: "b-toaster-top-center",
-        solid: true,
-        appendToast: false,
-        noCloseButton: true,
-        variant: "danger",
-      });
+      return diet_string;
+    },
+
+    // TODO - Fix Page 1 such that it supports this function, for now will just use
+    // the 'ethnicity' field in the current frontend
+    createEthnicityString() {
+      let ethnicity_string = this.formData.ethnicity_select.join(",");
+
+      if (this.ethnicity_prefer_no_answer) {
+        return "prefer-not-to-answer";
+      }
+      if (this.ethnicity_other && this.ethnicity_other_text != "") {
+        if (ethnicity_string != "") {
+          ethnicity_string += ",";
+        }
+        ethnicity_string = ethnicity_string + "other(" + this.ethnicity_other_text + ")";
+      }
+
+      return ethnicity_string;
+    },
+
+    // TODO - Fix Page 1 such that it supports this function, for now will just use
+    // the 'heard_from_select' field in the current frontend
+    createHeardFromString() {
+      let heard_from_string = this.heard_from_select.join(",");
+
+      if (this.heard_from_other && this.heard_from_other_text != "") {
+        if (heard_from_string != "") {
+          heard_from_string += ",";
+        }
+        heard_from_string = heard_from_string + "other(" + this.heard_from_other_text + ")";
+      }
+
+      return heard_from_string;
+    },
+
+    // From what I can tell this seems unused now
+    createTransportString() {
+      return this.transport_select.join(",");
     },
 
     handlePrevious() {
