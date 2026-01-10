@@ -43,7 +43,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="general"
-            @click="onSelectTrack('general')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card general-card"
@@ -64,7 +64,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="quantum"
-            @click="onSelectTrack('quantum')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -85,7 +85,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="machine_learning"
-            @click="onSelectTrack('machine_learning')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -106,7 +106,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="app_dev"
-            @click="onSelectTrack('app_dev')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -126,7 +126,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="cybersecurity"
-            @click="onSelectTrack('cybersecurity')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -149,23 +149,25 @@
         <div class="radio-inline-group">
           <label class="radio-inline">
             <input
+              v-model="formData.quantum_track"
               type="radio"
               value="beginner"
-              v-model="formData.quantum_track"
+              @click="touched.quantum_track = true"
             />
             Beginner
           </label>
           <label class="radio-inline">
             <input
+              v-model="formData.quantum_track"
               type="radio"
               value="advanced"
-              v-model="formData.quantum_track"
+              @click="touched.quantum_track = true"
             />
             Advanced
           </label>
         </div>
         <div
-          v-if="validations.quantum_track === false"
+          v-if="showInvalid('quantum_track')"
           class="invalid-feedback d-block"
         >
           Please select an answer
@@ -182,23 +184,25 @@
         <div class="radio-inline-group">
           <label class="radio-inline">
             <input
+              v-model="formData.beginner_content_opt_in"
               type="radio"
               :value="true"
-              v-model="formData.beginner_content_opt_in"
+              @click="touched.beginner_content_opt_in = true"
             />
             Yes
           </label>
           <label class="radio-inline">
             <input
+              v-model="formData.beginner_content_opt_in"
               type="radio"
               :value="false"
-              v-model="formData.beginner_content_opt_in"
+              @click="touched.beginner_content_opt_in = true"
             />
             No
           </label>
         </div>
         <div
-          v-if="validations.beginner_content_opt_in === false"
+          v-if="showInvalid('beginner_content_opt_in')"
           class="invalid-feedback d-block"
         >
           Please select an answer
@@ -218,8 +222,11 @@
       >
         <b-form-input
           id="num-hackathons"
-          v-model="formData.num_hackathons"
+          v-model="formData.hack_count"
+          type="number"
+          :state="showState('hack_count')"
           placeholder="Number of hackathons here..."
+          @input="touched.hack_count = true"
         />
       </b-form-group>
 
@@ -227,14 +234,16 @@
         label="Why are you interested in attending Bitcamp?*"
         label-for="why-bitcamp"
       >
-        <textarea
+        <b-form-textarea
           id="why-bitcamp"
+          v-model="formData.question1"
           class="form-control"
-          v-model="formData.why_bitcamp"
+          :state="showState('question1')"
           rows="4"
           :maxlength="1000"
           placeholder="Your response here..."
-        ></textarea>
+          @input="touched.question1 = true"
+        />
         <small class="char-counter">
           {{ whyBitcampChars }} / 1000 characters (minimum 50 required)
         </small>
@@ -244,14 +253,16 @@
         label="What do you plan on building at Bitcamp?*"
         label-for="what-build"
       >
-        <textarea
+        <b-form-textarea
           id="what-build"
+          v-model="formData.question2"
           class="form-control"
-          v-model="formData.what_build"
+          :state="showState('question2')"
           rows="4"
           :maxlength="1000"
           placeholder="Your response here..."
-        ></textarea>
+          @input="touched.question2 = true"
+        />
         <small class="char-counter">
           {{ whatBuildChars }} / 1000 characters (minimum 50 required)
         </small>
@@ -272,9 +283,11 @@
         >
           <b-form-select
             id="recruit-select"
-            v-model="formData.recruit_for_jobs"
+            v-model="formData.recruit"
             :options="recruitOptions"
+            :state="showState('recruit')"
             class="form-select"
+            @change="touched.recruit = true"
           />
         </b-form-group>
 
@@ -285,8 +298,10 @@
         >
           <b-form-input
             id="github-link"
-            v-model="formData.github_link"
+            v-model="formData.portfolio"
+            :state="showState('portfolio')"
             placeholder="github.com/username"
+            @input="touched.portfolio = true"
           />
         </b-form-group>
       </b-form-row>
@@ -318,24 +333,19 @@
       </b-form-group>
 
       <!-- Navigation Buttons -->
-     <div class="actions">
-  <b-button
-    type="button"
-    class="submit-btn prev-btn"
-    @click="handlePrevious"
-  >
-    <b-icon icon="arrow-left" class="mr-1" />
-    Previous
-  </b-button>
+      <div class="actions">
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
+          <b-icon icon="arrow-left" class="mr-1" /> Previous
+        </b-button>
 
-  <b-button
-    type="submit"
-    class="submit-btn next-btn"
-  >
-    Next Step
-    <b-icon icon="arrow-right" class="ml-1" />
-  </b-button>
-</div>
+        <b-button
+          type="submit"
+          class="submit-btn next-btn"
+        >
+          Next Step
+          <b-icon icon="arrow-right" class="ml-1" />
+        </b-button>
+      </div>
     </b-form>
   </div>
 </template>
@@ -345,6 +355,20 @@ import { IconsPlugin } from "bootstrap-vue";
 import Vue from "vue";
 
 Vue.use(IconsPlugin);
+
+const secondPageRequiredFields = [
+  "track_selected",
+  "beginner_content_opt_in",
+  "hack_count",
+  "question1",
+  "question2",
+  "recruit",
+];
+
+const secondPageOptionalFields = [
+  "quantum_track",
+  "portfolio",
+];
 
 export default {
   name: "Page2",
@@ -356,6 +380,9 @@ export default {
   },
   data() {
     return {
+      touched: Object.fromEntries(
+        [...secondPageRequiredFields, ...secondPageOptionalFields].map(key => [key, false])
+      ),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -365,11 +392,6 @@ export default {
         { number: 6, label: "Minor Waivers" },
         { number: 7, label: "Finalize & Submit" },
       ],
-      validations: {
-        track_selected: null,
-        quantum_track: null,
-        beginner_content_opt_in: null,
-      },
       recruitOptions: [
         { value: "", text: "Select one...", disabled: true },
         { value: "yes", text: "Yes" },
@@ -381,17 +403,52 @@ export default {
     };
   },
   computed: {
+    validations() {
+      const req = (v) => v && v.toString().trim().length > 0;
+
+      return {
+        track_selected: this.formData.track_selected && req(this.formData.track_selected),
+        quantum_track: this.formData.quantum_track !== null && this.formData.quantum_track !== undefined,
+        beginner_content_opt_in: this.formData.beginner_content_opt_in !== null && this.formData.beginner_content_opt_in !== undefined,
+        hack_count: req(this.formData.hack_count) && Number(this.formData.hack_count) >= 0,
+        question1: req(this.formData.question1) && (this.formData.question1 || "").length >= 50,
+        question2: req(this.formData.question2) && (this.formData.question2 || "").length >= 50,
+        recruit: req(this.formData.recruit),
+        portfolio: req(this.formData.portfolio),
+      }
+    },
     whyBitcampChars() {
-      return (this.formData.why_bitcamp || "").length;
+      return (this.formData.question1 || "").length;
     },
     whatBuildChars() {
-      return (this.formData.what_build || "").length;
+      return (this.formData.question2 || "").length;
+    },
+    optionalFieldsRequired() {
+      const res = [];
+
+      if (this.formData.recruit === "yes") {
+        res.push("portfolio");
+      }
+
+      if (this.formData.track_selected === "quantum") {
+        res.push("quantum_track");
+      }
+
+      return res;
     },
   },
   methods: {
-    onSelectTrack(track) {
-      this.formData.track_selected = track;
-      this.validations.track_selected = null;
+    showState(field) {
+      if (secondPageOptionalFields.includes(field) && !this.optionalFieldsRequired.includes(field)) {
+        return null;
+      }
+      if (!this.touched[field]) return null;
+      return this.validations[field] === true ? null : false;
+    },
+
+    showInvalid(field) {
+      // Note that "submitting" the form touches the fields so thats why I have this first part
+      return this.touched[field] === true && this.validations[field] === false;
     },
 
     // NEW: open the hidden file input
@@ -411,35 +468,24 @@ export default {
     },
 
     validateForm() {
-      let isValid = true;
-
-      if (!this.formData.track_selected || this.formData.track_selected.length === 0) {
-        this.validations.track_selected = false;
-        isValid = false;
-      } else {
-        this.validations.track_selected = null;
-      }
-
-      if (this.formData.track_selected === "quantum" && !this.formData.quantum_track) {
-        this.validations.quantum_track = false;
-        isValid = false;
-      } else {
-        this.validations.quantum_track = null;
-      }
-
-      if (
-        this.formData.beginner_content_opt_in === null ||
-        this.formData.beginner_content_opt_in === undefined
-      ) {
-        this.validations.beginner_content_opt_in = false;
-        isValid = false;
-      } else {
-        this.validations.beginner_content_opt_in = null;
-      }
-
-      return isValid;
+      return secondPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
+        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName]);
     },
-    handleNext() {
+
+    handleNext(event) {
+      event.preventDefault();
+
+      secondPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+      secondPageOptionalFields.forEach((key) => {
+        if (this.optionalFieldsRequired.includes(key)) {
+          this.touched[key] = true;
+        } else {
+          this.touched[key] = false;
+        }
+      });
+
       if (this.validateForm()) {
         this.$emit("next");
       } else {
