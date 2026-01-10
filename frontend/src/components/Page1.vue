@@ -60,8 +60,8 @@
       <b-form-row>
         <b-form-group class="col-md-6" label="Email *">
           <b-form-input
-            type="email"
             v-model="formData.email"
+            type="email"
             @input="touched.email = true"
             :state="showState('email')"
           />
@@ -70,8 +70,8 @@
 
         <b-form-group class="col-md-6" label="Phone Number *">
           <b-form-input
-            type="tel"
             v-model="formData.phone"
+            type="tel"
             @input="touched.phone = true"
             :state="showState('phone')"
           />
@@ -83,8 +83,8 @@
       <b-form-row>
         <b-form-group class="col-md-6" label="Age *">
           <b-form-input
-            type="number"
             v-model="formData.age"
+            type="number"
             @input="touched.age = true"
             :state="showState('age')"
           />
@@ -134,11 +134,25 @@
         <b-form-group class="col-12" label="School Name *">
           <vue-bootstrap-autocomplete
             v-model="formData.school"
+            no-results-info="No results found."
+            :input-class="school_class"
             :data="universityOptions"
+            :disabled="formData.school_other_selected"
             @input="touched.school = true"
             :state="showState('school')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback
+            v-if="formData.school.length === 0"
+            :state="showState('school')"
+          >
+            Please enter your school name
+          </b-form-invalid-feedback>
+          <b-form-invalid-feedback
+            v-else
+            :state="showState('school')"
+          >
+            Please select a school from the list
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -190,7 +204,7 @@
       <b-form-row>
         <b-form-group class="col-12" label="Select one *">
           <b-form-select
-            v-model="formData.heard_from_select"
+            v-model="formData.heard_from"
             :options="heardFromOptions"
             @change="touched.heard_from = true"
             :state="showState('heard_from')"
@@ -240,9 +254,31 @@ const major_map = majors_list.rows
   }))
   .sort((a, b) => a.text.localeCompare(b.text));
 
+const firstPageValidatedFields = [
+  "first_name",
+  "last_name",
+  "email",
+  "phone",
+  "age",
+  "gender",
+  "country_of_residence",
+  "ethnicity",
+  "school",
+  "school_other",
+  "school_year",
+  "major",
+  "heard_from",
+];
+
 export default {
   name: "Page1",
-  props: { formData: Object },
+
+  props: {
+    formData: {
+      type: Object,
+      required: true,
+    },
+  },
 
   data() {
     return {
@@ -256,23 +292,9 @@ export default {
         { number: 7, label: "Finalize & Submit" },
       ],
 
-      touched: {
-        first_name: false,
-        last_name: false,
-        email: false,
-        phone: false,
-        age: false,
-        gender: false,
-        country_of_residence: false,
-        ethnicity: false,
-        school: false,
-        school_other: false,
-        school_year: false,
-        major: false,
-        heard_from: false,
-      },
-
-      validations: {},
+      touched: Object.fromEntries(
+        firstPageValidatedFields.map(key => [key, false])
+      ),
 
       heardFromOptions: [
         { value: "", text: "Select one...", disabled: true },
@@ -310,11 +332,17 @@ export default {
       ],
 
       schoolYearOptions: [
-        { value: "", text: "Select one...", disabled: true },
+        { value: "less than high school", text: "Less than Secondary / High School" },
         { value: "high school", text: "Secondary / High School" },
-        { value: "undergrad", text: "Undergraduate" },
-        { value: "grad", text: "Graduate" },
+        { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+        { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+        { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+        { value: "bootcamp", text: "Code School / Bootcamp" },
+        { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+        { value: "postdoc", text: "Post Doctorate" },
         { value: "other", text: "Other" },
+        { value: "not a student", text: "I’m not currently a student" },
+        { value: "prefer not to answer", text: "Prefer not to answer" },
       ],
 
       majorOptions: [
@@ -332,53 +360,67 @@ export default {
     };
   },
 
+  computed: {
+    validations() {
+      const req = (v) => v && v.toString().trim().length > 0;
+      const phone = parsePhoneNumber(this.formData.phone || "", "US");
+
+      return {
+        first_name: req(this.formData.first_name),
+        last_name: req(this.formData.last_name),
+        age: req(this.formData.age) && this.formData.age > 0,
+        gender: req(this.formData.gender),
+        country_of_residence: req(this.formData.country_of_residence),
+        ethnicity: req(this.formData.ethnicity),
+        school_year: req(this.formData.school_year),
+        major: req(this.formData.major),
+        heard_from: req(this.formData.heard_from),
+        email: EmailValidator.validate(this.formData.email),
+        phone: phone && phone.isValid(),
+        school: !this.formData.school_other_selected ? req(this.formData.school) && univ_list.default.includes(this.formData.school) : true,
+        school_other: this.formData.school_other_selected ? req(this.formData.school_other) : true,
+      }
+    },
+
+    school_class() {
+      const state = this.showState("school");
+      if (state === true) return "typeahead is-valid";
+      if (state === false) return "typeahead is-invalid";
+      return "typeahead";
+    },
+  },
+
   methods: {
     showState(field) {
       if (!this.touched[field]) return null;
-      return this.validations[field];
+      return this.validations[field] === true ? null : false;
     },
 
     resetSchool() {
       if (this.formData.school_other_selected) {
         this.formData.school = "";
+        this.touched.school = false;
       } else {
         this.formData.school_other = "";
+        this.touched.school_other = false;
       }
     },
 
     validate() {
-      const req = (v) => v && v.toString().trim().length > 0;
-
-      this.validations.first_name = req(this.formData.first_name);
-      this.validations.last_name = req(this.formData.last_name);
-      this.validations.age = req(this.formData.age);
-      this.validations.gender = req(this.formData.gender);
-      this.validations.country_of_residence = req(
-        this.formData.country_of_residence
-      );
-      this.validations.ethnicity = req(this.formData.ethnicity);
-      this.validations.school_year = req(this.formData.school_year);
-      this.validations.major = req(this.formData.major);
-      this.validations.heard_from = req(this.formData.heard_from_select);
-
-      this.validations.email = EmailValidator.validate(this.formData.email);
-
-      const phone = parsePhoneNumber(this.formData.phone || "", "US");
-      this.validations.phone = phone && phone.isValid();
-
-      if (this.formData.school_other_selected) {
-        this.validations.school_other = req(this.formData.school_other);
-      } else {
-        this.validations.school = req(this.formData.school);
-      }
-
-      return Object.values(this.validations).every((v) => v);
+      return firstPageValidatedFields.every((fieldName) => this.validations[fieldName]);
     },
 
     handleNext(e) {
       e.preventDefault();
 
-      Object.keys(this.touched).forEach((key) => (this.touched[key] = true));
+      firstPageValidatedFields.forEach((key) => {
+        if ((key === "school" && this.formData.school_other_selected) ||
+          (key === "school_other" && !this.formData.school_other_selected)) {
+          this.touched[key] = false;
+          return;
+        }
+        this.touched[key] = true;
+      });
 
       if (!this.validate()) {
         this.$bvToast.toast("Please fill out all required fields", {
