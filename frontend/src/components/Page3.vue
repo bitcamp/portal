@@ -38,23 +38,25 @@
           <div class="radio-inline-group">
             <label class="radio-inline">
               <input
+                v-model="formData.transport"
                 type="radio"
                 :value="true"
-                v-model="formData.transport"
+                @change="touched.transport = true"
               />
               Yes
             </label>
             <label class="radio-inline">
               <input
+                v-model="formData.transport"
                 type="radio"
                 :value="false"
-                v-model="formData.transport"
+                @change="touched.transport = true"
               />
               No
             </label>
           </div>
           <div
-            v-if="validations.transport === false"
+            v-if="showInvalid('transport')"
             class="invalid-feedback d-block"
           >
             Please select an answer
@@ -80,6 +82,8 @@
             id="shipping-address"
             v-model="formData.address"
             placeholder="8125 Paint Branch Dr"
+            :state="showState('address')"
+            @input="touched.address = true"
           />
         </b-form-group>
 
@@ -92,6 +96,8 @@
             id="shipping-address2"
             v-model="formData.address2"
             placeholder="Apartment or Unit Number (optional)"
+            :state="showState('address2')"
+            @input="touched.address2 = true"
           />
         </b-form-group>
       </b-form-row>
@@ -106,6 +112,8 @@
             id="shipping-city"
             v-model="formData.city"
             placeholder="College Park"
+            :state="showState('city')"
+            @input="touched.city = true"
           />
         </b-form-group>
 
@@ -118,6 +126,8 @@
             id="shipping-state"
             v-model="formData.state"
             placeholder="MD"
+            :state="showState('state')"
+            @input="touched.state = true"
           />
         </b-form-group>
 
@@ -130,6 +140,8 @@
             id="shipping-zip"
             v-model="formData.zip"
             placeholder="20740"
+            :state="showState('zip')"
+            @input="touched.zip = true"
           />
         </b-form-group>
 
@@ -142,6 +154,8 @@
             id="shipping-country"
             v-model="formData.country"
             placeholder="USA"
+            :state="showState('country')"
+            @input="touched.country = true"
           />
         </b-form-group>
       </b-form-row>
@@ -167,7 +181,8 @@
             v-model="formData.tshirt_size"
             class="form-select"
             :options="tshirtSizeOptions"
-            :state="validations.tshirt_size"
+            :state="showState('tshirt_size')"
+            @change="touched.tshirt_size = true"
           />
           <b-form-invalid-feedback :state="validations.tshirt_size">
             Please select a T-shirt size
@@ -190,8 +205,8 @@
             <label class="checkbox-inline">
               <input
                 type="checkbox"
-                v-model="formData.diet_none"
-                @change="uncheckDietaryRestrictions"
+                :checked="formData.diet_none"
+                @change="toggleDietNoneOption"
               />
               None
             </label>
@@ -202,25 +217,27 @@
               class="checkbox-inline"
             >
               <input
+                v-model="formData.diet_select"
                 type="checkbox"
                 :value="option.value"
-                v-model="formData.diet_select"
                 :disabled="formData.diet_none"
+                @change="touched.diet_select = true"
               />
               {{ option.text }}
             </label>
 
             <label class="checkbox-inline">
               <input
-                type="checkbox"
                 v-model="formData.diet_other"
+                type="checkbox"
                 :disabled="formData.diet_none"
+                @change="touched.diet_other = true"
               />
               Other
             </label>
 
             <div
-              v-if="validations.diet === false"
+              v-if="showInvalid('diet')"
               class="invalid-feedback d-block"
             >
               Please select your dietary restrictions ("None" is an option)
@@ -230,9 +247,11 @@
           <b-form-input
             v-if="formData.diet_other"
             v-model="formData.diet_other_text"
+            :state="showState('diet_other_text')"
             class="mt-2"
             aria-label="Dietary Restriction Other Text Box"
             placeholder="Other dietary restriction"
+            @input="touched.diet_other_text = true"
           />
         </b-form-group>
       </b-form-row>
@@ -267,6 +286,22 @@ Vue.use(IconsPlugin);
 
 const no_transport_unis = ["The University of Maryland, College Park"];
 
+const thirdPageRequiredFields = [
+  "tshirt_size",
+  "diet",
+];
+
+const thirdPageOptionalFields = [
+  "transport",
+  "diet_other_text",
+  "address",
+  "address2",
+  "city",
+  "state",
+  "zip",
+  "country",
+];
+
 export default {
   name: "Page3",
   props: {
@@ -277,6 +312,9 @@ export default {
   },
   data() {
     return {
+      touched: Object.fromEntries(
+        [...thirdPageRequiredFields, ...thirdPageOptionalFields].map(key => [key, false])
+      ),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -304,74 +342,122 @@ export default {
         { text: "Kosher", value: "kosher" },
         { text: "Halal", value: "halal" },
       ],
-      validations: {
-        transport: null,
-        tshirt_size: null,
-        diet: null,
-      },
     };
   },
+
+  computed: {
+    validations() {
+      const req = (v) => v && v.toString().trim().length > 0;
+
+      let createDietaryRestrictionString = () => {
+        let diet_string = this.formData.diet_select.join(",");
+
+        if (this.formData.diet_none) {
+          return "none";
+        }
+        if (this.formData.diet_other && this.formData.diet_other_text !== "") {
+          if (diet_string !== "") {
+            diet_string += ",";
+          }
+          diet_string =
+            diet_string + "other(" + this.formData.diet_other_text + ")";
+        }
+
+        return diet_string;
+      };
+
+      let isValidDiet = true;
+      if (createDietaryRestrictionString().length === 0) {
+        isValidDiet = false;
+      } else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) {
+        isValidDiet = false;
+      }
+
+      return {
+        transport: this.formData.transport !== null && this.formData.transport !== undefined,
+        tshirt_size: req(this.formData.tshirt_size),
+        address: req(this.formData.address),
+        address2: true,
+        city: req(this.formData.city),
+        state: req(this.formData.state),
+        zip: req(this.formData.zip),
+        country: req(this.formData.country),
+        diet: isValidDiet,
+        diet_other_text: req(this.formData.diet_other_text),
+      }
+    },
+
+    optionalFieldsRequired() {
+      const res = [];
+
+      if (!this.atNoTransportUnis()) {
+        res.push("transport");
+      }
+      
+      if (this.formData.diet_other) {
+        res.push("diet_other_text");
+      }
+
+      if (["address", "address2", "city", "state", "zip", "country"].some((fieldName) => this.formData[fieldName] !== "")) {
+        res.push(...["address", "city", "state", "zip", "country"]);
+        if (this.formData["address2"] && this.formData["address2"].length > 0) {
+          res.push("address2");
+        }
+      }
+
+      return res;
+    },
+  },
+
   methods: {
+    showState(field) {
+      if (thirdPageOptionalFields.includes(field) && !this.optionalFieldsRequired.includes(field)) {
+        return null;
+      }
+      if (!this.touched[field]) return null;
+      return this.validations[field] === true ? null : false;
+    },
+
+    showInvalid(field) {
+      // Note that "submitting" the form touches the fields so thats why I have this first part
+      return this.touched[field] === true && this.validations[field] === false;
+    },
+
     atNoTransportUnis() {
       return no_transport_unis.includes(this.formData.school);
     },
-    uncheckDietaryRestrictions() {
-      // when "None" is checked, clear others & other-text
-      if (this.formData.diet_none) {
+
+    toggleDietNoneOption() {
+      if (!this.formData.diet_none) {
+        this.formData.diet_none = true;
+        // when "None" is checked, clear others & other-text
         this.formData.diet_select = [];
         this.formData.diet_other = false;
         this.formData.diet_other_text = "";
+      } else {
+        this.formData.diet_none = false;
       }
     },
-    createDietaryRestrictionString() {
-      let diet_string = this.formData.diet_select.join(",");
 
-      if (this.formData.diet_none) {
-        return "none";
-      }
-      if (this.formData.diet_other && this.formData.diet_other_text !== "") {
-        if (diet_string !== "") {
-          diet_string += ",";
-        }
-        diet_string =
-          diet_string + "other(" + this.formData.diet_other_text + ")";
-      }
-
-      return diet_string;
-    },
     validateForm() {
-      let isValid = true;
-
-      // Transport (only if not at no-transport unis)
-      if (!this.atNoTransportUnis() && this.formData.transport === null) {
-        this.validations.transport = false;
-        isValid = false;
-      } else {
-        this.validations.transport = null;
-      }
-
-      // T-shirt Size
-      if (!this.formData.tshirt_size || this.formData.tshirt_size.length === 0) {
-        this.validations.tshirt_size = false;
-        isValid = false;
-      } else {
-        this.validations.tshirt_size = null;
-      }
-
-      // Dietary Restrictions
-      if (this.createDietaryRestrictionString().length === 0) {
-        this.validations.diet = false;
-        isValid = false;
-      } else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) {
-        this.validations.diet = false;
-        isValid = false;
-      } else {
-        this.validations.diet = null;
-      }
-
-      return isValid;
+      return thirdPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
+        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName]);
     },
-    handleNext() {
+
+    handleNext(event) {
+      event.preventDefault();
+
+      thirdPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+      thirdPageOptionalFields.forEach((key) => {
+        if (this.optionalFieldsRequired.includes(key)) {
+          this.touched[key] = true;
+        } else {
+          this.touched[key] = false;
+        }
+      });
+
       if (this.validateForm()) {
         this.$emit("next");
       } else {
