@@ -45,8 +45,7 @@
                   v-model="formData[`q${i + 1}`]"
                   :name="'q' + (i + 1)"
                   stacked
-                  :state="validations[`q${i + 1}`]"
-                  @change="updateSelection(`q${i + 1}`)"
+                  @click="touched[`q${i + 1}`] = true"
                 >
                   <b-form-radio
                     v-for="opt in q.options"
@@ -58,9 +57,9 @@
                   </b-form-radio>
                 </b-form-radio-group>
 
-                <b-form-invalid-feedback :state="validations[`q${i + 1}`]">
+                <div v-if="showInvalid(`q${i + 1}`)" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
             </div>
 
@@ -89,6 +88,8 @@
 import Vue from "vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
+const fourthPageRequiredFields = ["q1", "q2", "q3", "q4", "q5"];
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
@@ -102,6 +103,7 @@ export default {
   },
   data() {
     return {
+      touched: Object.fromEntries([...fourthPageRequiredFields].map((key) => [key, false])),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -159,15 +161,19 @@ export default {
           ],
         },
       ],
-
-      validations: {
-        q1: null,
-        q2: null,
-        q3: null,
-        q4: null,
-        q5: null,
-      },
     };
+  },
+
+  computed: {
+    validations() {
+      return {
+        q1: this.formData.q1 !== null && this.formData.q1 !== undefined,
+        q2: this.formData.q2 !== null && this.formData.q2 !== undefined,
+        q3: this.formData.q3 !== null && this.formData.q3 !== undefined,
+        q4: this.formData.q4 !== null && this.formData.q4 !== undefined,
+        q5: this.formData.q5 !== null && this.formData.q5 !== undefined,
+      };
+    },
   },
 
   mounted() {
@@ -178,24 +184,24 @@ export default {
   },
 
   methods: {
-    updateSelection(key) {
-      if (this.formData[key]) this.validations[key] = null;
+    showInvalid(field) {
+      return this.touched[field] === true && this.validations[field] === false;
     },
 
     validateForm() {
-      let valid = true;
-      this.questions.forEach((_, i) => {
-        const key = `q${i + 1}`;
-        if (!this.formData[key]) {
-          this.validations[key] = false;
-          valid = false;
-        }
-      });
-      return valid;
+      return fourthPageRequiredFields.every((fieldName) => this.validations[fieldName]);
     },
 
-    handleNext() {
-      console.log(this.formData);
+    handleNext(event) {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
+
+      event.preventDefault();
+
+      fourthPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+
       if (this.validateForm()) {
         this.$emit("next");
         return;

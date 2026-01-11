@@ -428,7 +428,7 @@ export default {
         return null;
       }
       if (!this.touched[field]) return null;
-      return this.validations[field] === true ? null : false;
+      return this.validations[field] === true ? true : false;
     },
 
     showInvalid(field) {
