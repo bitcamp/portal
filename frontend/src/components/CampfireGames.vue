@@ -28,27 +28,25 @@
           <b-form @submit.prevent="handleNext">
             <h4 class="section-title">Campfire Games Survey</h4>
             <p class="info">
-              This year, you'll once again be put into one of three teams based on your personality and interests. By
-              winning unique challenges and attending workshops and mini-events, you and your fellow hackers will rack
-              up points for your team. At the end of the event, members of the winning team will receive limited edition
-              Bitcamp swag. So what are you waiting for? Take the survey and find your team!
+              This year, you'll once again be put into one of three teams based on your personality
+              and interests. By winning unique challenges and attending workshops and mini-events,
+              you and your fellow hackers will rack up points for your team. At the end of the
+              event, members of the winning team will receive limited edition Bitcamp swag. So what
+              are you waiting for? Take the survey and find your team!
             </p>
 
             <div class="campfire-questions-wrapper">
-              <b-form-group
-                v-for="(q, i) in questions"
-                :key="i"
-              >
+              <b-form-group v-for="(q, i) in questions" :key="i">
                 <template #label>
-                  <span class="required-label">{{ q.label }}</span>
+                  <span>{{ q.label }} <span class="text-danger">*</span></span>
                 </template>
 
                 <b-form-radio-group
-                  v-model="formData[`q${i+1}`]"
-                  :name="'q' + (i+1)"
+                  v-model="formData[`q${i + 1}`]"
+                  :name="'q' + (i + 1)"
                   stacked
-                  :state="validations[`q${i+1}`]"
-                  @change="updateSelection(`q${i+1}`)"
+                  :state="validations[`q${i + 1}`]"
+                  @change="updateSelection(`q${i + 1}`)"
                 >
                   <b-form-radio
                     v-for="opt in q.options"
@@ -60,14 +58,19 @@
                   </b-form-radio>
                 </b-form-radio-group>
 
-                <b-form-invalid-feedback :state="validations[`q${i+1}`]">
+                <b-form-invalid-feedback :state="validations[`q${i + 1}`]">
                   Please select an answer
                 </b-form-invalid-feedback>
               </b-form-group>
             </div>
 
             <div class="actions">
-              <b-button type="button" @click="handlePrevious" class="submit-btn" style="margin-right: 10px">
+              <b-button
+                type="button"
+                @click="handlePrevious"
+                class="submit-btn"
+                style="margin-right: 10px"
+              >
                 <b-icon icon="arrow-left" /> Previous
               </b-button>
               <b-button type="submit" class="submit-btn">
@@ -169,7 +172,7 @@ export default {
 
   mounted() {
     this.questions.forEach((_, i) => {
-      const key = `q${i+1}`;
+      const key = `q${i + 1}`;
       if (!this.formData[key]) this.$set(this.formData, key, null);
     });
   },
@@ -182,7 +185,7 @@ export default {
     validateForm() {
       let valid = true;
       this.questions.forEach((_, i) => {
-        const key = `q${i+1}`;
+        const key = `q${i + 1}`;
         if (!this.formData[key]) {
           this.validations[key] = false;
           valid = false;
@@ -192,6 +195,7 @@ export default {
     },
 
     handleNext() {
+      console.log(this.formData);
       if (this.validateForm()) {
         this.$emit("next");
         return;
@@ -297,14 +301,4 @@ export default {
   border-radius: 6px;
   box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
 }
-
-.required-label {
-  font-weight: 700; /* bold */
-}
-
-.required-label::after {
-  content: " *";       /* add asterisk */
-  color: red;          /* red color */
-}
-
 </style>

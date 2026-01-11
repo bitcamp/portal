@@ -34,33 +34,38 @@
 
             <b-form-group>
               <template #label>
-                <span class="required-label">Do you want to opt into team matching?</span>
+                <span
+                  >Do you want to opt into team matching? <span class="text-danger">*</span></span
+                >
               </template>
               <b-form-radio-group
                 v-model="formData.opt_in_team_matching"
                 name="opt_in_team_matching"
                 :state="validations.opt_in_team_matching"
-                @change="validateField('opt_in_team_matching'); clearAllValidationsIfOptOut()"
+                @change="
+                  validateField('opt_in_team_matching');
+                  clearAllValidationsIfOptOut();
+                "
               >
                 <b-form-radio value="yes">Yes</b-form-radio>
                 <b-form-radio value="no">No</b-form-radio>
               </b-form-radio-group>
-               <b-form-invalid-feedback :state="validations.opt_in_team_matching">
-                  Please select an answer
-                </b-form-invalid-feedback>
+              <b-form-invalid-feedback :state="validations.opt_in_team_matching">
+                Please select an answer
+              </b-form-invalid-feedback>
             </b-form-group>
-            
+
             <div v-if="formData.opt_in_team_matching === 'yes'">
               <h4 class="header">Track & Skills</h4>
               <div class="section-divider"></div>
-              
+
               <b-form-group>
                 <template #label>
-                  <span class="required-label">What track are you in?</span>
+                  <span>What track are you in? <span class="text-danger">*</span></span>
                 </template>
-                <b-form-radio-group 
-                  v-model="formData.track" 
-                  name="track" 
+                <b-form-radio-group
+                  v-model="formData.track"
+                  name="track"
                   stacked
                   :state="validations.track"
                   @change="validateField('track')"
@@ -75,7 +80,10 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label">Have you participated in a hackathon before?</span>
+                  <span
+                    >Have you participated in a hackathon before?
+                    <span class="text-danger">*</span></span
+                  >
                 </template>
                 <b-form-radio-group
                   v-model="formData.hackathon"
@@ -90,13 +98,13 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label"
-                    >What programming languages and frameworks are you comfortable
-                    with?</span
+                  <span
+                    >What programming languages and frameworks are you comfortable with?
+                    <span class="text-danger">*</span></span
                   >
                 </template>
-                <b-form-checkbox-group 
-                  v-model="formData.languages" 
+                <b-form-checkbox-group
+                  v-model="formData.languages"
                   stacked
                   :state="validations.languages"
                   @change="validateField('languages')"
@@ -113,21 +121,17 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label">What is your experience level?</span>
+                  <span>What is your experience level? <span class="text-danger">*</span></span>
                 </template>
-                <b-form-radio-group 
-                  v-model="formData.experience" 
-                  name="experience" 
+                <b-form-radio-group
+                  v-model="formData.experience"
+                  name="experience"
                   stacked
                   :state="validations.experience"
                   @change="validateField('experience')"
                 >
-                  <b-form-radio value="beginner"
-                    >Beginner (skill level 1-2)</b-form-radio
-                  >
-                  <b-form-radio value="inter"
-                    >Intermediate (skill level 3-4)</b-form-radio
-                  >
+                  <b-form-radio value="beginner">Beginner (skill level 1-2)</b-form-radio>
+                  <b-form-radio value="inter">Intermediate (skill level 3-4)</b-form-radio>
                   <b-form-radio value="advanced">Advanced (skill level 5)</b-form-radio>
                 </b-form-radio-group>
               </b-form-group>
@@ -137,13 +141,13 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label"
-                    >Do you prefer working with someone with a similar skill
-                    level?</span
+                  <span
+                    >Do you prefer working with someone with a similar skill level?
+                    <span class="text-danger">*</span></span
                   >
                 </template>
-                <b-form-radio-group 
-                  v-model="formData.skill_level" 
+                <b-form-radio-group
+                  v-model="formData.skill_level"
                   name="skill-level"
                   :state="validations.skill_level"
                   @change="validateField('skill_level')"
@@ -156,13 +160,13 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label"
-                    >What kind of technologies do you want your teammates to have
-                    knowledge of?</span
+                  <span
+                    >What kind of technologies do you want your teammates to have knowledge of?
+                    <span class="text-danger">*</span></span
                   >
                 </template>
-                <b-form-checkbox-group 
-                  v-model="formData.skills_wanted" 
+                <b-form-checkbox-group
+                  v-model="formData.skills_wanted"
                   stacked
                   :state="validations.skills_wanted"
                   @change="validateField('skills_wanted')"
@@ -179,12 +183,13 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label"
-                    >How many team members do you already have? (Select 1 if you are the only one in the team)</span
+                  <span
+                    >How many team members do you already have? (Select 1 if you are the only one in
+                    the team) <span class="text-danger">*</span></span
                   >
                 </template>
-                <b-form-radio-group 
-                  v-model="formData.num_team_members" 
+                <b-form-radio-group
+                  v-model="formData.num_team_members"
                   name="team-members"
                   :state="validations.num_team_members"
                   @change="validateField('num_team_members')"
@@ -200,13 +205,13 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label"
-                    >What kind of projects are you interested in (i.e. web, mobile, AI,
-                    etc.)?</span
+                  <span
+                    >What kind of projects are you interested in (i.e. web, mobile, AI, etc.)?
+                    <span class="text-danger">*</span></span
                   >
                 </template>
-                <b-form-checkbox-group 
-                  v-model="formData.projects" 
+                <b-form-checkbox-group
+                  v-model="formData.projects"
                   stacked
                   :state="validations.projects"
                   @change="validateField('projects')"
@@ -219,13 +224,13 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label"
-                    >What Bitcamp prizes are you interested in catering your project
-                    towards?</span
+                  <span
+                    >What Bitcamp prizes are you interested in catering your project towards?
+                    <span class="text-danger">*</span></span
                   >
                 </template>
-                <b-form-checkbox-group 
-                  v-model="formData.prizes" 
+                <b-form-checkbox-group
+                  v-model="formData.prizes"
                   stacked
                   :state="validations.prizes"
                   @change="validateField('prizes')"
@@ -249,10 +254,10 @@
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label">How serious are you?</span>
+                  <span>How serious are you? <span class="text-danger">*</span></span>
                 </template>
-                <b-form-radio-group 
-                  v-model="formData.serious" 
+                <b-form-radio-group
+                  v-model="formData.serious"
                   name="serious"
                   :state="validations.serious"
                   @change="validateField('serious')"
@@ -262,20 +267,20 @@
                     >I'm just doing this for fun (9-13 hours)</b-form-radio
                   >
                   <b-form-radio value="learning"
-                    >I want to learn, if I win that will be a plus (1-8
-                    hours)</b-form-radio
+                    >I want to learn, if I win that will be a plus (1-8 hours)</b-form-radio
                   >
                 </b-form-radio-group>
               </b-form-group>
 
               <b-form-group>
                 <template #label>
-                  <span class="required-label"
-                    >Which way would you prefer collaborating with your team?</span
+                  <span
+                    >Which way would you prefer collaborating with your team?
+                    <span class="text-danger">*</span></span
                   >
                 </template>
-                <b-form-checkbox-group 
-                  v-model="formData.collab" 
+                <b-form-checkbox-group
+                  v-model="formData.collab"
                   stacked
                   :state="validations.collab"
                   @change="validateField('collab')"
@@ -285,11 +290,15 @@
                   <b-form-checkbox value="in-person">In Person</b-form-checkbox>
                 </b-form-checkbox-group>
               </b-form-group>
-
             </div>
-            
+
             <div class="actions">
-              <b-button type="button" @click="handlePrevious" class="submit-btn" style="margin-right: 10px">
+              <b-button
+                type="button"
+                @click="handlePrevious"
+                class="submit-btn"
+                style="margin-right: 10px"
+              >
                 <b-icon icon="arrow-left" /> Previous
               </b-button>
               <b-button type="submit" class="submit-btn">
@@ -321,23 +330,23 @@ export default {
   },
   data() {
     const requiredFields = [
-      'opt_in_team_matching',
-      'track',
-      'hackathon',
-      'languages',
-      'experience',
-      'skill_level',
-      'skills_wanted',
-      'projects',
-      'prizes',
-      'serious',
-      'collab',
-      'num_team_members',
+      "opt_in_team_matching",
+      "track",
+      "hackathon",
+      "languages",
+      "experience",
+      "skill_level",
+      "skills_wanted",
+      "projects",
+      "prizes",
+      "serious",
+      "collab",
+      "num_team_members",
     ];
 
     const validations = {};
-    requiredFields.forEach(key => {
-        validations[key] = null;
+    requiredFields.forEach((key) => {
+      validations[key] = null;
     });
 
     const formFieldsDefaults = {
@@ -368,14 +377,14 @@ export default {
       ],
       validations: validations,
       requiredFields: requiredFields,
-      arrayFields: ['languages', 'skills_wanted', 'projects', 'prizes', 'collab'],
+      arrayFields: ["languages", "skills_wanted", "projects", "prizes", "collab"],
       formFieldsDefaults: formFieldsDefaults,
     };
   },
 
   mounted() {
     // Initialize all form fields in formData if they don't exist
-    Object.keys(this.formFieldsDefaults).forEach(key => {
+    Object.keys(this.formFieldsDefaults).forEach((key) => {
       if (!this.formData.hasOwnProperty(key)) {
         this.$set(this.formData, key, this.formFieldsDefaults[key]);
       }
@@ -392,45 +401,45 @@ export default {
         isValid = Array.isArray(value) && value.length > 0;
       } else {
         // Text/Radio group validation: check for null, undefined, or empty string
-        isValid = value !== null && value !== undefined && value !== '';
+        isValid = value !== null && value !== undefined && value !== "";
       }
 
       this.$set(this.validations, key, isValid ? null : false);
       return isValid;
     },
-    
+
     // Helper to clear validation errors when user opts out
     clearAllValidationsIfOptOut() {
-        if (this.formData.opt_in_team_matching === 'no') {
-            this.requiredFields.forEach(key => {
-                // Keep the opt-in validation, but clear everything else
-                if (key !== 'opt_in_team_matching') {
-                    this.$set(this.validations, key, null);
-                }
-            });
-        }
+      if (this.formData.opt_in_team_matching === "no") {
+        this.requiredFields.forEach((key) => {
+          // Keep the opt-in validation, but clear everything else
+          if (key !== "opt_in_team_matching") {
+            this.$set(this.validations, key, null);
+          }
+        });
+      }
     },
 
     validateForm() {
       let valid = true;
-      let fieldsToValidate = ['opt_in_team_matching'];
+      let fieldsToValidate = ["opt_in_team_matching"];
 
       // Check the primary opt-in question first
-      if (!this.validateField('opt_in_team_matching')) {
-          valid = false;
+      if (!this.validateField("opt_in_team_matching")) {
+        valid = false;
       }
 
       // If opted in, validate all other required fields
-      if (this.formData.opt_in_team_matching === 'yes') {
-        fieldsToValidate = this.requiredFields.filter(key => key !== 'opt_in_team_matching');
-        
-        fieldsToValidate.forEach(key => {
+      if (this.formData.opt_in_team_matching === "yes") {
+        fieldsToValidate = this.requiredFields.filter((key) => key !== "opt_in_team_matching");
+
+        fieldsToValidate.forEach((key) => {
           const fieldIsValid = this.validateField(key);
           if (!fieldIsValid) {
             valid = false;
           }
         });
-      } else if (this.formData.opt_in_team_matching === 'no') {
+      } else if (this.formData.opt_in_team_matching === "no") {
         // If opted out, ensure all other fields are clear of errors
         this.clearAllValidationsIfOptOut();
       }
@@ -439,6 +448,7 @@ export default {
     },
 
     handleNext() {
+      console.log(this.formData);
       if (this.validateForm()) {
         this.$emit("next");
         return;
@@ -446,7 +456,7 @@ export default {
 
       // NOTE: Using console.error instead of $bvToast.toast as per instructions
       console.error("Please fill out all required fields");
-      
+
       // Optional: Add toast notification if using BootstrapVue globally
       // this.$bvToast.toast("Please fill out all required fields", {
       //   toaster: "b-toaster-top-center",
@@ -549,16 +559,6 @@ export default {
   font-weight: 700;
   border-radius: 6px;
   box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
-}
-
-/* Custom Styles for Required Labels */
-.required-label {
-  font-weight: 700; /* bold */
-}
-
-.required-label::after {
-  content: " *"; /* add asterisk at the end */
-  color: red; /* red color */
 }
 
 .header {

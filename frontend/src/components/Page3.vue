@@ -33,8 +33,9 @@
         <h4 class="section-title">Travel and Transportation</h4>
         <div class="mt-2 form-group">
           <label class="form-label">
-            Would you need travel assistance to the hackathon?*
-          </label>
+            Would you need travel assistance to the hackathon?
+            <span class="text-danger">*</span></label
+          >
           <div class="radio-inline-group">
             <label class="radio-inline">
               <input
@@ -55,10 +56,7 @@
               No
             </label>
           </div>
-          <div
-            v-if="showInvalid('transport')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('transport')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </div>
@@ -68,16 +66,12 @@
       <!-- SHIPPING ADDRESS -->
       <h4 class="section-title">Want to give us a shipping address?</h4>
       <p class="info">
-        We plan on handing out all swag in-person at the event, but in case we need to ship swag to you instead,
-        this is where we'll send it to. Please note that we can only ship to the USA.
+        We plan on handing out all swag in-person at the event, but in case we need to ship swag to
+        you instead, this is where we'll send it to. Please note that we can only ship to the USA.
       </p>
 
       <b-form-row>
-        <b-form-group
-          label="Shipping Address"
-          label-for="shipping-address"
-          class="col-md-6"
-        >
+        <b-form-group label="Shipping Address" label-for="shipping-address" class="col-md-6">
           <b-form-input
             id="shipping-address"
             v-model="formData.address"
@@ -103,11 +97,7 @@
       </b-form-row>
 
       <b-form-row>
-        <b-form-group
-          label="City"
-          label-for="shipping-city"
-          class="col-md-3"
-        >
+        <b-form-group label="City" label-for="shipping-city" class="col-md-3">
           <b-form-input
             id="shipping-city"
             v-model="formData.city"
@@ -117,11 +107,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="State"
-          label-for="shipping-state"
-          class="col-md-2"
-        >
+        <b-form-group label="State" label-for="shipping-state" class="col-md-2">
           <b-form-input
             id="shipping-state"
             v-model="formData.state"
@@ -131,11 +117,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="Zip Code"
-          label-for="shipping-zip"
-          class="col-md-3"
-        >
+        <b-form-group label="Zip Code" label-for="shipping-zip" class="col-md-3">
           <b-form-input
             id="shipping-zip"
             v-model="formData.zip"
@@ -145,11 +127,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="Country"
-          label-for="shipping-country"
-          class="col-md-4"
-        >
+        <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
           <b-form-input
             id="shipping-country"
             v-model="formData.country"
@@ -170,12 +148,11 @@
       </p>
 
       <b-form-row>
-        <b-form-group
-          id="input-group-tshirt"
-          label="T-shirt Size*"
-          label-for="input-tshirt"
-          class="col-md-12"
-        >
+        <b-form-group id="input-group-tshirt" class="col-md-12">
+          <template #label>
+            T-shirt Size
+            <span class="text-danger">*</span></template
+          >
           <b-form-select
             id="input-tshirt"
             v-model="formData.tshirt_size"
@@ -194,28 +171,17 @@
 
       <!-- DIETARY RESTRICTIONS -->
       <h4 class="section-title">Do you have any dietary restrictions?</h4>
-      <p class="info">Select all that apply*</p>
+      <p class="info">Select all that apply <span class="text-danger">*</span></p>
 
       <b-form-row>
-        <b-form-group
-          id="input-dietary-restrictions"
-          class="col-12 col-md-6"
-        >
+        <b-form-group id="input-dietary-restrictions" class="col-12 col-md-6">
           <div class="checkbox-group">
             <label class="checkbox-inline">
-              <input
-                type="checkbox"
-                :checked="formData.diet_none"
-                @change="toggleDietNoneOption"
-              />
+              <input type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
               None
             </label>
 
-            <label
-              v-for="option in dietOptions"
-              :key="option.value"
-              class="checkbox-inline"
-            >
+            <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
               <input
                 v-model="formData.diet_select"
                 type="checkbox"
@@ -236,10 +202,7 @@
               Other
             </label>
 
-            <div
-              v-if="showInvalid('diet')"
-              class="invalid-feedback d-block"
-            >
+            <div v-if="showInvalid('diet')" class="invalid-feedback d-block">
               Please select your dietary restrictions ("None" is an option)
             </div>
           </div>
@@ -258,18 +221,11 @@
 
       <!-- Navigation Buttons -->
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="handlePrevious"
-        >
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
           <b-icon icon="arrow-left" class="mr-1" />
           Previous
         </b-button>
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
           <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
@@ -286,10 +242,7 @@ Vue.use(IconsPlugin);
 
 const no_transport_unis = ["The University of Maryland, College Park"];
 
-const thirdPageRequiredFields = [
-  "tshirt_size",
-  "diet",
-];
+const thirdPageRequiredFields = ["tshirt_size", "diet"];
 
 const thirdPageOptionalFields = [
   "transport",
@@ -313,7 +266,7 @@ export default {
   data() {
     return {
       touched: Object.fromEntries(
-        [...thirdPageRequiredFields, ...thirdPageOptionalFields].map(key => [key, false])
+        [...thirdPageRequiredFields, ...thirdPageOptionalFields].map((key) => [key, false])
       ),
       steps: [
         { number: 1, label: "Personal Info" },
@@ -359,8 +312,7 @@ export default {
           if (diet_string !== "") {
             diet_string += ",";
           }
-          diet_string =
-            diet_string + "other(" + this.formData.diet_other_text + ")";
+          diet_string = diet_string + "other(" + this.formData.diet_other_text + ")";
         }
 
         return diet_string;
@@ -384,7 +336,7 @@ export default {
         country: req(this.formData.country),
         diet: isValidDiet,
         diet_other_text: req(this.formData.diet_other_text),
-      }
+      };
     },
 
     optionalFieldsRequired() {
@@ -393,12 +345,16 @@ export default {
       if (!this.atNoTransportUnis()) {
         res.push("transport");
       }
-      
+
       if (this.formData.diet_other) {
         res.push("diet_other_text");
       }
 
-      if (["address", "address2", "city", "state", "zip", "country"].some((fieldName) => this.formData[fieldName] !== "")) {
+      if (
+        ["address", "address2", "city", "state", "zip", "country"].some(
+          (fieldName) => this.formData[fieldName] !== ""
+        )
+      ) {
         res.push(...["address", "city", "state", "zip", "country"]);
         if (this.formData["address2"] && this.formData["address2"].length > 0) {
           res.push("address2");
@@ -440,11 +396,15 @@ export default {
     },
 
     validateForm() {
-      return thirdPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
-        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName]);
+      return (
+        thirdPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
+        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName])
+      );
     },
 
     handleNext(event) {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
       event.preventDefault();
 
       thirdPageRequiredFields.forEach((key) => {

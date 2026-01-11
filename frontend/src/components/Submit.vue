@@ -16,9 +16,9 @@
               v-for="step in steps"
               :key="step.number"
               class="stepper-item"
-              :class="{ 
+              :class="{
                 active: step.number === 7,
-                completed: step.number < 7 
+                completed: step.number < 7,
               }"
             >
               <div class="stepper-circle">{{ step.number }}</div>
@@ -28,13 +28,11 @@
 
           <hr />
 
-          <b-form
-            :disabled="isSending"
-            @submit.prevent="handleNext"
-          >
+          <b-form :disabled="isSending" @submit.prevent="handleNext">
             <h4 class="section-title">Rules and privacy policies</h4>
             <p class="info">
-              Please read and agree to the necessary terms and conditions to proceed with your registration.
+              Please read and agree to the necessary terms and conditions to proceed with your
+              registration.
             </p>
 
             <div class="checkbox-wrapper">
@@ -46,15 +44,18 @@
                 :state="validations.valid_mlh_privacy"
                 @change="clearValidation('valid_mlh_privacy')"
               >
-                I authorize you to share my application/registration information with Major League Hacking
-                for event administration, ranking, and MLH administration in-line with the
-                <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
-                to the terms of both the
-                <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH Contest Terms
-                  and
-                  Conditions</a>
+                I authorize you to share my application/registration information with Major League
+                Hacking for event administration, ranking, and MLH administration in-line with the
+                <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further
+                agree to the terms of both the
+                <a
+                  href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                  target="_blank"
+                  >MLH Contest Terms and Conditions</a
+                >
                 and the
-                <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a><span class="red-asterisk">*</span>
+                <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
+                <span class="text-danger">*</span>
                 <b-form-invalid-feedback :state="validations.valid_mlh_privacy">
                   Please agree to MLH's privacy policy and terms
                 </b-form-invalid-feedback>
@@ -70,7 +71,9 @@
                 @change="clearValidation('valid_code_of_conduct')"
               >
                 I have read and agree to the
-                <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.<span class="red-asterisk">*</span>
+                <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank"
+                  >MLH Code of Conduct</a
+                >. <span class="text-danger">*</span>
                 <b-form-invalid-feedback :state="validations.valid_code_of_conduct">
                   Please agree to MLH's code of conduct
                 </b-form-invalid-feedback>
@@ -82,8 +85,8 @@
                 name="checkbox-3"
                 class="checkbox"
               >
-                I authorize MLH to send me occasional emails about relevant events, career opportunities,
-                and community announcements.
+                I authorize MLH to send me occasional emails about relevant events, career
+                opportunities, and community announcements.
               </b-form-checkbox>
             </div>
 
@@ -96,11 +99,7 @@
               >
                 <b-icon icon="arrow-left" /> Previous
               </b-button>
-              <b-button
-                type="submit"
-                class="submit-btn"
-                :disabled="isSending"
-              >
+              <b-button type="submit" class="submit-btn" :disabled="isSending">
                 Submit
                 <b-icon icon="arrow-right" class="ml-1" />
               </b-button>
@@ -153,7 +152,7 @@ export default {
   mounted() {
     // Initialize MLH checkbox values in formData if they don't exist
     const keys = ["MLH_emails", "MLH_conduct", "MLH_privacy"];
-    keys.forEach(key => {
+    keys.forEach((key) => {
       if (!this.formData.hasOwnProperty(key)) {
         this.$set(this.formData, key, false);
       }
@@ -168,6 +167,7 @@ export default {
     },
 
     async handleNext(event) {
+      console.log(this.formData);
       event.preventDefault();
 
       if (!this.validateForm()) {
@@ -293,9 +293,9 @@ export default {
       const response = await this.performPostRequest(
         this.getEnvVariable("BACKEND_ENDPOINT"),
         endpoint,
-        this.formData,
+        this.formData
       );
-      
+
       this.isSending = false;
       return response;
     },
@@ -468,11 +468,6 @@ export default {
   font-weight: 700;
   border-radius: 6px;
   box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
-}
-
-.red-asterisk {
-  color: red;
-  font-weight: 700;
 }
 
 .checkbox-wrapper {

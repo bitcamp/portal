@@ -35,93 +35,117 @@
 
       <!-- First & Last Name -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="First Name *" label-for="input-first-name">
+        <b-form-group class="col-md-6">
+          <template #label> First Name <span class="text-danger">*</span></template>
           <b-form-input
             id="input-first-name"
             v-model="formData.first_name"
             @input="touched.first_name = true"
             :state="showState('first_name')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('first_name')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Last Name *" label-for="input-last-name">
+        <b-form-group class="col-md-6">
+          <template #label> Last Name <span class="text-danger">*</span></template>
           <b-form-input
             id="input-last-name"
             v-model="formData.last_name"
             @input="touched.last_name = true"
             :state="showState('last_name')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('last_name')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Email & Phone -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Email *">
+        <b-form-group class="col-md-6">
+          <template #label> Email <span class="text-danger">*</span></template>
           <b-form-input
             v-model="formData.email"
             type="email"
             @input="touched.email = true"
             :state="showState('email')"
           />
-          <b-form-invalid-feedback>Please enter a valid email</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('email')">
+            Please enter a valid email
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Phone Number *">
+        <b-form-group class="col-md-6">
+          <template #label> Phone Number <span class="text-danger">*</span></template>
           <b-form-input
             v-model="formData.phone"
             type="tel"
             @input="touched.phone = true"
             :state="showState('phone')"
           />
-          <b-form-invalid-feedback>Please enter a valid phone number</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('phone')">
+            Please enter a valid phone number
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Age / Country -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Age *">
+        <b-form-group class="col-md-6">
+          <template #label> Age <span class="text-danger">*</span></template>
           <b-form-input
             v-model="formData.age"
             type="number"
             @input="touched.age = true"
             :state="showState('age')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('age')">
+            Please enter your real age
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Country of Residence *">
+        <b-form-group class="col-md-6">
+          <template #label> Country of Residence <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.country_of_residence"
             :options="countryOptions"
             @change="touched.country_of_residence = true"
             :state="showState('country_of_residence')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('country_of_residence')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Gender / Ethnicity -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Gender Identity *">
+        <b-form-group class="col-md-6">
+          <template #label> Gender Identity <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.gender"
             :options="genderOptions"
             @change="touched.gender = true"
             :state="showState('gender')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('gender')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Race / Ethnicity *">
+        <b-form-group class="col-md-6">
+          <template #label> Race / Ethnicity <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
             @change="touched.ethnicity = true"
             :state="showState('ethnicity')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('ethnicity')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -131,7 +155,8 @@
 
       <!-- School Name -->
       <b-form-row>
-        <b-form-group class="col-12" label="School Name *">
+        <b-form-group class="col-12">
+          <template #label> School Name <span class="text-danger">*</span></template>
           <vue-bootstrap-autocomplete
             v-model="formData.school"
             no-results-info="No results found."
@@ -141,16 +166,10 @@
             @input="touched.school = true"
             :state="showState('school')"
           />
-          <b-form-invalid-feedback
-            v-if="formData.school.length === 0"
-            :state="showState('school')"
-          >
+          <b-form-invalid-feedback v-if="formData.school.length === 0" :state="showState('school')">
             Please enter your school name
           </b-form-invalid-feedback>
-          <b-form-invalid-feedback
-            v-else
-            :state="showState('school')"
-          >
+          <b-form-invalid-feedback v-else :state="showState('school')">
             Please select a school from the list
           </b-form-invalid-feedback>
         </b-form-group>
@@ -172,27 +191,38 @@
             :state="showState('school_other')"
             placeholder="Other school"
           />
+          <b-form-invalid-feedback :state="showState('school_other')">
+            Please enter a valid school
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Level of Study / Major -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Current Level of Study *">
+        <b-form-group class="col-md-6">
+          <template #label> Current Level of Study <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.school_year"
             :options="schoolYearOptions"
             @change="touched.school_year = true"
             :state="showState('school_year')"
           />
+          <b-form-invalid-feedback :state="showState('school_year')">
+            Required Field
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Primary Major *">
+        <b-form-group class="col-md-6">
+          <template #label> Primary Major <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.major"
             :options="majorOptions"
             @change="touched.major = true"
             :state="showState('major')"
           />
+          <b-form-invalid-feedback :state="showState('major')">
+            Required Field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -202,24 +232,23 @@
 
       <!-- Single-select dropdown -->
       <b-form-row>
-        <b-form-group class="col-12" label="Select one *">
+        <b-form-group class="col-12">
+          <template #label> Select one <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.heard_from"
             :options="heardFromOptions"
             @change="touched.heard_from = true"
             :state="showState('heard_from')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('heard_from')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Navigation Buttons -->
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="$emit('previous')"
-        >
+        <b-button type="button" class="submit-btn prev-btn" @click="$emit('previous')">
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
 
@@ -292,9 +321,7 @@ export default {
         { number: 7, label: "Finalize & Submit" },
       ],
 
-      touched: Object.fromEntries(
-        firstPageValidatedFields.map(key => [key, false])
-      ),
+      touched: Object.fromEntries(firstPageValidatedFields.map((key) => [key, false])),
 
       heardFromOptions: [
         { value: "", text: "Select one...", disabled: true },
@@ -335,7 +362,10 @@ export default {
         { value: "", text: "Select one...", disabled: true },
         { value: "less than high school", text: "Less than Secondary / High School" },
         { value: "high school", text: "Secondary / High School" },
-        { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+        {
+          value: "undergrad 2 year",
+          text: "Undergraduate University (2 year - community college or similar)",
+        },
         { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
         { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
         { value: "bootcamp", text: "Code School / Bootcamp" },
@@ -354,10 +384,7 @@ export default {
 
       universityOptions: [...university_list],
 
-      countryOptions: [
-        { value: "", text: "Select one...", disabled: true },
-        ...country_list,
-      ],
+      countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
     };
   },
 
@@ -369,7 +396,7 @@ export default {
       return {
         first_name: req(this.formData.first_name),
         last_name: req(this.formData.last_name),
-        age: req(this.formData.age) && this.formData.age > 0,
+        age: req(this.formData.age) && this.formData.age > 0 && this.formData.age <= 120,
         gender: req(this.formData.gender),
         country_of_residence: req(this.formData.country_of_residence),
         ethnicity: req(this.formData.ethnicity),
@@ -378,9 +405,11 @@ export default {
         heard_from: req(this.formData.heard_from),
         email: EmailValidator.validate(this.formData.email),
         phone: phone && phone.isValid(),
-        school: !this.formData.school_other_selected ? req(this.formData.school) && univ_list.default.includes(this.formData.school) : true,
+        school: !this.formData.school_other_selected
+          ? req(this.formData.school) && univ_list.default.includes(this.formData.school)
+          : true,
         school_other: this.formData.school_other_selected ? req(this.formData.school_other) : true,
-      }
+      };
     },
 
     school_class() {
@@ -394,7 +423,7 @@ export default {
   methods: {
     showState(field) {
       if (!this.touched[field]) return null;
-      return this.validations[field] === true ? null : false;
+      return this.validations[field] === true ? true : false;
     },
 
     resetSchool() {
@@ -412,11 +441,15 @@ export default {
     },
 
     handleNext(e) {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
       e.preventDefault();
 
       firstPageValidatedFields.forEach((key) => {
-        if ((key === "school" && this.formData.school_other_selected) ||
-          (key === "school_other" && !this.formData.school_other_selected)) {
+        if (
+          (key === "school" && this.formData.school_other_selected) ||
+          (key === "school_other" && !this.formData.school_other_selected)
+        ) {
           this.touched[key] = false;
           return;
         }
@@ -497,6 +530,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.required-label {
+  content: " *";
+  color: red;
 }
 
 .stepper-item.active .stepper-circle {

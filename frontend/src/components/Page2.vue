@@ -1,7 +1,6 @@
 <template>
   <div class="register-page">
     <h1 class="page-title">Register for Bitcamp 2026</h1>
-    
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
@@ -30,9 +29,11 @@
 
     <b-form @submit.prevent="handleNext">
       <!-- CHOOSE TRACK -->
-      <h4 class="section-title">Choose a track!</h4>
+      <h4 class="section-title">Choose a track! <span class="text-danger">*</span></h4>
+
       <p class="info">
-        Select the track that interests you most. Each track offers unique workshops and mentorship opportunities.
+        Select the track that interests you most. Each track offers unique workshops and mentorship
+        opportunities.
       </p>
 
       <!-- HORIZONTAL SCROLLABLE TRACKS -->
@@ -52,8 +53,8 @@
             <h5 class="track-title">General</h5>
             <p>
               For any and all hackers! Build the perfect hack using hardware, software, and
-              collaboration with other tech-lovers, design thinkers, and students – all skill
-              and experience levels are welcome!
+              collaboration with other tech-lovers, design thinkers, and students – all skill and
+              experience levels are welcome!
             </p>
           </b-card>
         </label>
@@ -73,8 +74,8 @@
             <h5 class="track-title">Quantum</h5>
             <p>
               Hackers will delve into the field of quantum computing with exclusive mentors,
-              sponsors, and workshops. Use your knowledge of Python and other computing skills
-              on interactive Quantum Track activities!
+              sponsors, and workshops. Use your knowledge of Python and other computing skills on
+              interactive Quantum Track activities!
             </p>
           </b-card>
         </label>
@@ -134,8 +135,8 @@
           >
             <h5 class="track-title">Cybersecurity</h5>
             <p>
-              Explore the realm of cybersecurity and understand various aspects of the field
-              through interactive workshops and real-world applications.
+              Explore the realm of cybersecurity and understand various aspects of the field through
+              interactive workshops and real-world applications.
             </p>
           </b-card>
         </label>
@@ -166,10 +167,7 @@
             Advanced
           </label>
         </div>
-        <div
-          v-if="showInvalid('quantum_track')"
-          class="invalid-feedback d-block"
-        >
+        <div v-if="showInvalid('quantum_track')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
@@ -177,9 +175,9 @@
       <!-- Beginner Content Opt-in -->
       <div class="mt-4 form-group">
         <label class="form-label">
-          Although we are not offering a beginner (general) track this year, Bitcamp remains committed to being
-          a hackathon for hackers of all skill levels. Would you like us to share beginner-friendly content
-          with you?*
+          Although we are not offering a beginner (general) track this year, Bitcamp remains
+          committed to being a hackathon for hackers of all skill levels. Would you like us to share
+          beginner-friendly content with you? <span class="text-danger">*</span>
         </label>
         <div class="radio-inline-group">
           <label class="radio-inline">
@@ -201,10 +199,7 @@
             No
           </label>
         </div>
-        <div
-          v-if="showInvalid('beginner_content_opt_in')"
-          class="invalid-feedback d-block"
-        >
+        <div v-if="showInvalid('beginner_content_opt_in')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
@@ -213,13 +208,15 @@
       <hr class="mt-4" />
       <h4 class="section-title">Why Bitcamp?</h4>
       <p class="info">
-        We'd like to get to know you a little better! Help us learn more about you and make Bitcamp even more amazing by answering some questions!
+        We'd like to get to know you a little better! Help us learn more about you and make Bitcamp
+        even more amazing by answering some questions!
       </p>
 
-      <b-form-group
-        label="How many hackathons have you participated in before?*"
-        label-for="num-hackathons"
-      >
+      <b-form-group>
+        <template #label>
+          How many hackathons have you participated in before?
+          <span class="text-danger">*</span></template
+        >
         <b-form-input
           id="num-hackathons"
           v-model="formData.hack_count"
@@ -230,10 +227,11 @@
         />
       </b-form-group>
 
-      <b-form-group
-        label="Why are you interested in attending Bitcamp?*"
-        label-for="why-bitcamp"
-      >
+      <b-form-group>
+        <template #label>
+          Why are you interested in attending Bitcamp?
+          <span class="text-danger">*</span></template
+        >
         <b-form-textarea
           id="why-bitcamp"
           v-model="formData.question1"
@@ -249,10 +247,11 @@
         </small>
       </b-form-group>
 
-      <b-form-group
-        label="What do you plan on building at Bitcamp?*"
-        label-for="what-build"
-      >
+      <b-form-group>
+        <template #label>
+          What do you plan on building at Bitcamp?
+          <span class="text-danger">*</span></template
+        >
         <b-form-textarea
           id="what-build"
           v-model="formData.question2"
@@ -271,16 +270,14 @@
       <!-- WANT TO GET HIRED -->
       <hr class="mt-4" />
       <h4 class="section-title">Want to get hired?</h4>
-      <p class="info">
-        Let us know, and we’ll pass your info on to our sponsors!
-      </p>
+      <p class="info">Let us know, and we’ll pass your info on to our sponsors!</p>
 
       <b-form-row>
-        <b-form-group
-          label="Do you want to be recruited for jobs?*"
-          class="col-md-6"
-          label-for="recruit-select"
-        >
+        <b-form-group class="col-md-6">
+          <template #label>
+            Do you want to be recruited for jobs?
+            <span class="text-danger">*</span></template
+          >
           <b-form-select
             id="recruit-select"
             v-model="formData.recruit"
@@ -291,11 +288,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="GitHub or Portfolio Link"
-          class="col-md-6"
-          label-for="github-link"
-        >
+        <b-form-group label="GitHub or Portfolio Link" class="col-md-6">
           <b-form-input
             id="github-link"
             v-model="formData.portfolio"
@@ -307,20 +300,12 @@
       </b-form-row>
 
       <!-- RESUME (custom UI, only part that's different) -->
-      <b-form-group
-        label="Resume (.pdf .doc .docx)"
-        label-for="resume-upload"
-      >
-        <div
-          class="resume-upload"
-          @click="triggerResumeFile"
-        >
+      <b-form-group label="Resume (.pdf .doc .docx)">
+        <div class="resume-upload" @click="triggerResumeFile">
           <span class="resume-placeholder">
             {{ resumeLabel }}
           </span>
-          <span class="resume-browse">
-            Browse
-          </span>
+          <span class="resume-browse"> Browse </span>
           <input
             id="resume-upload"
             ref="resumeInput"
@@ -338,10 +323,7 @@
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
 
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
           <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
@@ -365,10 +347,7 @@ const secondPageRequiredFields = [
   "recruit",
 ];
 
-const secondPageOptionalFields = [
-  "quantum_track",
-  "portfolio",
-];
+const secondPageOptionalFields = ["quantum_track", "portfolio"];
 
 export default {
   name: "Page2",
@@ -381,7 +360,7 @@ export default {
   data() {
     return {
       touched: Object.fromEntries(
-        [...secondPageRequiredFields, ...secondPageOptionalFields].map(key => [key, false])
+        [...secondPageRequiredFields, ...secondPageOptionalFields].map((key) => [key, false])
       ),
       steps: [
         { number: 1, label: "Personal Info" },
@@ -408,14 +387,17 @@ export default {
 
       return {
         track_selected: this.formData.track_selected && req(this.formData.track_selected),
-        quantum_track: this.formData.quantum_track !== null && this.formData.quantum_track !== undefined,
-        beginner_content_opt_in: this.formData.beginner_content_opt_in !== null && this.formData.beginner_content_opt_in !== undefined,
+        quantum_track:
+          this.formData.quantum_track !== null && this.formData.quantum_track !== undefined,
+        beginner_content_opt_in:
+          this.formData.beginner_content_opt_in !== null &&
+          this.formData.beginner_content_opt_in !== undefined,
         hack_count: req(this.formData.hack_count) && Number(this.formData.hack_count) >= 0,
         question1: req(this.formData.question1) && (this.formData.question1 || "").length >= 50,
         question2: req(this.formData.question2) && (this.formData.question2 || "").length >= 50,
         recruit: req(this.formData.recruit),
         portfolio: req(this.formData.portfolio),
-      }
+      };
     },
     whyBitcampChars() {
       return (this.formData.question1 || "").length;
@@ -439,7 +421,10 @@ export default {
   },
   methods: {
     showState(field) {
-      if (secondPageOptionalFields.includes(field) && !this.optionalFieldsRequired.includes(field)) {
+      if (
+        secondPageOptionalFields.includes(field) &&
+        !this.optionalFieldsRequired.includes(field)
+      ) {
         return null;
       }
       if (!this.touched[field]) return null;
@@ -461,18 +446,20 @@ export default {
     // NEW: update label + bubble event to parent
     onResumeChange(event) {
       const file = event.target.files && event.target.files[0];
-      this.resumeLabel = file
-        ? file.name
-        : "Upload Resume (size limit: 5MB)";
+      this.resumeLabel = file ? file.name : "Upload Resume (size limit: 5MB)";
       this.$emit("resume-change", event);
     },
 
     validateForm() {
-      return secondPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
-        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName]);
+      return (
+        secondPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
+        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName])
+      );
     },
 
     handleNext(event) {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
       event.preventDefault();
 
       secondPageRequiredFields.forEach((key) => {
@@ -660,14 +647,13 @@ body {
   background: #ff6b35 !important;
   border-color: #ff6b35 !important;
   color: #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(255,107,53,0.3) !important;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.3) !important;
   transform: translateY(-2px);
 }
 .track-card--active h5,
 .track-card--active p {
   color: #ffffff !important;
 }
-
 
 .track-title {
   font-size: 1rem;
@@ -802,34 +788,34 @@ hr {
   box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.15);
 
   .actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-}
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
 
-.submit-btn {
-  padding: 10px 30px;
-  font-weight: 700;
-  border-radius: 6px;
-}
+  .submit-btn {
+    padding: 10px 30px;
+    font-weight: 700;
+    border-radius: 6px;
+  }
 
-.prev-btn {
-  background-color: #f5f5f5;
-  color: #ff6b35;
-  border: 1px solid #ff6b35;
-}
+  .prev-btn {
+    background-color: #f5f5f5;
+    color: #ff6b35;
+    border: 1px solid #ff6b35;
+  }
 
-.next-btn {
-  background-color: #ff6b35;
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
-}
+  .next-btn {
+    background-color: #ff6b35;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+  }
 
-.next-btn:hover,
-.next-btn:focus {
-  background-color: #ff7b47;
-}
+  .next-btn:hover,
+  .next-btn:focus {
+    background-color: #ff7b47;
+  }
 }
 
 /* hidden actual file input */
