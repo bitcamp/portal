@@ -68,7 +68,7 @@ export default {
     Page3,
     CampfireGames,
     TeamMatching,
-    Submit
+    Submit,
   },
   props: {
     default_track: {

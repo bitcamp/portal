@@ -41,15 +41,14 @@
               <b-form-radio-group
                 v-model="formData.opt_in_team_matching"
                 name="opt_in_team_matching"
-                :state="validations.opt_in_team_matching"
                 @click="touched.opt_in_team_matching = true"
               >
                 <b-form-radio value="yes">Yes</b-form-radio>
                 <b-form-radio value="no">No</b-form-radio>
               </b-form-radio-group>
-              <b-form-invalid-feedback :state="validations.opt_in_team_matching">
+              <div v-if="showInvalid('opt_in_team_matching')" class="invalid-feedback d-block">
                 Please select an answer
-              </b-form-invalid-feedback>
+              </div>
             </b-form-group>
 
             <div v-if="formData.opt_in_team_matching === 'yes'">
@@ -72,9 +71,9 @@
                   <b-form-radio value="ml">Machine Learning</b-form-radio>
                   <b-form-radio value="app dev">App Development</b-form-radio>
                 </b-form-radio-group>
-                <b-form-invalid-feedback :state="validations.track">
+                <div v-if="showInvalid('track')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <b-form-group>
@@ -92,9 +91,9 @@
                   <b-form-radio value="yes">Yes</b-form-radio>
                   <b-form-radio value="no">No</b-form-radio>
                 </b-form-radio-group>
-                <b-form-invalid-feedback :state="validations.hackathon">
+                <div v-if="showInvalid('hackathon')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <b-form-group>
@@ -117,9 +116,9 @@
                   <b-form-checkbox value="flask">Flask</b-form-checkbox>
                   <b-form-checkbox value="java">Java</b-form-checkbox>
                 </b-form-checkbox-group>
-                <b-form-invalid-feedback :state="validations.languages">
+                <div v-if="showInvalid('languages')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <b-form-group>
@@ -136,9 +135,9 @@
                   <b-form-radio value="inter">Intermediate (skill level 3-4)</b-form-radio>
                   <b-form-radio value="advanced">Advanced (skill level 5)</b-form-radio>
                 </b-form-radio-group>
-                <b-form-invalid-feedback :state="validations.experience">
+                <div v-if="showInvalid('experience')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <h4 class="header">Team Preferences</h4>
@@ -160,9 +159,9 @@
                   <b-form-radio value="no">No</b-form-radio>
                   <b-form-radio value="idc">Don't Care</b-form-radio>
                 </b-form-radio-group>
-                <b-form-invalid-feedback :state="validations.skill_level">
+                <div v-if="showInvalid('skill_level')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <b-form-group>
@@ -185,9 +184,9 @@
                   <b-form-checkbox value="flask">Flask</b-form-checkbox>
                   <b-form-checkbox value="java">Java</b-form-checkbox>
                 </b-form-checkbox-group>
-                <b-form-invalid-feedback :state="validations.skills_wanted">
+                <div v-if="showInvalid('skills_wanted')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <b-form-group>
@@ -206,9 +205,9 @@
                   <b-form-radio value="two">2</b-form-radio>
                   <b-form-radio value="three">3</b-form-radio>
                 </b-form-radio-group>
-                <b-form-invalid-feedback :state="validations.num_team_members">
+                <div v-if="showInvalid('num_team_members')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <h4 class="header">Project Preferences</h4>
@@ -230,9 +229,9 @@
                   <b-form-checkbox value="mobile_app">Mobile App</b-form-checkbox>
                   <b-form-checkbox value="ai/ml">AI/ML</b-form-checkbox>
                 </b-form-checkbox-group>
-                <b-form-invalid-feedback :state="validations.projects">
+                <div v-if="showInvalid('projects')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <b-form-group>
@@ -259,9 +258,9 @@
                   <b-form-checkbox value="sustainability">Best Sustainability Hack</b-form-checkbox>
                   <b-form-checkbox value="no_pref">No Preference</b-form-checkbox>
                 </b-form-checkbox-group>
-                <b-form-invalid-feedback :state="validations.prizes">
+                <div v-if="showInvalid('prizes')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <h4 class="header">Commitment</h4>
@@ -284,9 +283,9 @@
                     >I want to learn, if I win that will be a plus (1-8 hours)</b-form-radio
                   >
                 </b-form-radio-group>
-                <b-form-invalid-feedback :state="validations.serious">
+                <div v-if="showInvalid('serious')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
 
               <b-form-group>
@@ -305,9 +304,9 @@
                   <b-form-checkbox value="hybrid">Hybrid</b-form-checkbox>
                   <b-form-checkbox value="in-person">In Person</b-form-checkbox>
                 </b-form-checkbox-group>
-                <b-form-invalid-feedback :state="validations.collab">
+                <div v-if="showInvalid('collab')" class="invalid-feedback d-block">
                   Please select an answer
-                </b-form-invalid-feedback>
+                </div>
               </b-form-group>
             </div>
 
@@ -488,23 +487,26 @@ export default {
     },
 
     handleNext() {
-      console.log(this.formData);
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
+
+      event.preventDefault();
+
+      fifthPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+
       if (this.validateForm()) {
         this.$emit("next");
-        return;
+      } else {
+        this.$bvToast.toast("Please fill out all required fields", {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        });
       }
-
-      // NOTE: Using console.error instead of $bvToast.toast as per instructions
-      console.error("Please fill out all required fields");
-
-      // Optional: Add toast notification if using BootstrapVue globally
-      // this.$bvToast.toast("Please fill out all required fields", {
-      //   toaster: "b-toaster-top-center",
-      //   solid: true,
-      //   appendToast: false,
-      //   noCloseButton: true,
-      //   variant: "danger",
-      // });
     },
 
     handlePrevious() {
