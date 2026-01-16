@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <b-container>
+    <b-container class="move">
       <b-card class="main-card mt-3 mt-md-5">
         <b-row>
           <b-col md="1" />
@@ -15,7 +15,7 @@
               </span>
               for Bitcamp 2025!</h1>
 
-            <img style="width: 200px; height: 200px;" src="@/assets/bitcamp.gif" />
+            <img style=" width: 20vh; height: 20vh;" src="@/assets/bitcamp.gif" />
 
             <div class="py-3">
               <p class="mb-4">
@@ -66,7 +66,7 @@
                 <b-col md=1></b-col>
               </b-row> -->
 
-              <p>Follow us on social media to make sure you don't miss any updates from Bitcamp.</p>
+              <p class="mobile">Follow us on social media to make sure you don't miss any updates from Bitcamp.</p>
               <!-- Social links -->
               <div class="pb-3">
                 <social-links />
@@ -162,10 +162,26 @@ export default {
 </script>
 
 <style scoped>
+  @media screen and (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  .mb-4 {
+    font-size: 0.9rem;
+  }
+  .mobile {
+    font-size: 0.9rem;
+  }
+}
+
 .about {
   display: flex;
   height: 100vh;
   align-items: center;
+}
+
+.move {
+  width: 85%;
 }
 
 .card {
@@ -174,6 +190,7 @@ export default {
 
 h1 {
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 p {
