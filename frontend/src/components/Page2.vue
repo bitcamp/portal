@@ -152,6 +152,12 @@
               type="radio"
               value="beginner"
               v-model="formData.quantum_track"
+              @change="touched.quantum_track = true"
+              :state="showState('quantum_track')"
+              :class="{
+                'is-valid': showState('quantum_track') === true,
+                'is-invalid': touched.quantum_track && showState('quantum_track') === false
+              }"
             />
             Beginner
           </label>
@@ -160,14 +166,17 @@
               type="radio"
               value="advanced"
               v-model="formData.quantum_track"
+              @change="touched.quantum_track = true"
+              :state="showState('quantum_track')"
+              :class="{
+                'is-valid': showState('quantum_track') === true,
+                'is-invalid': touched.quantum_track && showState('quantum_track') === false
+              }"
             />
             Advanced
           </label>
         </div>
-        <div
-          v-if="validations.quantum_track === false"
-          class="invalid-feedback d-block"
-        >
+        <div v-if="touched.quantum_track && !showState('quantum_track')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
@@ -185,6 +194,12 @@
               type="radio"
               :value="true"
               v-model="formData.beginner_content_opt_in"
+              @change="touched.beginner_content_opt_in = true"
+              :state="showState('beginner_content_opt_in')"
+              :class="{
+                'is-valid': showState('beginner_content_opt_in') === true,
+                'is-invalid': touched.beginner_content_opt_in && showState('beginner_content_opt_in') === false
+              }"
             />
             Yes
           </label>
@@ -193,14 +208,17 @@
               type="radio"
               :value="false"
               v-model="formData.beginner_content_opt_in"
+              @change="touched.beginner_content_opt_in = true"
+              :state="showState('beginner_content_opt_in')"
+              :class="{
+                'is-valid': showState('beginner_content_opt_in') === true,
+                'is-invalid': touched.beginner_content_opt_in && showState('beginner_content_opt_in') === false
+              }"
             />
             No
           </label>
         </div>
-        <div
-          v-if="validations.beginner_content_opt_in === false"
-          class="invalid-feedback d-block"
-        >
+        <div v-if="touched.beginner_content_opt_in && !showState('beginner_content_opt_in')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
@@ -220,7 +238,10 @@
           id="num-hackathons"
           v-model="formData.num_hackathons"
           placeholder="Number of hackathons here..."
+          @input="touched.num_hackathons = true"
+          :state="showState('num_hackathons')"
         />
+        <div v-if="touched.num_hackathons && !showState('num_hackathons')" class="invalid-feedback d-block">Required field</div>
       </b-form-group>
 
       <b-form-group
@@ -234,10 +255,18 @@
           rows="4"
           :maxlength="1000"
           placeholder="Your response here..."
+          @input="touched.why_bitcamp = true"
+          :state="showState('why_bitcamp')"
+          :class="{
+            'is-valid': showState('why_bitcamp') === true,
+            'is-invalid': touched.why_bitcamp && showState('why_bitcamp') === false
+          }"
         ></textarea>
         <small class="char-counter">
           {{ whyBitcampChars }} / 1000 characters (minimum 50 required)
         </small>
+        
+        <div v-if="touched.why_bitcamp && !showState('why_bitcamp')" class="invalid-feedback d-block">Minimum 50 characters required</div>
       </b-form-group>
 
       <b-form-group
@@ -251,10 +280,18 @@
           rows="4"
           :maxlength="1000"
           placeholder="Your response here..."
+          @input="touched.what_build = true"
+          :state="showState('what_build')"
+          :class="{
+            'is-valid': showState('what_build') === true,
+            'is-invalid': touched.what_build && showState('what_build') === false
+          }"
         ></textarea>
         <small class="char-counter">
           {{ whatBuildChars }} / 1000 characters (minimum 50 required)
         </small>
+
+        <div v-if="touched.what_build && !showState('what_build')" class="invalid-feedback d-block">Minimum 50 characters required</div>
       </b-form-group>
 
       <!-- WANT TO GET HIRED -->
@@ -275,7 +312,14 @@
             v-model="formData.recruit_for_jobs"
             :options="recruitOptions"
             class="form-select"
+            @change="touched.recruit_for_jobs = true"
+            :state="showState('recruit_for_jobs')"
+            :class="{
+              'is-valid': showState('recruit_for_jobs') === true,
+              'is-invalid': touched.recruit_for_jobs && showState('recruit_for_jobs') === false
+            }"
           />
+          <div v-if="touched.recruit_for_jobs && !showState('recruit_for_jobs')" class="invalid-feedback d-block">Required field</div>
         </b-form-group>
 
         <b-form-group
@@ -369,29 +413,111 @@ export default {
         track_selected: null,
         quantum_track: null,
         beginner_content_opt_in: null,
+        num_hackathons: null,
+        why_bitcamp: null,
+        what_build: null,
+        recruit_for_jobs: null,
       },
       recruitOptions: [
         { value: "", text: "Select one...", disabled: true },
         { value: "yes", text: "Yes" },
         { value: "no", text: "No" },
-        { value: "maybe", text: "Maybe later" },
       ],
+          touched: {
+            track_selected: false,
+            quantum_track: false,
+            beginner_content_opt_in: false,
+            num_hackathons: false,
+            why_bitcamp: false,
+            what_build: false,
+            recruit_for_jobs: false,
+          },
       // NEW: label text for the resume upload UI
       resumeLabel: "Upload Resume (size limit: 5MB)",
     };
   },
   computed: {
     whyBitcampChars() {
-      return (this.formData.why_bitcamp || "").length;
+      return String(this.formData.why_bitcamp || "").length;
     },
     whatBuildChars() {
-      return (this.formData.what_build || "").length;
+      return String(this.formData.what_build || "").length;
     },
   },
   methods: {
+    req(v) {
+      return v !== null && v !== undefined && v.toString().trim().length > 0;
+    },
+
+    computeFieldValidity(field) {
+      if (field === "num_hackathons") {
+        return this.formData.num_hackathons !== null && this.formData.num_hackathons !== undefined && this.formData.num_hackathons.toString().trim().length > 0;
+      }
+
+      if (field === "why_bitcamp") {
+          return String(this.formData.why_bitcamp || "").trim().length >= 50;
+      }
+
+      if (field === "what_build") {
+          return String(this.formData.what_build || "").trim().length >= 50;
+      }
+
+      if (field === "recruit_for_jobs") {
+        return this.req(this.formData.recruit_for_jobs);
+      }
+
+      if (field === "track_selected") {
+        return this.req(this.formData.track_selected);
+      }
+
+      if (field === "quantum_track") {
+        if (this.formData.track_selected !== "quantum") return null;
+        return this.req(this.formData.quantum_track);
+      }
+
+      if (field === "beginner_content_opt_in") {
+        return this.formData.beginner_content_opt_in === true || this.formData.beginner_content_opt_in === false ? true : false;
+      }
+
+      return null;
+    },
+
+    showState(field) {
+      if (!this.touched[field]) return null;
+      const current = this.computeFieldValidity(field);
+      if (current !== null && typeof current !== 'undefined') return !!current;
+      const v = this.validations[field];
+      if (v !== undefined && v !== null) return !!v;
+      return null;
+    },
+    handleFieldChange(field, evt) {
+      // If an event or direct value is provided, determine the value
+      let val;
+      if (evt && Object.prototype.hasOwnProperty.call(evt, 'target')) {
+        val = evt.target.value;
+      } else if (typeof evt !== 'undefined') {
+        val = evt;
+      }
+
+      if (typeof val !== 'undefined') {
+        // coerce boolean-like strings to booleans so computeFieldValidity works
+        if (typeof val === 'string') {
+          if (val === 'true') val = true;
+          else if (val === 'false') val = false;
+        }
+        this.$set(this.formData, field, val);
+      }
+
+      const current = this.computeFieldValidity(field);
+      this.$set(this.touched, field, true);
+      if (current === true) this.$set(this.validations, field, true);
+      else if (current === false) this.$set(this.validations, field, false);
+      else this.$set(this.validations, field, null);
+    },
     onSelectTrack(track) {
-      this.formData.track_selected = track;
-      this.validations.track_selected = null;
+      this.$set(this.formData, 'track_selected', track);
+      this.$set(this.validations, 'track_selected', null);
+      this.handleFieldChange('track_selected', track);
     },
 
     // NEW: open the hidden file input
@@ -417,12 +543,14 @@ export default {
         this.validations.track_selected = false;
         isValid = false;
       } else {
-        this.validations.track_selected = null;
+        this.validations.track_selected = true;
       }
 
       if (this.formData.track_selected === "quantum" && !this.formData.quantum_track) {
         this.validations.quantum_track = false;
         isValid = false;
+      } else if (this.formData.track_selected === "quantum") {
+        this.validations.quantum_track = true;
       } else {
         this.validations.quantum_track = null;
       }
@@ -434,12 +562,49 @@ export default {
         this.validations.beginner_content_opt_in = false;
         isValid = false;
       } else {
-        this.validations.beginner_content_opt_in = null;
+        this.validations.beginner_content_opt_in = true;
+      }
+
+      // num_hackathons (required)
+      if (!this.formData.num_hackathons && this.formData.num_hackathons !== 0) {
+        this.validations.num_hackathons = false;
+        isValid = false;
+      } else {
+        this.validations.num_hackathons = true;
+      }
+
+      // why_bitcamp (minimum 50 chars)
+      if (String(this.formData.why_bitcamp || "").trim().length < 50) {
+        this.validations.why_bitcamp = false;
+        isValid = false;
+      } else {
+        this.validations.why_bitcamp = true;
+      }
+
+      // what_build (minimum 50 chars)
+      if (String(this.formData.what_build || "").trim().length < 50) {
+        this.validations.what_build = false;
+        isValid = false;
+      } else {
+        this.validations.what_build = true;
+      }
+
+      // recruit_for_jobs (required)
+      if (!this.formData.recruit_for_jobs || this.formData.recruit_for_jobs.length === 0) {
+        this.validations.recruit_for_jobs = false;
+        isValid = false;
+      } else {
+        this.validations.recruit_for_jobs = true;
       }
 
       return isValid;
     },
     handleNext() {
+      // mark all fields as touched so validation UI appears (same behavior as Page1)
+      Object.keys(this.touched).forEach((key) => {
+        this.$set(this.touched, key, true);
+      });
+
       if (this.validateForm()) {
         this.$emit("next");
       } else {
@@ -790,4 +955,25 @@ hr {
 .resume-file-input {
   display: none;
 }
+
+/* inline green check for fields */
+.field-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2ecc71;
+  color: white;
+  font-weight: 700;
+  position: absolute;
+  right: 12px;
+  top: 36px;
+  box-shadow: 0 2px 6px rgba(46, 204, 113, 0.2);
+}
+
+.select-check { top: 38px; }
+
+.form-group { position: relative; }
 </style>

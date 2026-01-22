@@ -335,7 +335,38 @@ export default {
   methods: {
     showState(field) {
       if (!this.touched[field]) return null;
-      return this.validations[field];
+      const current = this.computeFieldValidity(field);
+      if (current) return true;
+      if (this.validations[field] !== undefined) return !!this.validations[field];
+      return false;
+    },
+
+    req(v) {
+      return v && v.toString().trim().length > 0;
+    },
+
+    computeFieldValidity(field) {
+      if (field === "email") {
+        return EmailValidator.validate(this.formData.email);
+      }
+
+      if (field === "phone") {
+        const phone = parsePhoneNumber(this.formData.phone || "", "US");
+        return phone && phone.isValid();
+      }
+
+      if (field === "school") {
+        if (this.formData.school_other_selected) {
+          return this.req(this.formData.school_other);
+        }
+        return this.req(this.formData.school);
+      }
+
+      if (field === "heard_from") {
+        return this.req(this.formData.heard_from_select);
+      }
+
+      return this.req(this.formData[field]);
     },
 
     resetSchool() {

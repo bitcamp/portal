@@ -529,7 +529,7 @@ label.form-label {
   padding: 10px 30px;
   font-weight: 700;
   border-radius: 6px;
-}
+} 
 
 .prev-btn {
   background-color: #f5f5f5;
