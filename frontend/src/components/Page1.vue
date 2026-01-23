@@ -11,14 +11,25 @@
     <!-- Step Indicator -->
     <div class="stepper">
       <div
-        v-for="step in steps"
+        v-for="(step, index) in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 1 }"
+        :class="{ 
+          active: step.number === currentPage,
+          completed: step.number < currentPage
+        }"
       >
+        <!-- Connecting line before circle -->
+        <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
+        
         <div class="stepper-circle">
-          {{ step.number }}
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span v-else>{{ step.number }}</span>
         </div>
+        
+        <!-- Connecting line after circle -->
+        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
+        
         <div class="stepper-label">
           {{ step.label }}
         </div>
@@ -242,7 +253,13 @@ const major_map = majors_list.rows
 
 export default {
   name: "Page1",
-  props: { formData: Object },
+  props: {
+    formData: Object,
+    currentPage: {
+      type: Number,
+      default: 1
+    }
+  },
 
   data() {
     return {
@@ -253,7 +270,7 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Finalize & Submit" },
+        { number: 7, label: "Rules & Policies" },
       ],
 
       touched: {
@@ -466,30 +483,93 @@ body {
 .stepper {
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
+  align-items: flex-start;
+  margin: 30px 0;
+  position: relative;
 }
 
 .stepper-item {
   text-align: center;
   flex: 1;
-  font-size: 0.75rem;
-  color: #c4c4c4;
+  font-size: 0.85rem;
+  color: #808080;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stepper-circle {
-  width: 30px;
-  height: 30px;
-  margin: 0 auto 6px;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 8px;
   border-radius: 50%;
-  background: #eee;
+  background: #e8e8e8;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #666;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .stepper-item.active .stepper-circle {
   background: #ff6b35;
   color: white;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+}
+
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35;
+  color: white;
+}
+
+.stepper-label {
+  font-weight: 500;
+  line-height: 1.3;
+  padding: 0 5px;
+  color: #606060;
+}
+
+.stepper-item.active .stepper-label {
+  color: #ff6b35;
+  font-weight: 700;
+}
+
+.stepper-item.completed .stepper-label {
+  color: #606060;
+}
+
+/* Connecting lines */
+.stepper-line {
+  position: absolute;
+  height: 3px;
+  background: #d3d3d3;
+  top: 25px;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.stepper-item:not(:last-child) .stepper-line:last-of-type {
+  width: calc(100% + 10px);
+  left: 25px;
+}
+
+.stepper-item:first-child .stepper-line:first-of-type {
+  display: none;
+}
+
+.stepper-line.completed {
+  background: #ff6b35;
+}
+
+.checkmark {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 /* Buttons */

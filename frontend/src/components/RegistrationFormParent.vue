@@ -5,6 +5,7 @@
       <Page1
         v-if="currentPage === 1"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(2)"
         @email-filled="handleEmailFilled"
       />
@@ -13,6 +14,7 @@
       <Page2
         v-if="currentPage === 2"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(3)"
         @previous="goToPage(1)"
       />
@@ -21,6 +23,7 @@
       <Page3
         v-if="currentPage === 3"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(4)"
         @previous="goToPage(2)"
       />
@@ -29,6 +32,7 @@
       <CampfireGames
         v-if="currentPage === 4"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(5)"
         @previous="goToPage(3)"
       />
@@ -36,6 +40,7 @@
       <TeamMatching
         v-if="currentPage === 5"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(6)"
         @previous="goToPage(4)"
       />
@@ -43,6 +48,7 @@
       <Submit
         v-if="currentPage === 6"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(7)"
         @previous="goToPage(5)"
       />

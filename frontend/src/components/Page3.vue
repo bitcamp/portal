@@ -11,14 +11,25 @@
     <!-- Step Indicator -->
     <div class="stepper">
       <div
-        v-for="step in steps"
+        v-for="(step, index) in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 3 }"
+        :class="{ 
+          active: step.number === currentPage,
+          completed: step.number < currentPage
+        }"
       >
+        <!-- Connecting line before circle -->
+        <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
+        
         <div class="stepper-circle">
-          {{ step.number }}
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span v-else>{{ step.number }}</span>
         </div>
+        
+        <!-- Connecting line after circle -->
+        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
+        
         <div class="stepper-label">
           {{ step.label }}
         </div>
@@ -41,6 +52,8 @@
                 type="radio"
                 :value="true"
                 v-model="formData.transport"
+                @change="touched.transport = true; validations.transport = true"
+                :class="getFieldClass('transport')"
               />
               Yes
             </label>
@@ -49,12 +62,14 @@
                 type="radio"
                 :value="false"
                 v-model="formData.transport"
+                @change="touched.transport = true; validations.transport = true"
+                :class="getFieldClass('transport')"
               />
               No
             </label>
           </div>
           <div
-            v-if="validations.transport === false"
+            v-if="touched.transport && validations.transport === false"
             class="invalid-feedback d-block"
           >
             Please select an answer
@@ -167,9 +182,10 @@
             v-model="formData.tshirt_size"
             class="form-select"
             :options="tshirtSizeOptions"
-            :state="validations.tshirt_size"
+            @change="touched.tshirt_size = true; validations.tshirt_size = formData.tshirt_size ? true : false"
+            :state="getFieldState('tshirt_size')"
           />
-          <b-form-invalid-feedback :state="validations.tshirt_size">
+          <b-form-invalid-feedback :state="getFieldState('tshirt_size')">
             Please select a T-shirt size
           </b-form-invalid-feedback>
         </b-form-group>
@@ -191,7 +207,7 @@
               <input
                 type="checkbox"
                 v-model="formData.diet_none"
-                @change="uncheckDietaryRestrictions"
+                @change="uncheckDietaryRestrictions; touched.diet = true; updateDietValidation()"
               />
               None
             </label>
@@ -206,6 +222,7 @@
                 :value="option.value"
                 v-model="formData.diet_select"
                 :disabled="formData.diet_none"
+                @change="touched.diet = true; updateDietValidation()"
               />
               {{ option.text }}
             </label>
@@ -215,12 +232,13 @@
                 type="checkbox"
                 v-model="formData.diet_other"
                 :disabled="formData.diet_none"
+                @change="touched.diet = true; updateDietValidation()"
               />
               Other
             </label>
 
             <div
-              v-if="validations.diet === false"
+              v-if="touched.diet && validations.diet === false"
               class="invalid-feedback d-block"
             >
               Please select your dietary restrictions ("None" is an option)
@@ -232,6 +250,7 @@
             v-model="formData.diet_other_text"
             class="mt-2"
             aria-label="Dietary Restriction Other Text Box"
+            @input="touched.diet = true; updateDietValidation()"
             placeholder="Other dietary restriction"
           />
         </b-form-group>
@@ -274,6 +293,10 @@ export default {
       type: Object,
       required: true,
     },
+    currentPage: {
+      type: Number,
+      default: 1,
+    },
   },
   data() {
     return {
@@ -284,7 +307,7 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Finalize & Submit" },
+        { number: 7, label: "Rules & Policies" },
       ],
       tshirtSizeOptions: [
         { value: "", text: "Select one...", disabled: true },
@@ -309,9 +332,24 @@ export default {
         tshirt_size: null,
         diet: null,
       },
+      touched: {
+        transport: false,
+        tshirt_size: false,
+        diet: false,
+      },
     };
   },
   methods: {
+    getFieldClass(field) {
+      if (!this.touched[field]) return null;
+      if (this.validations[field] === true) return 'is-valid';
+      if (this.validations[field] === false) return 'is-invalid';
+      return null;
+    },
+    getFieldState(field) {
+      if (!this.touched[field]) return null;
+      return this.validations[field];
+    },
     atNoTransportUnis() {
       return no_transport_unis.includes(this.formData.school);
     },
@@ -321,6 +359,17 @@ export default {
         this.formData.diet_select = [];
         this.formData.diet_other = false;
         this.formData.diet_other_text = "";
+      }
+    },
+    updateDietValidation() {
+      // Update diet validation based on current selections
+      const dietString = this.createDietaryRestrictionString();
+      if (dietString.length === 0) {
+        this.validations.diet = false;
+      } else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) {
+        this.validations.diet = false;
+      } else {
+        this.validations.diet = true;
       }
     },
     createDietaryRestrictionString() {
@@ -345,6 +394,7 @@ export default {
       // Transport (only if not at no-transport unis)
       if (!this.atNoTransportUnis() && this.formData.transport === null) {
         this.validations.transport = false;
+        this.touched.transport = true;
         isValid = false;
       } else {
         this.validations.transport = null;
@@ -353,6 +403,7 @@ export default {
       // T-shirt Size
       if (!this.formData.tshirt_size || this.formData.tshirt_size.length === 0) {
         this.validations.tshirt_size = false;
+        this.touched.tshirt_size = true;
         isValid = false;
       } else {
         this.validations.tshirt_size = null;
@@ -361,9 +412,11 @@ export default {
       // Dietary Restrictions
       if (this.createDietaryRestrictionString().length === 0) {
         this.validations.diet = false;
+        this.touched.diet = true;
         isValid = false;
       } else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) {
         this.validations.diet = false;
+        this.touched.diet = true;
         isValid = false;
       } else {
         this.validations.diet = null;
@@ -442,35 +495,92 @@ label.form-label {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 18px 0 14px;
+  margin: 30px 0;
+  position: relative;
 }
 
 .stepper-item {
-  flex: 1;
   text-align: center;
-  font-size: 0.7rem;
-  color: #c4c4c4;
+  flex: 1;
+  font-size: 0.85rem;
+  color: #808080;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stepper-circle {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 8px;
   border-radius: 50%;
-  margin: 0 auto 6px;
+  background: #e8e8e8;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3f3f3;
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #666;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .stepper-item.active .stepper-circle {
   background: #ff6b35;
-  color: #ffffff;
-  border-color: #ff6b35;
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+}
+
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35;
+  color: white;
+}
+
+.stepper-label {
+  font-weight: 500;
+  line-height: 1.3;
+  padding: 0 5px;
+  color: #606060;
+}
+
+.stepper-item.active .stepper-label {
+  color: #ff6b35;
+  font-weight: 700;
+}
+
+.stepper-item.completed .stepper-label {
+  color: #606060;
+}
+
+/* Connecting lines */
+.stepper-line {
+  position: absolute;
+  height: 3px;
+  background: #d3d3d3;
+  top: 25px;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.stepper-item:not(:last-child) .stepper-line:last-of-type {
+  width: calc(100% + 10px);
+  left: 25px;
+}
+
+.stepper-item:first-child .stepper-line:first-of-type {
+  display: none;
+}
+
+.stepper-line.completed {
+  background: #ff6b35;
+}
+
+.checkmark {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .stepper-label {
@@ -500,6 +610,14 @@ label.form-label {
   margin-right: 6px;
 }
 
+.radio-inline input[type="radio"].is-valid {
+  accent-color: #28a745;
+}
+
+.radio-inline input[type="radio"].is-invalid {
+  accent-color: #dc3545;
+}
+
 .checkbox-group {
   display: flex;
   flex-direction: column;
@@ -516,6 +634,14 @@ label.form-label {
 .checkbox-inline input[type="checkbox"] {
   display: inline-block !important;
   margin-right: 6px;
+}
+
+.checkbox-inline input[type="checkbox"].is-valid {
+  accent-color: #28a745;
+}
+
+.checkbox-inline input[type="checkbox"].is-invalid {
+  accent-color: #dc3545;
 }
 
 /* Buttons */

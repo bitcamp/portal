@@ -13,12 +13,25 @@
 
           <div class="stepper">
             <div
-              v-for="step in steps"
+              v-for="(step, index) in steps"
               :key="step.number"
               class="stepper-item"
-              :class="{ active: step.number === 4 }"
+              :class="{ 
+                active: step.number === currentPage,
+                completed: step.number < currentPage
+              }"
             >
-              <div class="stepper-circle">{{ step.number }}</div>
+              <!-- Connecting line before circle -->
+              <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
+              
+              <div class="stepper-circle">
+                <span v-if="step.number < currentPage" class="checkmark">✓</span>
+                <span v-else>{{ step.number }}</span>
+              </div>
+              
+              <!-- Connecting line after circle -->
+              <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
+              
               <div class="stepper-label">{{ step.label }}</div>
             </div>
           </div>
@@ -96,6 +109,10 @@ export default {
       type: Object,
       required: true,
     },
+    currentPage: {
+      type: Number,
+      default: 1,
+    },
   },
   data() {
     return {
@@ -106,7 +123,7 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Finalize & Submit" },
+        { number: 7, label: "Rules & Policies" },
       ],
 
       questions: [
