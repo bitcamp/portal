@@ -386,4 +386,54 @@ button.btn.submit-btn.next-btn:hover,
 a.btn.submit-btn.next-btn:hover {
   background-color: #ff7b47 !important;
 }
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  /* Page container */
+  .register-page {
+    margin: 20px auto 40px;
+    padding: 0 10px;
+  }
+
+  /* Page titles */
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .page-subtitle {
+    font-size: 0.9rem;
+  }
+
+  /* Stepper adjustments */
+  .stepper-circle {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+    margin-right: 10px;
+  }
+
+  .stepper-label {
+    font-size: 0.8rem;
+  }
+
+  .stepper-line {
+    display: none; /* optional: hide lines on mobile for simplicity */
+  }
+
+  /* Form fields */
+  .b-form-group {
+    margin-bottom: 15px;
+  }
+
+  .b-form-radio-group,
+  .b-form-checkbox-group {
+    font-size: 0.9rem;
+  }
+
+  /* Buttons */
+  .submit-btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+}
 </style>
