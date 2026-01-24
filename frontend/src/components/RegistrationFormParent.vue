@@ -28,16 +28,17 @@
         @previous="goToPage(2)"
       />
 
-      <!-- Page 4 and beyond would go here as needed -->
-      <CampfireGames
+      <!-- Page 4: Campfire Games -->
+      <Page4
         v-if="currentPage === 4"
         :form-data="formData"
         :current-page="currentPage"
         @next="goToPage(5)"
         @previous="goToPage(3)"
       />
-
-      <TeamMatching
+      
+      <!-- Page 5: Team Matching -->
+      <Page5
         v-if="currentPage === 5"
         :form-data="formData"
         :current-page="currentPage"
@@ -45,7 +46,8 @@
         @previous="goToPage(4)"
       />
 
-      <Submit
+      <!-- Page 7: Submit -->
+      <Page7
         v-if="currentPage === 6"
         :form-data="formData"
         :current-page="currentPage"
@@ -61,9 +63,9 @@
 import Page1 from "./Page1.vue";
 import Page2 from "./Page2.vue";
 import Page3 from "./Page3.vue";
-import CampfireGames from "./CampfireGames.vue";
-import TeamMatching from "./TeamMatching.vue";
-import Submit from "./Submit.vue";
+import Page4 from "./Page4.vue";
+import Page5 from "./Page5.vue";
+import Page7 from "./Page7.vue";
 import { v4 as uuid } from "uuid";
 
 export default {
@@ -72,9 +74,9 @@ export default {
     Page1,
     Page2,
     Page3,
-    CampfireGames,
-    TeamMatching,
-    Submit
+    Page4,
+    Page5,
+    Page7
   },
   props: {
     default_track: {
