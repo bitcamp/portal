@@ -19,9 +19,6 @@
           completed: step.number < currentPage
         }"
       >
-        <!-- Connecting line before circle -->
-        <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
-        
         <div class="stepper-circle">
           <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -517,6 +514,19 @@ body {
   flex-shrink: 0;
 }
 
+.stepper-line {
+  position: absolute;
+  top: 25px;
+  left: calc(50% + 25px); 
+  width: calc(100% - 25px);
+  height: 3px;
+  border-radius: 999px;
+}
+
+.stepper-line.completed {
+  background: #ff6b35;
+}
+
 .stepper-item.active .stepper-circle {
   background: #ff6b35;
   color: white;
@@ -542,29 +552,6 @@ body {
 
 .stepper-item.completed .stepper-label {
   color: #606060;
-}
-
-/* Connecting lines */
-.stepper-line {
-  position: absolute;
-  height: 3px;
-  background: #d3d3d3;
-  top: 25px;
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-
-.stepper-item:not(:last-child) .stepper-line:last-of-type {
-  width: calc(100% + 10px);
-  left: 25px;
-}
-
-.stepper-item:first-child .stepper-line:first-of-type {
-  display: none;
-}
-
-.stepper-line.completed {
-  background: #ff6b35;
 }
 
 .checkmark {
@@ -608,13 +595,11 @@ a.btn.submit-btn.next-btn:hover {
 
 /* Responsive styles for mobile */
 @media (max-width: 768px) {
-  /* Page container */
   .register-page {
     margin: 20px auto 40px;
     padding: 0 10px;
   }
 
-  /* Page titles */
   .page-title {
     font-size: 1.8rem;
   }
@@ -623,12 +608,27 @@ a.btn.submit-btn.next-btn:hover {
     font-size: 0.9rem;
   }
 
-  /* Stepper adjustments */
+  .stepper {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 20px; 
+  }
+
+  .stepper-item {
+    flex: 0 0 25%; /* Row 1: 4 items */
+    max-width: 25%;
+    position: relative; /* Essential for line positioning */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .stepper-circle {
     width: 35px;
     height: 35px;
     font-size: 1rem;
-    margin-right: 10px;
+    z-index: 2; /* Ensure circle stays above the line */
   }
 
   .stepper-label {
@@ -636,21 +636,29 @@ a.btn.submit-btn.next-btn:hover {
   }
 
   .stepper-line {
-    display: none; /* optional: hide lines on mobile for simplicity */
+    display: block !important; 
+    position: absolute;
+    top: 17.5px; 
+    left: calc(50% + 17.5px); 
+    width: calc(100% - 35px);
+    height: 2px;
+    background: #e8e8e8; 
+    z-index: 1;
   }
 
-  /* Form fields */
-  .b-form-group {
-    margin-bottom: 15px;
+  .stepper-item:nth-child(4) .stepper-line,
+  .stepper-item:nth-child(7) .stepper-line {
+    display: none !important;
   }
 
-  .b-form-radio-group,
-  .b-form-checkbox-group {
-    font-size: 0.9rem;
+  .actions {
+    display: flex;
+    justify-content: center; /* center the row */
+    gap: 10px;               /* spacing between buttons */
   }
 
-  /* Buttons */
   .submit-btn {
+    flex: 0 0 auto;          /* don't stretch, keep natural size */
     padding: 8px 20px;
     font-size: 0.9rem;
   }
