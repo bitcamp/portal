@@ -497,6 +497,11 @@ export default {
       return this.validations[field] === true ? true : false;
     },
 
+    validateForm() {
+        return this.sixthPageRequiredFields.every(
+        (field) => this.validations[field] === true);
+    },
+
     handleNext(event) {
       console.log("TOUCHED", this.touched);
       console.log("FORM DATA", this.formData);
