@@ -40,11 +40,18 @@
         @previous="goToPage(4)"
       />
 
-      <Submit
+      <MinorForms
         v-if="currentPage === 6"
         :form-data="formData"
         @next="goToPage(7)"
         @previous="goToPage(5)"
+      />
+
+      <Submit
+        v-if="currentPage === 7"
+        :form-data="formData"
+        @next="goToPage(8)"
+        @previous="goToPage(6)"
       />
       <!-- For now, this could be a summary or additional forms page -->
     </b-card>
@@ -57,6 +64,7 @@ import Page2 from "./Page2.vue";
 import Page3 from "./Page3.vue";
 import CampfireGames from "./CampfireGames.vue";
 import TeamMatching from "./TeamMatching.vue";
+import MinorForms from "./MinorForms.vue";
 import Submit from "./Submit.vue";
 import { v4 as uuid } from "uuid";
 
@@ -68,6 +76,7 @@ export default {
     Page3,
     CampfireGames,
     TeamMatching,
+    MinorForms,
     Submit,
   },
   props: {
