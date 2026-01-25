@@ -5,15 +5,15 @@
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>You're registered
+            <h1>You're registered for Bitcamp 2026!</h1>
 
-              <span v-if="type">
+<!--               <span v-if="type">
                 as a {{ type }}
               </span>
               <span v-else>
                 for the waitlist
               </span>
-              for Bitcamp 2025!</h1>
+              for Bitcamp 2025!</h1> -->
 
             <img style=" width: 20vh; height: 20vh;" src="@/assets/bitcamp.gif" />
 
@@ -26,7 +26,10 @@
                 <br />
                 If you have any questions, be sure to reach out to
                 <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
+                <br />
+                You may now close this tab.
               </p>
+
 
               <!-- <p class="mb-1">
                 Next, share your referral link with others to earn rewards.
