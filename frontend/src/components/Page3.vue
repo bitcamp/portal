@@ -11,22 +11,14 @@
     <!-- Step Indicator -->
     <div class="stepper">
       <div
-        v-for="(step, index) in steps"
+        v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage,
-          completed: step.number < currentPage
-        }"
+        :class="{ active: step.number === 3 }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
-          <span v-else>{{ step.number }}</span>
+          {{ step.number }}
         </div>
-        
-        <!-- Connecting line after circle -->
-        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
-        
         <div class="stepper-label">
           {{ step.label }}
         </div>
@@ -41,34 +33,30 @@
         <h4 class="section-title">Travel and Transportation</h4>
         <div class="mt-2 form-group">
           <label class="form-label">
-            Would you need travel assistance to the hackathon?*
-          </label>
+            Would you need travel assistance to the hackathon?
+            <span class="text-danger">*</span></label
+          >
           <div class="radio-inline-group">
             <label class="radio-inline">
               <input
+                v-model="formData.transport"
                 type="radio"
                 :value="true"
-                v-model="formData.transport"
-                @change="touched.transport = true; validations.transport = true"
-                :class="getFieldClass('transport')"
+                @change="touched.transport = true"
               />
               Yes
             </label>
             <label class="radio-inline">
               <input
+                v-model="formData.transport"
                 type="radio"
                 :value="false"
-                v-model="formData.transport"
-                @change="touched.transport = true; validations.transport = true"
-                :class="getFieldClass('transport')"
+                @change="touched.transport = true"
               />
               No
             </label>
           </div>
-          <div
-            v-if="touched.transport && validations.transport === false"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('transport')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </div>
@@ -78,20 +66,18 @@
       <!-- SHIPPING ADDRESS -->
       <h4 class="section-title">Want to give us a shipping address?</h4>
       <p class="info">
-        We plan on handing out all swag in-person at the event, but in case we need to ship swag to you instead,
-        this is where we'll send it to. Please note that we can only ship to the USA.
+        We plan on handing out all swag in-person at the event, but in case we need to ship swag to
+        you instead, this is where we'll send it to. Please note that we can only ship to the USA.
       </p>
 
       <b-form-row>
-        <b-form-group
-          label="Shipping Address"
-          label-for="shipping-address"
-          class="col-md-6"
-        >
+        <b-form-group label="Shipping Address" label-for="shipping-address" class="col-md-6">
           <b-form-input
             id="shipping-address"
             v-model="formData.address"
             placeholder="8125 Paint Branch Dr"
+            :state="showState('address')"
+            @input="touched.address = true"
           />
         </b-form-group>
 
@@ -104,56 +90,50 @@
             id="shipping-address2"
             v-model="formData.address2"
             placeholder="Apartment or Unit Number (optional)"
+            :state="showState('address2')"
+            @input="touched.address2 = true"
           />
         </b-form-group>
       </b-form-row>
 
       <b-form-row>
-        <b-form-group
-          label="City"
-          label-for="shipping-city"
-          class="col-md-3"
-        >
+        <b-form-group label="City" label-for="shipping-city" class="col-md-3">
           <b-form-input
             id="shipping-city"
             v-model="formData.city"
             placeholder="College Park"
+            :state="showState('city')"
+            @input="touched.city = true"
           />
         </b-form-group>
 
-        <b-form-group
-          label="State"
-          label-for="shipping-state"
-          class="col-md-2"
-        >
+        <b-form-group label="State" label-for="shipping-state" class="col-md-2">
           <b-form-input
             id="shipping-state"
             v-model="formData.state"
             placeholder="MD"
+            :state="showState('state')"
+            @input="touched.state = true"
           />
         </b-form-group>
 
-        <b-form-group
-          label="Zip Code"
-          label-for="shipping-zip"
-          class="col-md-3"
-        >
+        <b-form-group label="Zip Code" label-for="shipping-zip" class="col-md-3">
           <b-form-input
             id="shipping-zip"
             v-model="formData.zip"
             placeholder="20740"
+            :state="showState('zip')"
+            @input="touched.zip = true"
           />
         </b-form-group>
 
-        <b-form-group
-          label="Country"
-          label-for="shipping-country"
-          class="col-md-4"
-        >
+        <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
           <b-form-input
             id="shipping-country"
             v-model="formData.country"
             placeholder="USA"
+            :state="showState('country')"
+            @input="touched.country = true"
           />
         </b-form-group>
       </b-form-row>
@@ -168,21 +148,20 @@
       </p>
 
       <b-form-row>
-        <b-form-group
-          id="input-group-tshirt"
-          label="T-shirt Size*"
-          label-for="input-tshirt"
-          class="col-md-12"
-        >
+        <b-form-group id="input-group-tshirt" class="col-md-12">
+          <template #label>
+            T-shirt Size
+            <span class="text-danger">*</span></template
+          >
           <b-form-select
             id="input-tshirt"
             v-model="formData.tshirt_size"
             class="form-select"
             :options="tshirtSizeOptions"
-            @change="touched.tshirt_size = true; validations.tshirt_size = formData.tshirt_size ? true : false"
-            :state="getFieldState('tshirt_size')"
+            :state="showState('tshirt_size')"
+            @change="touched.tshirt_size = true"
           />
-          <b-form-invalid-feedback :state="getFieldState('tshirt_size')">
+          <b-form-invalid-feedback :state="validations.tshirt_size">
             Please select a T-shirt size
           </b-form-invalid-feedback>
         </b-form-group>
@@ -192,52 +171,38 @@
 
       <!-- DIETARY RESTRICTIONS -->
       <h4 class="section-title">Do you have any dietary restrictions?</h4>
-      <p class="info">Select all that apply*</p>
+      <p class="info">Select all that apply <span class="text-danger">*</span></p>
 
       <b-form-row>
-        <b-form-group
-          id="input-dietary-restrictions"
-          class="col-12 col-md-6"
-        >
+        <b-form-group id="input-dietary-restrictions" class="col-12 col-md-6">
           <div class="checkbox-group">
             <label class="checkbox-inline">
-              <input
-                type="checkbox"
-                v-model="formData.diet_none"
-                @change="uncheckDietaryRestrictions; touched.diet = true; updateDietValidation()"
-              />
+              <input type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
               None
             </label>
 
-            <label
-              v-for="option in dietOptions"
-              :key="option.value"
-              class="checkbox-inline"
-            >
+            <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
               <input
+                v-model="formData.diet_select"
                 type="checkbox"
                 :value="option.value"
-                v-model="formData.diet_select"
                 :disabled="formData.diet_none"
-                @change="touched.diet = true; updateDietValidation()"
+                @change="touched.diet_select = true"
               />
               {{ option.text }}
             </label>
 
             <label class="checkbox-inline">
               <input
-                type="checkbox"
                 v-model="formData.diet_other"
+                type="checkbox"
                 :disabled="formData.diet_none"
-                @change="touched.diet = true; updateDietValidation()"
+                @change="touched.diet_other = true"
               />
               Other
             </label>
 
-            <div
-              v-if="touched.diet && validations.diet === false"
-              class="invalid-feedback d-block"
-            >
+            <div v-if="showInvalid('diet')" class="invalid-feedback d-block">
               Please select your dietary restrictions ("None" is an option)
             </div>
           </div>
@@ -245,28 +210,22 @@
           <b-form-input
             v-if="formData.diet_other"
             v-model="formData.diet_other_text"
+            :state="showState('diet_other_text')"
             class="mt-2"
             aria-label="Dietary Restriction Other Text Box"
-            @input="touched.diet = true; updateDietValidation()"
             placeholder="Other dietary restriction"
+            @input="touched.diet_other_text = true"
           />
         </b-form-group>
       </b-form-row>
 
       <!-- Navigation Buttons -->
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="handlePrevious"
-        >
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
           <b-icon icon="arrow-left" class="mr-1" />
           Previous
         </b-button>
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
           <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
@@ -283,6 +242,19 @@ Vue.use(IconsPlugin);
 
 const no_transport_unis = ["The University of Maryland, College Park"];
 
+const thirdPageRequiredFields = ["tshirt_size", "diet"];
+
+const thirdPageOptionalFields = [
+  "transport",
+  "diet_other_text",
+  "address",
+  "address2",
+  "city",
+  "state",
+  "zip",
+  "country",
+];
+
 export default {
   name: "Page3",
   props: {
@@ -290,13 +262,12 @@ export default {
       type: Object,
       required: true,
     },
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
   },
   data() {
     return {
+      touched: Object.fromEntries(
+        [...thirdPageRequiredFields, ...thirdPageOptionalFields].map((key) => [key, false])
+      ),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -304,7 +275,7 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Rules & Policies" },
+        { number: 7, label: "Finalize & Submit" },
       ],
       tshirtSizeOptions: [
         { value: "", text: "Select one...", disabled: true },
@@ -324,104 +295,129 @@ export default {
         { text: "Kosher", value: "kosher" },
         { text: "Halal", value: "halal" },
       ],
-      validations: {
-        transport: null,
-        tshirt_size: null,
-        diet: null,
-      },
-      touched: {
-        transport: false,
-        tshirt_size: false,
-        diet: false,
-      },
     };
   },
+
+  computed: {
+    validations() {
+      const req = (v) => v && v.toString().trim().length > 0;
+
+      let createDietaryRestrictionString = () => {
+        let diet_string = this.formData.diet_select.join(",");
+
+        if (this.formData.diet_none) {
+          return "none";
+        }
+        if (this.formData.diet_other && this.formData.diet_other_text !== "") {
+          if (diet_string !== "") {
+            diet_string += ",";
+          }
+          diet_string = diet_string + "other(" + this.formData.diet_other_text + ")";
+        }
+
+        return diet_string;
+      };
+
+      let isValidDiet = true;
+      if (createDietaryRestrictionString().length === 0) {
+        isValidDiet = false;
+      } else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) {
+        isValidDiet = false;
+      }
+
+      return {
+        transport: this.formData.transport !== null && this.formData.transport !== undefined,
+        tshirt_size: req(this.formData.tshirt_size),
+        address: req(this.formData.address),
+        address2: true,
+        city: req(this.formData.city),
+        state: req(this.formData.state),
+        zip: req(this.formData.zip),
+        country: req(this.formData.country),
+        diet: isValidDiet,
+        diet_other_text: req(this.formData.diet_other_text),
+      };
+    },
+
+    optionalFieldsRequired() {
+      const res = [];
+
+      if (!this.atNoTransportUnis()) {
+        res.push("transport");
+      }
+
+      if (this.formData.diet_other) {
+        res.push("diet_other_text");
+      }
+
+      if (
+        ["address", "address2", "city", "state", "zip", "country"].some(
+          (fieldName) => this.formData[fieldName] !== ""
+        )
+      ) {
+        res.push(...["address", "city", "state", "zip", "country"]);
+        if (this.formData["address2"] && this.formData["address2"].length > 0) {
+          res.push("address2");
+        }
+      }
+
+      return res;
+    },
+  },
+
   methods: {
-    getFieldClass(field) {
+    showState(field) {
+      if (thirdPageOptionalFields.includes(field) && !this.optionalFieldsRequired.includes(field)) {
+        return null;
+      }
       if (!this.touched[field]) return null;
-      if (this.validations[field] === true) return 'is-valid';
-      if (this.validations[field] === false) return 'is-invalid';
-      return null;
+      return this.validations[field] === true ? true : false;
     },
-    getFieldState(field) {
-      if (!this.touched[field]) return null;
-      return this.validations[field];
+
+    showInvalid(field) {
+      // Note that "submitting" the form touches the fields so thats why I have this first part
+      return this.touched[field] === true && this.validations[field] === false;
     },
+
     atNoTransportUnis() {
       return no_transport_unis.includes(this.formData.school);
     },
-    uncheckDietaryRestrictions() {
-      // when "None" is checked, clear others & other-text
-      if (this.formData.diet_none) {
+
+    toggleDietNoneOption() {
+      if (!this.formData.diet_none) {
+        this.formData.diet_none = true;
+        // when "None" is checked, clear others & other-text
         this.formData.diet_select = [];
         this.formData.diet_other = false;
         this.formData.diet_other_text = "";
-      }
-    },
-    updateDietValidation() {
-      // Update diet validation based on current selections
-      const dietString = this.createDietaryRestrictionString();
-      if (dietString.length === 0) {
-        this.validations.diet = false;
-      } else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) {
-        this.validations.diet = false;
       } else {
-        this.validations.diet = true;
+        this.formData.diet_none = false;
       }
     },
-    createDietaryRestrictionString() {
-      let diet_string = this.formData.diet_select.join(",");
 
-      if (this.formData.diet_none) {
-        return "none";
-      }
-      if (this.formData.diet_other && this.formData.diet_other_text !== "") {
-        if (diet_string !== "") {
-          diet_string += ",";
-        }
-        diet_string =
-          diet_string + "other(" + this.formData.diet_other_text + ")";
-      }
-
-      return diet_string;
-    },
     validateForm() {
-      let isValid = true;
-
-      // Transport (only if not at no-transport unis)
-      if (!this.atNoTransportUnis() && this.formData.transport === null) {
-        this.validations.transport = false;
-        this.touched.transport = true;
-        isValid = false;
-      } else {
-        this.validations.transport = null;
-      }
-
-      // T-shirt Size
-      if (!this.formData.tshirt_size || this.formData.tshirt_size.length === 0) {
-        this.validations.tshirt_size = false;
-        this.touched.tshirt_size = true;
-        isValid = false;
-      } else {
-        this.validations.tshirt_size = null;
-      }
-
-      // Dietary Restrictions
-      if (this.createDietaryRestrictionString().length === 0) {
-        this.validations.diet = false;
-        this.touched.diet = true;
-        isValid = false;
-      } else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) {
-        this.validations.diet = false;
-        this.touched.diet = true;
-        isValid = false;
-      } else {
-        this.validations.diet = null;
-      }
-
-      return isValid;
+      return (
+        thirdPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
+        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName])
+      );
     },
-    handleNext() {
+
+    handleNext(event) {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
+      event.preventDefault();
+
+      thirdPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+      thirdPageOptionalFields.forEach((key) => {
+        if (this.optionalFieldsRequired.includes(key)) {
+          this.touched[key] = true;
+        } else {
+          this.touched[key] = false;
+        }
+      });
+
       if (this.validateForm()) {
         this.$emit("next");
       } else {
@@ -492,84 +488,35 @@ label.form-label {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 30px 0;
-  position: relative;
+  margin: 18px 0 14px;
 }
 
 .stepper-item {
-  text-align: center;
   flex: 1;
-  font-size: 0.85rem;
-  color: #808080;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #c4c4c4;
 }
 
 .stepper-circle {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 8px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: #e8e8e8;
+  margin: 0 auto 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #666;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
+  background: #f3f3f3;
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .stepper-item.active .stepper-circle {
   background: #ff6b35;
-  color: white;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-}
-
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: white;
-}
-
-.stepper-label {
-  font-weight: 500;
-  line-height: 1.3;
-  padding: 0 5px;
-  color: #606060;
-}
-
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
-  font-weight: 700;
-}
-
-.stepper-item.completed .stepper-label {
-  color: #606060;
-}
-
-/* Connecting lines */
-.stepper-line {
-  position: absolute;
-  top: 25px;
-  left: calc(50% + 25px); 
-  width: calc(100% - 25px);
-  height: 3px;
-  border-radius: 999px;
-}
-
-
-.stepper-line.completed {
-  background: #ff6b35;
-}
-
-.checkmark {
-  font-size: 1.5rem;
-  font-weight: 700;
+  color: #ffffff;
+  border-color: #ff6b35;
 }
 
 .stepper-label {
@@ -599,14 +546,6 @@ label.form-label {
   margin-right: 6px;
 }
 
-.radio-inline input[type="radio"].is-valid {
-  accent-color: #28a745;
-}
-
-.radio-inline input[type="radio"].is-invalid {
-  accent-color: #dc3545;
-}
-
 .checkbox-group {
   display: flex;
   flex-direction: column;
@@ -625,14 +564,6 @@ label.form-label {
   margin-right: 6px;
 }
 
-.checkbox-inline input[type="checkbox"].is-valid {
-  accent-color: #28a745;
-}
-
-.checkbox-inline input[type="checkbox"].is-invalid {
-  accent-color: #dc3545;
-}
-
 /* Buttons */
 .actions {
   display: flex;
@@ -644,7 +575,7 @@ label.form-label {
   padding: 10px 30px;
   font-weight: 700;
   border-radius: 6px;
-} 
+}
 
 .prev-btn {
   background-color: #f5f5f5;
@@ -662,88 +593,5 @@ label.form-label {
 .next-btn:hover,
 .next-btn:focus {
   background-color: #ff7b47;
-}
-
-/* Responsive styles for mobile */
-@media (max-width: 768px) {
-  /* Page container */
-  .register-page {
-    margin: 20px auto 40px;
-    padding: 0 10px;
-  }
-
-  /* Page titles */
-  .page-title {
-    font-size: 1.8rem;
-  }
-
-  .page-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .stepper {
-    display: flex !important;
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 20px; 
-  }
-
-  .stepper-item {
-    flex: 0 0 25%; /* Row 1: 4 items */
-    max-width: 25%;
-    position: relative; /* Essential for line positioning */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stepper-circle {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-    z-index: 2; /* Ensure circle stays above the line */
-  }
-
-  .stepper-label {
-    font-size: 0.8rem;
-  }
-
-  .stepper-line {
-    display: block !important; 
-    position: absolute;
-    top: 17.5px; 
-    left: calc(50% + 17.5px); 
-    width: calc(100% - 35px);
-    height: 2px;
-    background: #e8e8e8; 
-    z-index: 1;
-  }
-
-  .stepper-item:nth-child(4) .stepper-line,
-  .stepper-item:nth-child(7) .stepper-line {
-    display: none !important;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: center; /* center the row */
-    gap: 10px;               /* spacing between buttons */
-  }
-
-  .submit-btn {
-    flex: 0 0 auto;          /* don't stretch, keep natural size */
-    padding: 8px 20px;
-    font-size: 0.9rem;
-  }
-
-  /* Form fields */
-  .b-form-group {
-    margin-bottom: 15px;
-  }
-
-  .b-form-radio-group,
-  .b-form-checkbox-group {
-    font-size: 0.9rem;
-  }
 }
 </style>

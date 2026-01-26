@@ -5,7 +5,6 @@
       <Page1
         v-if="currentPage === 1"
         :form-data="formData"
-        :current-page="currentPage"
         @next="goToPage(2)"
         @email-filled="handleEmailFilled"
       />
@@ -14,7 +13,6 @@
       <Page2
         v-if="currentPage === 2"
         :form-data="formData"
-        :current-page="currentPage"
         @next="goToPage(3)"
         @previous="goToPage(1)"
       />
@@ -23,34 +21,28 @@
       <Page3
         v-if="currentPage === 3"
         :form-data="formData"
-        :current-page="currentPage"
         @next="goToPage(4)"
         @previous="goToPage(2)"
       />
 
-      <!-- Page 4: Campfire Games -->
-      <Page4
+      <!-- Page 4 and beyond would go here as needed -->
+      <CampfireGames
         v-if="currentPage === 4"
         :form-data="formData"
-        :current-page="currentPage"
         @next="goToPage(5)"
         @previous="goToPage(3)"
       />
-      
-      <!-- Page 5: Team Matching -->
-      <Page5
+
+      <TeamMatching
         v-if="currentPage === 5"
         :form-data="formData"
-        :current-page="currentPage"
         @next="goToPage(6)"
         @previous="goToPage(4)"
       />
 
-      <!-- Page 7: Submit -->
-      <Page7
+      <Submit
         v-if="currentPage === 6"
         :form-data="formData"
-        :current-page="currentPage"
         @next="goToPage(7)"
         @previous="goToPage(5)"
       />
@@ -63,9 +55,9 @@
 import Page1 from "./Page1.vue";
 import Page2 from "./Page2.vue";
 import Page3 from "./Page3.vue";
-import Page4 from "./Page4.vue";
-import Page5 from "./Page5.vue";
-import Page7 from "./Page7.vue";
+import CampfireGames from "./CampfireGames.vue";
+import TeamMatching from "./TeamMatching.vue";
+import Submit from "./Submit.vue";
 import { v4 as uuid } from "uuid";
 
 export default {
@@ -74,9 +66,9 @@ export default {
     Page1,
     Page2,
     Page3,
-    Page4,
-    Page5,
-    Page7
+    CampfireGames,
+    TeamMatching,
+    Submit,
   },
   props: {
     default_track: {
@@ -110,7 +102,8 @@ export default {
         school_other_selected: false,
         school_year: "",
         major: "",
-        heard_from_select: [],
+        heard_from: "",
+        heard_from_select: "",
         heard_from_other: false,
         heard_from_other_text: "",
 
@@ -118,10 +111,21 @@ export default {
         track_selected: this.default_track || "general",
         quantum_track: null,
         beginner_content_opt_in: null,
+        hack_count: "",
+        question1: "",
+        question2: "",
+        recruit: "",
+        portfolio: "",
 
         // Page 3 data
         transport: null,
         tshirt_size: "",
+        address: "",
+        address2: "",
+        city: "",
+        state: "",
+        zip: "",
+        country: "",
         diet_select: [],
         diet_other: false,
         diet_other_text: "",
@@ -132,24 +136,13 @@ export default {
         MLH_conduct: false,
         MLH_privacy: false,
         name: "",
-        recruit: "",
-        portfolio: "",
         resume: "",
         resume_link: "",
         resume_id: "",
         minors_form: false,
         transport_select: "",
         transport_deposit: null,
-        address: "",
         address1: "",
-        address2: "",
-        city: "",
-        state: "",
-        country: "",
-        zip: "",
-        hack_count: "",
-        question1: "",
-        question2: "",
         gmaps_place_id: "",
         referred_by: "",
         waitlist_track_selected: "",

@@ -11,22 +11,14 @@
     <!-- Step Indicator -->
     <div class="stepper">
       <div
-        v-for="(step, index) in steps"
+        v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage,
-          completed: step.number < currentPage
-        }"
+        :class="{ active: step.number === 1 }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
-          <span v-else>{{ step.number }}</span>
+          {{ step.number }}
         </div>
-        
-        <!-- Connecting line after circle -->
-        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
-        
         <div class="stepper-label">
           {{ step.label }}
         </div>
@@ -43,93 +35,117 @@
 
       <!-- First & Last Name -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="First Name *" label-for="input-first-name">
+        <b-form-group class="col-md-6">
+          <template #label> First Name <span class="text-danger">*</span></template>
           <b-form-input
             id="input-first-name"
             v-model="formData.first_name"
             @input="touched.first_name = true"
             :state="showState('first_name')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('first_name')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Last Name *" label-for="input-last-name">
+        <b-form-group class="col-md-6">
+          <template #label> Last Name <span class="text-danger">*</span></template>
           <b-form-input
             id="input-last-name"
             v-model="formData.last_name"
             @input="touched.last_name = true"
             :state="showState('last_name')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('last_name')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Email & Phone -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Email *">
+        <b-form-group class="col-md-6">
+          <template #label> Email <span class="text-danger">*</span></template>
           <b-form-input
-            type="email"
             v-model="formData.email"
+            type="email"
             @input="touched.email = true"
             :state="showState('email')"
           />
-          <b-form-invalid-feedback>Please enter a valid email</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('email')">
+            Please enter a valid email
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Phone Number *">
+        <b-form-group class="col-md-6">
+          <template #label> Phone Number <span class="text-danger">*</span></template>
           <b-form-input
-            type="tel"
             v-model="formData.phone"
+            type="tel"
             @input="touched.phone = true"
             :state="showState('phone')"
           />
-          <b-form-invalid-feedback>Please enter a valid phone number</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('phone')">
+            Please enter a valid phone number
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Age / Country -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Age *">
+        <b-form-group class="col-md-6">
+          <template #label> Age <span class="text-danger">*</span></template>
           <b-form-input
-            type="number"
             v-model="formData.age"
+            type="number"
             @input="touched.age = true"
             :state="showState('age')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('age')">
+            Please enter your real age
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Country of Residence *">
+        <b-form-group class="col-md-6">
+          <template #label> Country of Residence <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.country_of_residence"
             :options="countryOptions"
             @change="touched.country_of_residence = true"
             :state="showState('country_of_residence')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('country_of_residence')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Gender / Ethnicity -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Gender Identity *">
+        <b-form-group class="col-md-6">
+          <template #label> Gender Identity <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.gender"
             :options="genderOptions"
             @change="touched.gender = true"
             :state="showState('gender')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('gender')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Race / Ethnicity *">
+        <b-form-group class="col-md-6">
+          <template #label> Race / Ethnicity <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
             @change="touched.ethnicity = true"
             :state="showState('ethnicity')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('ethnicity')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -139,14 +155,23 @@
 
       <!-- School Name -->
       <b-form-row>
-        <b-form-group class="col-12" label="School Name *">
+        <b-form-group class="col-12">
+          <template #label> School Name <span class="text-danger">*</span></template>
           <vue-bootstrap-autocomplete
             v-model="formData.school"
+            no-results-info="No results found."
+            :input-class="school_class"
             :data="universityOptions"
+            :disabled="formData.school_other_selected"
             @input="touched.school = true"
             :state="showState('school')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback v-if="formData.school.length === 0" :state="showState('school')">
+            Please enter your school name
+          </b-form-invalid-feedback>
+          <b-form-invalid-feedback v-else :state="showState('school')">
+            Please select a school from the list
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -166,27 +191,38 @@
             :state="showState('school_other')"
             placeholder="Other school"
           />
+          <b-form-invalid-feedback :state="showState('school_other')">
+            Please enter a valid school
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Level of Study / Major -->
       <b-form-row>
-        <b-form-group class="col-md-6" label="Current Level of Study *">
+        <b-form-group class="col-md-6">
+          <template #label> Current Level of Study <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.school_year"
             :options="schoolYearOptions"
             @change="touched.school_year = true"
             :state="showState('school_year')"
           />
+          <b-form-invalid-feedback :state="showState('school_year')">
+            Required Field
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group class="col-md-6" label="Primary Major *">
+        <b-form-group class="col-md-6">
+          <template #label> Primary Major <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.major"
             :options="majorOptions"
             @change="touched.major = true"
             :state="showState('major')"
           />
+          <b-form-invalid-feedback :state="showState('major')">
+            Required Field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -196,24 +232,23 @@
 
       <!-- Single-select dropdown -->
       <b-form-row>
-        <b-form-group class="col-12" label="Select one *">
+        <b-form-group class="col-12">
+          <template #label> Select one <span class="text-danger">*</span></template>
           <b-form-select
-            v-model="formData.heard_from_select"
+            v-model="formData.heard_from"
             :options="heardFromOptions"
             @change="touched.heard_from = true"
             :state="showState('heard_from')"
           />
-          <b-form-invalid-feedback>Required field</b-form-invalid-feedback>
+          <b-form-invalid-feedback :state="showState('heard_from')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
       <!-- Navigation Buttons -->
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="$emit('previous')"
-        >
+        <b-button type="button" class="submit-btn prev-btn" @click="$emit('previous')">
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
 
@@ -248,14 +283,30 @@ const major_map = majors_list.rows
   }))
   .sort((a, b) => a.text.localeCompare(b.text));
 
+const firstPageValidatedFields = [
+  "first_name",
+  "last_name",
+  "email",
+  "phone",
+  "age",
+  "gender",
+  "country_of_residence",
+  "ethnicity",
+  "school",
+  "school_other",
+  "school_year",
+  "major",
+  "heard_from",
+];
+
 export default {
   name: "Page1",
+
   props: {
-    formData: Object,
-    currentPage: {
-      type: Number,
-      default: 1
-    }
+    formData: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
@@ -267,26 +318,10 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Rules & Policies" },
+        { number: 7, label: "Finalize & Submit" },
       ],
 
-      touched: {
-        first_name: false,
-        last_name: false,
-        email: false,
-        phone: false,
-        age: false,
-        gender: false,
-        country_of_residence: false,
-        ethnicity: false,
-        school: false,
-        school_other: false,
-        school_year: false,
-        major: false,
-        heard_from: false,
-      },
-
-      validations: {},
+      touched: Object.fromEntries(firstPageValidatedFields.map((key) => [key, false])),
 
       heardFromOptions: [
         { value: "", text: "Select one...", disabled: true },
@@ -325,10 +360,20 @@ export default {
 
       schoolYearOptions: [
         { value: "", text: "Select one...", disabled: true },
+        { value: "less than high school", text: "Less than Secondary / High School" },
         { value: "high school", text: "Secondary / High School" },
-        { value: "undergrad", text: "Undergraduate" },
-        { value: "grad", text: "Graduate" },
+        {
+          value: "undergrad 2 year",
+          text: "Undergraduate University (2 year - community college or similar)",
+        },
+        { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
+        { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+        { value: "bootcamp", text: "Code School / Bootcamp" },
+        { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+        { value: "postdoc", text: "Post Doctorate" },
         { value: "other", text: "Other" },
+        { value: "not a student", text: "I’m not currently a student" },
+        { value: "prefer not to answer", text: "Prefer not to answer" },
       ],
 
       majorOptions: [
@@ -339,91 +384,77 @@ export default {
 
       universityOptions: [...university_list],
 
-      countryOptions: [
-        { value: "", text: "Select one...", disabled: true },
-        ...country_list,
-      ],
+      countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
     };
+  },
+
+  computed: {
+    validations() {
+      const req = (v) => v && v.toString().trim().length > 0;
+      const phone = parsePhoneNumber(this.formData.phone || "", "US");
+
+      return {
+        first_name: req(this.formData.first_name),
+        last_name: req(this.formData.last_name),
+        age: req(this.formData.age) && this.formData.age > 0 && this.formData.age <= 120,
+        gender: req(this.formData.gender),
+        country_of_residence: req(this.formData.country_of_residence),
+        ethnicity: req(this.formData.ethnicity),
+        school_year: req(this.formData.school_year),
+        major: req(this.formData.major),
+        heard_from: req(this.formData.heard_from),
+        email: EmailValidator.validate(this.formData.email),
+        phone: phone && phone.isValid(),
+        school: !this.formData.school_other_selected
+          ? req(this.formData.school) && univ_list.default.includes(this.formData.school)
+          : true,
+        school_other: this.formData.school_other_selected ? req(this.formData.school_other) : true,
+      };
+    },
+
+    school_class() {
+      const state = this.showState("school");
+      if (state === true) return "typeahead is-valid";
+      if (state === false) return "typeahead is-invalid";
+      return "typeahead";
+    },
   },
 
   methods: {
     showState(field) {
       if (!this.touched[field]) return null;
-      const current = this.computeFieldValidity(field);
-      if (current) return true;
-      if (this.validations[field] !== undefined) return !!this.validations[field];
-      return false;
-    },
-
-    req(v) {
-      return v && v.toString().trim().length > 0;
-    },
-
-    computeFieldValidity(field) {
-      if (field === "email") {
-        return EmailValidator.validate(this.formData.email);
-      }
-
-      if (field === "phone") {
-        const phone = parsePhoneNumber(this.formData.phone || "", "US");
-        return phone && phone.isValid();
-      }
-
-      if (field === "school") {
-        if (this.formData.school_other_selected) {
-          return this.req(this.formData.school_other);
-        }
-        return this.req(this.formData.school);
-      }
-
-      if (field === "heard_from") {
-        return this.req(this.formData.heard_from_select);
-      }
-
-      return this.req(this.formData[field]);
+      return this.validations[field] === true ? true : false;
     },
 
     resetSchool() {
       if (this.formData.school_other_selected) {
         this.formData.school = "";
+        this.touched.school = false;
       } else {
         this.formData.school_other = "";
+        this.touched.school_other = false;
       }
     },
 
     validate() {
-      const req = (v) => v && v.toString().trim().length > 0;
-
-      this.validations.first_name = req(this.formData.first_name);
-      this.validations.last_name = req(this.formData.last_name);
-      this.validations.age = req(this.formData.age);
-      this.validations.gender = req(this.formData.gender);
-      this.validations.country_of_residence = req(
-        this.formData.country_of_residence
-      );
-      this.validations.ethnicity = req(this.formData.ethnicity);
-      this.validations.school_year = req(this.formData.school_year);
-      this.validations.major = req(this.formData.major);
-      this.validations.heard_from = req(this.formData.heard_from_select);
-
-      this.validations.email = EmailValidator.validate(this.formData.email);
-
-      const phone = parsePhoneNumber(this.formData.phone || "", "US");
-      this.validations.phone = phone && phone.isValid();
-
-      if (this.formData.school_other_selected) {
-        this.validations.school_other = req(this.formData.school_other);
-      } else {
-        this.validations.school = req(this.formData.school);
-      }
-
-      return Object.values(this.validations).every((v) => v);
+      return firstPageValidatedFields.every((fieldName) => this.validations[fieldName]);
     },
 
     handleNext(e) {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
       e.preventDefault();
 
-      Object.keys(this.touched).forEach((key) => (this.touched[key] = true));
+      firstPageValidatedFields.forEach((key) => {
+        if (
+          (key === "school" && this.formData.school_other_selected) ||
+          (key === "school_other" && !this.formData.school_other_selected)
+        ) {
+          this.touched[key] = false;
+          return;
+        }
+        this.touched[key] = true;
+      });
 
       if (!this.validate()) {
         this.$bvToast.toast("Please fill out all required fields", {
@@ -480,83 +511,34 @@ body {
 .stepper {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin: 30px 0;
-  position: relative;
+  margin: 20px 0;
 }
 
 .stepper-item {
   text-align: center;
   flex: 1;
-  font-size: 0.85rem;
-  color: #808080;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-size: 0.75rem;
+  color: #c4c4c4;
 }
 
 .stepper-circle {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 8px;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto 6px;
   border-radius: 50%;
-  background: #e8e8e8;
+  background: #eee;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #666;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
 }
-
-.stepper-line {
-  position: absolute;
-  top: 25px;
-  left: calc(50% + 25px); 
-  width: calc(100% - 25px);
-  height: 3px;
-  border-radius: 999px;
-}
-
-.stepper-line.completed {
-  background: #ff6b35;
+.required-label {
+  content: " *";
+  color: red;
 }
 
 .stepper-item.active .stepper-circle {
   background: #ff6b35;
   color: white;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-}
-
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: white;
-}
-
-.stepper-label {
-  font-weight: 500;
-  line-height: 1.3;
-  padding: 0 5px;
-  color: #606060;
-}
-
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
-  font-weight: 700;
-}
-
-.stepper-item.completed .stepper-label {
-  color: #606060;
-}
-
-.checkmark {
-  font-size: 1.5rem;
-  font-weight: 700;
 }
 
 /* Buttons */
@@ -591,76 +573,5 @@ a.btn.submit-btn.next-btn {
 button.btn.submit-btn.next-btn:hover,
 a.btn.submit-btn.next-btn:hover {
   background-color: #ff7b47 !important;
-}
-
-/* Responsive styles for mobile */
-@media (max-width: 768px) {
-  .register-page {
-    margin: 20px auto 40px;
-    padding: 0 10px;
-  }
-
-  .page-title {
-    font-size: 1.8rem;
-  }
-
-  .page-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .stepper {
-    display: flex !important;
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 20px; 
-  }
-
-  .stepper-item {
-    flex: 0 0 25%; /* Row 1: 4 items */
-    max-width: 25%;
-    position: relative; /* Essential for line positioning */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stepper-circle {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-    z-index: 2; /* Ensure circle stays above the line */
-  }
-
-  .stepper-label {
-    font-size: 0.8rem;
-  }
-
-  .stepper-line {
-    display: block !important; 
-    position: absolute;
-    top: 17.5px; 
-    left: calc(50% + 17.5px); 
-    width: calc(100% - 35px);
-    height: 2px;
-    background: #e8e8e8; 
-    z-index: 1;
-  }
-
-  .stepper-item:nth-child(4) .stepper-line,
-  .stepper-item:nth-child(7) .stepper-line {
-    display: none !important;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: center; /* center the row */
-    gap: 10px;               /* spacing between buttons */
-  }
-
-  .submit-btn {
-    flex: 0 0 auto;          /* don't stretch, keep natural size */
-    padding: 8px 20px;
-    font-size: 0.9rem;
-  }
 }
 </style>

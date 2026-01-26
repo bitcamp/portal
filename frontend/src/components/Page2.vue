@@ -1,7 +1,6 @@
 <template>
   <div class="register-page">
     <h1 class="page-title">Register for Bitcamp 2026</h1>
-    
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
@@ -12,25 +11,14 @@
     <!-- Step Indicator -->
     <div class="stepper">
       <div
-        v-for="(step, index) in steps"
+        v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage,
-          completed: step.number < currentPage
-        }"
+        :class="{ active: step.number === 2 }"
       >
-        <!-- Connecting line before circle -->
-        <!-- <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
-         -->
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
-          <span v-else>{{ step.number }}</span>
+          {{ step.number }}
         </div>
-        
-        <!-- Connecting line after circle -->
-        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
-        
         <div class="stepper-label">
           {{ step.label }}
         </div>
@@ -41,9 +29,11 @@
 
     <b-form @submit.prevent="handleNext">
       <!-- CHOOSE TRACK -->
-      <h4 class="section-title">Choose a track!</h4>
+      <h4 class="section-title">Choose a track! <span class="text-danger">*</span></h4>
+
       <p class="info">
-        Select the track that interests you most. Each track offers unique workshops and mentorship opportunities.
+        Select the track that interests you most. Each track offers unique workshops and mentorship
+        opportunities.
       </p>
 
       <!-- HORIZONTAL SCROLLABLE TRACKS -->
@@ -54,7 +44,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="general"
-            @click="onSelectTrack('general')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card general-card"
@@ -63,8 +53,8 @@
             <h5 class="track-title">General</h5>
             <p>
               For any and all hackers! Build the perfect hack using hardware, software, and
-              collaboration with other tech-lovers, design thinkers, and students – all skill
-              and experience levels are welcome!
+              collaboration with other tech-lovers, design thinkers, and students – all skill and
+              experience levels are welcome!
             </p>
           </b-card>
         </label>
@@ -75,7 +65,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="quantum"
-            @click="onSelectTrack('quantum')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -84,8 +74,8 @@
             <h5 class="track-title">Quantum</h5>
             <p>
               Hackers will delve into the field of quantum computing with exclusive mentors,
-              sponsors, and workshops. Use your knowledge of Python and other computing skills
-              on interactive Quantum Track activities!
+              sponsors, and workshops. Use your knowledge of Python and other computing skills on
+              interactive Quantum Track activities!
             </p>
           </b-card>
         </label>
@@ -96,7 +86,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="machine_learning"
-            @click="onSelectTrack('machine_learning')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -117,7 +107,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="app_dev"
-            @click="onSelectTrack('app_dev')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -137,7 +127,7 @@
             v-model="formData.track_selected"
             type="radio"
             value="cybersecurity"
-            @click="onSelectTrack('cybersecurity')"
+            @click="touched.track_selected = true"
           />
           <b-card
             class="track-card"
@@ -145,8 +135,8 @@
           >
             <h5 class="track-title">Cybersecurity</h5>
             <p>
-              Explore the realm of cybersecurity and understand various aspects of the field
-              through interactive workshops and real-world applications.
+              Explore the realm of cybersecurity and understand various aspects of the field through
+              interactive workshops and real-world applications.
             </p>
           </b-card>
         </label>
@@ -160,34 +150,24 @@
         <div class="radio-inline-group">
           <label class="radio-inline">
             <input
+              v-model="formData.quantum_track"
               type="radio"
               value="beginner"
-              v-model="formData.quantum_track"
-              @change="touched.quantum_track = true"
-              :state="showState('quantum_track')"
-              :class="{
-                'is-valid': showState('quantum_track') === true,
-                'is-invalid': touched.quantum_track && showState('quantum_track') === false
-              }"
+              @click="touched.quantum_track = true"
             />
             Beginner
           </label>
           <label class="radio-inline">
             <input
+              v-model="formData.quantum_track"
               type="radio"
               value="advanced"
-              v-model="formData.quantum_track"
-              @change="touched.quantum_track = true"
-              :state="showState('quantum_track')"
-              :class="{
-                'is-valid': showState('quantum_track') === true,
-                'is-invalid': touched.quantum_track && showState('quantum_track') === false
-              }"
+              @click="touched.quantum_track = true"
             />
             Advanced
           </label>
         </div>
-        <div v-if="touched.quantum_track && !showState('quantum_track')" class="invalid-feedback d-block">
+        <div v-if="showInvalid('quantum_track')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
@@ -195,41 +175,31 @@
       <!-- Beginner Content Opt-in -->
       <div class="mt-4 form-group">
         <label class="form-label">
-          Although we are not offering a beginner (general) track this year, Bitcamp remains committed to being
-          a hackathon for hackers of all skill levels. Would you like us to share beginner-friendly content
-          with you?*
+          Although we are not offering a beginner (general) track this year, Bitcamp remains
+          committed to being a hackathon for hackers of all skill levels. Would you like us to share
+          beginner-friendly content with you? <span class="text-danger">*</span>
         </label>
         <div class="radio-inline-group">
           <label class="radio-inline">
             <input
+              v-model="formData.beginner_content_opt_in"
               type="radio"
               :value="true"
-              v-model="formData.beginner_content_opt_in"
-              @change="touched.beginner_content_opt_in = true"
-              :state="showState('beginner_content_opt_in')"
-              :class="{
-                'is-valid': showState('beginner_content_opt_in') === true,
-                'is-invalid': touched.beginner_content_opt_in && showState('beginner_content_opt_in') === false
-              }"
+              @click="touched.beginner_content_opt_in = true"
             />
             Yes
           </label>
           <label class="radio-inline">
             <input
+              v-model="formData.beginner_content_opt_in"
               type="radio"
               :value="false"
-              v-model="formData.beginner_content_opt_in"
-              @change="touched.beginner_content_opt_in = true"
-              :state="showState('beginner_content_opt_in')"
-              :class="{
-                'is-valid': showState('beginner_content_opt_in') === true,
-                'is-invalid': touched.beginner_content_opt_in && showState('beginner_content_opt_in') === false
-              }"
+              @click="touched.beginner_content_opt_in = true"
             />
             No
           </label>
         </div>
-        <div v-if="touched.beginner_content_opt_in && !showState('beginner_content_opt_in')" class="invalid-feedback d-block">
+        <div v-if="showInvalid('beginner_content_opt_in')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
@@ -238,160 +208,126 @@
       <hr class="mt-4" />
       <h4 class="section-title">Why Bitcamp?</h4>
       <p class="info">
-        We'd like to get to know you a little better! Help us learn more about you and make Bitcamp even more amazing by answering some questions!
+        We'd like to get to know you a little better! Help us learn more about you and make Bitcamp
+        even more amazing by answering some questions!
       </p>
 
-      <b-form-group
-        label="How many hackathons have you participated in before?*"
-        label-for="num-hackathons"
-      >
+      <b-form-group>
+        <template #label>
+          How many hackathons have you participated in before?
+          <span class="text-danger">*</span></template
+        >
         <b-form-input
           id="num-hackathons"
-          v-model="formData.num_hackathons"
+          v-model="formData.hack_count"
+          type="number"
+          :state="showState('hack_count')"
           placeholder="Number of hackathons here..."
-          @input="touched.num_hackathons = true"
-          :state="showState('num_hackathons')"
+          @input="touched.hack_count = true"
         />
-        <div v-if="touched.num_hackathons && !showState('num_hackathons')" class="invalid-feedback d-block">Required field</div>
       </b-form-group>
 
-      <b-form-group
-        label="Why are you interested in attending Bitcamp?*"
-        label-for="why-bitcamp"
-      >
-        <textarea
+      <b-form-group>
+        <template #label>
+          Why are you interested in attending Bitcamp?
+          <span class="text-danger">*</span></template
+        >
+        <b-form-textarea
           id="why-bitcamp"
+          v-model="formData.question1"
           class="form-control"
-          v-model="formData.why_bitcamp"
+          :state="showState('question1')"
           rows="4"
           :maxlength="1000"
           placeholder="Your response here..."
-          @input="touched.why_bitcamp = true"
-          :state="showState('why_bitcamp')"
-          :class="{
-            'is-valid': showState('why_bitcamp') === true,
-            'is-invalid': touched.why_bitcamp && showState('why_bitcamp') === false
-          }"
-        ></textarea>
+          @input="touched.question1 = true"
+        />
         <small class="char-counter">
           {{ whyBitcampChars }} / 1000 characters (minimum 50 required)
         </small>
-        
-        <div v-if="touched.why_bitcamp && !showState('why_bitcamp')" class="invalid-feedback d-block">Minimum 50 characters required</div>
       </b-form-group>
 
-      <b-form-group
-        label="What do you plan on building at Bitcamp?*"
-        label-for="what-build"
-      >
-        <textarea
+      <b-form-group>
+        <template #label>
+          What do you plan on building at Bitcamp?
+          <span class="text-danger">*</span></template
+        >
+        <b-form-textarea
           id="what-build"
+          v-model="formData.question2"
           class="form-control"
-          v-model="formData.what_build"
+          :state="showState('question2')"
           rows="4"
           :maxlength="1000"
           placeholder="Your response here..."
-          @input="touched.what_build = true"
-          :state="showState('what_build')"
-          :class="{
-            'is-valid': showState('what_build') === true,
-            'is-invalid': touched.what_build && showState('what_build') === false
-          }"
-        ></textarea>
+          @input="touched.question2 = true"
+        />
         <small class="char-counter">
           {{ whatBuildChars }} / 1000 characters (minimum 50 required)
         </small>
-
-        <div v-if="touched.what_build && !showState('what_build')" class="invalid-feedback d-block">Minimum 50 characters required</div>
       </b-form-group>
 
       <!-- WANT TO GET HIRED -->
       <hr class="mt-4" />
       <h4 class="section-title">Want to get hired?</h4>
-      <p class="info">
-        Let us know, and we’ll pass your info on to our sponsors!
-      </p>
+      <p class="info">Let us know, and we’ll pass your info on to our sponsors!</p>
 
       <b-form-row>
-        <b-form-group
-          label="Do you want to be recruited for jobs?*"
-          class="col-md-6"
-          label-for="recruit-select"
-        >
+        <b-form-group class="col-md-6">
+          <template #label>
+            Do you want to be recruited for jobs?
+            <span class="text-danger">*</span></template
+          >
           <b-form-select
             id="recruit-select"
-            v-model="formData.recruit_for_jobs"
+            v-model="formData.recruit"
             :options="recruitOptions"
+            :state="showState('recruit')"
             class="form-select"
-            @change="touched.recruit_for_jobs = true"
-            :state="showState('recruit_for_jobs')"
-            :class="{
-              'is-valid': showState('recruit_for_jobs') === true,
-              'is-invalid': touched.recruit_for_jobs && showState('recruit_for_jobs') === false
-            }"
+            @change="touched.recruit = true"
           />
-          <div v-if="touched.recruit_for_jobs && !showState('recruit_for_jobs')" class="invalid-feedback d-block">Required field</div>
         </b-form-group>
 
-        <b-form-group
-          label="GitHub or Portfolio Link"
-          class="col-md-6"
-          label-for="github-link"
-        >
+        <b-form-group label="GitHub or Portfolio Link" class="col-md-6">
           <b-form-input
             id="github-link"
-            v-model="formData.github_link"
+            v-model="formData.portfolio"
+            :state="showState('portfolio')"
             placeholder="github.com/username"
+            @input="touched.portfolio = true"
           />
         </b-form-group>
       </b-form-row>
 
       <!-- RESUME (custom UI, only part that's different) -->
-      <b-form-group
-        label="Resume (.pdf .doc .docx)"
-        label-for="resume-upload"
-      >
-        <div
-          class="resume-upload"
-          @click="triggerResumeFile"
-        >
+      <b-form-group label="Resume (.pdf .doc .docx)">
+        <div class="resume-upload" @click="triggerResumeFile">
           <span class="resume-placeholder">
-            {{ resumeLabelComputed }}
+            {{ resumeLabel }}
           </span>
-          <span class="resume-browse">
-            Browse
-          </span>
+          <span class="resume-browse"> Browse </span>
           <input
             id="resume-upload"
             ref="resumeInput"
             type="file"
             class="resume-file-input"
             accept=".pdf,.doc,.docx"
-            @click.stop="clearResumeInput"
             @change="onResumeChange"
           />
         </div>
       </b-form-group>
 
       <!-- Navigation Buttons -->
-     <div class="actions">
-  <b-button
-    type="button"
-    class="submit-btn prev-btn"
-    @click="handlePrevious"
-  >
-    <b-icon icon="arrow-left" class="mr-1" />
-    Previous
-  </b-button>
+      <div class="actions">
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
+          <b-icon icon="arrow-left" class="mr-1" /> Previous
+        </b-button>
 
-  <b-button
-    type="submit"
-    class="submit-btn next-btn"
-  >
-    Next Step
-    <b-icon icon="arrow-right" class="ml-1" />
-  </b-button>
-</div>
+        <b-button type="submit" class="submit-btn next-btn">
+          Next Step
+          <b-icon icon="arrow-right" class="ml-1" />
+        </b-button>
+      </div>
     </b-form>
   </div>
 </template>
@@ -402,6 +338,17 @@ import Vue from "vue";
 
 Vue.use(IconsPlugin);
 
+const secondPageRequiredFields = [
+  "track_selected",
+  "beginner_content_opt_in",
+  "hack_count",
+  "question1",
+  "question2",
+  "recruit",
+];
+
+const secondPageOptionalFields = ["quantum_track", "portfolio"];
+
 export default {
   name: "Page2",
   props: {
@@ -409,13 +356,12 @@ export default {
       type: Object,
       required: true,
     },
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
   },
   data() {
     return {
+      touched: Object.fromEntries(
+        [...secondPageRequiredFields, ...secondPageOptionalFields].map((key) => [key, false])
+      ),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -423,127 +369,71 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Rules & Policies" },
+        { number: 7, label: "Finalize & Submit" },
       ],
-      validations: {
-        track_selected: null,
-        quantum_track: null,
-        beginner_content_opt_in: null,
-        num_hackathons: null,
-        why_bitcamp: null,
-        what_build: null,
-        recruit_for_jobs: null,
-      },
       recruitOptions: [
         { value: "", text: "Select one...", disabled: true },
         { value: "yes", text: "Yes" },
         { value: "no", text: "No" },
+        { value: "maybe", text: "Maybe later" },
       ],
-          touched: {
-            track_selected: false,
-            quantum_track: false,
-            beginner_content_opt_in: false,
-            num_hackathons: false,
-            why_bitcamp: false,
-            what_build: false,
-            recruit_for_jobs: false,
-          },
+      // NEW: label text for the resume upload UI
+      resumeLabel: "Upload Resume (size limit: 5MB)",
     };
   },
   computed: {
+    validations() {
+      const req = (v) => v && v.toString().trim().length > 0;
+
+      return {
+        track_selected: this.formData.track_selected && req(this.formData.track_selected),
+        quantum_track:
+          this.formData.quantum_track !== null && this.formData.quantum_track !== undefined,
+        beginner_content_opt_in:
+          this.formData.beginner_content_opt_in !== null &&
+          this.formData.beginner_content_opt_in !== undefined,
+        hack_count: req(this.formData.hack_count) && Number(this.formData.hack_count) >= 0,
+        question1: req(this.formData.question1) && (this.formData.question1 || "").length >= 50,
+        question2: req(this.formData.question2) && (this.formData.question2 || "").length >= 50,
+        recruit: req(this.formData.recruit),
+        portfolio: req(this.formData.portfolio),
+      };
+    },
     whyBitcampChars() {
-      return String(this.formData.why_bitcamp || "").length;
+      return (this.formData.question1 || "").length;
     },
     whatBuildChars() {
-      return String(this.formData.what_build || "").length;
+      return (this.formData.question2 || "").length;
     },
-    resumeLabelComputed() {
-      return this.formData.resume_name || "Upload Resume (size limit: 5MB)";
+    optionalFieldsRequired() {
+      const res = [];
+
+      if (this.formData.recruit === "yes") {
+        res.push("portfolio");
+      }
+
+      if (this.formData.track_selected === "quantum") {
+        res.push("quantum_track");
+      }
+
+      return res;
     },
-  },
-  mounted() {
-    this.ensureResumeName();
   },
   methods: {
-    req(v) {
-      return v !== null && v !== undefined && v.toString().trim().length > 0;
-    },
-
-    computeFieldValidity(field) {
-      if (field === "num_hackathons") {
-        return this.formData.num_hackathons !== null && this.formData.num_hackathons !== undefined && this.formData.num_hackathons.toString().trim().length > 0;
-      }
-
-      if (field === "why_bitcamp") {
-          return String(this.formData.why_bitcamp || "").trim().length >= 50;
-      }
-
-      if (field === "what_build") {
-          return String(this.formData.what_build || "").trim().length >= 50;
-      }
-
-      if (field === "recruit_for_jobs") {
-        return this.req(this.formData.recruit_for_jobs);
-      }
-
-      if (field === "track_selected") {
-        return this.req(this.formData.track_selected);
-      }
-
-      if (field === "quantum_track") {
-        if (this.formData.track_selected !== "quantum") return null;
-        return this.req(this.formData.quantum_track);
-      }
-
-      if (field === "beginner_content_opt_in") {
-        return this.formData.beginner_content_opt_in === true || this.formData.beginner_content_opt_in === false ? true : false;
-      }
-
-      return null;
-    },
-
     showState(field) {
+      if (
+        secondPageOptionalFields.includes(field) &&
+        !this.optionalFieldsRequired.includes(field)
+      ) {
+        return null;
+      }
       if (!this.touched[field]) return null;
-      const current = this.computeFieldValidity(field);
-      if (current !== null && typeof current !== 'undefined') return !!current;
-      const v = this.validations[field];
-      if (v !== undefined && v !== null) return !!v;
-      return null;
-    },
-    handleFieldChange(field, evt) {
-      // If an event or direct value is provided, determine the value
-      let val;
-      if (evt && Object.prototype.hasOwnProperty.call(evt, 'target')) {
-        val = evt.target.value;
-      } else if (typeof evt !== 'undefined') {
-        val = evt;
-      }
-
-      if (typeof val !== 'undefined') {
-        // coerce boolean-like strings to booleans so computeFieldValidity works
-        if (typeof val === 'string') {
-          if (val === 'true') val = true;
-          else if (val === 'false') val = false;
-        }
-        this.$set(this.formData, field, val);
-      }
-
-      const current = this.computeFieldValidity(field);
-      this.$set(this.touched, field, true);
-      if (current === true) this.$set(this.validations, field, true);
-      else if (current === false) this.$set(this.validations, field, false);
-      else this.$set(this.validations, field, null);
-    },
-    onSelectTrack(track) {
-      this.$set(this.formData, 'track_selected', track);
-      this.$set(this.validations, 'track_selected', null);
-      this.handleFieldChange('track_selected', track);
+      return this.validations[field] === true ? true : false;
     },
 
-    ensureResumeName() {
-      if (this.formData.resume && this.formData.resume.name) {
-        this.$set(this.formData, "resume_name", this.formData.resume.name);
-      }
+    showInvalid(field) {
+      // Note that "submitting" the form touches the fields so thats why I have this first part
+      return this.touched[field] === true && this.validations[field] === false;
     },
 
     // NEW: open the hidden file input
@@ -553,91 +443,34 @@ export default {
       }
     },
 
-    clearResumeInput(e) {
-      e.target.value = null;
-    },
-
+    // NEW: update label + bubble event to parent
     onResumeChange(event) {
       const file = event.target.files && event.target.files[0];
-
-      if (file) {
-        this.$set(this.formData, "resume", file);
-        this.$set(this.formData, "resume_name", file.name);
-      } else {
-        this.$set(this.formData, "resume", null);
-        this.$set(this.formData, "resume_name", "");
-      }
-
+      this.resumeLabel = file ? file.name : "Upload Resume (size limit: 5MB)";
       this.$emit("resume-change", event);
     },
 
     validateForm() {
-      let isValid = true;
-
-      if (!this.formData.track_selected || this.formData.track_selected.length === 0) {
-        this.validations.track_selected = false;
-        isValid = false;
-      } else {
-        this.validations.track_selected = true;
-      }
-
-      if (this.formData.track_selected === "quantum" && !this.formData.quantum_track) {
-        this.validations.quantum_track = false;
-        isValid = false;
-      } else if (this.formData.track_selected === "quantum") {
-        this.validations.quantum_track = true;
-      } else {
-        this.validations.quantum_track = null;
-      }
-
-      if (
-        this.formData.beginner_content_opt_in === null ||
-        this.formData.beginner_content_opt_in === undefined
-      ) {
-        this.validations.beginner_content_opt_in = false;
-        isValid = false;
-      } else {
-        this.validations.beginner_content_opt_in = true;
-      }
-
-      // num_hackathons (required)
-      if (!this.formData.num_hackathons && this.formData.num_hackathons !== 0) {
-        this.validations.num_hackathons = false;
-        isValid = false;
-      } else {
-        this.validations.num_hackathons = true;
-      }
-
-      // why_bitcamp (minimum 50 chars)
-      if (String(this.formData.why_bitcamp || "").trim().length < 50) {
-        this.validations.why_bitcamp = false;
-        isValid = false;
-      } else {
-        this.validations.why_bitcamp = true;
-      }
-
-      // what_build (minimum 50 chars)
-      if (String(this.formData.what_build || "").trim().length < 50) {
-        this.validations.what_build = false;
-        isValid = false;
-      } else {
-        this.validations.what_build = true;
-      }
-
-      // recruit_for_jobs (required)
-      if (!this.formData.recruit_for_jobs || this.formData.recruit_for_jobs.length === 0) {
-        this.validations.recruit_for_jobs = false;
-        isValid = false;
-      } else {
-        this.validations.recruit_for_jobs = true;
-      }
-
-      return isValid;
+      return (
+        secondPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
+        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName])
+      );
     },
-    handleNext() {
-      // mark all fields as touched so validation UI appears (same behavior as Page1)
-      Object.keys(this.touched).forEach((key) => {
-        this.$set(this.touched, key, true);
+
+    handleNext(event) {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
+      event.preventDefault();
+
+      secondPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+      secondPageOptionalFields.forEach((key) => {
+        if (this.optionalFieldsRequired.includes(key)) {
+          this.touched[key] = true;
+        } else {
+          this.touched[key] = false;
+        }
       });
 
       if (this.validateForm()) {
@@ -720,83 +553,44 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 30px 0;
-  position: relative;
+  margin: 18px 0 14px;
 }
 
 .stepper-item {
-  text-align: center;
   flex: 1;
-  font-size: 0.85rem;
-  color: #808080;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #c4c4c4;
 }
 
 .stepper-circle {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 8px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: #e8e8e8;
+  margin: 0 auto 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #666;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
+  background: #f3f3f3;
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .stepper-item.active .stepper-circle {
   background: #ff6b35;
-  color: white;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-}
-
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: white;
+  color: #ffffff;
+  border-color: #ff6b35;
 }
 
 .stepper-label {
-  font-weight: 500;
-  line-height: 1.3;
-  padding: 0 5px;
-  color: #606060;
+  line-height: 1.2;
 }
 
 .stepper-item.active .stepper-label {
   color: #ff6b35;
-  font-weight: 700;
-}
-
-.stepper-item.completed .stepper-label {
-  color: #606060;
-}
-
-/* Connecting lines */
-.stepper-line {
-  position: absolute;
-  top: 25px;
-  left: calc(50% + 25px); 
-  width: calc(100% - 25px);
-  height: 3px;
-  border-radius: 999px;
-}
-
-.stepper-line.completed {
-  background: #ff6b35;
-}
-
-.checkmark {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* HORIZONTAL SCROLL CONTAINER FOR TRACKS */
@@ -853,14 +647,13 @@ body {
   background: #ff6b35 !important;
   border-color: #ff6b35 !important;
   color: #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(255,107,53,0.3) !important;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.3) !important;
   transform: translateY(-2px);
 }
 .track-card--active h5,
 .track-card--active p {
   color: #ffffff !important;
 }
-
 
 .track-title {
   font-size: 1rem;
@@ -995,142 +788,38 @@ hr {
   box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.15);
 
   .actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-}
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
 
-.submit-btn {
-  padding: 10px 30px;
-  font-weight: 700;
-  border-radius: 6px;
-}
+  .submit-btn {
+    padding: 10px 30px;
+    font-weight: 700;
+    border-radius: 6px;
+  }
 
-.prev-btn {
-  background-color: #f5f5f5;
-  color: #ff6b35;
-  border: 1px solid #ff6b35;
-}
+  .prev-btn {
+    background-color: #f5f5f5;
+    color: #ff6b35;
+    border: 1px solid #ff6b35;
+  }
 
-.next-btn {
-  background-color: #ff6b35;
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
-}
+  .next-btn {
+    background-color: #ff6b35;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+  }
 
-.next-btn:hover,
-.next-btn:focus {
-  background-color: #ff7b47;
-}
+  .next-btn:hover,
+  .next-btn:focus {
+    background-color: #ff7b47;
+  }
 }
 
 /* hidden actual file input */
 .resume-file-input {
   display: none;
-}
-
-/* inline green check for fields */
-.field-check {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #2ecc71;
-  color: white;
-  font-weight: 700;
-  position: absolute;
-  right: 12px;
-  top: 36px;
-  box-shadow: 0 2px 6px rgba(46, 204, 113, 0.2);
-}
-
-.select-check { top: 38px; }
-
-.form-group { position: relative; }
-
-/* Responsive styles for mobile */
-@media (max-width: 768px) {
-  /* Page container */
-  .register-page {
-    margin: 20px auto 40px;
-    padding: 0 10px;
-  }
-
-  /* Page titles */
-  .page-title {
-    font-size: 1.8rem;
-  }
-
-  .page-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .stepper {
-    display: flex !important;
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 20px; 
-  }
-
-  .stepper-item {
-    flex: 0 0 25%; /* Row 1: 4 items */
-    max-width: 25%;
-    position: relative; /* Essential for line positioning */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .stepper-circle {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-    z-index: 2; /* Ensure circle stays above the line */
-  }
-
-  .stepper-label {
-    font-size: 0.8rem;
-  }
-
-  .stepper-line {
-    display: block !important; 
-    position: absolute;
-    top: 17.5px; 
-    left: calc(50% + 17.5px); 
-    width: calc(100% - 35px);
-    height: 2px;
-    background: #e8e8e8; 
-    z-index: 1;
-  }
-
-  .stepper-item:nth-child(4) .stepper-line,
-  .stepper-item:nth-child(7) .stepper-line {
-    display: none !important;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: center; /* center the row */
-    gap: 10px;               /* spacing between buttons */
-  }
-
-  .submit-btn {
-    flex: 0 0 auto;          /* don't stretch, keep natural size */
-    padding: 8px 20px;
-    font-size: 0.9rem;
-  }
-
-  /* Form fields */
-  .b-form-group {
-    margin-bottom: 15px;
-  }
-
-  .b-form-radio-group,
-  .b-form-checkbox-group {
-    font-size: 0.9rem;
-  }
 }
 </style>
