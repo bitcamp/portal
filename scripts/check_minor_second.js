@@ -71,10 +71,10 @@ let minor_template = {
 
 // if you're 18 by the first day of bitcamp that means you were born <= Apr 8 2004
 // monthIndex for April is 3
-let cutoff = new Date(2004, 3, 8);
+let cutoff = new Date(2007, 3, 8);
 
 const scan_params = {
-  TableName: 'portal-prd-registration',
+  TableName: 'minor-dev-waiver-forms',
 };
 
 let main_emails = [];
@@ -89,7 +89,7 @@ function sleep(ms) {
 }
 
 const downloadRegistrations = async (stage) => {
-  const fullTableName = `portal-${stage}-registration`;
+  const fullTableName = `minor-${stage}-waiver-forms`;
   let params = {
     TableName: fullTableName,
   };
@@ -124,11 +124,11 @@ const mainFile = `./rsvp-users.csv`;
 const minorsFile = `./rsvp-minors-users.csv`;
 
 (async function () {
-  const result = await downloadRegistrations('prd');
+  const result = await downloadRegistrations('dev');
 
   let minor_set = new Set(old_minors.data.map((user) => user.Email));
 
-  // let temp = await downloadRegistrations('prd');
+  // let temp = await downloadRegistrations('dev');
   // temp.forEach(element => {
   //   console.log(new Date(element.birthday));
   // })
