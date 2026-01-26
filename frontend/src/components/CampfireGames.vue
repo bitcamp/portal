@@ -1,7 +1,7 @@
 <template>
   <div class="register-wrapper">
-    <b-row class="justify-content-center">
-      <b-col md="12" lg="12">
+    <b-row class="justify-content-center no-gutters">
+      <b-col md="12" lg="12" class="p-0">
         <div class="page-content">
           <h1 class="page-title">Register for Bitcamp 2026</h1>
 
@@ -16,7 +16,10 @@
               v-for="step in steps"
               :key="step.number"
               class="stepper-item"
-              :class="{ active: step.number === 4 }"
+              :class="{ 
+                active: step.number === 4, 
+                completed: step.number < 4 
+              }"
             >
               <div class="stepper-circle">{{ step.number }}</div>
               <div class="stepper-label">{{ step.label }}</div>
@@ -38,14 +41,16 @@
             <div class="campfire-questions-wrapper">
               <b-form-group v-for="(q, i) in questions" :key="i">
                 <template #label>
-                  <span>{{ q.label }} <span class="text-danger">*</span></span>
+                  <span class="form-label font-weight-bold">
+                    {{ q.label }} <span class="text-danger">*</span>
+                  </span>
                 </template>
 
                 <b-form-radio-group
                   v-model="formData[`q${i + 1}`]"
                   :name="'q' + (i + 1)"
                   stacked
-                  @click="touched[`q${i + 1}`] = true"
+                  @change="touched[`q${i + 1}`] = true"
                 >
                   <b-form-radio
                     v-for="opt in q.options"
@@ -67,12 +72,11 @@
               <b-button
                 type="button"
                 @click="handlePrevious"
-                class="submit-btn"
-                style="margin-right: 10px"
+                class="submit-btn prev-btn"
               >
-                <b-icon icon="arrow-left" /> Previous
+                <b-icon icon="arrow-left" class="mr-1" /> Previous
               </b-button>
-              <b-button type="submit" class="submit-btn">
+              <b-button type="submit" class="submit-btn next-btn">
                 Next Step
                 <b-icon icon="arrow-right" class="ml-1" />
               </b-button>
@@ -86,11 +90,9 @@
 
 <script>
 import Vue from "vue";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import { IconsPlugin } from "bootstrap-vue";
 
 const fourthPageRequiredFields = ["q1", "q2", "q3", "q4", "q5"];
-
-Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 export default {
@@ -113,109 +115,52 @@ export default {
         { number: 6, label: "Minor Waivers" },
         { number: 7, label: "Finalize & Submit" },
       ],
-
       questions: [
-        {
-          label: "1. Blah blah blah?",
-          options: [
-            { text: "Choice 1", value: "r" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "g" },
-            { text: "Choice 4", value: "r1" },
-          ],
-        },
-        {
-          label: "2. Blah blah blah?",
-          options: [
-            { text: "Choice 1", value: "r" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "g" },
-            { text: "Choice 4", value: "g1" },
-          ],
-        },
-        {
-          label: "3. Blah blah blah?",
-          options: [
-            { text: "Choice 1", value: "r" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "g" },
-            { text: "Choice 4", value: "b1" },
-          ],
-        },
-        {
-          label: "4. Blah blah blah?",
-          options: [
-            { text: "Choice 1", value: "r" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "g" },
-            { text: "Choice 4", value: "r1" },
-          ],
-        },
-        {
-          label: "5. Blah blah blah?",
-          options: [
-            { text: "Choice 1", value: "r" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "g" },
-            { text: "Choice 4", value: "g1" },
-          ],
-        },
+        { label: "1. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "r1" }] },
+        { label: "2. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "g1" }] },
+        { label: "3. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "b1" }] },
+        { label: "4. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "r1" }] },
+        { label: "5. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "g1" }] },
       ],
     };
   },
-
   computed: {
     validations() {
       return {
-        q1: this.formData.q1 !== null && this.formData.q1 !== undefined,
-        q2: this.formData.q2 !== null && this.formData.q2 !== undefined,
-        q3: this.formData.q3 !== null && this.formData.q3 !== undefined,
-        q4: this.formData.q4 !== null && this.formData.q4 !== undefined,
-        q5: this.formData.q5 !== null && this.formData.q5 !== undefined,
+        q1: !!this.formData.q1,
+        q2: !!this.formData.q2,
+        q3: !!this.formData.q3,
+        q4: !!this.formData.q4,
+        q5: !!this.formData.q5,
       };
     },
   },
-
   mounted() {
     this.questions.forEach((_, i) => {
       const key = `q${i + 1}`;
-      if (!this.formData[key]) this.$set(this.formData, key, null);
+      if (this.formData[key] === undefined) this.$set(this.formData, key, null);
     });
   },
-
   methods: {
     showInvalid(field) {
       return this.touched[field] === true && this.validations[field] === false;
     },
-
     validateForm() {
       return fourthPageRequiredFields.every((fieldName) => this.validations[fieldName]);
     },
-
     handleNext(event) {
-      console.log("TOUCHED", this.touched);
-      console.log("FORM DATA", this.formData);
-
       event.preventDefault();
-
-      fourthPageRequiredFields.forEach((key) => {
-        this.touched[key] = true;
-      });
-
+      fourthPageRequiredFields.forEach((key) => { this.touched[key] = true; });
       if (this.validateForm()) {
         this.$emit("next");
         return;
       }
-
       this.$bvToast.toast("Please fill out all required fields", {
         toaster: "b-toaster-top-center",
         solid: true,
-        appendToast: false,
-        noCloseButton: true,
         variant: "danger",
       });
     },
-
     handlePrevious() {
       this.$emit("previous");
     },
@@ -224,10 +169,27 @@ export default {
 </script>
 
 <style scoped>
+/* These lines ensure there is NO white background or margins around the component */
+.register-wrapper {
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.row.no-gutters {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+/* The card itself */
 .page-content {
   background: #fff7ee;
   border-radius: 12px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+
   padding: 40px 56px 48px;
   text-align: left;
 }
@@ -244,17 +206,7 @@ export default {
   margin-bottom: 22px;
 }
 
-.section-title {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.info {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  margin-bottom: 18px;
-}
-
+/* Big 54px Stepper Circles */
 .stepper {
   display: flex;
   justify-content: space-between;
@@ -264,47 +216,70 @@ export default {
 .stepper-item {
   flex: 1;
   text-align: center;
-  font-size: 0.7rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stepper-circle {
-  width: 40px;
-  height: 40px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  margin: 0 auto 6px;
+  margin: 0 auto 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f3f3f3;
   color: #9a9a9a;
   border: 1px solid #dddddd;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
 }
 
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
-  color: #ffffff;
-  border-color: #ff6b35;
+/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35 !important;
+  color: #ffffff !important;
+  border-color: #ff6b35 !important;
+  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
 }
 
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
-  font-weight: 600;
+.stepper-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2f2f2f;
+  line-height: 1.15;
+}
+
+.stepper-item.active .stepper-label,
+.stepper-item.completed .stepper-label {
+  color: #ff6b35 !important;
 }
 
 .actions {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
   margin-top: 30px;
 }
 
 .submit-btn {
-  background-color: #ff6b35;
-  border: none;
-  color: #ffffff;
-  padding: 10px 32px;
+  padding: 10px 30px;
   font-weight: 700;
   border-radius: 6px;
+}
+
+.prev-btn {
+  background-color: #f5f5f5;
+  color: #ff6b35;
+  border: 1px solid #ff6b35;
+}
+
+.next-btn {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
   box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
 }
 </style>

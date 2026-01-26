@@ -13,22 +13,14 @@
         v-for="(step, index) in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage,
-          completed: step.number < currentPage
-        }"
+        :class="{ active: step.number === currentPage, completed: step.number < currentPage }"
       >
-        <!-- Connecting line before circle -->
         <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
-        
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span v-if="step.number < currentPage" class="checkmark">&#10003;</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        
-        <!-- Connecting line after circle -->
         <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
-        
         <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
@@ -466,6 +458,7 @@ a.btn.submit-btn.next-btn:hover {
 
   .b-form-radio-group,
   .b-form-checkbox-group {
+    
     font-size: 0.9rem;
   }
 }

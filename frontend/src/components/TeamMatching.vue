@@ -521,7 +521,7 @@ export default {
 .page-content {
   background: #fff7ee;
   border-radius: 12px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+
   padding: 40px 56px 48px;
   text-align: left;
 }
@@ -558,34 +558,48 @@ export default {
 .stepper-item {
   flex: 1;
   text-align: center;
-  font-size: 0.7rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stepper-circle {
-  width: 40px;
-  height: 40px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  margin: 0 auto 6px;
+  margin: 0 auto 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f3f3f3;
   color: #9a9a9a;
   border: 1px solid #dddddd;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: .6 rem;
+  font-weight: 700;
 }
 
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
-  color: #ffffff;
-  border-color: #ff6b35;
+/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35 !important;
+  color: #ffffff !important;
+  border-color: #ff6b35 !important;
+  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
 }
 
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
-  font-weight: 600;
+.stepper-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2f2f2f;
+  line-height: 1.15;
 }
+
+.stepper-item.active .stepper-label,
+.stepper-item.completed .stepper-label {
+  color: #ff6b35 !important;
+}
+
 
 .actions {
   display: flex;

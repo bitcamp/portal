@@ -14,7 +14,7 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 2 }"
+        :class="{ active: step.number === currentPage, completed: step.number < currentPage }"
       >
         <div class="stepper-circle">
           {{ step.number }}
@@ -382,6 +382,11 @@ export default {
     };
   },
   computed: {
+    // The step number for this page (used by the stepper UI)
+    currentPage() {
+      return 2;
+    },
+
     validations() {
       const req = (v) => v && v.toString().trim().length > 0;
 
@@ -561,11 +566,38 @@ body {
   text-align: center;
   font-size: 0.7rem;
   color: #c4c4c4;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepper-item::before {
+  content: '';
+  position: absolute;
+  width: calc(100% - 50px);
+  height: 3px;
+  background: #d3d3d3;
+  top: 23px;
+  left: 25px;
+  z-index: 0;
+  transition: background 0.3s ease;
+}
+
+.stepper-item:first-child::before {
+  display: none;
+}
+
+.stepper-item.completed::before {
+  /* FORCE completed connector line to be orange */
+  background: #ff6b35 !important;
 }
 
 .stepper-circle {
-  width: 30px;
-  height: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  height: 50px;
   border-radius: 50%;
   margin: 0 auto 6px;
   display: flex;
@@ -578,19 +610,26 @@ body {
   font-weight: 600;
 }
 
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
-  color: #ffffff;
-  border-color: #ff6b35;
+/* FORCE stepper circles to be orange for current + completed */
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35 !important;
+  color: #ffffff !important;
+  border-color: #ff6b35 !important;
 }
 
 .stepper-label {
-  line-height: 1.2;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #333;
 }
 
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
-  font-weight: 600;
+/* FORCE stepper labels to be orange for current + completed */
+.stepper-item.active .stepper-label,
+.stepper-item.completed .stepper-label {
+  color: #ff6b35 !important;
+  font-weight: 700;
 }
 
 /* HORIZONTAL SCROLL CONTAINER FOR TRACKS */

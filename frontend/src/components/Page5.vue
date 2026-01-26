@@ -386,6 +386,13 @@ export default {
     };
   },
 
+  computed: {
+    // The step number for this page (used by the stepper UI)
+    currentPage() {
+      return 5;
+    },
+  },
+
   mounted() {
     // Initialize all form fields in formData if they don't exist
     Object.keys(this.formFieldsDefaults).forEach(key => {
@@ -494,25 +501,26 @@ export default {
 
 /* Stepper */
 .stepper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 auto 8px;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 30px 0;
-  position: relative;
-}
-
-.stepper-item {
-  text-align: center;
-  flex: 1;
-  font-size: 0.85rem;
-  color: #808080;
+  align-items: center;
+  justify-content: center;
+  background: #f3f3f3;
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
+  font-size: 1.3rem;
+  font-weight: 400;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.stepper-circle {
+  background: #ff6b35 !important;
+  color: #ffffff !important;
+  border-color: #ff6b35 !important;
+  font-weight: 400 !important;
   width: 50px;
   height: 50px;
   margin: 0 auto 8px;
@@ -521,7 +529,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #666;
   position: relative;
@@ -535,10 +543,34 @@ export default {
   color: white;
   box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
 }
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35;
+  color: #ffffff;
+}
 
 .stepper-item.completed .stepper-circle {
   background: #ff6b35;
   color: white;
+}
+
+.stepper-item::before {
+  content: '';
+  position: absolute;
+  width: calc(100% - 50px);
+  height: 3px;
+  background: #d3d3d3;
+  top: 23px;
+  left: 25px;
+  z-index: 0;
+  transition: background 0.3s ease;
+}
+
+.stepper-item:first-child::before {
+  display: none;
+}
+
+.stepper-item.completed::before {
+  background: #ff6b35;
 }
 
 .stepper-label {
@@ -549,6 +581,10 @@ export default {
 }
 
 .stepper-item.active .stepper-label {
+  color: #ff6b35;
+  font-weight: 700;
+}
+.stepper-item.completed .stepper-label {
   color: #ff6b35;
   font-weight: 700;
 }

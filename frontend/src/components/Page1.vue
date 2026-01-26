@@ -14,7 +14,7 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 1 }"
+        :class="{ active: step.number === currentPage, completed: step.number < currentPage }"
       >
         <div class="stepper-circle">
           {{ step.number }}
@@ -418,6 +418,11 @@ export default {
       if (state === false) return "typeahead is-invalid";
       return "typeahead";
     },
+
+    // The step number for this page (used by the stepper UI)
+    currentPage() {
+      return 1;
+    },
   },
 
   methods: {
@@ -514,31 +519,105 @@ body {
   margin: 20px 0;
 }
 
+/* Stepper */
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 40px 0;
+  position: relative;
+  padding: 0 20px;
+}
+
 .stepper-item {
-  text-align: center;
   flex: 1;
-  font-size: 0.75rem;
-  color: #c4c4c4;
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stepper-circle {
-  width: 30px;
-  height: 30px;
-  margin: 0 auto 6px;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 12px;
   border-radius: 50%;
-  background: #eee;
+  background: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.required-label {
-  content: " *";
-  color: red;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #999;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  border: 3px solid #e0e0e0;
 }
 
 .stepper-item.active .stepper-circle {
   background: #ff6b35;
+  color: #ffffff;
+  border-color: #ff6b35;
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+}
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35;
+  color: #ffffff;
+  border-color: #ff6b35;
+}
+
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35;
   color: white;
+  border-color: #ff6b35;
+}
+
+.stepper-label {
+  font-weight: 400;
+  line-height: 1.4;
+  padding: 0 8px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.stepper-item.active .stepper-label {
+  color: #ff6b35;
+  font-weight: 700;
+}
+.stepper-item.completed .stepper-label {
+  color: #ff6b35;
+  font-weight: 700;
+}
+
+.stepper-item.completed .stepper-label {
+  color: #ff6b35;
+  font-weight: 700;
+}
+
+/* Connecting lines */
+.stepper-item::before {
+  content: '';
+  position: absolute;
+  width: calc(100% - 80px);
+  height: 4px;
+  background: #d3d3d3;
+  top: 40px;
+  left: 40px;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.stepper-item:first-child::before {
+  display: none;
+}
+
+.stepper-item.completed::before {
+  background: #ff6b35;
 }
 
 /* Buttons */
