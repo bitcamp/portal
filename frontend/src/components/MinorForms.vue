@@ -27,69 +27,6 @@
 
           <b-form @submit.prevent="handleNext">
 
-        <div class="info-box">
-            <div class="info-header" @click="toggleStu">
-                <span class="title header-title">Student Organization Release and Informed Consent Form</span>
-                    <img
-                    :src="openImg"
-                    class="arrow"
-                    :class="{open : stuIsOpen}"
-                    @click.stop="toggleStu"
-                    />
-                </div>
-
-        <div v-if="stuIsOpen" class="info-content">
-        <p>
-            I am a participant of Bitcamp 2026 (Activity), a student organization recognized by the
-            Stamp Student Union (Union) at the University of Maryland, College Park (University). I
-            desire to participate in the Activity from April 10, 2026 - April 12, 2026 including. In
-            consideration of being permitted to participate in such Activity, I, for myself, my
-            heirs, personal representative(s) and assigns hereby represent and agree as follows:
-            <br />
-            1. I fully recognize and understand that there are risks and hazards, minor and serious,
-            associated with participation in the Activity, ranging from scrapes, bruises,
-            lacerations, broken bones to concussions, spinal cord injuries, paralysis and, even,
-            death. These injuries may result from crashing with other participants, being hit by
-            equipment, or environmental conditions. <br />
-            2. I understand that protective equipment, including but not limited to, headgear, pads,
-            eyewear and mouthpieces may be recommended for the safety and protection of
-            participants, and I agree to wear such equipment when participating in the Activity.
-            However, I understand that wearing such equipment will not eliminate the risks of
-            participation. <br />
-            3. To the extent they exist, I understand that the rules and regulations of the
-            Activity's organizers are designed, in part, for the safety and protection of
-            participants and I agree to abide by those rules and regulations. <br />
-            4. I understand that any physical activity requires a minimum level of fitness for safe
-            participation. I also understand that the University advises that participants in the
-            Activity carry personal health and accident insurance. I further understand that the
-            University and Bitcamp 2026 do not provide medical, health or other insurance for
-            participants in the Activity. <br />
-            5. In the event of a medical emergency, I hereby give my consent to emergency
-            transportation and medical treatment arising out of or related to participation in the
-            Activity. I understand that I am solely responsible for any and all costs associated
-            with any medical care received. <br />
-            6. Knowing the dangers, hazards and risks associated with student organization
-            activities, I voluntarily assume all responsibility and risk of loss, damage, illness
-            and/or injury to my person or property in any way associated with my participation in
-            the Activity. <br />
-            7. To the fullest extent permitted by law, I hereby release and forever discharge, and
-            agree to indemnify and hold harmless the State of Maryland, the University of Maryland,
-            and their departments, officers, agents, employees, and volunteers (Released Parties)
-            and Bitcamp 2026 from and against any and all liabilities, claims, demands, causes of
-            action, costs and expenses, (including attorneys' fees and related litigation costs)
-            incurred by any of the Released Parties arising out of or relating to my participation
-            in or involvement with student organization activities, or use of University equipment
-            and facilities, including travel thereto and therefrom, whether due to the negligence,
-            default or other action or inaction of any person or entity, including the Released
-            Parties. <br />
-            I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14
-            AND 18 AND THAT I HAVE READ AND FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM
-            AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS SIGNIFICANCE. AS A MINOR, THE
-            SIGNATURE BELOW IS THAT OF A PARENT OR LEGAL GUARDIAN AUTHORIZED TO SIGN ON MY BEHALF.
-          </p>
-        </div>
-    </div>
-
     <div class="info-box">
             <div class="info-header" @click="togglePhoto">
                 <span class="title header-title">Photography Consent Form</span>
@@ -217,99 +154,76 @@
     </div>
 
     <div class="info-box">
-            <div class="info-header" @click="toggleStu2">
+            <div class="info-header" @click="toggleStu">
                 <span class="title header-title">Student Organization Release and Informed Consent Form</span>
                     <img
                     :src="openImg"
                     class="arrow"
-                    :class="{open : stu2IsOpen}"
-                    @click.stop="toggleStu2"
+                    :class="{open : stuIsOpen}"
+                    @click.stop="toggleStu"
                     />
                 </div>
 
-        <div v-if="stu2IsOpen" class="info-content">
+        <div v-if="stuIsOpen" class="info-content">
         <p>
-            BY PARTICIPATING IN BITCAMP, YOU AGREE TO THE FOLLOWING TERMS AND ALL OTHER APPLICABLE 
-            DOCUMENTS.
+            I am a participant of Bitcamp 2026 (Activity), a student organization recognized by 
+            the Stamp Student Union (Union) at the University of Maryland, College Park (University). 
+            I desire to participate in the Activity from April 10, 2026 - April 12, 2026 including. In 
+            consideration of being permitted to participate in such Activity, I, for myself, my heirs, 
+            personal representative(s) and assigns hereby represent and agree as follows: 
             <br>
             <br>
-            Henceforth, "I", “me”, "my", “myself”, and other first-person pronouns shall refer to the Participant. "The 
-            Organizers" shall refer to any persons or group who had significant participation in the creation of the event,
-            namely (but not necessarily exclusively) the Bitcamp organizing team, Bitcamp Inc., Startup Shell Inc., the
-            student organization named Terrapin Hackers, and the University of Maryland at College Park. “The
-            Hackathon” shall refer to the Bitcamp hackathon. 
-            <br>
-            <br>
-            I understand that by participating in The Hackathon, I agree to the following terms listed in this Bitcamp 
-            Terms and Code of Conduct agreement (the “Agreement”), and to follow any procedures and instructions 
-            given by The Organizers. Refusal to comply and any violations will subject me to punishment deemed 
-            appropriate by The Organizers, such as the revocation of prizes and expulsion from The Hackathon.
-            I have represented myself accurately on the application and all other event forms. I am allowed to develop a 
-            concept for a project prior to The Hackathon, but any and all programming and tangible creations related to 
-            a concept must be done at the time and place of The Hackathon. I am allowed to use publicly available 
-            resources and code on my project, and I accept sole responsibility for licensee or owner responsibilities and 
-            for any and all licensing or ownership rights and responsibilities of any intellectual property that I use, 
-            display, store, distribute, make derivative works from, or otherwise and other appropriate acknowledgement 
-            regarding the resources. I understand that The Organizers will not receive any ownership title or rights of any 
-            work or project done at The Hackathon other than those limited rights herein. All original work will solely 
-            remain under the ownership of the creator and/or the employing company. The Organizers are not liable for 
-            any legal or contractual issues that may arise from the work. I hereby agree to indemnify, hold harmless, and 
-            defend The Organizers against any liability resulting from the project or any created content. I understand 
-            that the judges and The Organizers are allowed to look at my code for the purpose of judging by volunteer 
-            judges, and that the decisions of these judges are final and may not be contested. The Hackathon will not be 
-            held responsible for any decisions made by sponsors, and The Organizers are not liable for any transaction 
-            of prizes between a sponsor and a participant. I understand that if I win a Bitcamp-sponsored prize, it is my 
-            responsibility to be present at the event to receive the prize. If I am not present, I understand that I will not 
-            receive the prize, regardless if the rest of my team is present to receive their prizes. I understand that I will 
-            be fully responsible for any costs I incur as a direct or indirect result of participation in the event, including 
-            but not limited to use of proprietary technology, food, accommodations, and other purchases. The 
-            Organizers will not be liable for any costs or expenses incurred throughout the event. I understand that The 
-            Organizers are not obligated to give travel reimbursements, and that any granted travel reimbursements are 
-            contingent upon my submission of a project to Devpost. I understand that all services provided, including 
-            but not limited to transportation, facilities (property, furniture, electricity, networking), food and beverage, 
-            and activities are provided on an as-is and as-available basis only, with no guarantee of services meeting my 
-            requirements or remaining uninterrupted, error-free, secure, or free from viruses and other harmful 
-            components. The Organizers are not liable for any errors in services, regardless of whether they appear to
-            provide these services or not. I understand any information I provide via my application may be distributed 
-            to sponsors for recruiting purposes. I understand that by providing my resume via the application, I am 
-            allowing the distribution of my resume to sponsors for recruiting purposes. I understand that unless I have
-            paid for certain perks of sponsorship of Bitcamp, I am not allowed to recruit from the participants or disperse 
-            marketing or recruiting materials to anyone at The Hackathon, including anyone in the venue. I agree to be 
-            respectful and courteous to The Organizers, sponsors, volunteers, mentors, venue staff, and all other 
-            participants. The Organizers have the authority to discipline me if my behavior at the event does not meet 
-            their subjective standards of respect and courtesy. I authorize The Organizers in advance of any reasonably 
-            perceived medical emergency to authorize any specific diagnosis, treatment, or hospital care that is required 
-            to save my life or my child's life or to avoid or respond to serious bodily harm, but this authorization is given 
-            to provide authority and power on the part of Bitcamp, its agents and employees for the duration of a 
-            hackathon event and no more than eight hours after the official end of the event while I or my child remain 
-            on the premises of the Organizer's hackathon, in order to give specific consent to any and all such diagnosis, 
-            treatment or hospital care which the aforementioned health professional in the exercise of his or her best 
-            judgment may deem required or reasonably recommended. I agree to not be in the possession of illegal 
-            drugs, alcohol, or weapons at The Hackathon and otherwise always adhere to applicable state and federal 
-            contacts law. I understand that I am bound to all rules and regulations of Maryland state laws, as well as 
-            applicable city and federal laws.
-            <br>
-            <br>
-            I ASSUME ALL RESPONSIBILITY FOR THE DAMAGE OR THEFT OF ALL PERSONAL ITEMS AND PROPERTY. 
-            I UNDERSTAND THAT THE HACKATHON AND THE ORGANIZERS DO NOT TAKE RESPONSIBILITY AND 
-            ARE NOT LIABLE FOR ANY DAMAGES OR THEFT TO PERSONAL ITEMS AND/OR PROPERTY.
-            <br>
-            <br>
-            I understand that The Hackathon is 36 hours long, and that fatigue can cause delayed reaction time or 
-            unusual decision-making, and I indemnify and hold harmless Bitcamp and the University of Maryland for any 
-            liabilities or damages from and against, and shall compensate and reimburse each Indemnitee for, any loss, 
-            damage, injury, harm, detriment, lost opportunity, liability, exposure, claim, demand, settlement, judgment, 
-            award, fine, penalty, tax, fee (including attorneys' fees), charge or expense that is directly or indirectly 
-            suffered or incurred by any of the Indemnitees, or to which any of the Indemnitees otherwise may become 
-            subject (regardless of whether or not related to a third-party claim) at any time (whether during or after the 
-            Term), and that is caused by or results from (a) any inaccuracy in any representation or warranty by or on my 
-            behalf contained in this Agreement, or (b) any failure on my part to observe, perform or abide by, or any 
-            other breach of, any restriction, covenant, obligation or other provision contained in this Agreement.
+            <ol>
+              <li>
+                I fully recognize and understand that there are risks and hazards, minor and serious, associated 
+                with participation in the Activity, ranging from scrapes, bruises, lacerations, broken bones to concussions, 
+                spinal cord injuries, paralysis and, even, death. These injuries may result from crashing with other 
+                participants, being hit by equipment, or environmental conditions.
+              </li>
+              <li>
+                I understand that protective equipment, including but not limited to, headgear, pads, eyewear and mouthpieces 
+                may be recommended for the safety and protection of participants, and I agree to wear such equipment when 
+                participating in the Activity. However, I understand that wearing such equipment will not eliminate the risks of 
+                participation.
+              </li>
+              <li>
+                To the extent they exist, I understand that the rules and regulations of the Activity's organizers are designed,
+                in part, for the safety and protection of participants and I agree to abide by those rules and regulations.
+              </li>
+              <li>
+                I understand that any physical activity requires a minimum level of fitness for safe participation. I also 
+                understand that the University advises that participants in the Activity carry personal health and accident 
+                insurance. I further understand that the University and Bitcamp 2023 do not provide medical, health or other 
+                insurance for participants in the Activity.
+              </li>
+              <li>
+                In the event of a medical emergency, I hereby give my consent to emergency transportation and medical treatment 
+                arising out of or related to participation in the Activity. I understand that I am solely responsible for any and all 
+                costs associated with any medical care received.
+              </li>
+              <li>
+                Knowing the dangers, hazards and risks associated with student organization activities, I voluntarily assume all 
+                responsibility and risk of loss, damage, illness and/or injury to my person or property in any way associated with 
+                my participation in the Activity.
+              </li>
+              <li>
+                To the fullest extent permitted by law, I hereby release and forever discharge, and agree to indemnify and hold 
+                harmless the State of Maryland, the University of Maryland, and their departments, officers, agents, employees, and 
+                volunteers (Released Parties) and Bitcamp 2023 from and against any and all liabilities, claims, demands, causes of 
+                action, costs and expenses, (including attorneys' fees and related litigation costs) incurred by any of the Released Parties arising 
+                out of or relating to my participation in or involvement with student organization activities, or use of University equipment and 
+                facilities, including travel thereto and therefrom, whether due to the negligence, default or other action or inaction of any 
+                person or entity, including the Released Parties.
+              </li>
+            </ol>
+            I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14 AND 18 AND THAT I HAVE READ AND 
+            FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS SIGNIFICANCE. 
+            AS A MINOR, THE SIGNATURE BELOW IS THAT OF A PARENT OR LEGAL GUARDIAN AUTHORIZED TO SIGN ON MY BEHALF. 
           </p>
         </div>
     </div>
 
-  <div v-if="stu2IsOpen">
+  <div v-if="stuIsOpen">
     <b-form-row>
         <b-form-group class="col-md-6">
           <template #label> Minor Full Name <span class="text-danger">*</span></template>
@@ -515,7 +429,7 @@
                   v-model="formData.chap_date"
                   placeholder="MM/DD/YYYY"
                   :state="showState('chap_date')"
-                  @input="touched.chap_parent_date = true"
+                  @input="touched.chap_date = true"
             />
             <b-form-invalid-feedback :state="showState('chap_date')">
                 Please enter today's date
@@ -529,7 +443,7 @@
           <b-form-input
             id="input-chap_sig"
             v-model="formData.chap_sig"
-            @input="touched.chap_parent_sig = true"
+            @input="touched.chap_sig = true"
             :state="showState('chap_sig')"
           />
           <b-form-invalid-feedback :state="showState('chap_sig')">
@@ -635,7 +549,6 @@ export default {
 
       stuIsOpen: false,
       photoIsOpen: false,
-      stu2IsOpen: false,
       condIsOpen: false,
       openImg: require('@/assets/dropdown-icons/up-arrow.svg')
     };
@@ -749,10 +662,6 @@ export default {
 
     togglePhoto() {
       this.photoIsOpen = !this.photoIsOpen;
-    },
-
-    toggleStu2() {
-      this.stu2IsOpen = !this.stu2IsOpen;
     },
     
     toggleCond(){
