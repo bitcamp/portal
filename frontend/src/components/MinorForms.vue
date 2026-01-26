@@ -31,8 +31,9 @@
             <div class="info-header" @click="toggleStu">
                 <span class="title" style="color: white">Student Organization Release and Informed Consent</span>
                     <img
-                    :src="stuIsOpen ? openImg : closedImg"
+                    :src="openImg"
                     class="arrow"
+                    :class="{open : stuIsOpen}"
                     @click.stop="toggleStu"
                     />
                 </div>
@@ -41,7 +42,7 @@
         <p>
             I am a participant of Bitcamp 2026 (Activity), a student organization recognized by the
             Stamp Student Union (Union) at the University of Maryland, College Park (University). I
-            desire to participate in the Activity from April 10, 2026- April 12, 2026 including. In
+            desire to participate in the Activity from April 10, 2026 - April 12, 2026 including. In
             consideration of being permitted to participate in such Activity, I, for myself, my
             heirs, personal representative(s) and assigns hereby represent and agree as follows:
             <br />
@@ -61,7 +62,7 @@
             4. I understand that any physical activity requires a minimum level of fitness for safe
             participation. I also understand that the University advises that participants in the
             Activity carry personal health and accident insurance. I further understand that the
-            University and Bitcamp 2023 do not provide medical, health or other insurance for
+            University and Bitcamp 2026 do not provide medical, health or other insurance for
             participants in the Activity. <br />
             5. In the event of a medical emergency, I hereby give my consent to emergency
             transportation and medical treatment arising out of or related to participation in the
@@ -74,7 +75,7 @@
             7. To the fullest extent permitted by law, I hereby release and forever discharge, and
             agree to indemnify and hold harmless the State of Maryland, the University of Maryland,
             and their departments, officers, agents, employees, and volunteers (Released Parties)
-            and Bitcamp 2023 from and against any and all liabilities, claims, demands, causes of
+            and Bitcamp 2026 from and against any and all liabilities, claims, demands, causes of
             action, costs and expenses, (including attorneys' fees and related litigation costs)
             incurred by any of the Released Parties arising out of or relating to my participation
             in or involvement with student organization activities, or use of University equipment
@@ -93,8 +94,9 @@
             <div class="info-header" @click="togglePhoto">
                 <span class="title" style="color: white">Photography Consent Form</span>
                     <img
-                    :src="photoIsOpen ? openImg : closedImg"
+                    :src="openImg"
                     class="arrow"
+                    :class="{open : photoIsOpen}"
                     @click.stop="togglePhoto"
                     />
                 </div>
@@ -215,8 +217,9 @@
             <div class="info-header" @click="toggleCond">
                 <span class="title" style="color: white">Conditional Form Question</span>
                     <img
-                    :src="condIsOpen ? openImg : closedImg"
+                    :src="openImg"
                     class="arrow"
+                    :class="{open : condIsOpen}"
                     @click.stop="toggleCond"
                     />
                 </div>
@@ -263,6 +266,7 @@
         </div>
     </div>
 
+<div v-if="condIsOpen">
     <b-form-row>
         <b-form-group class="col-md-6">
           <template #label> Minor Full Name <span class="text-danger">*</span></template>
@@ -348,6 +352,7 @@
           </b-form-invalid-feedback>
         </b-form-group>
     </b-form-row>
+    </div>
 
             <div class="actions">
               <b-button
@@ -428,8 +433,7 @@ export default {
       stuIsOpen: false,
       photoIsOpen: false,
       condIsOpen: false,
-      closedImg: require('@/assets/dropdown-icons/dropdown-arrow-down.png'),
-      openImg: require('@/assets/dropdown-icons/dropdown-arrow-up.png')
+      openImg: require('@/assets/dropdown-icons/up-arrow.svg')
     };
   },
 
@@ -653,5 +657,11 @@ export default {
 .arrow {
   width: 16px;
   height: 16px;
+  transform: rotate(180deg);
 }
+
+.arrow.open{
+  transform: rotate(0deg);
+}
+
 </style>
