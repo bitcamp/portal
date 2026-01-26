@@ -8,20 +8,18 @@
       <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
-    <!-- Step Indicator -->
     <div class="stepper">
       <div
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === currentPage, completed: step.number < currentPage }"
+        :class="{ active: step.number === 1, completed: step.number < 1 }"
       >
         <div class="stepper-circle">
-          {{ step.number }}
+          <span v-if="step.number < 1" class="checkmark">✓</span>
+          <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">
-          {{ step.label }}
-        </div>
+        <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
 
@@ -475,7 +473,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 html,
 body,
 #app {
@@ -497,130 +495,107 @@ body {
   text-align: left;
 }
 
+/* The card itself */
+.page-content {
+  background: #fff7ee;
+  border-radius: 12px;
+
+  padding: 40px 56px 48px;
+  text-align: left;
+}
+
 .page-title {
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .page-subtitle {
-  font-size: 1rem;
-  color: #333;
+  font-size: 0.9rem;
+  opacity: 0.95;
+  margin-bottom: 22px;
 }
 
-.page-subtitle a {
-  color: #ff6b35;
-  text-decoration: none;
-}
-
-/* Stepper */
 .stepper {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-}
-
-/* Stepper */
-.stepper {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 40px 0;
+  width: 100%;
   position: relative;
-  padding: 0 20px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .stepper-item {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   text-align: center;
-  font-size: 1rem;
-  color: #666;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1; 
 }
 
-.stepper-circle {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 12px;
-  border-radius: 50%;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #999;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-  border: 3px solid #e0e0e0;
-}
-
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
-  color: #ffffff;
-  border-color: #ff6b35;
-  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
-}
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: #ffffff;
-  border-color: #ff6b35;
-}
-
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: white;
-  border-color: #ff6b35;
+.stepper-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 27px; 
+  left: 50%;
+  width: 100%;
+  height: 2px; 
+  background: #dddddd; 
+  z-index: -1; 
 }
 
 .stepper-label {
-  font-weight: 400;
-  line-height: 1.4;
-  padding: 0 8px;
-  color: #333;
-  font-size: 0.95rem;
+  font-size: 0.75rem !important; 
+  font-weight: 600;
+  font-family: "Inter", sans-serif !important;
+  color: #000000 !important;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 8px;
 }
 
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
+.stepper-item.completed:not(:last-child)::after {
+  background: #ff6b35 !important;
+}
+
+.stepper-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f3f3f3; 
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+  position: relative; 
+  z-index: 2;
+  font-family: "Inter", sans-serif !important; 
+}
+
+/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35 !important;
+  color: #ffffff !important;
+  border-color: #ff6b35 !important;
+  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
+}
+
+.checkmark {
+  font-size: 1.5rem;
   font-weight: 700;
 }
-.stepper-item.completed .stepper-label {
-  color: #ff6b35;
-  font-weight: 700;
-}
 
-.stepper-item.completed .stepper-label {
-  color: #ff6b35;
-  font-weight: 700;
-}
-
-/* Connecting lines */
-.stepper-item::before {
-  content: '';
-  position: absolute;
-  width: calc(100% - 80px);
-  height: 4px;
-  background: #d3d3d3;
-  top: 40px;
-  left: 40px;
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-
-.stepper-item:first-child::before {
-  display: none;
-}
-
-.stepper-item.completed::before {
-  background: #ff6b35;
-}
-
-/* Buttons */
 .actions {
   display: flex;
   justify-content: space-between;
@@ -631,6 +606,19 @@ body {
   padding: 10px 30px;
   font-weight: 700;
   border-radius: 6px;
+}
+
+.prev-btn {
+  background-color: #f5f5f5;
+  color: #ff6b35;
+  border: 1px solid #ff6b35;
+}
+
+.next-btn {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
 }
 
 /* FORCE override Bootstrap grey buttons */
@@ -652,5 +640,61 @@ a.btn.submit-btn.next-btn {
 button.btn.submit-btn.next-btn:hover,
 a.btn.submit-btn.next-btn:hover {
   background-color: #ff7b47 !important;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 30px 20px; 
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px; 
+  }
+
+  .stepper-item {
+    flex: 0 0 25%; 
+    max-width: 25%;
+  }
+
+  .stepper-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+
+  .checkmark {
+    font-size: 1.2rem;
+  }
+
+  .stepper-label {
+    font-size: 0.65rem !important;
+  }
+
+  .stepper-item:not(:last-child)::after {
+    top: 20px; 
+    height: 2px;
+  }
+
+  .stepper-item:nth-child(4)::after {
+    display: none !important;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+    gap: 15px;
+  }
+
+  .submit-btn {
+    width: 100%; 
+    padding: 12px;
+  }
 }
 </style>

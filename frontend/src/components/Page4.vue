@@ -10,17 +10,15 @@
 
     <div class="stepper">
       <div
-        v-for="(step, index) in steps"
+        v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === currentPage, completed: step.number < currentPage }"
+        :class="{ active: step.number === 4, completed: step.number < 4 }"
       >
-        <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">&#10003;</span>
+          <span v-if="step.number < 4" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
         <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
@@ -30,27 +28,26 @@
     <b-form @submit.prevent="handleNext">
       <h4 class="section-title">Campfire Games Survey</h4>
       <p class="info">
-        This year, you'll once again be put into one of three teams based on your personality and interests. By 
-        winning unique challenges and attending workshops and mini-events, you and your fellow hackers will rack 
-        up points for your team. At the end of the event, members of the winning team will receive limited edition 
-        Bitcamp swag. So what are you waiting for? Take the survey and find your team!
+        This year, you'll once again be put into one of three teams based on your personality
+        and interests. By winning unique challenges and attending workshops and mini-events,
+        you and your fellow hackers will rack up points for your team. At the end of the
+        event, members of the winning team will receive limited edition Bitcamp swag. So what
+        are you waiting for? Take the survey and find your team!
       </p>
 
       <div class="campfire-questions-wrapper">
-        <b-form-group
-          v-for="(q, i) in questions"
-          :key="i"
-        >
+        <b-form-group v-for="(q, i) in questions" :key="i">
           <template #label>
-            <span class="required-label">{{ q.label }}</span>
+            <span class="form-label font-weight-bold">
+              {{ q.label }} <span class="text-danger">*</span>
+            </span>
           </template>
 
           <b-form-radio-group
-            v-model="formData[`q${i+1}`]"
-            :name="'q' + (i+1)"
+            v-model="formData[`q${i + 1}`]"
+            :name="'q' + (i + 1)"
             stacked
-            :state="validations[`q${i+1}`]"
-            @change="updateSelection(`q${i+1}`)"
+            @change="touched[`q${i + 1}`] = true"
           >
             <b-form-radio
               v-for="opt in q.options"
@@ -62,24 +59,23 @@
             </b-form-radio>
           </b-form-radio-group>
 
-          <b-form-invalid-feedback :state="validations[`q${i+1}`]">
+          <div v-if="showInvalid(`q${i + 1}`)" class="invalid-feedback d-block">
             Please select an answer
-          </b-form-invalid-feedback>
+          </div>
         </b-form-group>
       </div>
 
-      <!-- Navigation Buttons -->
       <div class="actions">
         <b-button
           type="button"
+          @click="handlePrevious"
           class="submit-btn prev-btn"
-          @click="$emit('previous')"
         >
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
-
         <b-button type="submit" class="submit-btn next-btn">
-          Next Step <b-icon icon="arrow-right" class="ml-1" />
+          Next Step
+          <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
@@ -88,9 +84,9 @@
 
 <script>
 import Vue from "vue";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+import { IconsPlugin } from "bootstrap-vue";
 
-Vue.use(BootstrapVue);
+const fourthPageRequiredFields = ["q1", "q2", "q3", "q4", "q5"];
 Vue.use(IconsPlugin);
 
 export default {
@@ -100,13 +96,10 @@ export default {
       type: Object,
       required: true,
     },
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
   },
   data() {
     return {
+      touched: Object.fromEntries([...fourthPageRequiredFields].map((key) => [key, false])),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -114,106 +107,54 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Rules & Policies" },
+        { number: 7, label: "Finalize & Submit" },
       ],
-
       questions: [
-        {
-          label: "1. Blah blah blah? *",
-          options: [
-            { text: "Choice 1", value: "a" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "c" },
-            { text: "Choice 4", value: "d" },
-          ],
-        },
-        {
-          label: "2. Blah blah blah? *",
-          options: [
-            { text: "Choice 1", value: "a" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "c" },
-            { text: "Choice 4", value: "d" },
-          ],
-        },
-        {
-          label: "3. Blah blah blah? *",
-          options: [
-            { text: "Choice 1", value: "a" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "c" },
-            { text: "Choice 4", value: "d" },
-          ],
-        },
-        {
-          label: "4. Blah blah blah? *",
-          options: [
-            { text: "Choice 1", value: "a" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "c" },
-            { text: "Choice 4", value: "d" },
-          ],
-        },
-        {
-          label: "5. Blah blah blah? *",
-          options: [
-            { text: "Choice 1", value: "a" },
-            { text: "Choice 2", value: "b" },
-            { text: "Choice 3", value: "c" },
-            { text: "Choice 4", value: "d" },
-          ],
-        },
+        { label: "1. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "r1" }] },
+        { label: "2. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "g1" }] },
+        { label: "3. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "b1" }] },
+        { label: "4. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "r1" }] },
+        { label: "5. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "g1" }] },
       ],
-
-      validations: {
-        q1: null,
-        q2: null,
-        q3: null,
-        q4: null,
-        q5: null,
-      },
     };
   },
-
+  computed: {
+    validations() {
+      return {
+        q1: !!this.formData.q1,
+        q2: !!this.formData.q2,
+        q3: !!this.formData.q3,
+        q4: !!this.formData.q4,
+        q5: !!this.formData.q5,
+      };
+    },
+  },
   mounted() {
     this.questions.forEach((_, i) => {
-      const key = `q${i+1}`;
-      if (!this.formData[key]) this.$set(this.formData, key, null);
+      const key = `q${i + 1}`;
+      if (this.formData[key] === undefined) this.$set(this.formData, key, null);
     });
   },
-
   methods: {
-    updateSelection(key) {
-      if (this.formData[key]) this.validations[key] = null;
+    showInvalid(field) {
+      return this.touched[field] === true && this.validations[field] === false;
     },
-
     validateForm() {
-      let valid = true;
-      this.questions.forEach((_, i) => {
-        const key = `q${i+1}`;
-        if (!this.formData[key]) {
-          this.validations[key] = false;
-          valid = false;
-        }
-      });
-      return valid;
+      return fourthPageRequiredFields.every((fieldName) => this.validations[fieldName]);
     },
-
-    handleNext() {
+    handleNext(event) {
+      event.preventDefault();
+      fourthPageRequiredFields.forEach((key) => { this.touched[key] = true; });
       if (this.validateForm()) {
         this.$emit("next");
         return;
       }
-
       this.$bvToast.toast("Please fill out all required fields", {
         toaster: "b-toaster-top-center",
         solid: true,
-        appendToast: false,
-        noCloseButton: true,
         variant: "danger",
       });
     },
-
     handlePrevious() {
       this.$emit("previous");
     },
@@ -221,8 +162,8 @@ export default {
 };
 </script>
 
-<style>
-/* centered form */
+<style scoped>
+/* These lines ensure there is NO white background or margins around the component */
 .register-page {
   max-width: 760px;
   margin: 40px auto 80px;
@@ -230,107 +171,109 @@ export default {
   text-align: left;
 }
 
+.row.no-gutters {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+/* The card itself */
+.page-content {
+  background: #fff7ee;
+  border-radius: 12px;
+
+  padding: 40px 56px 48px;
+  text-align: left;
+}
+
 .page-title {
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .page-subtitle {
-  font-size: 1rem;
-  color: #333;
+  font-size: 0.9rem;
+  opacity: 0.95;
+  margin-bottom: 22px;
 }
 
-.page-subtitle a {
-  color: #ff6b35;
-  text-decoration: none;
-}
-
-/* Stepper */
 .stepper {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 30px 0;
+  width: 100%;
   position: relative;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .stepper-item {
+  flex: 1 1 0;
+  min-width: 0;
   text-align: center;
-  flex: 1;
-  font-size: 0.85rem;
-  color: #808080;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1; 
 }
 
-.stepper-circle {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 8px;
-  border-radius: 50%;
-  background: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #666;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-}
-
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
-  color: white;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-}
-
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: white;
+.stepper-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 27px; 
+  left: 50%;
+  width: 100%;
+  height: 2px; 
+  background: #dddddd; 
+  z-index: -1; 
 }
 
 .stepper-label {
-  font-weight: 500;
-  line-height: 1.3;
-  padding: 0 5px;
-  color: #606060;
+  font-size: 0.75rem !important; 
+  font-weight: 600;
+  font-family: "Inter", sans-serif !important;
+  color: #000000 !important;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 8px;
 }
 
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
+.stepper-item.completed:not(:last-child)::after {
+  background: #ff6b35 !important;
+}
+
+.stepper-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f3f3f3; 
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
+  margin-bottom: 8px;
+  position: relative; 
+  z-index: 2;
+  font-family: "Inter", sans-serif !important; 
 }
 
-.stepper-item.completed .stepper-label {
-  color: #606060;
-}
-
-/* Connecting lines */
-.stepper-line {
-  position: absolute;
-  height: 3px;
-  background: #d3d3d3;
-  top: 25px;
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-
-.stepper-item:not(:last-child) .stepper-line:last-of-type {
-  width: calc(100% + 10px);
-  left: 25px;
-}
-
-.stepper-item:first-child .stepper-line:first-of-type {
-  display: none;
-}
-
-.stepper-line.completed {
-  background: #ff6b35;
+/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35 !important;
+  color: #ffffff !important;
+  border-color: #ff6b35 !important;
+  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
 }
 
 .checkmark {
@@ -338,7 +281,6 @@ export default {
   font-weight: 700;
 }
 
-/* Buttons */
 .actions {
   display: flex;
   justify-content: space-between;
@@ -346,120 +288,77 @@ export default {
 }
 
 .submit-btn {
-  height: 44px;
-  min-width: 160px;
-  padding: 0 30px;
-
-  font-size: 1rem !important;
-  line-height: 1 !important;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  padding: 10px 30px;
+  font-weight: 700;
+  border-radius: 6px;
 }
 
-/* FORCE override Bootstrap grey buttons */
-button.btn.submit-btn.prev-btn,
-a.btn.submit-btn.prev-btn {
-  background-color: #f5f5f5 !important;
-  color: #ff6b35 !important;
-  border: 1px solid #ff6b35 !important;
+.prev-btn {
+  background-color: #f5f5f5;
+  color: #ff6b35;
+  border: 1px solid #ff6b35;
 }
 
-button.btn.submit-btn.next-btn,
-a.btn.submit-btn.next-btn {
-  background-color: #ff6b35 !important;
-  color: #ffffff !important;
-  border: none !important;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45) !important;
-}
-
-button.btn.submit-btn.next-btn:hover,
-a.btn.submit-btn.next-btn:hover {
-  background-color: #ff7b47 !important;
+.next-btn {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
 }
 
 /* Responsive styles for mobile */
 @media (max-width: 768px) {
-  /* Page container */
-  .register-page {
-    margin: 20px auto 40px;
-    padding: 0 10px;
+  .page-content {
+    padding: 30px 20px; 
   }
 
-  /* Page titles */
   .page-title {
     font-size: 1.8rem;
   }
 
-  .page-subtitle {
-    font-size: 0.9rem;
-  }
-
   .stepper {
-    display: flex !important;
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 20px; 
+    row-gap: 10px; 
   }
 
   .stepper-item {
-    flex: 0 0 25%; /* Row 1: 4 items */
+    flex: 0 0 25%; 
     max-width: 25%;
-    position: relative; /* Essential for line positioning */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
   .stepper-circle {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-    z-index: 2; /* Ensure circle stays above the line */
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+
+  .checkmark {
+    font-size: 1.2rem;
   }
 
   .stepper-label {
-    font-size: 0.8rem;
+    font-size: 0.65rem !important;
   }
 
-  .stepper-line {
-    display: block !important; 
-    position: absolute;
-    top: 17.5px; 
-    left: calc(50% + 17.5px); 
-    width: calc(100% - 35px);
+  .stepper-item:not(:last-child)::after {
+    top: 20px; 
     height: 2px;
-    background: #e8e8e8; 
-    z-index: 1;
   }
 
-  .stepper-item:nth-child(4) .stepper-line,
-  .stepper-item:nth-child(7) .stepper-line {
+  .stepper-item:nth-child(4)::after {
     display: none !important;
   }
 
   .actions {
-    display: flex;
-    justify-content: center; /* center the row */
-    gap: 10px;               /* spacing between buttons */
+    flex-direction: column-reverse;
+    gap: 15px;
   }
 
   .submit-btn {
-    flex: 0 0 auto;          /* don't stretch, keep natural size */
-    padding: 8px 20px;
-    font-size: 0.9rem;
-  }
-
-  /* Form fields */
-  .b-form-group {
-    margin-bottom: 15px;
-  }
-
-  .b-form-radio-group,
-  .b-form-checkbox-group {
-    
-    font-size: 0.9rem;
+    width: 100%; 
+    padding: 12px;
   }
 }
 </style>

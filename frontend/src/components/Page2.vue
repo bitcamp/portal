@@ -8,20 +8,18 @@
       <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
-    <!-- Step Indicator -->
     <div class="stepper">
       <div
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === currentPage, completed: step.number < currentPage }"
+        :class="{ active: step.number === 2, completed: step.number < 2 }"
       >
         <div class="stepper-circle">
-          {{ step.number }}
+          <span v-if="step.number < 2" class="checkmark">✓</span>
+          <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">
-          {{ step.label }}
-        </div>
+        <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
 
@@ -215,8 +213,8 @@
       <b-form-group>
         <template #label>
           How many hackathons have you participated in before?
-          <span class="text-danger">*</span></template
-        >
+          <span class="text-danger">*</span>
+        </template>
         <b-form-input
           id="num-hackathons"
           v-model="formData.hack_count"
@@ -230,8 +228,8 @@
       <b-form-group>
         <template #label>
           Why are you interested in attending Bitcamp?
-          <span class="text-danger">*</span></template
-        >
+          <span class="text-danger">*</span>
+        </template>
         <b-form-textarea
           id="why-bitcamp"
           v-model="formData.question1"
@@ -250,8 +248,8 @@
       <b-form-group>
         <template #label>
           What do you plan on building at Bitcamp?
-          <span class="text-danger">*</span></template
-        >
+          <span class="text-danger">*</span>
+        </template>
         <b-form-textarea
           id="what-build"
           v-model="formData.question2"
@@ -497,7 +495,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 html,
 body,
 #app {
@@ -553,83 +551,115 @@ body {
   margin-bottom: 18px;
 }
 
-/* Stepper */
 .stepper {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 18px 0 14px;
+  width: 100%;
+  position: relative;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .stepper-item {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   text-align: center;
-  font-size: 0.7rem;
-  color: #c4c4c4;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1; 
 }
 
-.stepper-item::before {
-  content: '';
+.stepper-item:not(:last-child)::after {
+  content: "";
   position: absolute;
-  width: calc(100% - 50px);
-  height: 3px;
-  background: #d3d3d3;
-  top: 23px;
-  left: 25px;
-  z-index: 0;
-  transition: background 0.3s ease;
+  top: 27px; 
+  left: 50%;
+  width: 100%;
+  height: 2px; 
+  background: #dddddd; 
+  z-index: -1; 
 }
 
-.stepper-item:first-child::before {
-  display: none;
+.stepper-label {
+  font-size: 0.75rem !important; 
+  font-weight: 600;
+  font-family: "Inter", sans-serif !important;
+  color: #000000 !important;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 8px;
 }
 
-.stepper-item.completed::before {
-  /* FORCE completed connector line to be orange */
+.stepper-item.completed:not(:last-child)::after {
   background: #ff6b35 !important;
 }
 
 .stepper-circle {
-  font-weight: 600;
-  font-size: 0.95rem;
-  line-height: 1.2;
-  height: 50px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  margin: 0 auto 6px;
+  background: #f3f3f3; 
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3f3f3;
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
+  margin-bottom: 8px;
+  position: relative; 
+  z-index: 2;
+  font-family: "Inter", sans-serif !important; 
 }
 
-/* FORCE stepper circles to be orange for current + completed */
+.stepper-label {
+  font-size: 0.75rem !important;
+  font-weight: 600;
+  color: #000000 !important;
+}
+
+/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
 .stepper-item.active .stepper-circle,
 .stepper-item.completed .stepper-circle {
   background: #ff6b35 !important;
   color: #ffffff !important;
   border-color: #ff6b35 !important;
+  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
 }
 
-.stepper-label {
+.checkmark {
+  font-size: 1.5rem;
   font-weight: 700;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: #333;
 }
 
-/* FORCE stepper labels to be orange for current + completed */
-.stepper-item.active .stepper-label,
-.stepper-item.completed .stepper-label {
-  color: #ff6b35 !important;
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.submit-btn {
+  padding: 10px 30px;
   font-weight: 700;
+  border-radius: 6px;
+}
+
+.prev-btn {
+  background-color: #f5f5f5;
+  color: #ff6b35;
+  border: 1px solid #ff6b35;
+}
+
+.next-btn {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
 }
 
 /* HORIZONTAL SCROLL CONTAINER FOR TRACKS */
@@ -720,11 +750,6 @@ label.form-label {
 .form-select:focus {
   border-color: #ff6b35;
   box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.15);
-}
-
-hr {
-  border-top: 1px solid #f0e0d1;
-  margin: 26px 0 22px;
 }
 
 /* Radio groups (for yes/no & beginner/advanced) */
@@ -860,5 +885,61 @@ hr {
 /* hidden actual file input */
 .resume-file-input {
   display: none;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 30px 20px; 
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px; 
+  }
+
+  .stepper-item {
+    flex: 0 0 25%; 
+    max-width: 25%;
+  }
+
+  .stepper-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+
+  .checkmark {
+    font-size: 1.2rem;
+  }
+
+  .stepper-label {
+    font-size: 0.65rem !important;
+  }
+
+  .stepper-item:not(:last-child)::after {
+    top: 20px; 
+    height: 2px;
+  }
+
+  .stepper-item:nth-child(4)::after {
+    display: none !important;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+    gap: 15px;
+  }
+
+  .submit-btn {
+    width: 100%; 
+    padding: 12px;
+  }
 }
 </style>

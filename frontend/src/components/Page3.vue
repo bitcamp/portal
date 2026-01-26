@@ -10,20 +10,16 @@
 
     <div class="stepper">
       <div
-        v-for="(step, index) in steps"
+        v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === currentPage, completed: step.number < currentPage }"
+        :class="{ active: step.number === 3, completed: step.number < 3 }"
       >
-        <div v-if="index > 0" class="stepper-line" :class="{ completed: step.number <= currentPage }"></div>
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">&#10003;</span>
+          <span v-if="step.number < 3" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
-        <div class="stepper-label">
-          {{ step.label }}
-        </div>
+        <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
 
@@ -41,56 +37,35 @@
           <div class="radio-inline-group">
             <label class="radio-inline">
               <input
+                type="radio"
+                value="yes"
                 v-model="formData.transport"
+                @change="touched.transport = true"
+              />
+              Yes
+            </label>
 
-                .stepper {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: flex-end;
-                  margin: 18px 0 14px;
-                }
-
-                .stepper-item {
-                  flex: 1;
-                  text-align: center;
-                  font-size: 0.7rem;
-                  color: #c4c4c4;
-                  position: relative;
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                }
-
-                .stepper-circle {
-                  width: 50px;
-                  height: 50px;
-                  border-radius: 50%;
-                  margin: 0 auto 8px;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  background: #f3f3f3;
-                  color: #9a9a9a;
-                  border: 1px solid #dddddd;
-                  font-size: 1.3rem;
-                  font-weight: 600;
-                  position: relative;
-                  z-index: 2;
-                }
-
-                .stepper-line {
-                  flex: 1 1 0;
-                  height: 4px;
-                  background: #e5e5e5;
-                  margin: 0 0 8px 0;
-                  width: 40px;
-                  align-self: center;
-                  border-radius: 2px;
-                  z-index: 1;
-                }
-                .stepper-line.completed {
-                  background: #ff6b35;
-                }
+            <label class="radio-inline">
+              <input
+                type="radio"
+                value="no"
+                v-model="formData.transport"
+                @change="touched.transport = true"
+              />
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <b-form-row>
+        <b-form-group
+          label="Shipping Address"
+          label-for="shipping-address"
+          class="col-md-6"
+        >
+          <b-form-input
+            id="shipping-address"
             v-model="formData.address"
             placeholder="8125 Paint Branch Dr"
             :state="showState('address')"
@@ -452,76 +427,109 @@ export default {
   margin-bottom: 18px;
 }
 
-/* Stepper logic from Page 2 */
 .stepper {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 18px 0 14px;
+  width: 100%;
+  position: relative;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .stepper-item {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   text-align: center;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1; 
 }
 
-.stepper-item::before {
-  content: '';
+.stepper-item:not(:last-child)::after {
+  content: "";
   position: absolute;
-  width: calc(100% - 50px);
-  height: 3px;
-  background: #d3d3d3;
-  top: 23px;
-  left: 25px;
-  z-index: 0;
+  top: 27px; 
+  left: 50%;
+  width: 100%;
+  height: 2px; 
+  background: #dddddd; 
+  z-index: -1; 
 }
 
-.stepper-item:first-child::before {
-  display: none;
+.stepper-label {
+  font-size: 0.75rem !important; 
+  font-weight: 600;
+  font-family: "Inter", sans-serif !important;
+  color: #000000 !important;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 8px;
 }
 
-.stepper-item.completed::before {
+.stepper-item.completed:not(:last-child)::after {
   background: #ff6b35 !important;
 }
 
 .stepper-circle {
-  height: 50px;
-  width: 50px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  margin: 0 auto 6px;
+  background: #f3f3f3; 
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3f3f3;
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
-  font-size: 0.85rem;
-  font-weight: 600;
-  position: relative;
-  z-index: 1;
+  font-weight: 700;
+  margin-bottom: 8px;
+  position: relative; 
+  z-index: 2;
+  font-family: "Inter", sans-serif !important; 
 }
 
+/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
 .stepper-item.active .stepper-circle,
 .stepper-item.completed .stepper-circle {
   background: #ff6b35 !important;
   color: #ffffff !important;
   border-color: #ff6b35 !important;
+  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
 }
 
-.stepper-label {
+.checkmark {
+  font-size: 1.5rem;
   font-weight: 700;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  color: #333;
 }
 
-.stepper-item.active .stepper-label,
-.stepper-item.completed .stepper-label {
-  color: #ff6b35 !important;
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.submit-btn {
+  padding: 10px 30px;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+.prev-btn {
+  background-color: #f5f5f5;
+  color: #ff6b35;
+  border: 1px solid #ff6b35;
+}
+
+.next-btn {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
 }
 
 /* Form Styles */
@@ -559,11 +567,6 @@ label.form-label {
   gap: 4px;
 }
 
-hr {
-  border-top: 1px solid #f0e0d1;
-  margin: 26px 0 22px;
-}
-
 .actions {
   display: flex;
   justify-content: space-between;
@@ -587,5 +590,61 @@ hr {
   color: #ffffff;
   border: none;
   box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 30px 20px; 
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px; 
+  }
+
+  .stepper-item {
+    flex: 0 0 25%; 
+    max-width: 25%;
+  }
+
+  .stepper-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+
+  .checkmark {
+    font-size: 1.2rem;
+  }
+
+  .stepper-label {
+    font-size: 0.65rem !important;
+  }
+
+  .stepper-item:not(:last-child)::after {
+    top: 20px; 
+    height: 2px;
+  }
+
+  .stepper-item:nth-child(4)::after {
+    display: none !important;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+    gap: 15px;
+  }
+
+  .submit-btn {
+    width: 100%; 
+    padding: 12px;
+  }
 }
 </style>

@@ -8,24 +8,17 @@
       <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
-    <div class="stepper">
+   <div class="stepper">
       <div
-        v-for="(step, index) in steps"
+        v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage,
-          completed: step.number < currentPage
-        }"
+        :class="{ active: step.number === 5, completed: step.number < 5 }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span v-if="step.number < 5" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        
-        <!-- Connecting line after circle -->
-        <div v-if="index < steps.length - 1" class="stepper-line" :class="{ completed: step.number < currentPage }"></div>
-        
         <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
@@ -41,36 +34,36 @@
 
       <b-form-group>
         <template #label>
-          <span class="required-label">Do you want to opt into team matching? *</span>
+          <span
+            >Do you want to opt into team matching? <span class="text-danger">*</span></span
+          >
         </template>
         <b-form-radio-group
           v-model="formData.opt_in_team_matching"
           name="opt_in_team_matching"
-          :state="validations.opt_in_team_matching"
-          @change="validateField('opt_in_team_matching'); clearAllValidationsIfOptOut()"
+          @click="touched.opt_in_team_matching = true"
         >
           <b-form-radio value="yes">Yes</b-form-radio>
           <b-form-radio value="no">No</b-form-radio>
         </b-form-radio-group>
-          <b-form-invalid-feedback :state="validations.opt_in_team_matching">
-            Please select an answer
-          </b-form-invalid-feedback>
+        <div v-if="showInvalid('opt_in_team_matching')" class="invalid-feedback d-block">
+          Please select an answer
+        </div>
       </b-form-group>
-      
+
       <div v-if="formData.opt_in_team_matching === 'yes'">
         <h4 class="header">Track & Skills</h4>
         <div class="section-divider"></div>
-        
+
         <b-form-group>
           <template #label>
-            <span class="required-label">What track are you in? *</span>
+            <span>What track are you in? <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group 
-            v-model="formData.track" 
-            name="track" 
+          <b-form-radio-group
+            v-model="formData.track"
+            name="track"
             stacked
-            :state="validations.track"
-            @change="validateField('track')"
+            @click="touched.track = true"
           >
             <b-form-radio value="general">General</b-form-radio>
             <b-form-radio value="quantum">Quantum</b-form-radio>
@@ -78,35 +71,42 @@
             <b-form-radio value="ml">Machine Learning</b-form-radio>
             <b-form-radio value="app dev">App Development</b-form-radio>
           </b-form-radio-group>
+          <div v-if="showInvalid('track')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span class="required-label">Have you participated in a hackathon before? *</span>
+            <span
+              >Have you participated in a hackathon before?
+              <span class="text-danger">*</span></span
+            >
           </template>
           <b-form-radio-group
             v-model="formData.hackathon"
             name="hackathon"
-            :state="validations.hackathon"
-            @change="validateField('hackathon')"
+            @click="touched.hackathon = true"
           >
             <b-form-radio value="yes">Yes</b-form-radio>
             <b-form-radio value="no">No</b-form-radio>
           </b-form-radio-group>
+          <div v-if="showInvalid('hackathon')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span class="required-label"
-              >What programming languages and frameworks are you comfortable
-              with? *</span
+            <span
+              >What programming languages and frameworks are you comfortable with?
+              <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-checkbox-group 
-            v-model="formData.languages" 
+          <b-form-checkbox-group
+            v-model="formData.languages"
             stacked
-            :state="validations.languages"
-            @change="validateField('languages')"
+            @click="touched.languages = true"
           >
             <b-form-checkbox value="html/css">HTML/CSS</b-form-checkbox>
             <b-form-checkbox value="javascript">Javascript</b-form-checkbox>
@@ -116,27 +116,28 @@
             <b-form-checkbox value="flask">Flask</b-form-checkbox>
             <b-form-checkbox value="java">Java</b-form-checkbox>
           </b-form-checkbox-group>
+          <div v-if="showInvalid('languages')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span class="required-label">What is your experience level? *</span>
+            <span>What is your experience level? <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group 
-            v-model="formData.experience" 
-            name="experience" 
+          <b-form-radio-group
+            v-model="formData.experience"
+            name="experience"
             stacked
-            :state="validations.experience"
-            @change="validateField('experience')"
+            @change="touched.experience = true"
           >
-            <b-form-radio value="beginner"
-              >Beginner (skill level 1-2)</b-form-radio
-            >
-            <b-form-radio value="inter"
-              >Intermediate (skill level 3-4)</b-form-radio
-            >
+            <b-form-radio value="beginner">Beginner (skill level 1-2)</b-form-radio>
+            <b-form-radio value="inter">Intermediate (skill level 3-4)</b-form-radio>
             <b-form-radio value="advanced">Advanced (skill level 5)</b-form-radio>
           </b-form-radio-group>
+          <div v-if="showInvalid('experience')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <h4 class="header">Team Preferences</h4>
@@ -144,35 +145,36 @@
 
         <b-form-group>
           <template #label>
-            <span class="required-label"
-              >Do you prefer working with someone with a similar skill
-              level? *</span
+            <span
+              >Do you prefer working with someone with a similar skill level?
+              <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-radio-group 
-            v-model="formData.skill_level" 
+          <b-form-radio-group
+            v-model="formData.skill_level"
             name="skill-level"
-            :state="validations.skill_level"
-            @change="validateField('skill_level')"
+            @click="touched.skill_level = true"
           >
             <b-form-radio value="yes">Yes</b-form-radio>
             <b-form-radio value="no">No</b-form-radio>
             <b-form-radio value="idc">Don't Care</b-form-radio>
           </b-form-radio-group>
+          <div v-if="showInvalid('skill_level')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span class="required-label"
-              >What kind of technologies do you want your teammates to have
-              knowledge of? *</span
+            <span
+              >What kind of technologies do you want your teammates to have knowledge of?
+              <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-checkbox-group 
-            v-model="formData.skills_wanted" 
+          <b-form-checkbox-group
+            v-model="formData.skills_wanted"
             stacked
-            :state="validations.skills_wanted"
-            @change="validateField('skills_wanted')"
+            @change="touched.skills_wanted = true"
           >
             <b-form-checkbox value="html/css">HTML/CSS</b-form-checkbox>
             <b-form-checkbox value="javascript">Javascript</b-form-checkbox>
@@ -182,24 +184,30 @@
             <b-form-checkbox value="flask">Flask</b-form-checkbox>
             <b-form-checkbox value="java">Java</b-form-checkbox>
           </b-form-checkbox-group>
+          <div v-if="showInvalid('skills_wanted')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span class="required-label"
-              >How many team members do you already have? (Select 1 if you are the only one in the team) *</span
+            <span
+              >How many team members do you already have? (Select 1 if you are the only one in
+              the team) <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-radio-group 
-            v-model="formData.num_team_members" 
+          <b-form-radio-group
+            v-model="formData.num_team_members"
             name="team-members"
-            :state="validations.num_team_members"
-            @change="validateField('num_team_members')"
+            @click="touched.num_team_members = true"
           >
             <b-form-radio value="one">1</b-form-radio>
             <b-form-radio value="two">2</b-form-radio>
             <b-form-radio value="three">3</b-form-radio>
           </b-form-radio-group>
+          <div v-if="showInvalid('num_team_members')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <h4 class="header">Project Preferences</h4>
@@ -207,35 +215,36 @@
 
         <b-form-group>
           <template #label>
-            <span class="required-label"
-              >What kind of projects are you interested in (i.e. web, mobile, AI,
-              etc.)? *</span
+            <span
+              >What kind of projects are you interested in (i.e. web, mobile, AI, etc.)?
+              <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-checkbox-group 
-            v-model="formData.projects" 
+          <b-form-checkbox-group
+            v-model="formData.projects"
             stacked
-            :state="validations.projects"
-            @change="validateField('projects')"
+            @change="touched.projects = true"
           >
             <b-form-checkbox value="web_dev">Web Development</b-form-checkbox>
             <b-form-checkbox value="mobile_app">Mobile App</b-form-checkbox>
             <b-form-checkbox value="ai/ml">AI/ML</b-form-checkbox>
           </b-form-checkbox-group>
+          <div v-if="showInvalid('projects')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span class="required-label"
-              >What Bitcamp prizes are you interested in catering your project
-              towards? *</span
+            <span
+              >What Bitcamp prizes are you interested in catering your project towards?
+              <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-checkbox-group 
-            v-model="formData.prizes" 
+          <b-form-checkbox-group
+            v-model="formData.prizes"
             stacked
-            :state="validations.prizes"
-            @change="validateField('prizes')"
+            @change="touched.prizes = true"
           >
             <b-form-checkbox value="hardware">Best Hardware Hack</b-form-checkbox>
             <b-form-checkbox value="bitcamp">Best Bitcamp Hack</b-form-checkbox>
@@ -249,6 +258,9 @@
             <b-form-checkbox value="sustainability">Best Sustainability Hack</b-form-checkbox>
             <b-form-checkbox value="no_pref">No Preference</b-form-checkbox>
           </b-form-checkbox-group>
+          <div v-if="showInvalid('prizes')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <h4 class="header">Commitment</h4>
@@ -256,57 +268,59 @@
 
         <b-form-group>
           <template #label>
-            <span class="required-label">How serious are you? *</span>
+            <span>How serious are you? <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group 
-            v-model="formData.serious" 
+          <b-form-radio-group
+            v-model="formData.serious"
             name="serious"
-            :state="validations.serious"
-            @change="validateField('serious')"
+            @click="touched.serious = true"
           >
             <b-form-radio value="win">I want to win! (16-20 hours)</b-form-radio>
             <b-form-radio value="funsies"
               >I'm just doing this for fun (9-13 hours)</b-form-radio
             >
             <b-form-radio value="learning"
-              >I want to learn, if I win that will be a plus (1-8
-              hours)</b-form-radio
+              >I want to learn, if I win that will be a plus (1-8 hours)</b-form-radio
             >
           </b-form-radio-group>
+          <div v-if="showInvalid('serious')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span class="required-label"
-              >Which way would you prefer collaborating with your team? *</span
+            <span
+              >Which way would you prefer collaborating with your team?
+              <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-checkbox-group 
-            v-model="formData.collab" 
+          <b-form-checkbox-group
+            v-model="formData.collab"
             stacked
-            :state="validations.collab"
-            @change="validateField('collab')"
+            @change="touched.collab = true"
           >
             <b-form-checkbox value="remote">Remote</b-form-checkbox>
             <b-form-checkbox value="hybrid">Hybrid</b-form-checkbox>
             <b-form-checkbox value="in-person">In Person</b-form-checkbox>
           </b-form-checkbox-group>
+          <div v-if="showInvalid('collab')" class="invalid-feedback d-block">
+            Please select an answer
+          </div>
         </b-form-group>
-
       </div>
-      
-      <!-- Navigation Buttons -->
+
       <div class="actions">
         <b-button
           type="button"
+          @click="handlePrevious"
           class="submit-btn prev-btn"
-          @click="$emit('previous')"
         >
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
-
         <b-button type="submit" class="submit-btn next-btn">
-          Next Step <b-icon icon="arrow-right" class="ml-1" />
+          Next Step
+          <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
@@ -317,40 +331,51 @@
 import Vue from "vue";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
+const fifthPageRequiredFields = [
+  "opt_in_team_matching",
+  "track",
+  "hackathon",
+  "languages",
+  "experience",
+  "skill_level",
+  "skills_wanted",
+  "num_team_members",
+  "projects",
+  "prizes",
+  "serious",
+  "collab",
+];
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 export default {
-  name: "Page5",
+  name: "TeamMatchingStep",
   props: {
     formData: {
       type: Object,
       required: true,
     },
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
   },
   data() {
     const requiredFields = [
-      'opt_in_team_matching',
-      'track',
-      'hackathon',
-      'languages',
-      'experience',
-      'skill_level',
-      'skills_wanted',
-      'projects',
-      'prizes',
-      'serious',
-      'collab',
-      'num_team_members',
+      "opt_in_team_matching",
+      "track",
+      "hackathon",
+      "languages",
+      "experience",
+      "skill_level",
+      "skills_wanted",
+      "projects",
+      "prizes",
+      "serious",
+      "collab",
+      "num_team_members",
     ];
 
     const validations = {};
-    requiredFields.forEach(key => {
-        validations[key] = null;
+    requiredFields.forEach((key) => {
+      validations[key] = null;
     });
 
     const formFieldsDefaults = {
@@ -370,6 +395,7 @@ export default {
     };
 
     return {
+      touched: Object.fromEntries([...fifthPageRequiredFields].map((key) => [key, false])),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -379,23 +405,52 @@ export default {
         { number: 6, label: "Minor Waivers" },
         { number: 7, label: "Finalize & Submit" },
       ],
-      validations: validations,
       requiredFields: requiredFields,
-      arrayFields: ['languages', 'skills_wanted', 'projects', 'prizes', 'collab'],
+      arrayFields: ["languages", "skills_wanted", "projects", "prizes", "collab"],
       formFieldsDefaults: formFieldsDefaults,
     };
   },
 
   computed: {
-    // The step number for this page (used by the stepper UI)
-    currentPage() {
-      return 5;
+    validations() {
+      let checkValidBox = (field) => {
+        let isValidBox = true;
+        if (createCheckboxString(field).length === 0) {
+          isValidBox = false;
+        }
+        return isValidBox;
+      };
+
+      let createCheckboxString = (field) => {
+        if (!this.formData[field] || !Array.isArray(this.formData[field])) {
+          return "";
+        }
+        return this.formData[field].join(",");
+      };
+
+      return {
+        opt_in_team_matching:
+          this.formData.opt_in_team_matching !== null &&
+          this.formData.opt_in_team_matching !== undefined,
+        track: this.formData.track !== null && this.formData.track !== undefined,
+        hackathon: this.formData.hackathon !== null && this.formData.hackathon !== undefined,
+        languages: checkValidBox("languages"),
+        experience: this.formData.experience !== null && this.formData.experience !== undefined,
+        skill_level: this.formData.skill_level !== null && this.formData.skill_level !== undefined,
+        skills_wanted: checkValidBox("skills_wanted"),
+        num_team_members:
+          this.formData.num_team_members !== null && this.formData.num_team_members !== undefined,
+        projects: checkValidBox("projects"),
+        prizes: checkValidBox("prizes"),
+        serious: this.formData.serious !== null && this.formData.serious !== undefined,
+        collab: checkValidBox("collab"),
+      };
     },
   },
 
   mounted() {
     // Initialize all form fields in formData if they don't exist
-    Object.keys(this.formFieldsDefaults).forEach(key => {
+    Object.keys(this.formFieldsDefaults).forEach((key) => {
       if (!this.formData.hasOwnProperty(key)) {
         this.$set(this.formData, key, this.formFieldsDefaults[key]);
       }
@@ -403,69 +458,51 @@ export default {
   },
 
   methods: {
-    validateField(key) {
-      const value = this.formData[key];
-      let isValid = true;
-
-      if (this.arrayFields.includes(key)) {
-        // Checkbox group validation: check if array has at least one item
-        isValid = Array.isArray(value) && value.length > 0;
-      } else {
-        // Text/Radio group validation: check for null, undefined, or empty string
-        isValid = value !== null && value !== undefined && value !== '';
-      }
-
-      this.$set(this.validations, key, isValid ? null : false);
-      return isValid;
-    },
-    
-    // Helper to clear validation errors when user opts out
-    clearAllValidationsIfOptOut() {
-        if (this.formData.opt_in_team_matching === 'no') {
-            this.requiredFields.forEach(key => {
-                // Keep the opt-in validation, but clear everything else
-                if (key !== 'opt_in_team_matching') {
-                    this.$set(this.validations, key, null);
-                }
-            });
-        }
+    showInvalid(field) {
+      return this.touched[field] === true && this.validations[field] === false;
     },
 
     validateForm() {
-      let valid = true;
-      let fieldsToValidate = ['opt_in_team_matching'];
-
-      // Check the primary opt-in question first
-      if (!this.validateField('opt_in_team_matching')) {
-          valid = false;
+      if (this.formData.opt_in_team_matching === "no") {
+        return this.validations.opt_in_team_matching;
       }
 
-      // If opted in, validate all other required fields
-      if (this.formData.opt_in_team_matching === 'yes') {
-        fieldsToValidate = this.requiredFields.filter(key => key !== 'opt_in_team_matching');
-        
-        fieldsToValidate.forEach(key => {
-          const fieldIsValid = this.validateField(key);
-          if (!fieldIsValid) {
-            valid = false;
+      return fifthPageRequiredFields.every((fieldName) => this.validations[fieldName]);
+    },
+
+    // Helper to clear validation errors when user opts out
+    clearAllValidationsIfOptOut() {
+      if (this.formData.opt_in_team_matching === "no") {
+        fifthPageRequiredFields.forEach((key) => {
+          // Keep the opt-in validation, but clear everything else
+          if (key !== "opt_in_team_matching") {
+            this.$set(this.validations, key, null);
           }
         });
-      } else if (this.formData.opt_in_team_matching === 'no') {
-        // If opted out, ensure all other fields are clear of errors
-        this.clearAllValidationsIfOptOut();
       }
-
-      return valid;
     },
 
     handleNext() {
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
+
+      event.preventDefault();
+
+      fifthPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+
       if (this.validateForm()) {
         this.$emit("next");
-        return;
+      } else {
+        this.$bvToast.toast("Please fill out all required fields", {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        });
       }
-
-      // NOTE: Using console.error instead of $bvToast.toast as per instructions
-      console.error("Please fill out all required fields");
     },
 
     handlePrevious() {
@@ -475,8 +512,8 @@ export default {
 };
 </script>
 
-<style>
-/* centered form */
+<style scoped>
+/* Stepper and Page Content Styles */
 .register-page {
   max-width: 760px;
   margin: 40px auto 80px;
@@ -484,128 +521,110 @@ export default {
   text-align: left;
 }
 
+.page-content {
+  background: #fff7ee;
+  border-radius: 12px;
+
+  padding: 40px 56px 48px;
+  text-align: left;
+}
+
 .page-title {
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .page-subtitle {
-  font-size: 1rem;
-  color: #333;
+  font-size: 0.9rem;
+  opacity: 0.95;
+  margin-bottom: 22px;
 }
 
-.page-subtitle a {
-  color: #ff6b35;
-  text-decoration: none;
+.section-title {
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
-/* Stepper */
+.info {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 18px;
+}
+
 .stepper {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin: 0 auto 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f3f3f3;
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
-  font-size: 1.3rem;
-  font-weight: 400;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.stepper-item {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #ff6b35 !important;
-  color: #ffffff !important;
-  border-color: #ff6b35 !important;
-  font-weight: 400 !important;
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 8px;
-  border-radius: 50%;
-  background: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #666;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
+  z-index: 1; 
 }
 
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
-  color: white;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-}
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: #ffffff;
-}
-
-.stepper-item.completed .stepper-circle {
-  background: #ff6b35;
-  color: white;
-}
-
-.stepper-item::before {
-  content: '';
+.stepper-item:not(:last-child)::after {
+  content: "";
   position: absolute;
-  width: calc(100% - 50px);
-  height: 3px;
-  background: #d3d3d3;
-  top: 23px;
-  left: 25px;
-  z-index: 0;
-  transition: background 0.3s ease;
-}
-
-.stepper-item:first-child::before {
-  display: none;
-}
-
-.stepper-item.completed::before {
-  background: #ff6b35;
+  top: 27px; 
+  left: 50%;
+  width: 100%;
+  height: 2px; 
+  background: #dddddd; 
+  z-index: -1; 
 }
 
 .stepper-label {
-  font-weight: 500;
-  line-height: 1.3;
-  padding: 0 5px;
-  color: #606060;
+  font-size: 0.75rem !important; 
+  font-weight: 600;
+  font-family: "Inter", sans-serif !important;
+  color: #000000 !important;
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 8px;
 }
 
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
+.stepper-item.completed:not(:last-child)::after {
+  background: #ff6b35 !important;
+}
+
+.stepper-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #f3f3f3; 
+  color: #9a9a9a;
+  border: 1px solid #dddddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
-}
-.stepper-item.completed .stepper-label {
-  color: #ff6b35;
-  font-weight: 700;
-}
-
-.stepper-item.completed .stepper-label {
-  color: #606060;
+  margin-bottom: 8px;
+  position: relative; 
+  z-index: 2;
+  font-family: "Inter", sans-serif !important; 
 }
 
-/* Connecting lines */
-.stepper-line {
-  position: absolute;
-  top: 25px;
-  left: calc(50% + 25px); 
-  width: calc(100% - 25px);
-  height: 3px;
-  border-radius: 999px;
-}
-
-
-.stepper-line.completed {
-  background: #ff6b35;
+/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #ff6b35 !important;
+  color: #ffffff !important;
+  border-color: #ff6b35 !important;
+  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
 }
 
 .checkmark {
@@ -613,7 +632,6 @@ export default {
   font-weight: 700;
 }
 
-/* Buttons */
 .actions {
   display: flex;
   justify-content: space-between;
@@ -626,107 +644,81 @@ export default {
   border-radius: 6px;
 }
 
-/* FORCE override Bootstrap grey buttons */
-button.btn.submit-btn.prev-btn,
-a.btn.submit-btn.prev-btn {
-  background-color: #f5f5f5 !important;
-  color: #ff6b35 !important;
-  border: 1px solid #ff6b35 !important;
+.prev-btn {
+  background-color: #f5f5f5;
+  color: #ff6b35;
+  border: 1px solid #ff6b35;
 }
 
-button.btn.submit-btn.next-btn,
-a.btn.submit-btn.next-btn {
-  background-color: #ff6b35 !important;
-  color: #ffffff !important;
-  border: none !important;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45) !important;
+.next-btn {
+  background-color: #ff6b35;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+}
+.header {
+  margin-top: 2rem;
 }
 
-button.btn.submit-btn.next-btn:hover,
-a.btn.submit-btn.next-btn:hover {
-  background-color: #ff7b47 !important;
+.section-divider {
+  height: 2px;
+  background-color: #ffeac7;
+  margin: 0.5rem auto 1.5rem;
+  border-radius: 2px;
 }
 
-/* Responsive styles for mobile */
 @media (max-width: 768px) {
-  /* Page container */
-  .register-page {
-    margin: 20px auto 40px;
-    padding: 0 10px;
+  .page-content {
+    padding: 30px 20px; 
   }
 
-  /* Page titles */
   .page-title {
     font-size: 1.8rem;
   }
 
-  .page-subtitle {
-    font-size: 0.9rem;
-  }
-
   .stepper {
-    display: flex !important;
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 20px; 
+    row-gap: 10px; 
   }
 
   .stepper-item {
-    flex: 0 0 25%; /* Row 1: 4 items */
+    flex: 0 0 25%; 
     max-width: 25%;
-    position: relative; /* Essential for line positioning */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
   .stepper-circle {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-    z-index: 2; /* Ensure circle stays above the line */
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+
+  .checkmark {
+    font-size: 1.2rem;
   }
 
   .stepper-label {
-    font-size: 0.8rem;
+    font-size: 0.65rem !important;
   }
 
-  .stepper-line {
-    display: block !important; 
-    position: absolute;
-    top: 17.5px; 
-    left: calc(50% + 17.5px); 
-    width: calc(100% - 35px);
+  .stepper-item:not(:last-child)::after {
+    top: 20px; 
     height: 2px;
-    background: #e8e8e8; 
-    z-index: 1;
   }
 
-  .stepper-item:nth-child(4) .stepper-line,
-  .stepper-item:nth-child(7) .stepper-line {
+  .stepper-item:nth-child(4)::after {
     display: none !important;
   }
 
   .actions {
-    display: flex;
-    justify-content: center; /* center the row */
-    gap: 10px;               /* spacing between buttons */
+    flex-direction: column-reverse;
+    gap: 15px;
   }
 
   .submit-btn {
-    flex: 0 0 auto;          /* don't stretch, keep natural size */
-    padding: 8px 20px;
-    font-size: 0.9rem;
-  }
-
-  /* Form fields */
-  .b-form-group {
-    margin-bottom: 15px;
-  }
-
-  .b-form-radio-group,
-  .b-form-checkbox-group {
-    font-size: 0.9rem;
+    width: 100%; 
+    padding: 12px;
   }
 }
 </style>
