@@ -2,7 +2,7 @@
   <b-container>
     <b-card class="main-card mt-3 mt-lg-4 mt-xxl-5">
       <!-- Page 1: Tell us about yourself -->
-      <Page1
+      <PersonalInfoPage1
         v-if="currentPage === 1"
         :form-data="formData"
         :current-page="currentPage"
@@ -11,7 +11,7 @@
       />
 
       <!-- Page 2: Choose a track -->
-      <Page2
+      <TrackExperiencePage2
         v-if="currentPage === 2"
         :form-data="formData"
         :current-page="currentPage"
@@ -20,7 +20,7 @@
       />
 
       <!-- Page 3: Travel and T-shirt -->
-      <Page3
+      <AttendancePage3
         v-if="currentPage === 3"
         :form-data="formData"
         :current-page="currentPage"
@@ -29,14 +29,14 @@
       />
 
       <!-- Page 4 and beyond would go here as needed -->
-      <Page4
+      <CampfireGamesPage4
         v-if="currentPage === 4"
         :form-data="formData"
         @next="goToPage(5)"
         @previous="goToPage(3)"
       />
 
-      <Page5
+      <TeamMatchingPage5
         v-if="currentPage === 5"
         :form-data="formData"
         :current-page="currentPage"
@@ -44,7 +44,7 @@
         @previous="goToPage(4)"
       />
 
-      <Page7
+      <SubmitPage7
         v-if="currentPage === 6"
         :form-data="formData"
         :current-page="currentPage"
@@ -57,23 +57,23 @@
 </template>
 
 <script>
-import Page1 from "./Page1.vue";
-import Page2 from "./Page2.vue";
-import Page3 from "./Page3.vue";
-import Page4 from "./Page4.vue";
-import Page5 from "./Page5.vue";
-import Page7 from "./Page7.vue";
+import PersonalInfoPage1 from "./PersonalInfoPage1.vue";
+import TrackExperiencePage2 from "./TrackExperiencePage2.vue";
+import AttendancePage3 from "./AttendancePage3.vue";
+import CampfireGamesPage4 from "./CampfireGamesPage4.vue";
+import TeamMatchingPage5 from "./TeamMatchingPage5.vue";
+import SubmitPage7 from "./SubmitPage7.vue";
 import { v4 as uuid } from "uuid";
 
 export default {
   name: "RegistrationFormParent",
   components: {
-    Page1,
-    Page2,
-    Page3,
-    Page4,
-    Page5,
-    Page7,
+    PersonalInfoPage1,
+    TrackExperiencePage2,
+    AttendancePage3,
+    CampfireGamesPage4,
+    TeamMatchingPage5,
+    SubmitPage7,
   },
   props: {
     default_track: {

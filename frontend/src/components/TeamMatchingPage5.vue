@@ -350,7 +350,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 export default {
-  name: "TeamMatchingStep",
+  name: "TeamMatchingPage5",
   props: {
     formData: {
       type: Object,

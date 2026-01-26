@@ -245,7 +245,7 @@ const thirdPageOptionalFields = [
 ];
 
 export default {
-  name: "Page3",
+  name: "AttendancePage3",
   props: {
     formData: { type: Object, required: true },
   },

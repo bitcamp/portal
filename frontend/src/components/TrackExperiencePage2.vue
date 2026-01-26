@@ -348,7 +348,7 @@ const secondPageRequiredFields = [
 const secondPageOptionalFields = ["quantum_track", "portfolio"];
 
 export default {
-  name: "Page2",
+  name: "TrackExperiencePage2",
   props: {
     formData: {
       type: Object,

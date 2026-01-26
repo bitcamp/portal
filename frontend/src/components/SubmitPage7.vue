@@ -96,7 +96,7 @@
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
         <b-button type="submit" class="submit-btn next-btn">
-          Next Step
+          Complete Registration
           <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
@@ -113,7 +113,7 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
 export default {
-  name: "Page7",
+  name: "SubmitPage7",
   mixins: [generalMixin],
   props: {
     formData: {
@@ -130,7 +130,7 @@ export default {
         { number: 4, label: "Campfire Games" },
         { number: 5, label: "Team Matching" },
         { number: 6, label: "Minor Waivers" },
-        { number: 7, label: "Rules & Policies" },
+        { number: 7, label: "Finalize & Submit" },
       ],
 
       validations: {

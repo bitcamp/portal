@@ -90,7 +90,7 @@ const fourthPageRequiredFields = ["q1", "q2", "q3", "q4", "q5"];
 Vue.use(IconsPlugin);
 
 export default {
-  name: "Page4",
+  name: "CampfireGamesPage4",
   props: {
     formData: {
       type: Object,

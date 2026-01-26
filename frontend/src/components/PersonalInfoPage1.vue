@@ -298,7 +298,7 @@ const firstPageValidatedFields = [
 ];
 
 export default {
-  name: "Page1",
+  name: "PersonalInfoPage1",
 
   props: {
     formData: {
