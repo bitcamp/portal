@@ -29,7 +29,7 @@
 
         <div class="info-box">
             <div class="info-header" @click="toggleStu">
-                <span class="title" style="color: white">Student Organization Release and Informed Consent Form</span>
+                <span class="title header-title">Student Organization Release and Informed Consent Form</span>
                     <img
                     :src="openImg"
                     class="arrow"
@@ -92,7 +92,7 @@
 
     <div class="info-box">
             <div class="info-header" @click="togglePhoto">
-                <span class="title" style="color: white">Photography Consent Form</span>
+                <span class="title header-title">Photography Consent Form</span>
                     <img
                     :src="openImg"
                     class="arrow"
@@ -218,7 +218,7 @@
 
     <div class="info-box">
             <div class="info-header" @click="toggleStu2">
-                <span class="title" style="color: white">Student Organization Release and Informed Consent Form</span>
+                <span class="title header-title">Student Organization Release and Informed Consent Form</span>
                     <img
                     :src="openImg"
                     class="arrow"
@@ -400,7 +400,7 @@
 
     <div class="info-box">
             <div class="info-header" @click="toggleCond">
-                <span class="title" style="color: white">Conditional Form Question</span>
+                <span class="title header-title">Conditional Form Question</span>
                     <img
                     :src="openImg"
                     class="arrow"
@@ -782,6 +782,13 @@ export default {
   font-size: 0.9rem;
   opacity: 0.95;
   margin-bottom: 22px;
+}
+
+.header-title {
+  font-family: "Aleo", serif;
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
 }
 
 .stepper {
