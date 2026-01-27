@@ -309,7 +309,6 @@ export default {
   align-items: flex-start;
   width: 100%;
   position: relative;
-  margin-bottom: 50px;
 }
 
 .stepper-item {
@@ -416,11 +415,6 @@ export default {
   margin-bottom: 18px;
 }
 
-hr {
-  margin: 40px 0;
-  border-top: 1px solid #eee;
-}
-
 .checkbox-wrapper {
   margin-top: 20px;
 }
@@ -433,5 +427,50 @@ hr {
 .checkbox a {
   color: #f97345;
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 30px 20px; 
+  }
+  .page-title {
+    font-size: 1.8rem;
+  }
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px; 
+  }
+  .stepper-item {
+    flex: 0 0 25%; 
+    max-width: 25%;
+  }
+  .stepper-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+  .checkmark {
+    font-size: 1.2rem;
+  }
+  .stepper-label {
+    font-size: 0.65rem !important;
+  }
+  .stepper-item:not(:last-child)::after {
+    top: 20px; 
+    height: 2px;
+  }
+  .stepper-item:nth-child(4)::after {
+    display: none !important;
+  }
+  .actions {
+    flex-direction: column-reverse;
+    gap: 15px;
+  }
+  .submit-btn {
+    width: 100%; 
+    padding: 12px;
+  }
 }
 </style>
