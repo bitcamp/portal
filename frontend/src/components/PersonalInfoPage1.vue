@@ -542,7 +542,7 @@ export default {
   color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
-  width: 75px; 
+  width: 65px; 
   word-wrap: break-word;
   margin-top: 8px;
 }
@@ -632,6 +632,7 @@ export default {
   }
   .stepper-label {
     font-size: 0.65rem !important;
+    width: 55px; 
   }
   .stepper-item:not(:last-child)::after {
     top: 20px; 
