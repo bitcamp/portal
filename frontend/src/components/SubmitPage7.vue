@@ -13,10 +13,14 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 7, completed: step.number < 7 }"
+        :class="{ 
+          active: step.number === currentPage, 
+          completed: step.number < currentPage,
+          inactive: step.number > currentPage 
+        }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < 7" class="checkmark">✓</span>
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">{{ step.label }}</div>
@@ -143,14 +147,14 @@ export default {
   },
 
   computed: {
-    // The step number for this page (used by the stepper UI)
     currentPage() {
       return 7;
     },
+    whyBitcampChars() { return (this.formData.question1 || "").length; },
+    whatBuildChars() { return (this.formData.question2 || "").length; },
   },
 
   mounted() {
-    // Initialize MLH checkbox values in formData if they don't exist
     const keys = ["MLH_emails", "MLH_conduct", "MLH_privacy"];
     keys.forEach((key) => {
       if (!this.formData.hasOwnProperty(key)) {
@@ -167,9 +171,7 @@ export default {
     },
 
     async handleNext(event) {
-      console.log(this.formData);
       event.preventDefault();
-
       if (!this.validateForm()) {
         this.$bvToast.toast("Please fill out all required fields", {
           toaster: "b-toaster-top-center",
@@ -178,12 +180,9 @@ export default {
           noCloseButton: true,
           variant: "danger",
         });
-
         return;
       }
-
       const response = await this.registerUser();
-
       if (response && response.referral_id) {
         this.$router.push({ path: "thanks", query: { r: response.referral_id } });
       } else {
@@ -199,71 +198,27 @@ export default {
 
     async registerUser() {
       if (this.isSending) return;
-
       this.isSending = true;
-
       this.formData.name = `${this.formData.first_name} ${this.formData.last_name}`;
-
-      // prevent blacklisted hackers from registering
       if (this.formData.name === "Auran Shereef" || this.formData.name === "Monte James") {
         this.$router.push({ path: "thanks" });
         return;
       }
-
-      // time taken to fill out form in seconds
       this.formData.time_taken = (Date.now() - this.form_start) / 1000;
-
       if (this.$route.params.referral) {
         this.$gtag.event("got-referred", { method: "Google" });
         this.formData.referred_by = this.$route.params.referral;
-        this.track({
-          random_id: this.random_id,
-          key: "got-referred",
-          value: this.$route.params.referral,
-        });
+        this.track({ random_id: this.random_id, key: "got-referred", value: this.$route.params.referral });
       }
-
-      // Track "heard from" statistics
-      // TODO - Uncomment this once we fixed the frontend for that
-      // for (let heardFrom of this.heard_from_select) {
-      //   this.track({
-      //     random_id: this.random_id,
-      //     key: `hf-${heardFrom}`,
-      //     value: 1,
-      //   });
-      // }
-      // for now will use what works with frontend atm
-      this.track({
-        random_id: this.random_id,
-        key: `hf-${this.heard_from}`,
-        value: 1,
-      });
-
+      this.track({ random_id: this.random_id, key: `hf-${this.heard_from}`, value: 1 });
       if (this.heard_from_other) {
-        this.track({
-          random_id: this.random_id,
-          key: "hf-other",
-          value: 1,
-        });
+        this.track({ random_id: this.random_id, key: "hf-other", value: 1 });
       }
-
       this.$gtag.event("submit-registration", { method: "Google" });
-      this.$gtag.time({
-        name: "completion-time",
-        value: this.formData.time_taken,
-        event_category: "Form completion duration",
-      });
-      this.track({
-        random_id: this.random_id,
-        key: "form-submitted",
-        value: this.formData.time_taken,
-      });
-
+      this.$gtag.time({ name: "completion-time", value: this.formData.time_taken, event_category: "Form completion duration" });
+      this.track({ random_id: this.random_id, key: "form-submitted", value: this.formData.time_taken });
       const d = new Date();
-      this.formData.secret =
-        (d.getHours() * d.getDay() * 15).toString() +
-        d.getFullYear().toString().split("").reverse().join("");
-
+      this.formData.secret = (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().toString().split("").reverse().join("");
       const survey_count = { r: 0, b: 0, g: 0 };
       survey_count[this.formData.q1.substring(0, 1)] += 1;
       survey_count[this.formData.q2.substring(0, 1)] += 1;
@@ -273,129 +228,64 @@ export default {
       this.formData.red = survey_count["r"];
       this.formData.green = survey_count["g"];
       this.formData.blue = survey_count["b"];
-
       this.formData.dietary_restrictions = this.createDietaryRestrictionString();
-
-      // TODO - Fix frontend to support this, atm it just uses ethnicity with no
-      // multiselect
-      // this.formData.ethnicity = this.createEthnicityString();
-
-      // TODO - Heard from with the current frontend is not compatible with old frontend code
-      // so will just use what works with the frontend for now
-      // this.formData.heard_from = this.createHeardFromString();
-
-      // TODO - From what I can tell this seems unused? Should check
-      // this.formData.transport_select = this.createTransportString();
-
       const isMinor = this.formData.age.length > 0 && Number(this.formData.age) < 18;
       const endpoint = isMinor ? "register_minor" : "register";
-
-      const response = await this.performPostRequest(
-        this.getEnvVariable("BACKEND_ENDPOINT"),
-        endpoint,
-        this.formData
-      );
-
+      const response = await this.performPostRequest(this.getEnvVariable("BACKEND_ENDPOINT"), endpoint, this.formData);
       this.isSending = false;
       return response;
     },
 
-    // Should probably revalidate previous page fields too
     validateForm() {
       let valid = true;
       const form = this.formData;
-
-      if (!form.MLH_privacy) {
-        this.validations.valid_mlh_privacy = false;
-        valid = false;
-      } else {
-        this.validations.valid_mlh_privacy = null;
-      }
-
-      if (!form.MLH_conduct) {
-        this.validations.valid_code_of_conduct = false;
-        valid = false;
-      } else {
-        this.validations.valid_code_of_conduct = null;
-      }
-
+      if (!form.MLH_privacy) { this.validations.valid_mlh_privacy = false; valid = false; }
+      else { this.validations.valid_mlh_privacy = null; }
+      if (!form.MLH_conduct) { this.validations.valid_code_of_conduct = false; valid = false; }
+      else { this.validations.valid_code_of_conduct = null; }
       return valid;
     },
 
     createDietaryRestrictionString() {
       let diet_string = this.formData.diet_select.join(",");
-
-      if (this.formData.diet_none) {
-        return "none";
-      }
+      if (this.formData.diet_none) return "none";
       if (this.formData.diet_other && this.formData.diet_other_text != "") {
-        if (diet_string != "") {
-          diet_string += ",";
-        }
+        if (diet_string != "") diet_string += ",";
         diet_string = diet_string + "other(" + this.formData.diet_other_text + ")";
       }
-
       return diet_string;
     },
 
-    // TODO - Fix Page 1 such that it supports this function, for now will just use
-    // the 'ethnicity' field in the current frontend
     createEthnicityString() {
       let ethnicity_string = this.formData.ethnicity_select.join(",");
-
-      if (this.ethnicity_prefer_no_answer) {
-        return "prefer-not-to-answer";
-      }
+      if (this.ethnicity_prefer_no_answer) return "prefer-not-to-answer";
       if (this.ethnicity_other && this.ethnicity_other_text != "") {
-        if (ethnicity_string != "") {
-          ethnicity_string += ",";
-        }
+        if (ethnicity_string != "") ethnicity_string += ",";
         ethnicity_string = ethnicity_string + "other(" + this.ethnicity_other_text + ")";
       }
-
       return ethnicity_string;
     },
 
-    // TODO - Fix Page 1 such that it supports this function, for now will just use
-    // the 'heard_from_select' field in the current frontend
     createHeardFromString() {
       let heard_from_string = this.heard_from_select.join(",");
-
       if (this.heard_from_other && this.heard_from_other_text != "") {
-        if (heard_from_string != "") {
-          heard_from_string += ",";
-        }
+        if (heard_from_string != "") heard_from_string += ",";
         heard_from_string = heard_from_string + "other(" + this.heard_from_other_text + ")";
       }
-
       return heard_from_string;
     },
 
-    // From what I can tell this seems unused now
-    createTransportString() {
-      return this.transport_select.join(",");
-    },
-
-    handlePrevious() {
-      this.$emit("previous");
-    },
+    createTransportString() { return this.transport_select.join(","); },
+    handlePrevious() { this.$emit("previous"); },
   },
 };
 </script>
 
 <style scoped>
 .register-page {
-  max-width: 760px;
+  max-width: 820px;
   margin: 40px auto 80px;
   padding: 0 20px;
-  text-align: left;
-}
-
-.page-content {
-  background: #fff7ee;
-  border-radius: 12px;
-
-  padding: 40px 56px 48px;
   text-align: left;
 }
 
@@ -407,21 +297,11 @@ export default {
 
 .page-subtitle {
   font-size: 0.9rem;
-  opacity: 0.95;
-  margin-bottom: 22px;
+  opacity: 0.8;
+  margin-bottom: 30px;
 }
 
-.section-title {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-
-.info {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  margin-bottom: 18px;
-}
-
+/* --- STEPPER STYLES --- */
 .stepper {
   display: flex !important;
   flex-direction: row !important;
@@ -429,10 +309,7 @@ export default {
   align-items: flex-start;
   width: 100%;
   position: relative;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
+  margin-bottom: 50px;
 }
 
 .stepper-item {
@@ -449,58 +326,59 @@ export default {
 .stepper-item:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: 27px; 
-  left: 50%;
-  width: 100%;
-  height: 2px; 
-  background: #dddddd; 
-  z-index: -1; 
-}
-
-.stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600;
-  font-family: "Inter", sans-serif !important;
-  color: #000000 !important;
-  text-align: center;
-  line-height: 1.2;
-  margin-top: 8px;
+  top: 27px;
+  /* Starts the line 35px to the right of the circle center */
+  left: calc(50% + 35px); 
+  /* Subtracts 70px (35px for each side) to create the gap */
+  width: calc(100% - 70px); 
+  height: 4px;
+  background: #e9ecef;
+  z-index: -1;
 }
 
 .stepper-item.completed:not(:last-child)::after {
-  background: #ff6b35 !important;
+  background: #f97345 !important;
 }
 
 .stepper-circle {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #f3f3f3; 
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
+  background: #ebebeb; 
+  color: #a0a0a0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
   position: relative; 
   z-index: 2;
-  font-family: "Inter", sans-serif !important; 
+}
+
+.stepper-label {
+  font-size: 0.75rem !important; 
+  font-weight: 600; 
+  color: #837d7d !important; /* Force all labels to stay grey */
+  text-align: center;
+  line-height: 1.1;
+  width: 75px; 
+  word-wrap: break-word;
+  margin-top: 8px;
 }
 
 .stepper-item.active .stepper-circle,
 .stepper-item.completed .stepper-circle {
-  background: #ff6b35 !important;
+  background: #f97345 !important;
   color: #ffffff !important;
-  border-color: #ff6b35 !important;
-  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
+  box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
 }
 
 .checkmark {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.4rem;
 }
 
+/* --- ACTIONS --- */
 .actions {
   display: flex;
   justify-content: space-between;
@@ -508,76 +386,52 @@ export default {
 }
 
 .submit-btn {
-  padding: 10px 30px;
+  padding: 12px 24px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .prev-btn {
-  background-color: #f5f5f5;
-  color: #ff6b35;
-  border: 1px solid #ff6b35;
+  background-color: transparent !important;
+  color: #f97345 !important;
+  border: 1px solid #f97345 !important;
 }
 
 .next-btn {
-  background-color: #ff6b35;
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+  background-color: #f97345 !important;
+  color: #ffffff !important;
+  border: none !important;
 }
 
-@media (max-width: 768px) {
-  .page-content {
-    padding: 30px 20px; 
-  }
+/* --- FORM STYLES --- */
+.section-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
 
-  .page-title {
-    font-size: 1.8rem;
-  }
+.info {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  color: #555;
+  margin-bottom: 18px;
+}
 
-  .stepper {
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 10px; 
-  }
+hr {
+  margin: 40px 0;
+  border-top: 1px solid #eee;
+}
 
-  .stepper-item {
-    flex: 0 0 25%; 
-    max-width: 25%;
-  }
+.checkbox-wrapper {
+  margin-top: 20px;
+}
 
-  .stepper-circle {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem !important;
-    margin-bottom: 2px;
-  }
+.checkbox {
+  font-size: 0.9rem;
+  color: #555;
+}
 
-  .checkmark {
-    font-size: 1.2rem;
-  }
-
-  .stepper-label {
-    font-size: 0.65rem !important;
-  }
-
-  .stepper-item:not(:last-child)::after {
-    top: 20px; 
-    height: 2px;
-  }
-
-  .stepper-item:nth-child(4)::after {
-    display: none !important;
-  }
-
-  .actions {
-    flex-direction: column-reverse;
-    gap: 15px;
-  }
-
-  .submit-btn {
-    width: 100%; 
-    padding: 12px;
-  }
+.checkbox a {
+  color: #f97345;
+  text-decoration: underline;
 }
 </style>

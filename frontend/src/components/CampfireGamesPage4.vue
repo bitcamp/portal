@@ -13,7 +13,11 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 4, completed: step.number < 4 }"
+        :class="{ 
+          active: step.number === 4, 
+          completed: step.number < 4,
+          inactive: step.number > 4
+        }"
       >
         <div class="stepper-circle">
           <span v-if="step.number < 4" class="checkmark">✓</span>
@@ -163,29 +167,10 @@ export default {
 </script>
 
 <style scoped>
-/* These lines ensure there is NO white background or margins around the component */
 .register-page {
-  max-width: 760px;
+  max-width: 820px;
   margin: 40px auto 80px;
   padding: 0 20px;
-  text-align: left;
-}
-
-.row.no-gutters {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-.p-0 {
-  padding: 0 !important;
-}
-
-/* The card itself */
-.page-content {
-  background: #fff7ee;
-  border-radius: 12px;
-
-  padding: 40px 56px 48px;
   text-align: left;
 }
 
@@ -197,10 +182,11 @@ export default {
 
 .page-subtitle {
   font-size: 0.9rem;
-  opacity: 0.95;
-  margin-bottom: 22px;
+  opacity: 0.8;
+  margin-bottom: 30px;
 }
 
+/* --- STEPPER STYLES --- */
 .stepper {
   display: flex !important;
   flex-direction: row !important;
@@ -208,10 +194,7 @@ export default {
   align-items: flex-start;
   width: 100%;
   position: relative;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
+  margin-bottom: 50px;
 }
 
 .stepper-item {
@@ -228,59 +211,59 @@ export default {
 .stepper-item:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: 27px; 
-  left: 50%;
-  width: 100%;
-  height: 2px; 
-  background: #dddddd; 
-  z-index: -1; 
-}
-
-.stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600;
-  font-family: "Inter", sans-serif !important;
-  color: #000000 !important;
-  text-align: center;
-  line-height: 1.2;
-  margin-top: 8px;
+  top: 27px;
+  /* Starts the line 35px to the right of the circle center */
+  left: calc(50% + 35px); 
+  /* Subtracts 70px (35px for each side) to create the gap */
+  width: calc(100% - 70px); 
+  height: 4px;
+  background: #e9ecef;
+  z-index: -1;
 }
 
 .stepper-item.completed:not(:last-child)::after {
-  background: #ff6b35 !important;
+  background: #f97345 !important;
 }
 
 .stepper-circle {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #f3f3f3; 
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
+  background: #ebebeb; 
+  color: #a0a0a0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
   position: relative; 
   z-index: 2;
-  font-family: "Inter", sans-serif !important; 
 }
 
-/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
+.stepper-label {
+  font-size: 0.75rem !important; 
+  font-weight: 600; 
+  color: #837d7d !important; /* Force all labels to stay grey */
+  text-align: center;
+  line-height: 1.1;
+  width: 75px; 
+  word-wrap: break-word;
+  margin-top: 8px;
+}
+
 .stepper-item.active .stepper-circle,
 .stepper-item.completed .stepper-circle {
-  background: #ff6b35 !important;
+  background: #f97345 !important;
   color: #ffffff !important;
-  border-color: #ff6b35 !important;
-  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
+  box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
 }
 
 .checkmark {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.4rem;
 }
 
+/* --- FORM & ACTION STYLES --- */
 .actions {
   display: flex;
   justify-content: space-between;
@@ -288,77 +271,36 @@ export default {
 }
 
 .submit-btn {
-  padding: 10px 30px;
+  padding: 12px 24px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .prev-btn {
-  background-color: #f5f5f5;
-  color: #ff6b35;
-  border: 1px solid #ff6b35;
+  background-color: transparent !important;
+  color: #f97345 !important;
+  border: 1px solid #f97345 !important;
 }
 
 .next-btn {
-  background-color: #ff6b35;
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+  background-color: #f97345 !important;
+  color: #ffffff !important;
+  border: none !important;
 }
 
-/* Responsive styles for mobile */
-@media (max-width: 768px) {
-  .page-content {
-    padding: 30px 20px; 
-  }
+.section-title {
+  font-weight: 700;
+}
 
-  .page-title {
-    font-size: 1.8rem;
-  }
+.info {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  color: #555;
+  margin-bottom: 18px;
+}
 
-  .stepper {
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 10px; 
-  }
-
-  .stepper-item {
-    flex: 0 0 25%; 
-    max-width: 25%;
-  }
-
-  .stepper-circle {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem !important;
-    margin-bottom: 2px;
-  }
-
-  .checkmark {
-    font-size: 1.2rem;
-  }
-
-  .stepper-label {
-    font-size: 0.65rem !important;
-  }
-
-  .stepper-item:not(:last-child)::after {
-    top: 20px; 
-    height: 2px;
-  }
-
-  .stepper-item:nth-child(4)::after {
-    display: none !important;
-  }
-
-  .actions {
-    flex-direction: column-reverse;
-    gap: 15px;
-  }
-
-  .submit-btn {
-    width: 100%; 
-    padding: 12px;
-  }
+hr {
+  margin: 40px 0;
+  border-top: 1px solid #eee;
 }
 </style>

@@ -13,10 +13,14 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 2, completed: step.number < 2 }"
+        :class="{ 
+          active: step.number === currentPage, 
+          completed: step.number < currentPage,
+          inactive: step.number > currentPage 
+        }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < 2" class="checkmark">✓</span>
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">{{ step.label }}</div>
@@ -26,7 +30,6 @@
     <hr />
 
     <b-form @submit.prevent="handleNext">
-      <!-- CHOOSE TRACK -->
       <h4 class="section-title">Choose a track! <span class="text-danger">*</span></h4>
 
       <p class="info">
@@ -34,9 +37,7 @@
         opportunities.
       </p>
 
-      <!-- HORIZONTAL SCROLLABLE TRACKS -->
       <div class="track-scroll">
-        <!-- General -->
         <label class="track-card-wrapper">
           <input
             v-model="formData.track_selected"
@@ -57,7 +58,6 @@
           </b-card>
         </label>
 
-        <!-- Quantum -->
         <label class="track-card-wrapper">
           <input
             v-model="formData.track_selected"
@@ -78,7 +78,6 @@
           </b-card>
         </label>
 
-        <!-- Machine Learning -->
         <label class="track-card-wrapper">
           <input
             v-model="formData.track_selected"
@@ -99,7 +98,6 @@
           </b-card>
         </label>
 
-        <!-- App Dev -->
         <label class="track-card-wrapper">
           <input
             v-model="formData.track_selected"
@@ -119,7 +117,6 @@
           </b-card>
         </label>
 
-        <!-- Cybersecurity -->
         <label class="track-card-wrapper">
           <input
             v-model="formData.track_selected"
@@ -140,7 +137,6 @@
         </label>
       </div>
 
-      <!-- Quantum Track Selection -->
       <div v-if="formData.track_selected === 'quantum'" class="mt-4 form-group">
         <label class="form-label">
           Would you like to be placed in the beginner quantum or advanced quantum track?*
@@ -170,7 +166,6 @@
         </div>
       </div>
 
-      <!-- Beginner Content Opt-in -->
       <div class="mt-4 form-group">
         <label class="form-label">
           Although we are not offering a beginner (general) track this year, Bitcamp remains
@@ -202,7 +197,6 @@
         </div>
       </div>
 
-      <!-- WHY BITCAMP -->
       <hr class="mt-4" />
       <h4 class="section-title">Why Bitcamp?</h4>
       <p class="info">
@@ -265,7 +259,6 @@
         </small>
       </b-form-group>
 
-      <!-- WANT TO GET HIRED -->
       <hr class="mt-4" />
       <h4 class="section-title">Want to get hired?</h4>
       <p class="info">Let us know, and we’ll pass your info on to our sponsors!</p>
@@ -297,7 +290,6 @@
         </b-form-group>
       </b-form-row>
 
-      <!-- RESUME (custom UI, only part that's different) -->
       <b-form-group label="Resume (.pdf .doc .docx)">
         <div class="resume-upload" @click="triggerResumeFile">
           <span class="resume-placeholder">
@@ -315,7 +307,6 @@
         </div>
       </b-form-group>
 
-      <!-- Navigation Buttons -->
       <div class="actions">
         <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
           <b-icon icon="arrow-left" class="mr-1" /> Previous
@@ -511,7 +502,7 @@ body {
 
 /* center content, no big card */
 .register-page {
-  max-width: 760px;
+  max-width: 820px; /* Slightly wider for labels */
   margin: 40px auto 80px;
   padding: 0 20px 40px;
   text-align: left;
@@ -551,6 +542,7 @@ body {
   margin-bottom: 18px;
 }
 
+/* --- UPDATED STEPPER STYLES --- */
 .stepper {
   display: flex !important;
   flex-direction: row !important;
@@ -562,6 +554,7 @@ body {
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
+  margin-bottom: 50px;
 }
 
 .stepper-item {
@@ -578,63 +571,68 @@ body {
 .stepper-item:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: 27px; 
-  left: 50%;
-  width: 100%;
-  height: 2px; 
-  background: #dddddd; 
-  z-index: -1; 
+  top: 27px;
+  /* Starts the line 35px to the right of the circle center */
+  left: calc(50% + 35px); 
+  /* Subtracts 70px (35px for each side) to create the gap */
+  width: calc(100% - 70px); 
+  height: 4px;
+  background: #e9ecef;
+  z-index: -1;
 }
 
-.stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600;
-  font-family: "Inter", sans-serif !important;
-  color: #000000 !important;
-  text-align: center;
-  line-height: 1.2;
-  margin-top: 8px;
-}
-
+/* Orange for completed lines */
 .stepper-item.completed:not(:last-child)::after {
-  background: #ff6b35 !important;
+  background: #f97345 !important;
 }
 
 .stepper-circle {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #f3f3f3; 
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
+  background: #ebebeb; 
+  color: #a0a0a0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
   position: relative; 
   z-index: 2;
-  font-family: "Inter", sans-serif !important; 
+  transition: all 0.3s ease;
 }
+
 
 .stepper-label {
-  font-size: 0.75rem !important;
-  font-weight: 600;
-  color: #000000 !important;
+  font-size: 0.75rem !important; 
+  font-weight: 600; 
+  color: #837d7d !important; /* Force all labels to stay grey */
+  text-align: center;
+  line-height: 1.1;
+  width: 75px; 
+  word-wrap: break-word;
+  margin-top: 8px;
 }
 
-/* Orange for 1, 2, 3 (Completed) and 4 (Active) */
+/* Remove or comment out any color overrides for active/completed labels */
+/* .stepper-item.active .stepper-label { color: #000; }  <-- DELETE THIS */
+
+/* Orange for Active and Completed */
 .stepper-item.active .stepper-circle,
 .stepper-item.completed .stepper-circle {
-  background: #ff6b35 !important;
+  background: #f97345 !important;
   color: #ffffff !important;
-  border-color: #ff6b35 !important;
-  box-shadow: 0 10px 18px rgba(255, 107, 53, 0.35);
+  box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
+}
+
+/* Grey label for future steps */
+.stepper-item.inactive .stepper-label {
+  color: #a0a0a0 !important;
 }
 
 .checkmark {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.4rem;
 }
 
 .actions {
@@ -644,22 +642,21 @@ body {
 }
 
 .submit-btn {
-  padding: 10px 30px;
+  padding: 12px 24px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .prev-btn {
-  background-color: #f5f5f5;
-  color: #ff6b35;
-  border: 1px solid #ff6b35;
+  background-color: transparent !important;
+  color: #f97345 !important;
+  border: 1px solid #f97345 !important;
 }
 
 .next-btn {
-  background-color: #ff6b35;
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+  background-color: #f97345 !important;
+  color: #ffffff !important;
+  border: none !important;
 }
 
 /* HORIZONTAL SCROLL CONTAINER FOR TRACKS */
@@ -690,34 +687,22 @@ body {
   height: 100%;
   border-radius: 8px;
   border: 1px solid #f0e0d1;
-  background: #ffffff;
-  padding: 18px 18px 16px;
+  background: #ffffff !important;
+  padding: 18px;
   transition: all 0.25s ease;
-  color: #000000;
+  color: #000000 !important;
 }
 
 .track-card p,
 .track-card h5 {
-  color: inherit;
-}
-
-/* DEFAULT — all cards white */
-.track-card {
-  background: #ffffff !important;
-  color: #000000 !important;
-}
-.track-card h5,
-.track-card p {
   color: #000000 !important;
 }
 
-/* CLICKED / ACTIVE — all cards turn orange */
+/* CLICKED / ACTIVE — cards turn orange */
 .track-card--active {
-  background: #ff6b35 !important;
-  border-color: #ff6b35 !important;
+  background: #f97345 !important;
+  border-color: #f97345 !important;
   color: #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.3) !important;
-  transform: translateY(-2px);
 }
 .track-card--active h5,
 .track-card--active p {
@@ -748,11 +733,11 @@ label.form-label {
 
 .form-control:focus,
 .form-select:focus {
-  border-color: #ff6b35;
-  box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.15);
+  border-color: #f97345;
+  box-shadow: 0 0 0 0.2rem rgba(249, 115, 69, 0.15);
 }
 
-/* Radio groups (for yes/no & beginner/advanced) */
+/* Radio groups */
 .radio-inline-group {
   display: flex;
   gap: 20px;
@@ -778,38 +763,7 @@ label.form-label {
   color: #777;
 }
 
-/* Buttons */
-.actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-}
-
-.submit-btn {
-  padding: 10px 30px;
-  font-weight: 700;
-  border-radius: 6px;
-}
-
-.prev-btn {
-  background-color: #f5f5f5;
-  color: #ff6b35;
-  border: 1px solid #ff6b35;
-}
-
-.next-btn {
-  background-color: #ff6b35;
-  color: #ffffff;
-  border: none;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
-}
-
-.next-btn:hover,
-.next-btn:focus {
-  background-color: #ff7b47;
-}
-
-/* Custom Resume upload UI (only new styling) */
+/* Custom Resume upload UI */
 .resume-upload {
   width: 100%;
   border: 1px solid #e3d7ca;
@@ -843,103 +797,12 @@ label.form-label {
   font-weight: 500;
 }
 
-.resume-upload:hover {
-  border-color: #ff6b35;
-}
-
-.resume-upload:focus-within {
-  border-color: #ff6b35;
-  box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.15);
-
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-  }
-
-  .submit-btn {
-    padding: 10px 30px;
-    font-weight: 700;
-    border-radius: 6px;
-  }
-
-  .prev-btn {
-    background-color: #f5f5f5;
-    color: #ff6b35;
-    border: 1px solid #ff6b35;
-  }
-
-  .next-btn {
-    background-color: #ff6b35;
-    color: #ffffff;
-    border: none;
-    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
-  }
-
-  .next-btn:hover,
-  .next-btn:focus {
-    background-color: #ff7b47;
-  }
-}
-
-/* hidden actual file input */
 .resume-file-input {
   display: none;
 }
 
-/* Responsive styles for mobile */
-@media (max-width: 768px) {
-  .page-content {
-    padding: 30px 20px; 
-  }
-
-  .page-title {
-    font-size: 1.8rem;
-  }
-
-  .stepper {
-    flex-wrap: wrap;
-    justify-content: center;
-    row-gap: 10px; 
-  }
-
-  .stepper-item {
-    flex: 0 0 25%; 
-    max-width: 25%;
-  }
-
-  .stepper-circle {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem !important;
-    margin-bottom: 2px;
-  }
-
-  .checkmark {
-    font-size: 1.2rem;
-  }
-
-  .stepper-label {
-    font-size: 0.65rem !important;
-  }
-
-  .stepper-item:not(:last-child)::after {
-    top: 20px; 
-    height: 2px;
-  }
-
-  .stepper-item:nth-child(4)::after {
-    display: none !important;
-  }
-
-  .actions {
-    flex-direction: column-reverse;
-    gap: 15px;
-  }
-
-  .submit-btn {
-    width: 100%; 
-    padding: 12px;
-  }
+hr {
+  margin: 40px 0;
+  border-top: 1px solid #eee;
 }
 </style>
