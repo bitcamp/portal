@@ -486,7 +486,7 @@ export default {
       }
     },
 
-    handleNext() {
+    handleNext(event) {
       console.log("TOUCHED", this.touched);
       console.log("FORM DATA", this.formData);
 
