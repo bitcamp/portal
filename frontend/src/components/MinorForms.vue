@@ -193,7 +193,7 @@
               <li>
                 I understand that any physical activity requires a minimum level of fitness for safe participation. I also 
                 understand that the University advises that participants in the Activity carry personal health and accident 
-                insurance. I further understand that the University and Bitcamp 2023 do not provide medical, health or other 
+                insurance. I further understand that the University and Bitcamp 2026 do not provide medical, health or other 
                 insurance for participants in the Activity.
               </li>
               <li>
@@ -209,7 +209,7 @@
               <li>
                 To the fullest extent permitted by law, I hereby release and forever discharge, and agree to indemnify and hold 
                 harmless the State of Maryland, the University of Maryland, and their departments, officers, agents, employees, and 
-                volunteers (Released Parties) and Bitcamp 2023 from and against any and all liabilities, claims, demands, causes of 
+                volunteers (Released Parties) and Bitcamp 2026 from and against any and all liabilities, claims, demands, causes of 
                 action, costs and expenses, (including attorneys' fees and related litigation costs) incurred by any of the Released Parties arising 
                 out of or relating to my participation in or involvement with student organization activities, or use of University equipment and 
                 facilities, including travel thereto and therefrom, whether due to the negligence, default or other action or inaction of any 
