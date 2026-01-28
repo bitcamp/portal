@@ -143,34 +143,31 @@
               <span class="text-danger">*</span></span>
           </template>
           <b-form-checkbox-group
-            v-model="formData.languages"
+            v-model="form.languages"
             stacked
-            @click="touched.languages = true"
+            @change="touched.languages = true"
           >
-            <b-form-checkbox value="html/css">
-              HTML/CSS
-            </b-form-checkbox>
-            <b-form-checkbox value="javascript">
-              Javascript
-            </b-form-checkbox>
-            <b-form-checkbox value="react/vue">
-              React/Vue
-            </b-form-checkbox>
-            <b-form-checkbox value="python">
-              Python
-            </b-form-checkbox>
-            <b-form-checkbox value="sql">
-              SQL
-            </b-form-checkbox>
-            <b-form-checkbox value="flask">
-              Flask
-            </b-form-checkbox>
-            <b-form-checkbox value="java">
-              Java
-            </b-form-checkbox>
+            <b-form-checkbox value="html/css">HTML/CSS</b-form-checkbox>
+            <b-form-checkbox value="javascript">Javascript</b-form-checkbox>
+            <b-form-checkbox value="react/vue">React/Vue</b-form-checkbox>
+            <b-form-checkbox value="python">Python</b-form-checkbox>
+            <b-form-checkbox value="sql">SQL</b-form-checkbox>
+            <b-form-checkbox value="flask">Flask</b-form-checkbox>
+            <b-form-checkbox value="java">Java</b-form-checkbox>
+            <b-form-checkbox value="other">Other</b-form-checkbox>
           </b-form-checkbox-group>
+          <div v-if="form.languages && form.languages.includes('other')" class="mt-2">
+            <b-form-group label="Please specify other languages/frameworks (comma separated, e.g. Go, Rust, Swift):">
+              <b-form-input
+                v-model="form.languages_other"
+                placeholder="e.g. Go, Rust, Swift"
+                required
+              ></b-form-input>
+              <small class="text-muted">Enter multiple values separated by commas.</small>
+            </b-form-group>
+          </div>
           <div
-            v-if="showInvalid('languages')"
+            v-if="touched.languages && (!form.languages || form.languages.length === 0)"
             class="invalid-feedback d-block"
           >
             Please select an answer
@@ -244,34 +241,31 @@
               <span class="text-danger">*</span></span>
           </template>
           <b-form-checkbox-group
-            v-model="formData.skills_wanted"
+            v-model="form.skills_wanted"
             stacked
             @change="touched.skills_wanted = true"
           >
-            <b-form-checkbox value="html/css">
-              HTML/CSS
-            </b-form-checkbox>
-            <b-form-checkbox value="javascript">
-              Javascript
-            </b-form-checkbox>
-            <b-form-checkbox value="react/vue">
-              React/Vue
-            </b-form-checkbox>
-            <b-form-checkbox value="python">
-              Python
-            </b-form-checkbox>
-            <b-form-checkbox value="sql">
-              SQL
-            </b-form-checkbox>
-            <b-form-checkbox value="flask">
-              Flask
-            </b-form-checkbox>
-            <b-form-checkbox value="java">
-              Java
-            </b-form-checkbox>
+            <b-form-checkbox value="html/css">HTML/CSS</b-form-checkbox>
+            <b-form-checkbox value="javascript">Javascript</b-form-checkbox>
+            <b-form-checkbox value="react/vue">React/Vue</b-form-checkbox>
+            <b-form-checkbox value="python">Python</b-form-checkbox>
+            <b-form-checkbox value="sql">SQL</b-form-checkbox>
+            <b-form-checkbox value="flask">Flask</b-form-checkbox>
+            <b-form-checkbox value="java">Java</b-form-checkbox>
+            <b-form-checkbox value="other">Other</b-form-checkbox>
           </b-form-checkbox-group>
+          <div v-if="form.skills_wanted && form.skills_wanted.includes('other')" class="mt-2">
+            <b-form-group label="Please specify other technologies (comma separated, e.g. Go, Rust, Swift):">
+              <b-form-input
+                v-model="form.skills_wanted_other"
+                placeholder="e.g. Go, Rust, Swift"
+                required
+              ></b-form-input>
+              <small class="text-muted">Enter multiple values separated by commas.</small>
+            </b-form-group>
+          </div>
           <div
-            v-if="showInvalid('skills_wanted')"
+            v-if="touched.skills_wanted && (!form.skills_wanted || form.skills_wanted.length === 0)"
             class="invalid-feedback d-block"
           >
             Please select an answer
@@ -553,14 +547,21 @@ export default {
       requiredFields: requiredFields,
       arrayFields: ["languages", "skills_wanted", "projects", "prizes", "collab"],
       formFieldsDefaults: formFieldsDefaults,
+      form: {
+        languages: [],
+        languages_other: '',
+        skills_wanted: [],
+        skills_wanted_other: '',
+      },
     };
   },
 
   computed: {
     validations() {
-      let checkValidBox = (field) => {
-        if (!this.formData[field] || !Array.isArray(this.formData[field])) return false;
-        return this.formData[field].length > 0;
+      // Accept either formData or form arrays for validation (to support pre-submit state)
+      let checkValidBox = (field, formArr) => {
+        const arr = (this.formData[field] && Array.isArray(this.formData[field])) ? this.formData[field] : (formArr && Array.isArray(formArr) ? formArr : []);
+        return arr.length > 0;
       };
 
       return {
@@ -569,15 +570,15 @@ export default {
           this.formData.opt_in_team_matching !== undefined,
         track: this.formData.track !== null,
         hackathon: this.formData.hackathon !== null,
-        languages: checkValidBox("languages"),
+        languages: checkValidBox("languages", this.form.languages),
         experience: this.formData.experience !== null,
         skill_level: this.formData.skill_level !== null,
-        skills_wanted: checkValidBox("skills_wanted"),
+        skills_wanted: checkValidBox("skills_wanted", this.form.skills_wanted),
         num_team_members: this.formData.num_team_members !== null,
-        projects: checkValidBox("projects"),
-        prizes: checkValidBox("prizes"),
+        projects: checkValidBox("projects", this.formData.projects),
+        prizes: checkValidBox("prizes", this.formData.prizes),
         serious: this.formData.serious !== null,
-        collab: checkValidBox("collab"),
+        collab: checkValidBox("collab", this.formData.collab),
       };
     },
   },
@@ -607,6 +608,22 @@ export default {
       fifthPageRequiredFields.forEach((key) => {
         this.touched[key] = true;
       });
+
+      // Combine 'other' values for languages
+      if (this.form.languages && this.form.languages.includes('other') && this.form.languages_other) {
+        const otherLangs = this.form.languages_other.split(',').map(s => s.trim()).filter(Boolean);
+        this.formData.languages = this.form.languages.filter(v => v !== 'other').concat(otherLangs);
+      } else {
+        this.formData.languages = this.form.languages ? this.form.languages.filter(v => v !== 'other') : [];
+      }
+
+      // Combine 'other' values for skills_wanted
+      if (this.form.skills_wanted && this.form.skills_wanted.includes('other') && this.form.skills_wanted_other) {
+        const otherSkills = this.form.skills_wanted_other.split(',').map(s => s.trim()).filter(Boolean);
+        this.formData.skills_wanted = this.form.skills_wanted.filter(v => v !== 'other').concat(otherSkills);
+      } else {
+        this.formData.skills_wanted = this.form.skills_wanted ? this.form.skills_wanted.filter(v => v !== 'other') : [];
+      }
 
       if (this.validateForm()) {
         this.$emit("next");
