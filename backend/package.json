@@ -19,5 +19,8 @@
   },
   "author": "Technica Tech Team",
   "license": "ISC",
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "serverless-offline": "^14.4.0"
+  }
 }

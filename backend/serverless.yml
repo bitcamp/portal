@@ -211,7 +211,7 @@ package:
 
 plugins:
   - serverless-sentry
-  # - serverless-layers
+  - serverless-offline
 
 custom:
   provisionedConcurrency:

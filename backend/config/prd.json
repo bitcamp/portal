@@ -2,6 +2,7 @@
     "SENTRY_DSN": "https://0e393a6ba49641debefd3774cb69ed2c@o414418.ingest.sentry.io/5303942",
     "PLATFORM_BASE_URL": "register.bit.camp",
     "REGISTRATION_TABLE": "portal-prd-registration",
+    "TEAM_MATCHING_TABLE": "team-matching-system-prd-2026",
     "VOLUNTEER_TABLE": "portal-prd-volunteers",
     "MENTOR_TABLE": "portal-prd-mentors",
     "STATISTICS_TABLE": "portal-prd-statistics",

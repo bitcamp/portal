@@ -2,6 +2,7 @@
     "SENTRY_DSN": "https://474121de6dfb4ea7973f677619e38b2d@o414418.ingest.sentry.io/5776787",
     "PLATFORM_BASE_URL": "localhost:8080",
     "REGISTRATION_TABLE": "portal-dev-registration",
+    "TEAM_MATCHING_TABLE": "team-matching-system-dev-2026",
     "VOLUNTEER_TABLE": "portal-dev-volunteers",
     "MENTOR_TABLE": "portal-dev-mentors",
     "STATISTICS_TABLE": "portal-dev-statistics",

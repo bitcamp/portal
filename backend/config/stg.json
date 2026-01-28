@@ -2,6 +2,7 @@
     "SENTRY_DSN": "https://0e393a6ba49641debefd3774cb69ed2c@o414418.ingest.sentry.io/5303942",
     "PLATFORM_BASE_URL": "beta.register.bit.camp",
     "REGISTRATION_TABLE": "portal-stg-registration",
+    "TEAM_MATCHING_TABLE": "team-matching-system-stg-2026",
     "STATISTICS_TABLE": "portal-stg-statistics",
     "VOLUNTEER_TABLE": "portal-stg-volunteers",
     "MENTOR_TABLE": "portal-stg-mentors",

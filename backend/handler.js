@@ -24,6 +24,46 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
   const body = JSON.parse(event.body);
   const ddb = new AWS.DynamoDB.DocumentClient();
 
+  // Prepare team matching data for the new table
+  const teamMatchingTable = process.env.TEAM_MATCHING_TABLE;
+  // Map all required fields from the request body
+  const teamMatchingItem = {
+    email: body.email ? body.email.toLowerCase() : undefined,
+    first_name: body.first_name,
+    last_name: body.last_name,
+    username: body.username || body.email ? body.email.split('@')[0] : undefined,
+    password: body.password || '',
+    year: body.year || '',
+    track: body.track || body.track_selected,
+    experience: body.experience,
+    languages: Array.isArray(body.languages) ? body.languages : [],
+    skill_level: body.skill_level,
+    skills_wanted: Array.isArray(body.skills_wanted) ? body.skills_wanted : [],
+    num_team_members: body.num_team_members,
+    projects: Array.isArray(body.projects) ? body.projects : [],
+    prizes: Array.isArray(body.prizes) ? body.prizes : [],
+    serious: body.serious,
+    collab: Array.isArray(body.collab) ? body.collab : [],
+  };
+
+  // Remove undefined fields
+  Object.keys(teamMatchingItem).forEach(key => {
+    if (teamMatchingItem[key] === undefined) {
+      delete teamMatchingItem[key];
+    }
+  });
+
+  // Write to team-matching-system-dev-new table
+  try {
+    await ddb.put({
+      TableName: teamMatchingTable,
+      Item: teamMatchingItem,
+    }).promise();
+    console.log('Team matching data written:', teamMatchingItem);
+  } catch (err) {
+    console.error('Failed to write team matching data:', err);
+  }
+
   // Checks if any field is missing
   if (!body.email || !body.name || !body.phone || !body.school_year) {
     return {
