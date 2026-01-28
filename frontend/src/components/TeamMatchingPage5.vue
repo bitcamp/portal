@@ -13,10 +13,10 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === 5, 
+        :class="{
+          active: step.number === 5,
           completed: step.number < 5,
-          inactive: step.number > 5 
+          inactive: step.number > 5,
         }"
       >
         <div class="stepper-circle">
@@ -32,15 +32,13 @@
     <b-form @submit.prevent="handleNext">
       <h4 class="section-title">Team Matching Preferences</h4>
       <p class="info">
-        Tell us a little about your skills and interests so we can find you the perfect team!
-        If you have already found a team, you may opt out.
+        Tell us a little about your skills and interests so we can find you the perfect team! If you
+        have already found a team, you may opt out.
       </p>
 
       <b-form-group>
         <template #label>
-          <span
-            >Do you want to opt into team matching? <span class="text-danger">*</span></span
-          >
+          <span>Do you want to opt into team matching? <span class="text-danger">*</span></span>
         </template>
         <b-form-radio-group
           v-model="formData.opt_in_team_matching"
@@ -83,8 +81,7 @@
         <b-form-group>
           <template #label>
             <span
-              >Have you participated in a hackathon before?
-              <span class="text-danger">*</span></span
+              >Have you participated in a hackathon before? <span class="text-danger">*</span></span
             >
           </template>
           <b-form-radio-group
@@ -196,8 +193,8 @@
         <b-form-group>
           <template #label>
             <span
-              >How many team members do you already have? (Select 1 if you are the only one in
-              the team) <span class="text-danger">*</span></span
+              >How many team members do you already have? (Select 1 if you are the only one in the
+              team) <span class="text-danger">*</span></span
             >
           </template>
           <b-form-radio-group
@@ -245,11 +242,7 @@
               <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-checkbox-group
-            v-model="formData.prizes"
-            stacked
-            @change="touched.prizes = true"
-          >
+          <b-form-checkbox-group v-model="formData.prizes" stacked @change="touched.prizes = true">
             <b-form-checkbox value="hardware">Best Hardware Hack</b-form-checkbox>
             <b-form-checkbox value="bitcamp">Best Bitcamp Hack</b-form-checkbox>
             <b-form-checkbox value="first_time">Best First Time Hack</b-form-checkbox>
@@ -280,9 +273,7 @@
             @click="touched.serious = true"
           >
             <b-form-radio value="win">I want to win! (16-20 hours)</b-form-radio>
-            <b-form-radio value="funsies"
-              >I'm just doing this for fun (9-13 hours)</b-form-radio
-            >
+            <b-form-radio value="funsies">I'm just doing this for fun (9-13 hours)</b-form-radio>
             <b-form-radio value="learning"
               >I want to learn, if I win that will be a plus (1-8 hours)</b-form-radio
             >
@@ -299,11 +290,7 @@
               <span class="text-danger">*</span></span
             >
           </template>
-          <b-form-checkbox-group
-            v-model="formData.collab"
-            stacked
-            @change="touched.collab = true"
-          >
+          <b-form-checkbox-group v-model="formData.collab" stacked @change="touched.collab = true">
             <b-form-checkbox value="remote">Remote</b-form-checkbox>
             <b-form-checkbox value="hybrid">Hybrid</b-form-checkbox>
             <b-form-checkbox value="in-person">In Person</b-form-checkbox>
@@ -315,11 +302,7 @@
       </div>
 
       <div class="actions">
-        <b-button
-          type="button"
-          @click="handlePrevious"
-          class="submit-btn prev-btn"
-        >
+        <b-button type="button" @click="handlePrevious" class="submit-btn prev-btn">
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
         <b-button type="submit" class="submit-btn next-btn">
@@ -417,7 +400,9 @@ export default {
       };
 
       return {
-        opt_in_team_matching: this.formData.opt_in_team_matching !== null && this.formData.opt_in_team_matching !== undefined,
+        opt_in_team_matching:
+          this.formData.opt_in_team_matching !== null &&
+          this.formData.opt_in_team_matching !== undefined,
         track: this.formData.track !== null,
         hackathon: this.formData.hackathon !== null,
         languages: checkValidBox("languages"),
@@ -455,7 +440,9 @@ export default {
 
     handleNext(event) {
       event.preventDefault();
-      fifthPageRequiredFields.forEach((key) => { this.touched[key] = true; });
+      fifthPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
 
       if (this.validateForm()) {
         this.$emit("next");
@@ -513,7 +500,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .stepper-item:not(:last-child)::after {
@@ -521,9 +508,9 @@ export default {
   position: absolute;
   top: 27px;
   /* Starts the line 35px to the right of the circle center */
-  left: calc(50% + 35px); 
+  left: calc(50% + 35px);
   /* Subtracts 70px (35px for each side) to create the gap */
-  width: calc(100% - 70px); 
+  width: calc(100% - 70px);
   height: 4px;
   background: #e9ecef;
   z-index: -1;
@@ -537,7 +524,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb; 
+  background: #ebebeb;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -545,17 +532,17 @@ export default {
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 12px;
-  position: relative; 
+  position: relative;
   z-index: 2;
 }
 
 .stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600; 
+  font-size: 0.75rem !important;
+  font-weight: 600;
   color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
-  width: 65px; 
+  width: 65px;
   word-wrap: break-word;
   margin-top: 8px;
 }
@@ -623,7 +610,7 @@ export default {
 
 @media (max-width: 768px) {
   .page-content {
-    padding: 30px 20px; 
+    padding: 30px 20px;
   }
   .page-title {
     font-size: 1.8rem;
@@ -631,10 +618,10 @@ export default {
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 10px; 
+    row-gap: 10px;
   }
   .stepper-item {
-    flex: 0 0 25%; 
+    flex: 0 0 25%;
     max-width: 25%;
   }
   .stepper-circle {
@@ -648,10 +635,10 @@ export default {
   }
   .stepper-label {
     font-size: 0.65rem !important;
-    width: 55px; 
+    width: 55px;
   }
   .stepper-item:not(:last-child)::after {
-    top: 20px; 
+    top: 20px;
     height: 2px;
   }
   .stepper-item:nth-child(4)::after {
@@ -662,7 +649,7 @@ export default {
     gap: 15px;
   }
   .submit-btn {
-    width: 100%; 
+    width: 100%;
     padding: 12px;
   }
 }

@@ -40,7 +40,7 @@
         v-if="currentPage === 5"
         :form-data="formData"
         :current-page="currentPage"
-        @next="goToPage(6)"
+        @next="goToPage(isMinor ? 6 : 7)"
         @previous="goToPage(4)"
       />
 
@@ -56,7 +56,7 @@
         v-if="currentPage === 7"
         :form-data="formData"
         @next="goToPage(8)"
-        @previous="goToPage(6)"
+        @previous="goToPage(isMinor ? 6 : 5)"
       />
       <!-- For now, this could be a summary or additional forms page -->
     </b-card>
@@ -199,6 +199,12 @@ export default {
       random_id: uuid(),
       form_start: Date.now(),
     };
+  },
+  computed: {
+    isMinor() {
+      const age = parseInt(this.formData.age, 10);
+      return !isNaN(age) && age < 18;
+    },
   },
   methods: {
     goToPage(pageNumber) {
