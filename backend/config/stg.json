@@ -1,12 +1,13 @@
 {
-    "SENTRY_DSN": "https://0e393a6ba49641debefd3774cb69ed2c@o414418.ingest.sentry.io/5303942",
-    "PLATFORM_BASE_URL": "beta.register.bit.camp",
-    "REGISTRATION_TABLE": "portal-stg-registration",
-    "STATISTICS_TABLE": "portal-stg-statistics",
-    "VOLUNTEER_TABLE": "portal-stg-volunteers",
-    "MENTOR_TABLE": "portal-stg-mentors",
-    "MINOR_TABLE": "minor-stg-waiver-forms",
-    "TRACKING_TABLE": "portal-stg-tracking",
-    "RESUMES_TABLE": "portal-stg-resumes",
-    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot"
+  "SENTRY_DSN": "https://0e393a6ba49641debefd3774cb69ed2c@o414418.ingest.sentry.io/5303942",
+  "PLATFORM_BASE_URL": "beta.register.bit.camp",
+  "REGISTRATION_TABLE": "portal-stg-registration",
+  "STATISTICS_TABLE": "portal-stg-statistics",
+  "VOLUNTEER_TABLE": "portal-stg-volunteers",
+  "MENTOR_TABLE": "portal-stg-mentors",
+  "MINOR_TABLE": "portal-stg-minor-registration",
+  "TRACKING_TABLE": "portal-stg-tracking",
+  "RESUMES_TABLE": "portal-stg-resumes",
+  "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot",
+  "TEAM_MATCHING_TABLE": "portal-stg-team-matching"
 }

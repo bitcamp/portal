@@ -1,12 +1,13 @@
 {
-    "SENTRY_DSN": "https://474121de6dfb4ea7973f677619e38b2d@o414418.ingest.sentry.io/5776787",
-    "PLATFORM_BASE_URL": "localhost:8080",
-    "REGISTRATION_TABLE": "portal-dev-registration",
-    "VOLUNTEER_TABLE": "portal-dev-volunteers",
-    "MENTOR_TABLE": "portal-dev-mentors",
-    "STATISTICS_TABLE": "portal-dev-statistics",
-    "TRACKING_TABLE": "portal-dev-tracking",
-    "MINOR_TABLE": "minor-dev-waiver-forms",
-    "RESUMES_TABLE": "portal-dev-resumes",
-    "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot"
+  "SENTRY_DSN": "https://474121de6dfb4ea7973f677619e38b2d@o414418.ingest.sentry.io/5776787",
+  "PLATFORM_BASE_URL": "localhost:8080",
+  "REGISTRATION_TABLE": "portal-dev-registration",
+  "VOLUNTEER_TABLE": "portal-dev-volunteers",
+  "MENTOR_TABLE": "portal-dev-mentors",
+  "STATISTICS_TABLE": "portal-dev-statistics",
+  "TRACKING_TABLE": "portal-dev-tracking",
+  "MINOR_TABLE": "portal-dev-minor-registration",
+  "RESUMES_TABLE": "portal-dev-resumes",
+  "SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME": "RegistrationBot",
+  "TEAM_MATCHING_TABLE": "portal-dev-team-matching"
 }
