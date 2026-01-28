@@ -111,13 +111,13 @@ export default {
         age: "",
         country_of_residence: "",
         gender: "",
-        ethnicity: "",
+        ethnicity: [],
         school: "",
         school_other: "",
         school_other_selected: false,
         school_year: "",
         major: "",
-        heard_from: "",
+        heard_from: [],
 
         // Page 2 data
         track_selected: this.default_track || "general",
@@ -144,7 +144,7 @@ export default {
         diet_other: false,
         diet_other_text: "",
         diet_none: false,
-        
+
         // Page 4 data
         q1: "",
         q2: "",
@@ -247,7 +247,7 @@ export default {
       // You can add analytics tracking here if needed
     },
     getFileExtension(filename) {
-      const parts = filename.split('.');
+      const parts = filename.split(".");
       const extension = parts.pop();
       return extension;
     },
@@ -269,19 +269,19 @@ export default {
 
       const fileExtension = this.getFileExtension(file.name);
       const cleanname =
-          this.formData.first_name
-            .replace(/[^a-z0-9_-]/gi, "_")
-            .toLowerCase()
-            .replace(/_{2,}/g, "_")
-            .substring(0, 48) +
-          "_" +
-          this.formData.last_name
-            .replace(/[^a-z0-9_-]/gi, "_")
-            .toLowerCase()
-            .replace(/_{2,}/g, "_")
-            .substring(0, 48) +
-          "." +
-          fileExtension;
+        this.formData.first_name
+          .replace(/[^a-z0-9_-]/gi, "_")
+          .toLowerCase()
+          .replace(/_{2,}/g, "_")
+          .substring(0, 48) +
+        "_" +
+        this.formData.last_name
+          .replace(/[^a-z0-9_-]/gi, "_")
+          .toLowerCase()
+          .replace(/_{2,}/g, "_")
+          .substring(0, 48) +
+        "." +
+        fileExtension;
 
       const userParams = {
         id: this.random_id,

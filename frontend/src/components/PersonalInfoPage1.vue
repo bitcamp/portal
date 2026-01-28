@@ -139,7 +139,7 @@
           <template #label> Race / Ethnicity <span class="text-danger">*</span> </template>
           <b-form-tags
             id="tags-component-select"
-            v-model="value"
+            v-model="formData.ethnicity"
             size="lg"
             class="mb-2"
             add-on-change
@@ -435,7 +435,6 @@ export default {
       universityOptions: [...university_list],
 
       countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
-      value: [],
     };
   },
 
@@ -450,10 +449,10 @@ export default {
         age: req(this.formData.age) && this.formData.age > 0 && this.formData.age <= 120,
         gender: req(this.formData.gender),
         country_of_residence: req(this.formData.country_of_residence),
-        ethnicity: req(this.formData.ethnicity),
+        ethnicity: this.formData.ethnicity.length > 0,
         school_year: req(this.formData.school_year),
         major: req(this.formData.major),
-        heard_from: req(this.formData.heard_from),
+        heard_from: this.formData.heard_from.length > 0,
         email: EmailValidator.validate(this.formData.email),
         phone: phone && phone.isValid(),
         school: !this.formData.school_other_selected
@@ -464,7 +463,9 @@ export default {
     },
 
     availableOptions() {
-      return this.ethnicityOptionsSelect.filter((opt) => this.value.indexOf(opt) === -1);
+      return this.ethnicityOptionsSelect.filter(
+        (opt) => !this.formData.ethnicity.includes(opt.text)
+      );
     },
 
     availableHeardFromOptions() {
