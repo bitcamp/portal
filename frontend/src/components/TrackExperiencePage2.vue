@@ -1,17 +1,11 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">
-      Register for Bitcamp 2026
-    </h1>
+    <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a
-        href="https://bit.camp"
-        target="_blank"
-        rel="noopener"
-      >bit.camp</a>!
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -26,10 +20,7 @@
         }"
       >
         <div class="stepper-circle">
-          <span
-            v-if="step.number < currentPage"
-            class="checkmark"
-          >✓</span>
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">
@@ -38,12 +29,10 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <b-form @submit.prevent="handleNext">
-      <h4 class="section-title">
-        Choose a track! <span class="text-danger">*</span>
-      </h4>
+      <h4 class="section-title">Choose a track! <span class="text-danger">*</span></h4>
 
       <p class="info">
         Select the track that interests you most. Each track offers unique workshops and mentorship
@@ -57,7 +46,7 @@
             type="radio"
             value="general"
             @click="touched.track_selected = true"
-          >
+          />
           <b-card
             class="track-card general-card"
             :class="{ 'track-card--active': formData.track_selected === 'general' }"
@@ -77,7 +66,7 @@
             type="radio"
             value="quantum"
             @click="touched.track_selected = true"
-          >
+          />
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'quantum' }"
@@ -97,7 +86,7 @@
             type="radio"
             value="machine_learning"
             @click="touched.track_selected = true"
-          >
+          />
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'machine_learning' }"
@@ -117,7 +106,7 @@
             type="radio"
             value="app_dev"
             @click="touched.track_selected = true"
-          >
+          />
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'app_dev' }"
@@ -136,7 +125,7 @@
             type="radio"
             value="cybersecurity"
             @click="touched.track_selected = true"
-          >
+          />
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'cybersecurity' }"
@@ -150,10 +139,7 @@
         </label>
       </div>
 
-      <div
-        v-if="formData.track_selected === 'quantum'"
-        class="mt-4 form-group"
-      >
+      <div v-if="formData.track_selected === 'quantum'" class="mt-4 form-group">
         <label class="form-label">
           Would you like to be placed in the beginner quantum or advanced quantum track?*
         </label>
@@ -164,7 +150,7 @@
               type="radio"
               value="beginner"
               @click="touched.quantum_track = true"
-            >
+            />
             Beginner
           </label>
           <label class="radio-inline">
@@ -173,14 +159,11 @@
               type="radio"
               value="advanced"
               @click="touched.quantum_track = true"
-            >
+            />
             Advanced
           </label>
         </div>
-        <div
-          v-if="showInvalid('quantum_track')"
-          class="invalid-feedback d-block"
-        >
+        <div v-if="showInvalid('quantum_track')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
@@ -198,7 +181,7 @@
               type="radio"
               :value="true"
               @click="touched.beginner_content_opt_in = true"
-            >
+            />
             Yes
           </label>
           <label class="radio-inline">
@@ -207,22 +190,17 @@
               type="radio"
               :value="false"
               @click="touched.beginner_content_opt_in = true"
-            >
+            />
             No
           </label>
         </div>
-        <div
-          v-if="showInvalid('beginner_content_opt_in')"
-          class="invalid-feedback d-block"
-        >
+        <div v-if="showInvalid('beginner_content_opt_in')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </div>
 
-      <hr class="mt-4">
-      <h4 class="section-title">
-        Why Bitcamp?
-      </h4>
+      <hr class="mt-4" />
+      <h4 class="section-title">Why Bitcamp?</h4>
       <p class="info">
         We'd like to get to know you a little better! Help us learn more about you and make Bitcamp
         even more amazing by answering some questions!
@@ -244,10 +222,7 @@
       </b-form-group>
 
       <b-form-group>
-        <template #label>
-          Why are you interested in attending Bitcamp?
-          <span class="text-danger">*</span>
-        </template>
+        <template #label> Why are you interested in attending Bitcamp? </template>
         <b-form-textarea
           id="why-bitcamp"
           v-model="formData.question1"
@@ -264,10 +239,7 @@
       </b-form-group>
 
       <b-form-group>
-        <template #label>
-          What do you plan on building at Bitcamp?
-          <span class="text-danger">*</span>
-        </template>
+        <template #label> What do you plan on building at Bitcamp? </template>
         <b-form-textarea
           id="what-build"
           v-model="formData.question2"
@@ -283,13 +255,9 @@
         </small>
       </b-form-group>
 
-      <hr class="mt-4">
-      <h4 class="section-title">
-        Want to get hired?
-      </h4>
-      <p class="info">
-        Let us know, and we’ll pass your info on to our sponsors!
-      </p>
+      <hr class="mt-4" />
+      <h4 class="section-title">Want to get hired?</h4>
+      <p class="info">Let us know, and we’ll pass your info on to our sponsors!</p>
 
       <b-form-row>
         <b-form-group class="col-md-6">
@@ -307,10 +275,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="GitHub or Portfolio Link"
-          class="col-md-6"
-        >
+        <b-form-group label="GitHub or Portfolio Link" class="col-md-6">
           <b-form-input
             id="github-link"
             v-model="formData.portfolio"
@@ -322,10 +287,7 @@
       </b-form-row>
 
       <b-form-group label="Resume (.pdf .doc .docx)">
-        <div
-          class="resume-upload"
-          @click="triggerResumeFile"
-        >
+        <div class="resume-upload" @click="triggerResumeFile">
           <span class="resume-placeholder">
             {{ resumeLabel }}
           </span>
@@ -337,31 +299,18 @@
             class="resume-file-input"
             accept=".pdf,.doc,.docx,.txt"
             @change="onResumeChange"
-          >
+          />
         </div>
       </b-form-group>
 
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="handlePrevious"
-        >
-          <b-icon
-            icon="arrow-left"
-            class="mr-1"
-          /> Previous
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
+          <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
 
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
-          <b-icon
-            icon="arrow-right"
-            class="ml-1"
-          />
+          <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
@@ -378,8 +327,6 @@ const secondPageRequiredFields = [
   "track_selected",
   "beginner_content_opt_in",
   "hack_count",
-  "question1",
-  "question2",
   "recruit",
 ];
 
@@ -387,7 +334,9 @@ const secondPageOptionalFields = [
   "quantum_track",
   "portfolio",
   "resume_id",
-  "resume_link"
+  "resume_link",
+  "question1",
+  "question2",
 ];
 
 export default {
