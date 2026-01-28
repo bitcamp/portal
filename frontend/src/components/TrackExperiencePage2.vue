@@ -437,7 +437,7 @@ export default {
         question1: req(this.formData.question1) && (this.formData.question1 || "").length >= 50,
         question2: req(this.formData.question2) && (this.formData.question2 || "").length >= 50,
         recruit: req(this.formData.recruit),
-        portfolio: req(this.formData.portfolio),
+        portfolio: req(this.formData.portfolio) && this.isValidUrl(this.formData.portfolio),
       };
     },
     whyBitcampChars() {
@@ -461,6 +461,15 @@ export default {
     },
   },
   methods: {
+    isValidUrl(string) {
+      try {
+        new URL(string);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    },
+
     showState(field) {
       if (
         secondPageOptionalFields.includes(field) &&
