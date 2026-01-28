@@ -44,7 +44,7 @@
         @previous="goToPage(4)"
       />
 
-      <MinorFormsPage7
+      <MinorFormsPage6
         v-if="currentPage === 6"
         :form-data="formData"
         :current-page="currentPage"
@@ -52,7 +52,7 @@
         @previous="goToPage(5)"
       />
 
-      <Submit
+      <SubmitPage7
         v-if="currentPage === 7"
         :form-data="formData"
         @next="goToPage(8)"
@@ -69,9 +69,9 @@ import TrackExperiencePage2 from "./TrackExperiencePage2.vue";
 import AttendancePage3 from "./AttendancePage3.vue";
 import CampfireGamesPage4 from "./CampfireGamesPage4.vue";
 import TeamMatchingPage5 from "./TeamMatchingPage5.vue";
-import MinorForms from "./MinorForms.vue";
 import SubmitPage7 from "./SubmitPage7.vue";
 import { v4 as uuid } from "uuid";
+import MinorFormsPage6 from "./MinorFormsPage6.vue";
 
 export default {
   name: "RegistrationFormParent",
@@ -81,7 +81,7 @@ export default {
     AttendancePage3,
     CampfireGamesPage4,
     TeamMatchingPage5,
-    MinorForms,
+    MinorFormsPage6,
     SubmitPage7,
   },
   props: {

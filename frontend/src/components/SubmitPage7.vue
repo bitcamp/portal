@@ -13,10 +13,10 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage, 
+        :class="{
+          active: step.number === currentPage,
           completed: step.number < currentPage,
-          inactive: step.number > currentPage 
+          inactive: step.number > currentPage,
         }"
       >
         <div class="stepper-circle">
@@ -45,13 +45,11 @@
           :state="validations.valid_mlh_privacy"
           @change="clearValidation('valid_mlh_privacy')"
         >
-          I authorize you to share my application/registration information with Major League
-          Hacking for event administration, ranking, and MLH administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further
-          agree to the terms of both the
-          <a
-            href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
-            target="_blank"
+          I authorize you to share my application/registration information with Major League Hacking
+          for event administration, ranking, and MLH administration in-line with the
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
+          to the terms of both the
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank"
             >MLH Contest Terms and Conditions</a
           >
           and the
@@ -86,17 +84,13 @@
           name="checkbox-3"
           class="checkbox"
         >
-          I authorize MLH to send me occasional emails about relevant events, career
-          opportunities, and community announcements.
+          I authorize MLH to send me occasional emails about relevant events, career opportunities,
+          and community announcements.
         </b-form-checkbox>
       </div>
 
       <div class="actions">
-        <b-button
-          type="button"
-          @click="handlePrevious"
-          class="submit-btn prev-btn"
-        >
+        <b-button type="button" @click="handlePrevious" class="submit-btn prev-btn">
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
         <b-button type="submit" class="submit-btn next-btn">
@@ -150,8 +144,12 @@ export default {
     currentPage() {
       return 7;
     },
-    whyBitcampChars() { return (this.formData.question1 || "").length; },
-    whatBuildChars() { return (this.formData.question2 || "").length; },
+    whyBitcampChars() {
+      return (this.formData.question1 || "").length;
+    },
+    whatBuildChars() {
+      return (this.formData.question2 || "").length;
+    },
   },
 
   mounted() {
@@ -208,17 +206,31 @@ export default {
       if (this.$route.params.referral) {
         this.$gtag.event("got-referred", { method: "Google" });
         this.formData.referred_by = this.$route.params.referral;
-        this.track({ random_id: this.random_id, key: "got-referred", value: this.$route.params.referral });
+        this.track({
+          random_id: this.random_id,
+          key: "got-referred",
+          value: this.$route.params.referral,
+        });
       }
       this.track({ random_id: this.random_id, key: `hf-${this.heard_from}`, value: 1 });
       if (this.heard_from_other) {
         this.track({ random_id: this.random_id, key: "hf-other", value: 1 });
       }
       this.$gtag.event("submit-registration", { method: "Google" });
-      this.$gtag.time({ name: "completion-time", value: this.formData.time_taken, event_category: "Form completion duration" });
-      this.track({ random_id: this.random_id, key: "form-submitted", value: this.formData.time_taken });
+      this.$gtag.time({
+        name: "completion-time",
+        value: this.formData.time_taken,
+        event_category: "Form completion duration",
+      });
+      this.track({
+        random_id: this.random_id,
+        key: "form-submitted",
+        value: this.formData.time_taken,
+      });
       const d = new Date();
-      this.formData.secret = (d.getHours() * d.getDay() * 15).toString() + d.getFullYear().toString().split("").reverse().join("");
+      this.formData.secret =
+        (d.getHours() * d.getDay() * 15).toString() +
+        d.getFullYear().toString().split("").reverse().join("");
       const survey_count = { r: 0, b: 0, g: 0 };
       survey_count[this.formData.q1.substring(0, 1)] += 1;
       survey_count[this.formData.q2.substring(0, 1)] += 1;
@@ -231,7 +243,11 @@ export default {
       this.formData.dietary_restrictions = this.createDietaryRestrictionString();
       const isMinor = this.formData.age.length > 0 && Number(this.formData.age) < 18;
       const endpoint = isMinor ? "register_minor" : "register";
-      const response = await this.performPostRequest(this.getEnvVariable("BACKEND_ENDPOINT"), endpoint, this.formData);
+      const response = await this.performPostRequest(
+        this.getEnvVariable("BACKEND_ENDPOINT"),
+        endpoint,
+        this.formData
+      );
       this.isSending = false;
       return response;
     },
@@ -239,10 +255,18 @@ export default {
     validateForm() {
       let valid = true;
       const form = this.formData;
-      if (!form.MLH_privacy) { this.validations.valid_mlh_privacy = false; valid = false; }
-      else { this.validations.valid_mlh_privacy = null; }
-      if (!form.MLH_conduct) { this.validations.valid_code_of_conduct = false; valid = false; }
-      else { this.validations.valid_code_of_conduct = null; }
+      if (!form.MLH_privacy) {
+        this.validations.valid_mlh_privacy = false;
+        valid = false;
+      } else {
+        this.validations.valid_mlh_privacy = null;
+      }
+      if (!form.MLH_conduct) {
+        this.validations.valid_code_of_conduct = false;
+        valid = false;
+      } else {
+        this.validations.valid_code_of_conduct = null;
+      }
       return valid;
     },
 
@@ -275,8 +299,12 @@ export default {
       return heard_from_string;
     },
 
-    createTransportString() { return this.transport_select.join(","); },
-    handlePrevious() { this.$emit("previous"); },
+    createTransportString() {
+      return this.transport_select.join(",");
+    },
+    handlePrevious() {
+      this.$emit("previous");
+    },
   },
 };
 </script>
@@ -319,7 +347,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .stepper-item:not(:last-child)::after {
@@ -327,9 +355,9 @@ export default {
   position: absolute;
   top: 27px;
   /* Starts the line 35px to the right of the circle center */
-  left: calc(50% + 35px); 
+  left: calc(50% + 35px);
   /* Subtracts 70px (35px for each side) to create the gap */
-  width: calc(100% - 70px); 
+  width: calc(100% - 70px);
   height: 4px;
   background: #e9ecef;
   z-index: -1;
@@ -343,7 +371,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb; 
+  background: #ebebeb;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -351,17 +379,17 @@ export default {
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 12px;
-  position: relative; 
+  position: relative;
   z-index: 2;
 }
 
 .stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600; 
+  font-size: 0.75rem !important;
+  font-weight: 600;
   color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
-  width: 65px; 
+  width: 65px;
   word-wrap: break-word;
   margin-top: 8px;
 }
@@ -431,7 +459,7 @@ export default {
 
 @media (max-width: 768px) {
   .page-content {
-    padding: 30px 20px; 
+    padding: 30px 20px;
   }
   .page-title {
     font-size: 1.8rem;
@@ -439,10 +467,10 @@ export default {
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 10px; 
+    row-gap: 10px;
   }
   .stepper-item {
-    flex: 0 0 25%; 
+    flex: 0 0 25%;
     max-width: 25%;
   }
   .stepper-circle {
@@ -456,11 +484,10 @@ export default {
   }
   .stepper-label {
     font-size: 0.65rem !important;
-    width: 55px; 
-
+    width: 55px;
   }
   .stepper-item:not(:last-child)::after {
-    top: 20px; 
+    top: 20px;
     height: 2px;
   }
   .stepper-item:nth-child(4)::after {
@@ -471,7 +498,7 @@ export default {
     gap: 15px;
   }
   .submit-btn {
-    width: 100%; 
+    width: 100%;
     padding: 12px;
   }
 }

@@ -1,30 +1,33 @@
 <template>
-  <div class="register-wrapper">
-    <b-row class="justify-content-center">
-      <b-col md="12" lg="12">
-        <div class="page-content">
-          <h1 class="page-title">Register for Bitcamp 2026</h1>
+  <div class="register-page">
+    <h1 class="page-title">Register for Bitcamp 2026</h1>
 
-          <p class="page-subtitle">
-            Questions? Chat with us in the bottom right hand corner or email
-            <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-            <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
-          </p>
+    <p class="page-subtitle">
+      Questions? Chat with us in the bottom right hand corner or email
+      <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
+    </p>
 
-          <div class="stepper">
-            <div
-              v-for="step in steps"
-              :key="step.number"
-              class="stepper-item"
-              :class="{ active: step.number === 6 }"
-            >
-              <div class="stepper-circle">{{ step.number }}</div>
-              <div class="stepper-label">{{ step.label }}</div>
-            </div>
-          </div>
+    <div class="stepper">
+      <div
+        v-for="step in steps"
+        :key="step.number"
+        class="stepper-item"
+        :class="{
+          active: step.number === 6,
+          completed: step.number < 6,
+          inactive: step.number > 6
+        }"
+      >
+        <div class="stepper-circle">
+          <span v-if="step.number < 6" class="checkmark">✓</span>
+          <span v-else>{{ step.number }}</span>
+        </div>
+        <div class="stepper-label">{{ step.label }}</div>
+      </div>
+    </div>
 
-          <hr />
-
+    <hr />
           <b-form @submit.prevent="handleNext">
 
     <div class="info-box">
@@ -166,24 +169,24 @@
 
         <div v-if="stuIsOpen" class="info-content">
         <p>
-            I am a participant of Bitcamp 2026 (Activity), a student organization recognized by 
-            the Stamp Student Union (Union) at the University of Maryland, College Park (University). 
-            I desire to participate in the Activity from April 10, 2026 - April 12, 2026 including. In 
-            consideration of being permitted to participate in such Activity, I, for myself, my heirs, 
-            personal representative(s) and assigns hereby represent and agree as follows: 
+            I am a participant of Bitcamp 2026 (Activity), a student organization recognized by
+            the Stamp Student Union (Union) at the University of Maryland, College Park (University).
+            I desire to participate in the Activity from April 10, 2026 - April 12, 2026 including. In
+            consideration of being permitted to participate in such Activity, I, for myself, my heirs,
+            personal representative(s) and assigns hereby represent and agree as follows:
             <br>
             <br>
             <ol>
               <li>
-                I fully recognize and understand that there are risks and hazards, minor and serious, associated 
-                with participation in the Activity, ranging from scrapes, bruises, lacerations, broken bones to concussions, 
-                spinal cord injuries, paralysis and, even, death. These injuries may result from crashing with other 
+                I fully recognize and understand that there are risks and hazards, minor and serious, associated
+                with participation in the Activity, ranging from scrapes, bruises, lacerations, broken bones to concussions,
+                spinal cord injuries, paralysis and, even, death. These injuries may result from crashing with other
                 participants, being hit by equipment, or environmental conditions.
               </li>
               <li>
-                I understand that protective equipment, including but not limited to, headgear, pads, eyewear and mouthpieces 
-                may be recommended for the safety and protection of participants, and I agree to wear such equipment when 
-                participating in the Activity. However, I understand that wearing such equipment will not eliminate the risks of 
+                I understand that protective equipment, including but not limited to, headgear, pads, eyewear and mouthpieces
+                may be recommended for the safety and protection of participants, and I agree to wear such equipment when
+                participating in the Activity. However, I understand that wearing such equipment will not eliminate the risks of
                 participation.
               </li>
               <li>
@@ -191,34 +194,34 @@
                 in part, for the safety and protection of participants and I agree to abide by those rules and regulations.
               </li>
               <li>
-                I understand that any physical activity requires a minimum level of fitness for safe participation. I also 
-                understand that the University advises that participants in the Activity carry personal health and accident 
-                insurance. I further understand that the University and Bitcamp 2026 do not provide medical, health or other 
+                I understand that any physical activity requires a minimum level of fitness for safe participation. I also
+                understand that the University advises that participants in the Activity carry personal health and accident
+                insurance. I further understand that the University and Bitcamp 2026 do not provide medical, health or other
                 insurance for participants in the Activity.
               </li>
               <li>
-                In the event of a medical emergency, I hereby give my consent to emergency transportation and medical treatment 
-                arising out of or related to participation in the Activity. I understand that I am solely responsible for any and all 
+                In the event of a medical emergency, I hereby give my consent to emergency transportation and medical treatment
+                arising out of or related to participation in the Activity. I understand that I am solely responsible for any and all
                 costs associated with any medical care received.
               </li>
               <li>
-                Knowing the dangers, hazards and risks associated with student organization activities, I voluntarily assume all 
-                responsibility and risk of loss, damage, illness and/or injury to my person or property in any way associated with 
+                Knowing the dangers, hazards and risks associated with student organization activities, I voluntarily assume all
+                responsibility and risk of loss, damage, illness and/or injury to my person or property in any way associated with
                 my participation in the Activity.
               </li>
               <li>
-                To the fullest extent permitted by law, I hereby release and forever discharge, and agree to indemnify and hold 
-                harmless the State of Maryland, the University of Maryland, and their departments, officers, agents, employees, and 
-                volunteers (Released Parties) and Bitcamp 2026 from and against any and all liabilities, claims, demands, causes of 
-                action, costs and expenses, (including attorneys' fees and related litigation costs) incurred by any of the Released Parties arising 
-                out of or relating to my participation in or involvement with student organization activities, or use of University equipment and 
-                facilities, including travel thereto and therefrom, whether due to the negligence, default or other action or inaction of any 
+                To the fullest extent permitted by law, I hereby release and forever discharge, and agree to indemnify and hold
+                harmless the State of Maryland, the University of Maryland, and their departments, officers, agents, employees, and
+                volunteers (Released Parties) and Bitcamp 2026 from and against any and all liabilities, claims, demands, causes of
+                action, costs and expenses, (including attorneys' fees and related litigation costs) incurred by any of the Released Parties arising
+                out of or relating to my participation in or involvement with student organization activities, or use of University equipment and
+                facilities, including travel thereto and therefrom, whether due to the negligence, default or other action or inaction of any
                 person or entity, including the Released Parties.
               </li>
             </ol>
-            I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14 AND 18 AND THAT I HAVE READ AND 
-            FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS SIGNIFICANCE. 
-            AS A MINOR, THE SIGNATURE BELOW IS THAT OF A PARENT OR LEGAL GUARDIAN AUTHORIZED TO SIGN ON MY BEHALF. 
+            I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14 AND 18 AND THAT I HAVE READ AND
+            FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS SIGNIFICANCE.
+            AS A MINOR, THE SIGNATURE BELOW IS THAT OF A PARENT OR LEGAL GUARDIAN AUTHORIZED TO SIGN ON MY BEHALF.
           </p>
         </div>
     </div>
@@ -457,12 +460,11 @@
               <b-button
                 type="button"
                 @click="handlePrevious"
-                class="submit-btn"
-                style="margin-right: 10px"
+                class="submit-btn prev-btn"
               >
                 <b-icon icon="arrow-left" /> Previous
               </b-button>
-              <b-button type="submit" class="submit-btn">
+              <b-button type="submit" class="submit-btn next-btn">
                 Next Step
                 <b-icon icon="arrow-right" class="ml-1" />
               </b-button>
@@ -663,7 +665,7 @@ export default {
     togglePhoto() {
       this.photoIsOpen = !this.photoIsOpen;
     },
-    
+
     toggleCond(){
         this.condIsOpen = !this.condIsOpen;
     }
@@ -672,12 +674,10 @@ export default {
 </script>
 
 <style scoped>
-/* Stepper and Page Content Styles */
-.page-content {
-  background: #fff7ee;
-  border-radius: 12px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
-  padding: 40px 56px 48px;
+.register-page {
+  max-width: 820px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
   text-align: left;
 }
 
@@ -689,73 +689,127 @@ export default {
 
 .page-subtitle {
   font-size: 0.9rem;
-  opacity: 0.95;
-  margin-bottom: 22px;
+  opacity: 0.8;
+  margin-bottom: 30px;
 }
 
-.header-title {
-  font-family: "Aleo", serif;
-  font-size: 20px;
-  color: white;
-  font-weight: 600;
-}
-
+/* --- STEPPER STYLES --- */
 .stepper {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between;
-  margin: 18px 0 14px;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
 }
 
 .stepper-item {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 0;
   text-align: center;
-  font-size: 0.7rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.stepper-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 27px;
+  /* Starts the line 35px to the right of the circle center */
+  left: calc(50% + 35px);
+  /* Subtracts 70px (35px for each side) to create the gap */
+  width: calc(100% - 70px);
+  height: 4px;
+  background: #e9ecef;
+  z-index: -1;
+}
+
+.stepper-item.completed:not(:last-child)::after {
+  background: #f97345 !important;
 }
 
 .stepper-circle {
-  width: 40px;
-  height: 40px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  margin: 0 auto 6px;
+  background: #ebebeb;
+  color: #a0a0a0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f3f3f3;
-  color: #9a9a9a;
-  border: 1px solid #dddddd;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.stepper-label {
+  font-size: 0.75rem !important;
   font-weight: 600;
+  color: #837d7d !important; /* Force all labels to stay grey */
+  text-align: center;
+  line-height: 1.1;
+  width: 65px;
+  word-wrap: break-word;
+  margin-top: 8px;
 }
 
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
-  color: #ffffff;
-  border-color: #ff6b35;
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #f97345 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
 }
 
-.stepper-item.active .stepper-label {
-  color: #ff6b35;
-  font-weight: 600;
+.checkmark {
+  font-size: 1.4rem;
 }
 
+/* --- ACTIONS --- */
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 30px;
 }
 
 .submit-btn {
-  background-color: #ff6b35;
-  border: none;
-  color: #ffffff;
-  padding: 10px 32px;
+  padding: 12px 24px;
   font-weight: 700;
-  border-radius: 6px;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45);
+  border-radius: 8px;
+}
+
+.prev-btn {
+  background-color: transparent !important;
+  color: #f97345 !important;
+  border: 1px solid #f97345 !important;
+}
+
+.next-btn {
+  background-color: #f97345 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+/* --- FORM & PROJECT STYLES --- */
+.section-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.info {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  color: #555;
+  margin-bottom: 18px;
 }
 
 .header {
   margin-top: 2rem;
+  font-weight: 700;
 }
 
 .section-divider {
@@ -763,6 +817,59 @@ export default {
   background-color: #ffeac7;
   margin: 0.5rem auto 1.5rem;
   border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 30px 20px;
+  }
+  .page-title {
+    font-size: 1.8rem;
+  }
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+  }
+  .stepper-item {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .stepper-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+  .checkmark {
+    font-size: 1.2rem;
+  }
+  .stepper-label {
+    font-size: 0.65rem !important;
+    width: 55px;
+  }
+  .stepper-item:not(:last-child)::after {
+    top: 20px;
+    height: 2px;
+  }
+  .stepper-item:nth-child(4)::after {
+    display: none !important;
+  }
+  .actions {
+    flex-direction: column-reverse;
+    gap: 15px;
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+.header-title {
+  font-family: "Aleo", serif;
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
 }
 
 .info-box {

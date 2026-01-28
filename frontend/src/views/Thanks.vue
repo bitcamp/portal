@@ -75,7 +75,8 @@
               <div class="pb-3">
                 <social-links />
               </div>
-              <orange-p>You may now close this tab</orange-p>
+
+              <p class="orange-p">You may now close this tab</p>
             </div>
           </b-col>
           <b-col md="1" />
@@ -202,7 +203,7 @@ p {
   font-size: 1.05rem;
 }
 
-orange-p {
+.orange-p {
   font-family: Avenir;
   font-weight: 800;
   font-style: Heavy;
