@@ -19,6 +19,7 @@ provider:
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
     SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME: ${file(./config/${self:provider.stage}.json):SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME}
+    TEAM_MATCHING_TABLE: ${file(./config/${self:provider.stage}.json):TEAM_MATCHING_TABLE}
 
   iam:
     role:
