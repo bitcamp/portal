@@ -8,20 +8,22 @@
       <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
-    <!-- Step Indicator -->
     <div class="stepper">
       <div
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ active: step.number === 1 }"
+        :class="{ 
+          active: step.number === currentPage, 
+          completed: step.number < currentPage,
+          inactive: step.number > currentPage 
+        }"
       >
         <div class="stepper-circle">
-          {{ step.number }}
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">
-          {{ step.label }}
-        </div>
+        <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
 
@@ -33,7 +35,6 @@
         Once you register, you'll receive more info about Bitcamp 2026 at the email you provide.
       </p>
 
-      <!-- First & Last Name -->
       <b-form-row>
         <b-form-group class="col-md-6">
           <template #label> First Name <span class="text-danger">*</span></template>
@@ -62,7 +63,6 @@
         </b-form-group>
       </b-form-row>
 
-      <!-- Email & Phone -->
       <b-form-row>
         <b-form-group class="col-md-6">
           <template #label> Email <span class="text-danger">*</span></template>
@@ -91,7 +91,6 @@
         </b-form-group>
       </b-form-row>
 
-      <!-- Age / Country -->
       <b-form-row>
         <b-form-group class="col-md-6">
           <template #label> Age <span class="text-danger">*</span></template>
@@ -120,7 +119,6 @@
         </b-form-group>
       </b-form-row>
 
-      <!-- Gender / Ethnicity -->
       <b-form-row>
         <b-form-group class="col-md-6">
           <template #label> Gender Identity <span class="text-danger">*</span></template>
@@ -153,7 +151,6 @@
 
       <h4 class="section-title">How about your school?</h4>
 
-      <!-- School Name -->
       <b-form-row>
         <b-form-group class="col-12">
           <template #label> School Name <span class="text-danger">*</span></template>
@@ -164,7 +161,6 @@
             :data="universityOptions"
             :disabled="formData.school_other_selected"
             @input="touched.school = true"
-            :state="showState('school')"
           />
           <b-form-invalid-feedback v-if="formData.school.length === 0" :state="showState('school')">
             Please enter your school name
@@ -175,7 +171,6 @@
         </b-form-group>
       </b-form-row>
 
-      <!-- Other school checkbox -->
       <b-form-row>
         <div class="col-12">
           <b-form-checkbox v-model="formData.school_other_selected" @change="resetSchool">
@@ -197,7 +192,6 @@
         </b-form-group>
       </b-form-row>
 
-      <!-- Level of Study / Major -->
       <b-form-row>
         <b-form-group class="col-md-6">
           <template #label> Current Level of Study <span class="text-danger">*</span></template>
@@ -230,7 +224,6 @@
 
       <h4 class="section-title">How did you hear about us?</h4>
 
-      <!-- Single-select dropdown -->
       <b-form-row>
         <b-form-group class="col-12">
           <template #label> Select one <span class="text-danger">*</span></template>
@@ -246,7 +239,6 @@
         </b-form-group>
       </b-form-row>
 
-      <!-- Navigation Buttons -->
       <div class="actions">
         <b-button type="button" class="submit-btn prev-btn" @click="$emit('previous')">
           <b-icon icon="arrow-left" class="mr-1" /> Previous
@@ -300,7 +292,7 @@ const firstPageValidatedFields = [
 ];
 
 export default {
-  name: "Page1",
+  name: "PersonalInfoPage1",
 
   props: {
     formData: {
@@ -406,7 +398,7 @@ export default {
         email: EmailValidator.validate(this.formData.email),
         phone: phone && phone.isValid(),
         school: !this.formData.school_other_selected
-          ? req(this.formData.school) && univ_list.default.includes(this.formData.school)
+          ? req(this.formData.school) && university_list.includes(this.formData.school)
           : true,
         school_other: this.formData.school_other_selected ? req(this.formData.school_other) : true,
       };
@@ -417,6 +409,10 @@ export default {
       if (state === true) return "typeahead is-valid";
       if (state === false) return "typeahead is-invalid";
       return "typeahead";
+    },
+
+    currentPage() {
+      return 1;
     },
   },
 
@@ -441,8 +437,6 @@ export default {
     },
 
     handleNext(e) {
-      console.log("TOUCHED", this.touched);
-      console.log("FORM DATA", this.formData);
       e.preventDefault();
 
       firstPageValidatedFields.forEach((key) => {
@@ -470,108 +464,190 @@ export default {
 };
 </script>
 
-<style>
-html,
-body,
-#app {
-  height: 100%;
-  margin: 0;
-}
-
-/* gradient background */
-body {
-  background-image: none !important;
-  background: linear-gradient(135deg, #f97345 0%, #f9ad4b 55%, #f5a13e 100%) fixed;
-}
-
-/* centered form */
+<style scoped>
 .register-page {
-  max-width: 760px;
+  max-width: 820px;
   margin: 40px auto 80px;
   padding: 0 20px;
   text-align: left;
 }
 
 .page-title {
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .page-subtitle {
-  font-size: 1rem;
-  color: #333;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 30px;
 }
 
-.page-subtitle a {
-  color: #ff6b35;
-  text-decoration: none;
-}
-
-/* Stepper */
+/* --- STEPPER STYLES --- */
 .stepper {
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
 }
 
 .stepper-item {
-  text-align: center;
   flex: 1;
-  font-size: 0.75rem;
-  color: #c4c4c4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Base horizontal line */
+.stepper-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 27px;
+  /* Starts the line 35px to the right of the circle center */
+  left: calc(50% + 35px); 
+  /* Subtracts 70px (35px for each side) to create the gap */
+  width: calc(100% - 70px); 
+  height: 4px;
+  background: #e9ecef;
+  z-index: -1;
+}
+
+/* Completed orange line logic */
+.stepper-item.completed:not(:last-child)::after {
+  background: #f97345;
 }
 
 .stepper-circle {
-  width: 30px;
-  height: 30px;
-  margin: 0 auto 6px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  background: #eee;
+  background: #ebebeb;
+  color: #a0a0a0;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.required-label {
-  content: " *";
-  color: red;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
 }
 
-.stepper-item.active .stepper-circle {
-  background: #ff6b35;
+.stepper-label {
+  font-size: 0.75rem !important; 
+  font-weight: 600; 
+  color: #837d7d !important; /* Force all labels to stay grey */
+  text-align: center;
+  line-height: 1.1;
+  width: 65px; 
+  word-wrap: break-word;
+  margin-top: 8px;
+}
+
+/* Active & Completed Styling */
+.stepper-item.active .stepper-circle,
+.stepper-item.completed .stepper-circle {
+  background: #f97345;
   color: white;
+  box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
 }
 
-/* Buttons */
+.stepper-item.active .stepper-label {
+  color: #000;
+}
+
+/* Inactive State Styling */
+.stepper-item.inactive .stepper-label {
+  color: #a0a0a0;
+}
+
+.checkmark {
+  font-size: 1.4rem;
+}
+
+/* --- FORM & ACTION STYLES --- */
+.section-title {
+  margin-top: 20px;
+  font-weight: 700;
+  color: #333;
+}
+
+.info {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
 .actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .submit-btn {
-  padding: 10px 30px;
+  padding: 12px 24px;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
-/* FORCE override Bootstrap grey buttons */
-button.btn.submit-btn.prev-btn,
-a.btn.submit-btn.prev-btn {
-  background-color: #f5f5f5 !important;
-  color: #ff6b35 !important;
-  border: 1px solid #ff6b35 !important;
+.prev-btn {
+  background: transparent;
+  color: #f97345 !important;
+  border: 1px solid #f97345 !important;
 }
 
-button.btn.submit-btn.next-btn,
-a.btn.submit-btn.next-btn {
-  background-color: #ff6b35 !important;
-  color: #ffffff !important;
+.next-btn {
+  background: #f97345 !important;
   border: none !important;
-  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.45) !important;
+  color: white !important;
 }
 
-button.btn.submit-btn.next-btn:hover,
-a.btn.submit-btn.next-btn:hover {
-  background-color: #ff7b47 !important;
+@media (max-width: 768px) {
+  .page-content {
+    padding: 30px 20px; 
+  }
+  .page-title {
+    font-size: 1.8rem;
+  }
+  .stepper {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px; 
+  }
+  .stepper-item {
+    flex: 0 0 25%; 
+    max-width: 25%;
+  }
+  .stepper-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem !important;
+    margin-bottom: 2px;
+  }
+  .checkmark {
+    font-size: 1.2rem;
+  }
+  .stepper-label {
+    font-size: 0.65rem !important;
+    width: 55px; 
+  }
+  .stepper-item:not(:last-child)::after {
+    top: 20px; 
+    height: 2px;
+  }
+  .stepper-item:nth-child(4)::after {
+    display: none !important;
+  }
+  .actions {
+    flex-direction: column-reverse;
+    gap: 15px;
+  }
+  .submit-btn {
+    width: 100%; 
+    padding: 12px;
+  }
 }
 </style>

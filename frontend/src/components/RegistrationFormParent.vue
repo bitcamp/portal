@@ -2,47 +2,52 @@
   <b-container>
     <b-card class="main-card mt-3 mt-lg-4 mt-xxl-5">
       <!-- Page 1: Tell us about yourself -->
-      <Page1
+      <PersonalInfoPage1
         v-if="currentPage === 1"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(2)"
         @email-filled="handleEmailFilled"
       />
 
       <!-- Page 2: Choose a track -->
-      <Page2
+      <TrackExperiencePage2
         v-if="currentPage === 2"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(3)"
         @previous="goToPage(1)"
       />
 
       <!-- Page 3: Travel and T-shirt -->
-      <Page3
+      <AttendancePage3
         v-if="currentPage === 3"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(4)"
         @previous="goToPage(2)"
       />
 
       <!-- Page 4 and beyond would go here as needed -->
-      <CampfireGames
+      <CampfireGamesPage4
         v-if="currentPage === 4"
         :form-data="formData"
         @next="goToPage(5)"
         @previous="goToPage(3)"
       />
 
-      <TeamMatching
+      <TeamMatchingPage5
         v-if="currentPage === 5"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(6)"
         @previous="goToPage(4)"
       />
 
-      <MinorForms
+      <MinorFormsPage7
         v-if="currentPage === 6"
         :form-data="formData"
+        :current-page="currentPage"
         @next="goToPage(7)"
         @previous="goToPage(5)"
       />
@@ -59,25 +64,25 @@
 </template>
 
 <script>
-import Page1 from "./Page1.vue";
-import Page2 from "./Page2.vue";
-import Page3 from "./Page3.vue";
-import CampfireGames from "./CampfireGames.vue";
-import TeamMatching from "./TeamMatching.vue";
+import PersonalInfoPage1 from "./PersonalInfoPage1.vue";
+import TrackExperiencePage2 from "./TrackExperiencePage2.vue";
+import AttendancePage3 from "./AttendancePage3.vue";
+import CampfireGamesPage4 from "./CampfireGamesPage4.vue";
+import TeamMatchingPage5 from "./TeamMatchingPage5.vue";
 import MinorForms from "./MinorForms.vue";
-import Submit from "./Submit.vue";
+import SubmitPage7 from "./SubmitPage7.vue";
 import { v4 as uuid } from "uuid";
 
 export default {
   name: "RegistrationFormParent",
   components: {
-    Page1,
-    Page2,
-    Page3,
-    CampfireGames,
-    TeamMatching,
+    PersonalInfoPage1,
+    TrackExperiencePage2,
+    AttendancePage3,
+    CampfireGamesPage4,
+    TeamMatchingPage5,
     MinorForms,
-    Submit,
+    SubmitPage7,
   },
   props: {
     default_track: {
