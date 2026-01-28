@@ -83,10 +83,10 @@
         >
           <b-form-input
             id="shipping-address"
-            v-model="formData.address"
+            v-model="formData.address1"
             placeholder="8125 Paint Branch Dr"
-            :state="showState('address')"
-            @input="touched.address = true"
+            :state="showState('address1')"
+            @input="touched.address1 = true"
           />
         </b-form-group>
 
@@ -305,7 +305,7 @@ const thirdPageRequiredFields = ["tshirt_size", "diet"];
 const thirdPageOptionalFields = [
   "transport",
   "diet_other_text",
-  "address",
+  "address1",
   "address2",
   "city",
   "state",
@@ -378,7 +378,7 @@ export default {
       return {
         transport: this.formData.transport !== null && this.formData.transport !== undefined,
         tshirt_size: req(this.formData.tshirt_size),
-        address: req(this.formData.address),
+        address1: req(this.formData.address1),
         city: req(this.formData.city),
         state: req(this.formData.state),
         zip: req(this.formData.zip),
@@ -392,11 +392,11 @@ export default {
       if (!this.atNoTransportUnis()) res.push("transport");
       if (this.formData.diet_other) res.push("diet_other_text");
       if (
-        ["address", "city", "state", "zip", "country"].some(
+        ["address1", "city", "state", "zip", "country"].some(
           (fieldName) => this.formData[fieldName] && this.formData[fieldName].trim() !== ""
         )
       ) {
-        res.push(...["address", "city", "state", "zip", "country"]);
+        res.push(...["address1", "city", "state", "zip", "country"]);
       }
       return res;
     },

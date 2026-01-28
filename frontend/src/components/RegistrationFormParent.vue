@@ -133,7 +133,7 @@ export default {
 
         // Page 3 data
         transport: null,
-        address: "",
+        address1: "",
         address2: "",
         city: "",
         state: "",
@@ -257,7 +257,13 @@ export default {
 
       // 5MB upload limit
       if (file.size > 1024 * 1024 * 5) {
-        this.showErrorToastCustom("Please ensure that your resume file size does not exceed 5MB.");
+        this.$bvToast.toast("Please ensure that your resume file size does not exceed 5MB.", {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        });
         return;
       }
 
@@ -290,7 +296,13 @@ export default {
       );
 
       if (!(r && r.putUrl)) {
-        this.showErrorToastCustom("Oops! We couldn't upload your resume, try again later!");
+        this.$bvToast.toast("Oops! We couldn't upload your resume, try again later!", {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        });
         return;
       }
 
@@ -304,7 +316,13 @@ export default {
       this.formData.resume_id = this.random_id;
 
       if (!(r2 && r2.status == 200)) {
-        this.showErrorToastCustom("Oops! We couldn't upload your resume, try again later!");
+        this.$bvToast.toast("Oops! We couldn't upload your resume, try again later!", {
+          toaster: "b-toaster-top-center",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+          variant: "danger",
+        });
         return;
       }
 

@@ -234,56 +234,144 @@ export default {
     async registerUser() {
       if (this.isSending) return;
       this.isSending = true;
-      this.formData.name = `${this.formData.first_name} ${this.formData.last_name}`;
-      if (this.formData.name === "Auran Shereef" || this.formData.name === "Monte James") {
+
+      const name = `${this.formData.first_name} ${this.formData.last_name}`;
+      if (name === "Auran Shereef" || name === "Monte James") {
         this.$router.push({ path: "thanks" });
         return;
       }
-      this.formData.time_taken = (Date.now() - this.form_start) / 1000;
+
+      const time_taken = (Date.now() - this.form_start) / 1000;
+      let referred_by = null;
       if (this.$route.params.referral) {
         this.$gtag.event("got-referred", { method: "Google" });
-        this.formData.referred_by = this.$route.params.referral;
+        referred_by = this.$route.params.referral;
         this.track({
           random_id: this.random_id,
           key: "got-referred",
           value: this.$route.params.referral,
         });
       }
+
       this.track({ random_id: this.random_id, key: `hf-${this.heard_from}`, value: 1 });
       if (this.heard_from_other) {
         this.track({ random_id: this.random_id, key: "hf-other", value: 1 });
       }
+
       this.$gtag.event("submit-registration", { method: "Google" });
       this.$gtag.time({
         name: "completion-time",
-        value: this.formData.time_taken,
+        value: time_taken,
         event_category: "Form completion duration",
       });
       this.track({
         random_id: this.random_id,
         key: "form-submitted",
-        value: this.formData.time_taken,
+        value: time_taken,
       });
-      const d = new Date();
-      this.formData.secret =
-        (d.getHours() * d.getDay() * 15).toString() +
-        d.getFullYear().toString().split("").reverse().join("");
+
+      // Unused for some reason...
+      // const d = new Date();
+      // this.formData.secret =
+      //   (d.getHours() * d.getDay() * 15).toString() +
+      //   d.getFullYear().toString().split("").reverse().join("");
+
       const survey_count = { r: 0, b: 0, g: 0 };
       survey_count[this.formData.q1.substring(0, 1)] += 1;
       survey_count[this.formData.q2.substring(0, 1)] += 1;
       survey_count[this.formData.q3.substring(0, 1)] += 1;
       survey_count[this.formData.q4.substring(0, 1)] += 1;
       survey_count[this.formData.q5.substring(0, 1)] += 1;
-      this.formData.red = survey_count["r"];
-      this.formData.green = survey_count["g"];
-      this.formData.blue = survey_count["b"];
-      this.formData.dietary_restrictions = this.createDietaryRestrictionString();
+
       const isMinor = this.formData.age.length > 0 && Number(this.formData.age) < 18;
       const endpoint = isMinor ? "register_minor" : "register";
+
+      const requestBody = {
+        email: this.formData.email,
+        phone: this.formData.phone,
+        MLH_emails: this.formData.MLH_emails,
+        MLH_conduct: this.formData.MLH_conduct,
+        MLH_privacy: this.formData.MLH_privacy,
+        name: name,
+        first_name: this.formData.first_name,
+        last_name: this.formData.last_name,
+        country_of_residence: this.formData.country_of_residence,
+        gender: this.formData.gender,
+        ethnicity: this.formData.ethnicity,
+        major: this.formData.major,
+        recruit: this.formData.recruit,
+        portfolio: this.formData.portfolio,
+        school_year: this.formData.school_year,
+        school: this.formData.school,
+        school_other: this.formData.school_other,
+        resume_link: this.formData.resume_link,
+        resume_id: this.formData.resume_id,
+        age: this.formData.age,
+        transport: this.formData.transport,
+        // transport_select: this.formData.transport_select,
+        // transport_deposit: this.formData.transport_deposit,
+        address: this.createAddressString(),
+        address1: this.formData.address1,
+        address2: this.formData.address2,
+        city: this.formData.city,
+        state: this.formData.state,
+        country: this.formData.country,
+        zip: this.formData.zip,
+        tshirt_size: this.formData.tshirt_size,
+        hack_count: this.formData.hack_count,
+        question1: this.formData.question1,
+        question2: this.formData.question2,
+        heard_from: this.formData.heard_from,
+        dietary_restrictions: this.createDietaryRestrictionString(),
+        // gmaps_place_id: this.formData.gmaps_place_id,
+        referred_by: referred_by,
+        track_selected: this.formData.track_selected,
+        waitlist_track_selected: [], // HARDCODED TO EMPTY ARRAY FOR NOW
+        // citizen: this.formData.citizen,
+        quantum_track: this.formData.quantum_track,
+        beginner_content_opt_in: this.formData.beginner_content_opt_in,
+        green: survey_count["g"],
+        red: survey_count["r"],
+        blue: survey_count["b"],
+      };
+
+      if (isMinor) {
+        Object.assign(requestBody, {
+          waiver_type: this.formData.waiverType,
+          photo_name: this.formData.photo_name,
+          photo_date: this.formData.photo_date,
+          photo_signature: this.formData.photo_signature,
+          p_photo_name: this.formData.p_photo_name,
+          p_photo_date: this.formData.p_photo_date,
+          p_photo_signature: this.formData.p_photo_signature,
+          terms_minor_name: this.formData.terms_minor_name,
+          terms_minor_date: this.formData.terms_minor_date,
+          terms_minor_signature: this.formData.terms_minor_signature,
+          terms_parent_name: this.formData.terms_parent_name,
+          terms_parent_date: this.formData.terms_parent_date,
+          terms_parent_signature: this.formData.terms_parent_signature,
+          chap_name: this.formData.chap_name,
+          chap_date: this.formData.chap_date,
+          chap_signature: this.formData.chap_signature,
+          p_chap_name: this.formData.p_chap_name,
+          p_chap_date: this.formData.p_chap_date,
+          p_chap_signature: this.formData.p_chap_signature,
+          school_minor_name: this.formData.school_minor_name,
+          school_minor_date: this.formData.school_minor_date,
+          school_minor_signature: this.formData.school_minor_signature,
+          school_teacher_name: this.formData.school_teacher_name,
+          school_teacher_date: this.formData.school_teacher_date,
+          school_teacher_signature: this.formData.school_teacher_signature,
+          school_principal_name: this.formData.school_principal_name,
+          school_principal_date: this.formData.school_principal_date,
+          school_principal_signature: this.formData.school_principal_signature,
+        })
+      }
+
       const response = await this.performPostRequest(
         this.getEnvVariable("BACKEND_ENDPOINT"),
         endpoint,
-        this.formData
+        requestBody,
       );
       this.isSending = false;
       return response;
@@ -305,6 +393,17 @@ export default {
         this.validations.valid_code_of_conduct = null;
       }
       return valid;
+    },
+
+    createAddressString() {
+      return [
+        this.formData.address1,
+        this.formData.address2,
+        [this.formData.city, this.formData.state, this.formData.zip]
+          .filter(Boolean)
+          .join(" "),
+        this.formData.country,
+      ].filter(Boolean).join(", ");
     },
 
     createDietaryRestrictionString() {
