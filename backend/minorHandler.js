@@ -4,9 +4,9 @@ const withSentry = require("serverless-sentry-lib");
 AWS.config.update({ region: "us-east-1" });
 
 const HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Credentials': true,
-  'Access-Control-Allow-Headers': '*',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Credentials": true,
+  "Access-Control-Allow-Headers": "*",
 };
 
 const withSentryOptions = {
@@ -29,10 +29,12 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
     };
   }
 
-  const existingReg = await ddb.get({
-    TableName: process.env.MINOR_TABLE,
-    Key: { email: body.email.toLowerCase() }
-  }).promise();
+  const existingReg = await ddb
+    .get({
+      TableName: process.env.MINOR_TABLE,
+      Key: { email: body.email.toLowerCase() },
+    })
+    .promise();
 
   let referralID;
   if (existingReg.Item != null) {
@@ -149,24 +151,24 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
   if (body.referred_by) {
     try {
       const referred_by = normalizeReferral(body.referred_by);
-      params.Item.referred_by = referred_by
-      body.referred_by = referred_by
+      params.Item.referred_by = referred_by;
+      body.referred_by = referred_by;
 
       await Promise.all([
         logStatistic(ddb, "referrals", 1),
         logReferral(ddb, body.referred_by, body.name),
       ]);
     } catch (error) {
-      console.error("Failed to log referral!")
-      console.error(error)
+      console.error("Failed to log referral!");
+      console.error(error);
     }
   }
 
   const logWaitlistTrack = () => {
     if (body.waitlist_track_selected.length > 0) {
-      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1)
+      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1);
     }
-  }
+  };
 
   await Promise.all([
     logStatistic(ddb, "track-" + body.track_selected, 1),
@@ -176,6 +178,7 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
     ddb.put(params).promise(),
     // Send confirmation email
     sendConfirmationEmail(params.Item),
+    registerTeamMatching(ddb, body),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
@@ -196,8 +199,6 @@ const makeAddon = (length) => {
   return result.join("");
 };
 
-
-
 const logStatistic = (ddb, stat) => {
   return ddb
     .update({
@@ -212,8 +213,8 @@ const logStatistic = (ddb, stat) => {
 };
 
 const normalizeReferral = (referred_by) => {
-  const givenChunks = referred_by.split('-');
-  return (givenChunks[0] + '-' + givenChunks[1].substring(0, 3));
+  const givenChunks = referred_by.split("-");
+  return givenChunks[0] + "-" + givenChunks[1].substring(0, 3);
 };
 
 const logReferral = async (ddb, referred_by, referralName) => {
@@ -240,6 +241,35 @@ const logReferral = async (ddb, referred_by, referralName) => {
   return Promise.resolve();
 };
 
+// registerTeamMatching adds team matching data to a DynamoDB Table
+const registerTeamMatching = async (ddb, body) => {
+  if (!body.opt_in_team_matching) {
+    return;
+  }
+
+  var params = {
+    TableName: process.env.TEAM_MATCHING_TABLE,
+    Item: {
+      email: body.email,
+      collab: body.collab,
+      experience: body.experience,
+      first_name: body.first_name,
+      languages: body.languages,
+      last_name: body.last_name,
+      num_team_members: body.num_team_members,
+      prizes: body.prizes,
+      projects: body.projects,
+      serious: body.serious,
+      skill_level: body.skill_level,
+      skills_wanted: body.skills_wanted,
+      track: body.track,
+      year: body.school_year,
+    },
+  };
+
+  await ddb.put(params).promise();
+};
+
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
 const sendConfirmationEmail = async (user) => {
   const ses = new AWS.SES();
@@ -248,32 +278,52 @@ const sendConfirmationEmail = async (user) => {
 
   // Capitalize track
   const track = user.track
-    .split('_')
+    .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 
   const school_year_options = [
-    { value: "less than high school", text: "Less than Secondary / High School" },
+    {
+      value: "less than high school",
+      text: "Less than Secondary / High School",
+    },
     { value: "high school", text: "Secondary / High School" },
-    { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+    {
+      value: "undergrad 2 year",
+      text: "Undergraduate University (2 year - community college or similar)",
+    },
     { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
-    { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+    {
+      value: "grad",
+      text: "Graduate University (Masters, Professional, Doctoral, etc)",
+    },
     { value: "bootcamp", text: "Code School / Bootcamp" },
-    { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+    {
+      value: "vocational",
+      text: "Other Vocational / Trade Program or Apprenticeship",
+    },
     { value: "postdoc", text: "Post Doctorate" },
     { value: "other", text: "Other" },
     { value: "not a student", text: "I'm not currently a student" },
     { value: "prefer not to answer", text: "Prefer not to answer" },
   ];
 
-  const schoolYear = school_year_options
-    .find(option => option.value === user.school_year).text;
+  const schoolYear = school_year_options.find(
+    (option) => option.value === user.school_year,
+  ).text;
 
   const tShirtSize = user.tshirt_size.toUpperCase();
 
   // Combine address fields
-  const address = [user.address1, user.address2, user.city, user.state, user.zip, user.country]
-    .filter(Boolean)  // Remove empty/null values
+  const address = [
+    user.address1,
+    user.address2,
+    user.city,
+    user.state,
+    user.zip,
+    user.country,
+  ]
+    .filter(Boolean) // Remove empty/null values
     .join(", ");
 
   const params = {

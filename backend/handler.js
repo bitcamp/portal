@@ -1,14 +1,14 @@
 const AWS = require("aws-sdk");
-const UUID = require('uuid');
+const UUID = require("uuid");
 const withSentry = require("serverless-sentry-lib");
 const { IncomingWebhook } = require("@slack/webhook");
 
 AWS.config.update({ region: "us-east-1" });
 
 const HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Credentials': true,
-  'Access-Control-Allow-Headers': '*',
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Credentials": true,
+  "Access-Control-Allow-Headers": "*",
 };
 
 const withSentryOptions = {
@@ -32,15 +32,17 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     };
   }
 
-  const existingReg = await ddb.get({
-    TableName: process.env.REGISTRATION_TABLE,
-    Key: { email: body.email.toLowerCase() }
-  }).promise()
+  const existingReg = await ddb
+    .get({
+      TableName: process.env.REGISTRATION_TABLE,
+      Key: { email: body.email.toLowerCase() },
+    })
+    .promise();
 
   // Generate referral ID
   var referralID;
   if (existingReg.Item != null) {
-    referralID = existingReg.Item.referral_id
+    referralID = existingReg.Item.referral_id;
   } else {
     const referralBase = body.name.split(" ")[0].toLowerCase();
     do {
@@ -110,52 +112,40 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_red: body.red,
       survey_blue: body.blue,
 
-      // chaperone_e_signature_school: body.chap_signature,
-      // date_signed_chaperone_school: body.chap_date,
-      // date_signed_minor: body.photo_date,
-      // date_signed_principal_school: body.school_principal_date,
-      // date_signed_terms: body.terms_parent_date,
-      // e_signature_terms: body.terms_parent_signature,
-      // guardian_e_signature_chap: body.p_chap_signature,
-      // guardian_e_signature_minor: body.p_photo_signature,
-      // guardian_name_chap: body.p_chap_name,
-      // guardian_relationship_chap: body.p_chap_relationship,
-      // principal_e_signature_school: body.school_principal_signature,
-
       // remove this after 2024 season
       waitlist: body.waitlist,
     },
   };
 
   if (existingReg.Item != null && existingReg.Item.referred_by !== "") {
-    params.Item.referred_by = existingReg.Item.referred_by
+    params.Item.referred_by = existingReg.Item.referred_by;
   }
 
   if (existingReg.Item != null) {
-    params.Item.referral_count = existingReg.Item.referral_count
+    params.Item.referral_count = existingReg.Item.referral_count;
   }
 
   if (body.referred_by) {
     try {
       const referred_by = normalizeReferral(body.referred_by);
-      params.Item.referred_by = referred_by
-      body.referred_by = referred_by
+      params.Item.referred_by = referred_by;
+      body.referred_by = referred_by;
 
       await Promise.all([
         logStatistic(ddb, "referrals", 1),
         logReferral(ddb, body.referred_by, body.name),
       ]);
     } catch (error) {
-      console.error("Failed to log referral!")
-      console.error(error)
+      console.error("Failed to log referral!");
+      console.error(error);
     }
   }
 
   const logWaitlistTrack = () => {
     if (body.waitlist_track_selected.length > 0) {
-      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1)
+      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1);
     }
-  }
+  };
 
   await Promise.all([
     logStatistic(ddb, "track-" + body.track_selected, 1),
@@ -165,6 +155,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     ddb.put(params).promise(),
     // Send confirmation email
     sendConfirmationEmail(params.Item),
+    registerTeamMatching(ddb, body),
   ]);
 
   // Returns status code 200 and JSON string of 'result'
@@ -185,6 +176,35 @@ const makeAddon = (length) => {
   return result.join("");
 };
 
+// registerTeamMatching adds team matching data to a DynamoDB Table
+const registerTeamMatching = async (ddb, body) => {
+  if (!body.opt_in_team_matching) {
+    return;
+  }
+
+  var params = {
+    TableName: process.env.TEAM_MATCHING_TABLE,
+    Item: {
+      email: body.email,
+      collab: body.collab,
+      experience: body.experience,
+      first_name: body.first_name,
+      languages: body.languages,
+      last_name: body.last_name,
+      num_team_members: body.num_team_members,
+      prizes: body.prizes,
+      projects: body.projects,
+      serious: body.serious,
+      skill_level: body.skill_level,
+      skills_wanted: body.skills_wanted,
+      track: body.track,
+      year: body.school_year,
+    },
+  };
+
+  await ddb.put(params).promise();
+};
+
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
 const sendConfirmationEmail = async (user) => {
   const ses = new AWS.SES();
@@ -195,19 +215,31 @@ const sendConfirmationEmail = async (user) => {
 
   // Capitalize track
   const track = user.track
-    .split('_')
+    .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 
   // Keep this the same as in RegistrationForm.vue
   const school_year_options = [
-    { value: "less than high school", text: "Less than Secondary / High School" },
+    {
+      value: "less than high school",
+      text: "Less than Secondary / High School",
+    },
     { value: "high school", text: "Secondary / High School" },
-    { value: "undergrad 2 year", text: "Undergraduate University (2 year - community college or similar)" },
+    {
+      value: "undergrad 2 year",
+      text: "Undergraduate University (2 year - community college or similar)",
+    },
     { value: "undergrad 3+ year", text: "Undergraduate University (3+ year)" },
-    { value: "grad", text: "Graduate University (Masters, Professional, Doctoral, etc)" },
+    {
+      value: "grad",
+      text: "Graduate University (Masters, Professional, Doctoral, etc)",
+    },
     { value: "bootcamp", text: "Code School / Bootcamp" },
-    { value: "vocational", text: "Other Vocational / Trade Program or Apprenticeship" },
+    {
+      value: "vocational",
+      text: "Other Vocational / Trade Program or Apprenticeship",
+    },
     { value: "postdoc", text: "Post Doctorate" },
     { value: "other", text: "Other" },
     { value: "not a student", text: "I’m not currently a student" },
@@ -215,8 +247,9 @@ const sendConfirmationEmail = async (user) => {
   ];
 
   // School year text
-  const schoolYear = school_year_options
-    .find(option => option.value === user.school_year).text;
+  const schoolYear = school_year_options.find(
+    (option) => option.value === user.school_year,
+  ).text;
 
   // All caps t shirt size
   const tShirtSize = user.tshirt_size.toUpperCase();
@@ -232,7 +265,12 @@ const sendConfirmationEmail = async (user) => {
   return await ses.sendTemplatedEmail(params).promise();
 };
 
-const sendReferralNotificationEmail = async (fullName, email, referralID, referralName) => {
+const sendReferralNotificationEmail = async (
+  fullName,
+  email,
+  referralID,
+  referralName,
+) => {
   const ses = new AWS.SES();
 
   const referralLink = "https://register.gotechnica.org/" + referralID;
@@ -258,7 +296,7 @@ module.exports.upload_resume = withSentry(async (event) => {
   if (!body.filename) {
     return {
       statusCode: 500,
-      body: '/upload_resume is missing filename',
+      body: "/upload_resume is missing filename",
     };
   }
 
@@ -268,17 +306,20 @@ module.exports.upload_resume = withSentry(async (event) => {
   const filePath = `${folder}/${body.filename}`;
 
   const params = {
-    Bucket: 'bitcamp-2024-resumes',
+    Bucket: "bitcamp-2024-resumes",
     Key: filePath,
     Expires: 600,
-    ContentType: 'multipart/form-data',
+    ContentType: "multipart/form-data",
   };
 
-  const s3Result = s3.getSignedUrl('putObject', params);
+  const s3Result = s3.getSignedUrl("putObject", params);
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ putUrl: s3Result, uploadUrl: `https://bitcamp-2024-resumes.s3.amazonaws.com/${filePath}` }),
+    body: JSON.stringify({
+      putUrl: s3Result,
+      uploadUrl: `https://bitcamp-2024-resumes.s3.amazonaws.com/${filePath}`,
+    }),
     headers: HEADERS,
   };
 });
@@ -290,7 +331,7 @@ module.exports.upload_resume_text = withSentry(async (event) => {
   if (!body.user_id || !body.resume_text) {
     return {
       statusCode: 500,
-      body: '/upload_resume_text is missing user_id or resume_text',
+      body: "/upload_resume_text is missing user_id or resume_text",
     };
   }
 
@@ -308,7 +349,7 @@ module.exports.upload_resume_text = withSentry(async (event) => {
 
   return {
     statusCode: 200,
-    body: 'success',
+    body: "success",
     headers: HEADERS,
   };
 });
@@ -370,7 +411,6 @@ module.exports.track = withSentry(async (event) => {
   };
 });
 
-
 const logStatistic = (ddb, stat) => {
   return ddb
     .update({
@@ -386,9 +426,9 @@ const logStatistic = (ddb, stat) => {
 
 const normalizeReferral = (referred_by) => {
   // check for illegal characters
-  const givenChunks = referred_by.split('-');
-  return (givenChunks[0] + '-' + givenChunks[1].substring(0, 3));
-}
+  const givenChunks = referred_by.split("-");
+  return givenChunks[0] + "-" + givenChunks[1].substring(0, 3);
+};
 
 const logReferral = async (ddb, referred_by, referralName) => {
   var referralQuery = {
@@ -418,7 +458,7 @@ module.exports.update = withSentry(async () => {
   const statsTable = process.env.STATISTICS_TABLE;
   const registrationTable = process.env.REGISTRATION_TABLE;
   const mentorTable = process.env.MENTOR_TABLE;
-  const minorTable = process.env.MINOR_TABLE
+  const minorTable = process.env.MINOR_TABLE;
   const volunteerTable = process.env.VOLUNTEER_TABLE;
 
   // Can't simply scan a table to get the count once it's over 1mb in size (~950 registrations)
@@ -428,7 +468,6 @@ module.exports.update = withSentry(async () => {
   //   TableName: registrationTable,
   //   Select: "COUNT",
   // }).promise();
-
 
   const countTable = async (tableName) => {
     let scanParams = {
@@ -442,24 +481,27 @@ module.exports.update = withSentry(async () => {
     do {
       stat = await ddb.scan(scanParams).promise();
       statCount += stat.Count;
-      scanParams.ExclusiveStartKey = stat.LastEvaluatedKey
+      scanParams.ExclusiveStartKey = stat.LastEvaluatedKey;
     } while (stat.LastEvaluatedKey);
     return statCount;
-  }
-
+  };
 
   const hackersCount = await countTable(registrationTable);
   const minorsCount = await countTable(minorTable);
 
-  const mentors = await ddb.scan({
-    TableName: mentorTable,
-    Select: "COUNT",
-  }).promise();
+  const mentors = await ddb
+    .scan({
+      TableName: mentorTable,
+      Select: "COUNT",
+    })
+    .promise();
 
-  const volunteers = await ddb.scan({
-    TableName: volunteerTable,
-    Select: "COUNT",
-  }).promise();
+  const volunteers = await ddb
+    .scan({
+      TableName: volunteerTable,
+      Select: "COUNT",
+    })
+    .promise();
 
   const params = {
     TableName: statsTable,
@@ -467,7 +509,8 @@ module.exports.update = withSentry(async () => {
   };
 
   // Prepare the slack webhook
-  const webhookUrl = "https://hooks.slack.com/services/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";
+  const webhookUrl =
+    "https://hooks.slack.com/services/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";
   const webhook = new IncomingWebhook(webhookUrl);
 
   // Collect statistic data
@@ -480,7 +523,8 @@ module.exports.update = withSentry(async () => {
 
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
-    if (stat.statistic === "registrations") { // save for later
+    if (stat.statistic === "registrations") {
+      // save for later
       registrations = hackersCount + minorsCount;
       volunteerRegistrations = volunteers.Count;
       mentorRegistrations = mentors.Count;
@@ -495,9 +539,10 @@ module.exports.update = withSentry(async () => {
         track = track.replace("waitlist-", "");
       }
 
-      track = track.split('_')
+      track = track
+        .split("_")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+        .join(" ");
       if (waitlist) {
         track = `Waitlist (${track})`;
       }
@@ -510,11 +555,11 @@ module.exports.update = withSentry(async () => {
   });
 
   // Sort strings ignoring the statistic value
-  const sortWithoutStatisticValue = ((a, b) => {
-    a = a.replace(/[0-9]/g, '');
-    b = b.replace(/[0-9]/g, '');
+  const sortWithoutStatisticValue = (a, b) => {
+    a = a.replace(/[0-9]/g, "");
+    b = b.replace(/[0-9]/g, "");
     return a.localeCompare(b);
-  });
+  };
 
   // Format statistic update
   let statArr = [];
@@ -527,7 +572,7 @@ module.exports.update = withSentry(async () => {
   statArr = statArr.concat(trackArr.sort(sortWithoutStatisticValue));
   statArr.push("~~~~~~~~~~~");
   statArr = statArr.concat(hfArr.sort(sortWithoutStatisticValue));
-  statArr.push(`${pageViews} Page Views`)
+  statArr.push(`${pageViews} Page Views`);
 
   // Send the statistic update to slack
   await webhook.send({
@@ -536,7 +581,7 @@ module.exports.update = withSentry(async () => {
       `${new Date().toLocaleString("en-US", {
         timeZone: "America/New_York",
         dateStyle: "short",
-        timeStyle: "short"
+        timeStyle: "short",
       })} ET:\n\n` +
       `${Array.from(statArr).join("\n")}`,
   });

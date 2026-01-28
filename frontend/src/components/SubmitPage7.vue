@@ -287,6 +287,7 @@ export default {
       const endpoint = isMinor ? "register_minor" : "register";
 
       const requestBody = {
+        // Registration fields
         email: this.formData.email,
         phone: this.formData.phone,
         MLH_emails: this.formData.MLH_emails,
@@ -333,6 +334,20 @@ export default {
         green: survey_count["g"],
         red: survey_count["r"],
         blue: survey_count["b"],
+
+        // Team matching fields
+        opt_in_team_matching: this.formData.opt_in_team_matching,
+        collab: this.formData.collab,
+        experience: this.formData.experience,
+        languages: this.formData.languages,
+        num_team_members: this.formData.num_team_members,
+        prizes: this.formData.prizes,
+        projects: this.formData.projects,
+        serious: this.formData.serious,
+        skill_level: this.formData.skill_level,
+        skills_wanted: this.formData.skills_wanted,
+        track: this.formData.track,
+        year: this.formData.school_year,
       };
 
       if (isMinor) {
