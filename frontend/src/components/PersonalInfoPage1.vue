@@ -1,11 +1,17 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">Register for Bitcamp 2026</h1>
+    <h1 class="page-title">
+      Register for Bitcamp 2026
+    </h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
+      <a
+        href="https://bit.camp"
+        target="_blank"
+        rel="noopener"
+      >bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -13,36 +19,45 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage, 
+        :class="{
+          active: step.number === currentPage,
           completed: step.number < currentPage,
-          inactive: step.number > currentPage 
+          inactive: step.number > currentPage,
         }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span
+            v-if="step.number < currentPage"
+            class="checkmark"
+          >✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">{{ step.label }}</div>
+        <div class="stepper-label">
+          {{ step.label }}
+        </div>
       </div>
     </div>
 
-    <hr />
+    <hr>
 
     <b-form @submit="handleNext">
-      <h4 class="section-title">Tell us about yourself!</h4>
+      <h4 class="section-title">
+        Tell us about yourself!
+      </h4>
       <p class="info">
         Once you register, you'll receive more info about Bitcamp 2026 at the email you provide.
       </p>
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> First Name <span class="text-danger">*</span></template>
+          <template #label>
+            First Name <span class="text-danger">*</span>
+          </template>
           <b-form-input
             id="input-first-name"
             v-model="formData.first_name"
-            @input="touched.first_name = true"
             :state="showState('first_name')"
+            @input="touched.first_name = true"
           />
           <b-form-invalid-feedback :state="showState('first_name')">
             Required field
@@ -50,12 +65,14 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Last Name <span class="text-danger">*</span></template>
+          <template #label>
+            Last Name <span class="text-danger">*</span>
+          </template>
           <b-form-input
             id="input-last-name"
             v-model="formData.last_name"
-            @input="touched.last_name = true"
             :state="showState('last_name')"
+            @input="touched.last_name = true"
           />
           <b-form-invalid-feedback :state="showState('last_name')">
             Required field
@@ -65,12 +82,14 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Email <span class="text-danger">*</span></template>
+          <template #label>
+            Email <span class="text-danger">*</span>
+          </template>
           <b-form-input
             v-model="formData.email"
             type="email"
-            @input="touched.email = true"
             :state="showState('email')"
+            @input="touched.email = true"
           />
           <b-form-invalid-feedback :state="showState('email')">
             Please enter a valid email
@@ -78,12 +97,14 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Phone Number <span class="text-danger">*</span></template>
+          <template #label>
+            Phone Number <span class="text-danger">*</span>
+          </template>
           <b-form-input
             v-model="formData.phone"
             type="tel"
-            @input="touched.phone = true"
             :state="showState('phone')"
+            @input="touched.phone = true"
           />
           <b-form-invalid-feedback :state="showState('phone')">
             Please enter a valid phone number
@@ -93,12 +114,14 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Age <span class="text-danger">*</span></template>
+          <template #label>
+            Age <span class="text-danger">*</span>
+          </template>
           <b-form-input
             v-model="formData.age"
             type="number"
-            @input="touched.age = true"
             :state="showState('age')"
+            @input="touched.age = true"
           />
           <b-form-invalid-feedback :state="showState('age')">
             Please enter your real age
@@ -106,12 +129,14 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Country of Residence <span class="text-danger">*</span></template>
+          <template #label>
+            Country of Residence <span class="text-danger">*</span>
+          </template>
           <b-form-select
             v-model="formData.country_of_residence"
             :options="countryOptions"
-            @change="touched.country_of_residence = true"
             :state="showState('country_of_residence')"
+            @change="touched.country_of_residence = true"
           />
           <b-form-invalid-feedback :state="showState('country_of_residence')">
             Required field
@@ -121,12 +146,14 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Gender Identity <span class="text-danger">*</span></template>
+          <template #label>
+            Gender Identity <span class="text-danger">*</span>
+          </template>
           <b-form-select
             v-model="formData.gender"
             :options="genderOptions"
-            @change="touched.gender = true"
             :state="showState('gender')"
+            @change="touched.gender = true"
           />
           <b-form-invalid-feedback :state="showState('gender')">
             Required field
@@ -134,12 +161,14 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Race / Ethnicity <span class="text-danger">*</span></template>
+          <template #label>
+            Race / Ethnicity <span class="text-danger">*</span>
+          </template>
           <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
-            @change="touched.ethnicity = true"
             :state="showState('ethnicity')"
+            @change="touched.ethnicity = true"
           />
           <b-form-invalid-feedback :state="showState('ethnicity')">
             Required field
@@ -147,13 +176,17 @@
         </b-form-group>
       </b-form-row>
 
-      <hr />
+      <hr>
 
-      <h4 class="section-title">How about your school?</h4>
+      <h4 class="section-title">
+        How about your school?
+      </h4>
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label> School Name <span class="text-danger">*</span></template>
+          <template #label>
+            School Name <span class="text-danger">*</span>
+          </template>
           <vue-bootstrap-autocomplete
             v-model="formData.school"
             no-results-info="No results found."
@@ -162,10 +195,16 @@
             :disabled="formData.school_other_selected"
             @input="touched.school = true"
           />
-          <b-form-invalid-feedback v-if="formData.school.length === 0" :state="showState('school')">
+          <b-form-invalid-feedback
+            v-if="formData.school.length === 0"
+            :state="showState('school')"
+          >
             Please enter your school name
           </b-form-invalid-feedback>
-          <b-form-invalid-feedback v-else :state="showState('school')">
+          <b-form-invalid-feedback
+            v-else
+            :state="showState('school')"
+          >
             Please select a school from the list
           </b-form-invalid-feedback>
         </b-form-group>
@@ -173,7 +212,10 @@
 
       <b-form-row>
         <div class="col-12">
-          <b-form-checkbox v-model="formData.school_other_selected" @change="resetSchool">
+          <b-form-checkbox
+            v-model="formData.school_other_selected"
+            @change="resetSchool"
+          >
             My school is not listed
           </b-form-checkbox>
         </div>
@@ -182,9 +224,9 @@
           <b-form-input
             v-if="formData.school_other_selected"
             v-model="formData.school_other"
-            @input="touched.school_other = true"
             :state="showState('school_other')"
             placeholder="Other school"
+            @input="touched.school_other = true"
           />
           <b-form-invalid-feedback :state="showState('school_other')">
             Please enter a valid school
@@ -194,12 +236,14 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Current Level of Study <span class="text-danger">*</span></template>
+          <template #label>
+            Current Level of Study <span class="text-danger">*</span>
+          </template>
           <b-form-select
             v-model="formData.school_year"
             :options="schoolYearOptions"
-            @change="touched.school_year = true"
             :state="showState('school_year')"
+            @change="touched.school_year = true"
           />
           <b-form-invalid-feedback :state="showState('school_year')">
             Required Field
@@ -207,12 +251,14 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Primary Major <span class="text-danger">*</span></template>
+          <template #label>
+            Primary Major <span class="text-danger">*</span>
+          </template>
           <b-form-select
             v-model="formData.major"
             :options="majorOptions"
-            @change="touched.major = true"
             :state="showState('major')"
+            @change="touched.major = true"
           />
           <b-form-invalid-feedback :state="showState('major')">
             Required Field
@@ -220,18 +266,22 @@
         </b-form-group>
       </b-form-row>
 
-      <hr />
+      <hr>
 
-      <h4 class="section-title">How did you hear about us?</h4>
+      <h4 class="section-title">
+        How did you hear about us?
+      </h4>
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label> Select one <span class="text-danger">*</span></template>
+          <template #label>
+            Select one <span class="text-danger">*</span>
+          </template>
           <b-form-select
             v-model="formData.heard_from"
             :options="heardFromOptions"
-            @change="touched.heard_from = true"
             :state="showState('heard_from')"
+            @change="touched.heard_from = true"
           />
           <b-form-invalid-feedback :state="showState('heard_from')">
             Required field
@@ -240,12 +290,25 @@
       </b-form-row>
 
       <div class="actions">
-        <b-button type="button" class="submit-btn prev-btn" @click="$emit('previous')">
-          <b-icon icon="arrow-left" class="mr-1" /> Previous
+        <b-button
+          type="button"
+          class="submit-btn prev-btn"
+          @click="$emit('previous')"
+        >
+          <b-icon
+            icon="arrow-left"
+            class="mr-1"
+          /> Previous
         </b-button>
 
-        <b-button type="submit" class="submit-btn next-btn">
-          Next Step <b-icon icon="arrow-right" class="ml-1" />
+        <b-button
+          type="submit"
+          class="submit-btn next-btn"
+        >
+          Next Step <b-icon
+            icon="arrow-right"
+            class="ml-1"
+          />
         </b-button>
       </div>
     </b-form>
@@ -508,9 +571,9 @@ export default {
   position: absolute;
   top: 27px;
   /* Starts the line 35px to the right of the circle center */
-  left: calc(50% + 35px); 
+  left: calc(50% + 35px);
   /* Subtracts 70px (35px for each side) to create the gap */
-  width: calc(100% - 70px); 
+  width: calc(100% - 70px);
   height: 4px;
   background: #e9ecef;
   z-index: -1;
@@ -537,13 +600,15 @@ export default {
 }
 
 .stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600; 
+  font-size: 0.75rem !important;
+  font-weight: 600;
   color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
-  width: 65px; 
-  word-wrap: break-word;
+  width: 65px;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   margin-top: 8px;
 }
 
@@ -607,7 +672,7 @@ export default {
 
 @media (max-width: 768px) {
   .page-content {
-    padding: 30px 20px; 
+    padding: 30px 20px;
   }
   .page-title {
     font-size: 1.8rem;
@@ -615,10 +680,10 @@ export default {
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 10px; 
+    row-gap: 10px;
   }
   .stepper-item {
-    flex: 0 0 25%; 
+    flex: 0 0 25%;
     max-width: 25%;
   }
   .stepper-circle {
@@ -632,10 +697,10 @@ export default {
   }
   .stepper-label {
     font-size: 0.65rem !important;
-    width: 55px; 
+    width: 55px;
   }
   .stepper-item:not(:last-child)::after {
-    top: 20px; 
+    top: 20px;
     height: 2px;
   }
   .stepper-item:nth-child(4)::after {
@@ -646,7 +711,7 @@ export default {
     gap: 15px;
   }
   .submit-btn {
-    width: 100%; 
+    width: 100%;
     padding: 12px;
   }
 }

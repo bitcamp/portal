@@ -1,11 +1,17 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">Register for Bitcamp 2026</h1>
+    <h1 class="page-title">
+      Register for Bitcamp 2026
+    </h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
+      <a
+        href="https://bit.camp"
+        target="_blank"
+        rel="noopener"
+      >bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -13,25 +19,32 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage, 
+        :class="{
+          active: step.number === currentPage,
           completed: step.number < currentPage,
-          inactive: step.number > currentPage 
+          inactive: step.number > currentPage,
         }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span
+            v-if="step.number < currentPage"
+            class="checkmark"
+          >✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">{{ step.label }}</div>
+        <div class="stepper-label">
+          {{ step.label }}
+        </div>
       </div>
     </div>
 
-    <hr />
+    <hr>
 
     <b-form @submit.prevent="handleNext">
       <div v-if="!atNoTransportUnis()">
-        <h4 class="section-title">Travel and Transportation</h4>
+        <h4 class="section-title">
+          Travel and Transportation
+        </h4>
         <div class="mt-2 form-group">
           <label class="form-label">
             Would you need travel assistance to the hackathon?
@@ -41,27 +54,27 @@
           <div class="radio-inline-group">
             <label class="radio-inline">
               <input
+                v-model="formData.transport"
                 type="radio"
                 value="yes"
-                v-model="formData.transport"
                 @change="touched.transport = true"
-              />
+              >
               Yes
             </label>
 
             <label class="radio-inline">
               <input
+                v-model="formData.transport"
                 type="radio"
                 value="no"
-                v-model="formData.transport"
                 @change="touched.transport = true"
-              />
+              >
               No
             </label>
           </div>
         </div>
       </div>
-      
+
       <b-form-row>
         <b-form-group
           label="Shipping Address"
@@ -93,7 +106,11 @@
       </b-form-row>
 
       <b-form-row>
-        <b-form-group label="City" label-for="shipping-city" class="col-md-3">
+        <b-form-group
+          label="City"
+          label-for="shipping-city"
+          class="col-md-3"
+        >
           <b-form-input
             id="shipping-city"
             v-model="formData.city"
@@ -103,7 +120,11 @@
           />
         </b-form-group>
 
-        <b-form-group label="State" label-for="shipping-state" class="col-md-2">
+        <b-form-group
+          label="State"
+          label-for="shipping-state"
+          class="col-md-2"
+        >
           <b-form-input
             id="shipping-state"
             v-model="formData.state"
@@ -113,7 +134,11 @@
           />
         </b-form-group>
 
-        <b-form-group label="Zip Code" label-for="shipping-zip" class="col-md-3">
+        <b-form-group
+          label="Zip Code"
+          label-for="shipping-zip"
+          class="col-md-3"
+        >
           <b-form-input
             id="shipping-zip"
             v-model="formData.zip"
@@ -123,7 +148,11 @@
           />
         </b-form-group>
 
-        <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
+        <b-form-group
+          label="Country"
+          label-for="shipping-country"
+          class="col-md-4"
+        >
           <b-form-input
             id="shipping-country"
             v-model="formData.country"
@@ -134,16 +163,21 @@
         </b-form-group>
       </b-form-row>
 
-      <hr />
+      <hr>
 
-      <h4 class="section-title mb-2">Select a T-shirt size!</h4>
+      <h4 class="section-title mb-2">
+        Select a T-shirt size!
+      </h4>
       <p class="info">
         We've got unisex T-shirts in sizes XS–2XL! Choose whichever size you like, and your very own
         Bitcamp 2026 shirt will be given to you once you arrive.
       </p>
 
       <b-form-row>
-        <b-form-group id="input-group-tshirt" class="col-md-12">
+        <b-form-group
+          id="input-group-tshirt"
+          class="col-md-12"
+        >
           <template #label>
             T-shirt Size <span class="text-danger">*</span>
           </template>
@@ -163,27 +197,42 @@
         </b-form-group>
       </b-form-row>
 
-      <hr />
+      <hr>
 
-      <h4 class="section-title">Do you have any dietary restrictions?</h4>
-      <p class="info">Select all that apply <span class="text-danger">*</span></p>
+      <h4 class="section-title">
+        Do you have any dietary restrictions?
+      </h4>
+      <p class="info">
+        Select all that apply <span class="text-danger">*</span>
+      </p>
 
       <b-form-row>
-        <b-form-group id="input-dietary-restrictions" class="col-12 col-md-12">
+        <b-form-group
+          id="input-dietary-restrictions"
+          class="col-12 col-md-12"
+        >
           <div class="checkbox-group">
             <label class="checkbox-inline">
-              <input type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
+              <input
+                type="checkbox"
+                :checked="formData.diet_none"
+                @change="toggleDietNoneOption"
+              >
               None
             </label>
 
-            <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
+            <label
+              v-for="option in dietOptions"
+              :key="option.value"
+              class="checkbox-inline"
+            >
               <input
                 v-model="formData.diet_select"
                 type="checkbox"
                 :value="option.value"
                 :disabled="formData.diet_none"
                 @change="touched.diet_select = true"
-              />
+              >
               {{ option.text }}
             </label>
 
@@ -193,11 +242,14 @@
                 type="checkbox"
                 :disabled="formData.diet_none"
                 @change="touched.diet_other = true"
-              />
+              >
               Other
             </label>
 
-            <div v-if="showInvalid('diet')" class="invalid-feedback d-block">
+            <div
+              v-if="showInvalid('diet')"
+              class="invalid-feedback d-block"
+            >
               Please select your dietary restrictions ("None" is an option)
             </div>
           </div>
@@ -215,14 +267,27 @@
       </b-form-row>
 
       <div class="actions">
-        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
-          <b-icon icon="arrow-left" class="mr-1" />
+        <b-button
+          type="button"
+          class="submit-btn prev-btn"
+          @click="handlePrevious"
+        >
+          <b-icon
+            icon="arrow-left"
+            class="mr-1"
+          />
           Previous
         </b-button>
 
-        <b-button type="submit" class="submit-btn next-btn">
+        <b-button
+          type="submit"
+          class="submit-btn next-btn"
+        >
           Next Step
-          <b-icon icon="arrow-right" class="ml-1" />
+          <b-icon
+            icon="arrow-right"
+            class="ml-1"
+          />
         </b-button>
       </div>
     </b-form>
@@ -307,7 +372,8 @@ export default {
 
       let isValidDiet = true;
       if (createDietaryRestrictionString().length === 0) isValidDiet = false;
-      else if (this.formData.diet_other && !this.formData.diet_other_text.trim()) isValidDiet = false;
+      else if (this.formData.diet_other && !this.formData.diet_other_text.trim())
+        isValidDiet = false;
 
       return {
         transport: this.formData.transport !== null && this.formData.transport !== undefined,
@@ -452,7 +518,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .stepper-item:not(:last-child)::after {
@@ -460,9 +526,9 @@ export default {
   position: absolute;
   top: 27px;
   /* Starts the line 35px to the right of the circle center */
-  left: calc(50% + 35px); 
+  left: calc(50% + 35px);
   /* Subtracts 70px (35px for each side) to create the gap */
-  width: calc(100% - 70px); 
+  width: calc(100% - 70px);
   height: 4px;
   background: #e9ecef;
   z-index: -1;
@@ -476,7 +542,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb; 
+  background: #ebebeb;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -484,21 +550,22 @@ export default {
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 12px;
-  position: relative; 
+  position: relative;
   z-index: 2;
   transition: all 0.3s ease;
 }
 .stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600; 
+  font-size: 0.75rem !important;
+  font-weight: 600;
   color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
-  width: 65px; 
-  word-wrap: break-word;
+  width: 65px;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   margin-top: 8px;
 }
-
 
 .stepper-item.active .stepper-circle,
 .stepper-item.completed .stepper-circle {
@@ -555,13 +622,15 @@ label.form-label {
   margin-top: 6px;
 }
 
-.radio-inline, .checkbox-inline {
+.radio-inline,
+.checkbox-inline {
   font-size: 0.85rem;
   display: flex;
   align-items: center;
 }
 
-.radio-inline input, .checkbox-inline input {
+.radio-inline input,
+.checkbox-inline input {
   margin-right: 6px;
 }
 
@@ -573,7 +642,7 @@ label.form-label {
 
 @media (max-width: 768px) {
   .page-content {
-    padding: 30px 20px; 
+    padding: 30px 20px;
   }
   .page-title {
     font-size: 1.8rem;
@@ -581,10 +650,10 @@ label.form-label {
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 10px; 
+    row-gap: 10px;
   }
   .stepper-item {
-    flex: 0 0 25%; 
+    flex: 0 0 25%;
     max-width: 25%;
   }
   .stepper-circle {
@@ -598,10 +667,10 @@ label.form-label {
   }
   .stepper-label {
     font-size: 0.65rem !important;
-    width: 55px; 
+    width: 55px;
   }
   .stepper-item:not(:last-child)::after {
-    top: 20px; 
+    top: 20px;
     height: 2px;
   }
   .stepper-item:nth-child(4)::after {
@@ -612,7 +681,7 @@ label.form-label {
     gap: 15px;
   }
   .submit-btn {
-    width: 100%; 
+    width: 100%;
     padding: 12px;
   }
 }

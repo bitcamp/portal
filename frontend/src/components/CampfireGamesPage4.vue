@@ -1,11 +1,17 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">Register for Bitcamp 2026</h1>
+    <h1 class="page-title">
+      Register for Bitcamp 2026
+    </h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
+      <a
+        href="https://bit.camp"
+        target="_blank"
+        rel="noopener"
+      >bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -13,34 +19,44 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === 4, 
+        :class="{
+          active: step.number === 4,
           completed: step.number < 4,
-          inactive: step.number > 4
+          inactive: step.number > 4,
         }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < 4" class="checkmark">✓</span>
+          <span
+            v-if="step.number < 4"
+            class="checkmark"
+          >✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">{{ step.label }}</div>
+        <div class="stepper-label">
+          {{ step.label }}
+        </div>
       </div>
     </div>
 
-    <hr />
+    <hr>
 
     <b-form @submit.prevent="handleNext">
-      <h4 class="section-title">Campfire Games Survey</h4>
+      <h4 class="section-title">
+        Campfire Games Survey
+      </h4>
       <p class="info">
-        This year, you'll once again be put into one of three teams based on your personality
-        and interests. By winning unique challenges and attending workshops and mini-events,
-        you and your fellow hackers will rack up points for your team. At the end of the
-        event, members of the winning team will receive limited edition Bitcamp swag. So what
-        are you waiting for? Take the survey and find your team!
+        This year, you'll once again be put into one of three teams based on your personality and
+        interests. By winning unique challenges and attending workshops and mini-events, you and
+        your fellow hackers will rack up points for your team. At the end of the event, members of
+        the winning team will receive limited edition Bitcamp swag. So what are you waiting for?
+        Take the survey and find your team!
       </p>
 
       <div class="campfire-questions-wrapper">
-        <b-form-group v-for="(q, i) in questions" :key="i">
+        <b-form-group
+          v-for="(q, i) in questions"
+          :key="i"
+        >
           <template #label>
             <span class="form-label font-weight-bold">
               {{ q.label }} <span class="text-danger">*</span>
@@ -63,7 +79,10 @@
             </b-form-radio>
           </b-form-radio-group>
 
-          <div v-if="showInvalid(`q${i + 1}`)" class="invalid-feedback d-block">
+          <div
+            v-if="showInvalid(`q${i + 1}`)"
+            class="invalid-feedback d-block"
+          >
             Please select an answer
           </div>
         </b-form-group>
@@ -72,14 +91,23 @@
       <div class="actions">
         <b-button
           type="button"
-          @click="handlePrevious"
           class="submit-btn prev-btn"
+          @click="handlePrevious"
         >
-          <b-icon icon="arrow-left" class="mr-1" /> Previous
+          <b-icon
+            icon="arrow-left"
+            class="mr-1"
+          /> Previous
         </b-button>
-        <b-button type="submit" class="submit-btn next-btn">
+        <b-button
+          type="submit"
+          class="submit-btn next-btn"
+        >
           Next Step
-          <b-icon icon="arrow-right" class="ml-1" />
+          <b-icon
+            icon="arrow-right"
+            class="ml-1"
+          />
         </b-button>
       </div>
     </b-form>
@@ -114,11 +142,51 @@ export default {
         { number: 7, label: "Finalize & Submit" },
       ],
       questions: [
-        { label: "1. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "r1" }] },
-        { label: "2. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "g1" }] },
-        { label: "3. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "b1" }] },
-        { label: "4. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "r1" }] },
-        { label: "5. Blah blah blah?", options: [{ text: "Choice 1", value: "r" }, { text: "Choice 2", value: "b" }, { text: "Choice 3", value: "g" }, { text: "Choice 4", value: "g1" }] },
+        {
+          label: "1. Blah blah blah?",
+          options: [
+            { text: "Choice 1", value: "r" },
+            { text: "Choice 2", value: "b" },
+            { text: "Choice 3", value: "g" },
+            { text: "Choice 4", value: "r1" },
+          ],
+        },
+        {
+          label: "2. Blah blah blah?",
+          options: [
+            { text: "Choice 1", value: "r" },
+            { text: "Choice 2", value: "b" },
+            { text: "Choice 3", value: "g" },
+            { text: "Choice 4", value: "g1" },
+          ],
+        },
+        {
+          label: "3. Blah blah blah?",
+          options: [
+            { text: "Choice 1", value: "r" },
+            { text: "Choice 2", value: "b" },
+            { text: "Choice 3", value: "g" },
+            { text: "Choice 4", value: "b1" },
+          ],
+        },
+        {
+          label: "4. Blah blah blah?",
+          options: [
+            { text: "Choice 1", value: "r" },
+            { text: "Choice 2", value: "b" },
+            { text: "Choice 3", value: "g" },
+            { text: "Choice 4", value: "r1" },
+          ],
+        },
+        {
+          label: "5. Blah blah blah?",
+          options: [
+            { text: "Choice 1", value: "r" },
+            { text: "Choice 2", value: "b" },
+            { text: "Choice 3", value: "g" },
+            { text: "Choice 4", value: "g1" },
+          ],
+        },
       ],
     };
   },
@@ -148,7 +216,9 @@ export default {
     },
     handleNext(event) {
       event.preventDefault();
-      fourthPageRequiredFields.forEach((key) => { this.touched[key] = true; });
+      fourthPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
       if (this.validateForm()) {
         this.$emit("next");
         return;
@@ -204,7 +274,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .stepper-item:not(:last-child)::after {
@@ -212,9 +282,9 @@ export default {
   position: absolute;
   top: 27px;
   /* Starts the line 35px to the right of the circle center */
-  left: calc(50% + 35px); 
+  left: calc(50% + 35px);
   /* Subtracts 70px (35px for each side) to create the gap */
-  width: calc(100% - 70px); 
+  width: calc(100% - 70px);
   height: 4px;
   background: #e9ecef;
   z-index: -1;
@@ -228,7 +298,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb; 
+  background: #ebebeb;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -236,18 +306,20 @@ export default {
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 12px;
-  position: relative; 
+  position: relative;
   z-index: 2;
 }
 
 .stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600; 
+  font-size: 0.75rem !important;
+  font-weight: 600;
   color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
-  width: 65px; 
-  word-wrap: break-word;
+  width: 65px;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   margin-top: 8px;
 }
 
@@ -300,7 +372,7 @@ export default {
 
 @media (max-width: 768px) {
   .page-content {
-    padding: 30px 20px; 
+    padding: 30px 20px;
   }
   .page-title {
     font-size: 1.8rem;
@@ -308,10 +380,10 @@ export default {
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 10px; 
+    row-gap: 10px;
   }
   .stepper-item {
-    flex: 0 0 25%; 
+    flex: 0 0 25%;
     max-width: 25%;
   }
   .stepper-circle {
@@ -325,10 +397,10 @@ export default {
   }
   .stepper-label {
     font-size: 0.65rem !important;
-    width: 55px; 
+    width: 55px;
   }
   .stepper-item:not(:last-child)::after {
-    top: 20px; 
+    top: 20px;
     height: 2px;
   }
   .stepper-item:nth-child(4)::after {
@@ -339,7 +411,7 @@ export default {
     gap: 15px;
   }
   .submit-btn {
-    width: 100%; 
+    width: 100%;
     padding: 12px;
   }
 }

@@ -2,10 +2,17 @@
 <template>
   <b-card class="role-card">
     <div>
-      <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
+      <img
+        v-if="svgImagePath"
+        :src="require(`@/assets/${svgImagePath}`)"
+        class="role-logo"
+      >
 
-      <div class="title-container" @click="redirectToRole">
-        <div class="effect-box"></div>
+      <div
+        class="title-container"
+        @click="redirectToRole"
+      >
+        <div class="effect-box" />
         <div>
           <h2 class="role-title">
             {{ roleTitle }}
@@ -13,8 +20,15 @@
         </div>
       </div>
     </div>
-    <div v-b-tooltip.hover.bottom :title="roleDescription">
-      <b-icon style="color: white;" scale="1.5" icon="info-circle"></b-icon>
+    <div
+      v-b-tooltip.hover.bottom
+      :title="roleDescription"
+    >
+      <b-icon
+        style="color: white;"
+        scale="1.5"
+        icon="info-circle"
+      />
     </div>
   </b-card>
 </template>

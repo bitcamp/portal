@@ -1035,7 +1035,9 @@ export default {
   text-align: center;
   line-height: 1.1;
   width: 65px;
-  word-wrap: break-word;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   margin-top: 8px;
 }
 

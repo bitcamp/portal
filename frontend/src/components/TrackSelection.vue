@@ -1,11 +1,25 @@
 <template>
   <div>
-    <b-row class="row gx-12" cols="1">
-      <b-col md="6" class="p-1 col d-flex align-items-stretch center">
+    <b-row
+      class="row gx-12"
+      cols="1"
+    >
+      <b-col
+        md="6"
+        class="p-1 col d-flex align-items-stretch center"
+      >
         <label>
           <div class="color h-100 w-100">
-            <input v-model="card" type="radio" value="general" @click="onSelectTrack('general')" />
-            <b-card class="h-100 w-100 general" :class="{ active: card === 'general' }">
+            <input
+              v-model="card"
+              type="radio"
+              value="general"
+              @click="onSelectTrack('general')"
+            >
+            <b-card
+              class="h-100 w-100 general"
+              :class="{ active: card === 'general' }"
+            >
               <h4>General</h4>
               <p>
                 For any and all hackers! Build the perfect hack using hardware,
@@ -27,11 +41,22 @@
         </p>
       -->
 
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+      <b-col
+        md="6"
+        class="p-1 col d-flex align-items-stretch"
+      >
         <label>
           <div class="color h-100 w-100">
-            <input v-model="card" type="radio" value="quantum" @click="onSelectTrack('quantum')" />
-            <b-card class="h-100 w-100 general" :class="{ active: card === 'quantum' }">
+            <input
+              v-model="card"
+              type="radio"
+              value="quantum"
+              @click="onSelectTrack('quantum')"
+            >
+            <b-card
+              class="h-100 w-100 general"
+              :class="{ active: card === 'quantum' }"
+            >
               <h4>Quantum</h4>
               <p>
                 Hackers will delve into the field of quantum computing with
@@ -46,15 +71,26 @@
         </label>
       </b-col>
 
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+      <b-col
+        md="6"
+        class="p-1 col d-flex align-items-stretch"
+      >
         <label>
           <div class="color h-100 w-100">
-            <input v-model="card" type="radio" value="machine_learning" @click="onSelectTrack('machine_learning')" />
-            <b-card class="h-100 w-100 general" :class="{ active: card === 'machine_learning' }">
+            <input
+              v-model="card"
+              type="radio"
+              value="machine_learning"
+              @click="onSelectTrack('machine_learning')"
+            >
+            <b-card
+              class="h-100 w-100 general"
+              :class="{ active: card === 'machine_learning' }"
+            >
               <h4>Machine Learning</h4>
               <p>
-                If you are amazed by AI breakthroughs like ChatGPT and driven to create something just as impactful, then this is your track! 
-                Dive into hands-on workshops where you’ll learn to build and deploy machine learning models, gain proficiency in essential ML techniques, and discuss innovations reshaping the AI landscape. 
+                If you are amazed by AI breakthroughs like ChatGPT and driven to create something just as impactful, then this is your track!
+                Dive into hands-on workshops where you’ll learn to build and deploy machine learning models, gain proficiency in essential ML techniques, and discuss innovations reshaping the AI landscape.
                 By the end of this track, you’ll have a portfolio-ready project to showcase!
               </p>
             </b-card>
@@ -62,11 +98,22 @@
         </label>
       </b-col>
 
-      <b-col md="6" class="p-1 col d-flex align-items-stretch">
+      <b-col
+        md="6"
+        class="p-1 col d-flex align-items-stretch"
+      >
         <label>
           <div class="color h-100 w-100">
-            <input v-model="card" type="radio" value="app_dev" @click="onSelectTrack('app_dev')" />
-            <b-card class="h-100 w-100 general" :class="{ active: card === 'app_dev' }">
+            <input
+              v-model="card"
+              type="radio"
+              value="app_dev"
+              @click="onSelectTrack('app_dev')"
+            >
+            <b-card
+              class="h-100 w-100 general"
+              :class="{ active: card === 'app_dev' }"
+            >
               <h4>App Dev</h4>
               <p>
                 Ever wondered how to turn your innovative app idea into a
@@ -82,11 +129,23 @@
         </label>
       </b-col>
 
-      <b-col md="6" offset-md="3" class="p-1 col d-flex align-items-stretch">
+      <b-col
+        md="6"
+        offset-md="3"
+        class="p-1 col d-flex align-items-stretch"
+      >
         <label>
           <div class="color h-100 w-100">
-            <input v-model="card" type="radio" value="cybersecurity" @click="onSelectTrack('cybersecurity')" />
-            <b-card class="h-100 w-100 general" :class="{ active: card === 'cybersecurity' }">
+            <input
+              v-model="card"
+              type="radio"
+              value="cybersecurity"
+              @click="onSelectTrack('cybersecurity')"
+            >
+            <b-card
+              class="h-100 w-100 general"
+              :class="{ active: card === 'cybersecurity' }"
+            >
               <h4>Cybersecurity</h4>
               <p>
                 One of our newest tracks! Explore the realm of cybersecurity and

@@ -1,38 +1,54 @@
 <template>
   <b-container class="screen-container">
     <b-row class="mb-4 pb-5">
-      <div class = "logos">
-        <img src="@/assets/logotype.svg" alt="Bitcamp logo" class="bitcamp-logo" />
-      <img src="@/assets/register.svg" alt="Register Sign" class="register-logo" />
+      <div class="logos">
+        <img
+          src="@/assets/logotype.svg"
+          alt="Bitcamp logo"
+          class="bitcamp-logo"
+        >
+        <img
+          src="@/assets/register.svg"
+          alt="Register Sign"
+          class="register-logo"
+        >
       </div>
-      
     </b-row>
     <b-container class="card-container mb-5">
       <b-row>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+        <b-col
+          :md="screenWidth >= 768 ? 6 : 4"
+          class="mb-4 marshie-card"
+        >
           <CardButton
             data-role="mentor"
             role-title="MENTOR"
-            role-description="As a mentor, leverage your expertise to guide and inspire 
-            the next generation of tech enthusiasts. Become a key figure in shaping the 
+            role-description="As a mentor, leverage your expertise to guide and inspire
+            the next generation of tech enthusiasts. Become a key figure in shaping the
             experience for participants as they navigate through the hackathon challenges."
             role-u-r-l="/mentor"
             svg-image-path="splash-screen/red-dino.svg"
           />
         </b-col>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+        <b-col
+          :md="screenWidth >= 768 ? 6 : 4"
+          class="mb-4 marshie-card"
+        >
           <CardButton
             data-role="hacker"
             role-title="HACKER"
-            role-description="As a hacker, you'll be at the forefront of problem-solving 
-            and innovation. Dive into challenging projects, showcase your coding skills, 
+            role-description="As a hacker, you'll be at the forefront of problem-solving
+            and innovation. Dive into challenging projects, showcase your coding skills,
             and be part of a community dedicated to pushing the boundaries of technology."
             role-u-r-l="/hacker"
             svg-image-path="splash-screen/blue-marshie-updated.svg"
           />
         </b-col>
 
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+        <b-col
+          :md="screenWidth >= 768 ? 6 : 4"
+          class="mb-4 marshie-card"
+        >
           <CardButton
             data-role="volunteer"
             role-title="VOLUNTEER"
@@ -43,7 +59,6 @@
             svg-image-path="splash-screen/Green Dino.svg"
           />
         </b-col>
-        
       </b-row>
     </b-container>
   </b-container>
@@ -82,7 +97,7 @@ export default {
 
 .mb-4 {
   margin-bottom: 0 !important;
-  
+
 }
 
 .card-container {

@@ -1,11 +1,17 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">Register for Bitcamp 2026</h1>
+    <h1 class="page-title">
+      Register for Bitcamp 2026
+    </h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
+      <a
+        href="https://bit.camp"
+        target="_blank"
+        rel="noopener"
+      >bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -13,24 +19,31 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{ 
-          active: step.number === currentPage, 
+        :class="{
+          active: step.number === currentPage,
           completed: step.number < currentPage,
-          inactive: step.number > currentPage 
+          inactive: step.number > currentPage,
         }"
       >
         <div class="stepper-circle">
-          <span v-if="step.number < currentPage" class="checkmark">✓</span>
+          <span
+            v-if="step.number < currentPage"
+            class="checkmark"
+          >✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">{{ step.label }}</div>
+        <div class="stepper-label">
+          {{ step.label }}
+        </div>
       </div>
     </div>
 
-    <hr />
+    <hr>
 
     <b-form @submit.prevent="handleNext">
-      <h4 class="section-title">Choose a track! <span class="text-danger">*</span></h4>
+      <h4 class="section-title">
+        Choose a track! <span class="text-danger">*</span>
+      </h4>
 
       <p class="info">
         Select the track that interests you most. Each track offers unique workshops and mentorship
@@ -44,7 +57,7 @@
             type="radio"
             value="general"
             @click="touched.track_selected = true"
-          />
+          >
           <b-card
             class="track-card general-card"
             :class="{ 'track-card--active': formData.track_selected === 'general' }"
@@ -64,7 +77,7 @@
             type="radio"
             value="quantum"
             @click="touched.track_selected = true"
-          />
+          >
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'quantum' }"
@@ -84,7 +97,7 @@
             type="radio"
             value="machine_learning"
             @click="touched.track_selected = true"
-          />
+          >
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'machine_learning' }"
@@ -104,7 +117,7 @@
             type="radio"
             value="app_dev"
             @click="touched.track_selected = true"
-          />
+          >
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'app_dev' }"
@@ -123,7 +136,7 @@
             type="radio"
             value="cybersecurity"
             @click="touched.track_selected = true"
-          />
+          >
           <b-card
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'cybersecurity' }"
@@ -137,7 +150,10 @@
         </label>
       </div>
 
-      <div v-if="formData.track_selected === 'quantum'" class="mt-4 form-group">
+      <div
+        v-if="formData.track_selected === 'quantum'"
+        class="mt-4 form-group"
+      >
         <label class="form-label">
           Would you like to be placed in the beginner quantum or advanced quantum track?*
         </label>
@@ -148,7 +164,7 @@
               type="radio"
               value="beginner"
               @click="touched.quantum_track = true"
-            />
+            >
             Beginner
           </label>
           <label class="radio-inline">
@@ -157,11 +173,14 @@
               type="radio"
               value="advanced"
               @click="touched.quantum_track = true"
-            />
+            >
             Advanced
           </label>
         </div>
-        <div v-if="showInvalid('quantum_track')" class="invalid-feedback d-block">
+        <div
+          v-if="showInvalid('quantum_track')"
+          class="invalid-feedback d-block"
+        >
           Please select an answer
         </div>
       </div>
@@ -179,7 +198,7 @@
               type="radio"
               :value="true"
               @click="touched.beginner_content_opt_in = true"
-            />
+            >
             Yes
           </label>
           <label class="radio-inline">
@@ -188,17 +207,22 @@
               type="radio"
               :value="false"
               @click="touched.beginner_content_opt_in = true"
-            />
+            >
             No
           </label>
         </div>
-        <div v-if="showInvalid('beginner_content_opt_in')" class="invalid-feedback d-block">
+        <div
+          v-if="showInvalid('beginner_content_opt_in')"
+          class="invalid-feedback d-block"
+        >
           Please select an answer
         </div>
       </div>
 
-      <hr class="mt-4" />
-      <h4 class="section-title">Why Bitcamp?</h4>
+      <hr class="mt-4">
+      <h4 class="section-title">
+        Why Bitcamp?
+      </h4>
       <p class="info">
         We'd like to get to know you a little better! Help us learn more about you and make Bitcamp
         even more amazing by answering some questions!
@@ -259,16 +283,20 @@
         </small>
       </b-form-group>
 
-      <hr class="mt-4" />
-      <h4 class="section-title">Want to get hired?</h4>
-      <p class="info">Let us know, and we’ll pass your info on to our sponsors!</p>
+      <hr class="mt-4">
+      <h4 class="section-title">
+        Want to get hired?
+      </h4>
+      <p class="info">
+        Let us know, and we’ll pass your info on to our sponsors!
+      </p>
 
       <b-form-row>
         <b-form-group class="col-md-6">
           <template #label>
             Do you want to be recruited for jobs?
-            <span class="text-danger">*</span></template
-          >
+            <span class="text-danger">*</span>
+          </template>
           <b-form-select
             id="recruit-select"
             v-model="formData.recruit"
@@ -279,7 +307,10 @@
           />
         </b-form-group>
 
-        <b-form-group label="GitHub or Portfolio Link" class="col-md-6">
+        <b-form-group
+          label="GitHub or Portfolio Link"
+          class="col-md-6"
+        >
           <b-form-input
             id="github-link"
             v-model="formData.portfolio"
@@ -291,7 +322,10 @@
       </b-form-row>
 
       <b-form-group label="Resume (.pdf .doc .docx)">
-        <div class="resume-upload" @click="triggerResumeFile">
+        <div
+          class="resume-upload"
+          @click="triggerResumeFile"
+        >
           <span class="resume-placeholder">
             {{ resumeLabel }}
           </span>
@@ -303,18 +337,31 @@
             class="resume-file-input"
             accept=".pdf,.doc,.docx"
             @change="onResumeChange"
-          />
+          >
         </div>
       </b-form-group>
 
       <div class="actions">
-        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
-          <b-icon icon="arrow-left" class="mr-1" /> Previous
+        <b-button
+          type="button"
+          class="submit-btn prev-btn"
+          @click="handlePrevious"
+        >
+          <b-icon
+            icon="arrow-left"
+            class="mr-1"
+          /> Previous
         </b-button>
 
-        <b-button type="submit" class="submit-btn next-btn">
+        <b-button
+          type="submit"
+          class="submit-btn next-btn"
+        >
           Next Step
-          <b-icon icon="arrow-right" class="ml-1" />
+          <b-icon
+            icon="arrow-right"
+            class="ml-1"
+          />
         </b-button>
       </div>
     </b-form>
@@ -564,7 +611,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .stepper-item:not(:last-child)::after {
@@ -572,9 +619,9 @@ body {
   position: absolute;
   top: 27px;
   /* Starts the line 35px to the right of the circle center */
-  left: calc(50% + 35px); 
+  left: calc(50% + 35px);
   /* Subtracts 70px (35px for each side) to create the gap */
-  width: calc(100% - 70px); 
+  width: calc(100% - 70px);
   height: 4px;
   background: #e9ecef;
   z-index: -1;
@@ -589,7 +636,7 @@ body {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb; 
+  background: #ebebeb;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -597,20 +644,21 @@ body {
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 12px;
-  position: relative; 
+  position: relative;
   z-index: 2;
   transition: all 0.3s ease;
 }
 
-
 .stepper-label {
-  font-size: 0.75rem !important; 
-  font-weight: 600; 
+  font-size: 0.75rem !important;
+  font-weight: 600;
   color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
-  width: 65px; 
-  word-wrap: break-word;
+  width: 65px;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   margin-top: 8px;
 }
 
@@ -802,7 +850,7 @@ label.form-label {
 
 @media (max-width: 768px) {
   .page-content {
-    padding: 30px 20px; 
+    padding: 30px 20px;
   }
   .page-title {
     font-size: 1.8rem;
@@ -810,10 +858,10 @@ label.form-label {
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 10px; 
+    row-gap: 10px;
   }
   .stepper-item {
-    flex: 0 0 25%; 
+    flex: 0 0 25%;
     max-width: 25%;
   }
   .stepper-circle {
@@ -827,10 +875,10 @@ label.form-label {
   }
   .stepper-label {
     font-size: 0.65rem !important;
-    width: 55px; 
+    width: 55px;
   }
   .stepper-item:not(:last-child)::after {
-    top: 20px; 
+    top: 20px;
     height: 2px;
   }
   .stepper-item:nth-child(4)::after {
@@ -841,7 +889,7 @@ label.form-label {
     gap: 15px;
   }
   .submit-btn {
-    width: 100%; 
+    width: 100%;
     padding: 12px;
   }
 }

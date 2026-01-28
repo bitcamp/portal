@@ -1,331 +1,595 @@
 <!-- eslint-disable no-undef -->
 <template>
-    <b-row>
-        <b-col md="1" />
-        <b-col md="10">
-            <br>
-            <h1 style="text-align: left">
-                Register for Bitcamp 2025 - Mentor
-            </h1>
+  <b-row>
+    <b-col md="1" />
+    <b-col md="10">
+      <br>
+      <h1 style="text-align: left">
+        Register for Bitcamp 2025 - Mentor
+      </h1>
 
-            <p style="font-size: 0.9rem; opacity: 95%">
-                As a mentor, you will assist attendees with their projects and provide any additional guidance. Be prepared to answer any questions hackers may have, ranging from hardware to front-end and back-end.
+      <p style="font-size: 0.9rem; opacity: 95%">
+        As a mentor, you will assist attendees with their projects and provide any additional guidance. Be prepared to answer any questions hackers may have, ranging from hardware to front-end and back-end.
+      </p>
+      <p style="font-size: 0.9rem; opacity: 95%">
+        Questions about mentoring? Contact us at
+        <a href="mailto:personnel@bit.camp">personnel@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
+      </p>
+      <hr>
+      <b-form
+        class="registration-form"
+        autocomplete="on"
+        @submit="registerUser"
+      >
+        <h4>Tell us about yourself!</h4>
+        <p class="info">
+          Once you register, you'll receive more info about Bitcamp 2025 at the
+          email you provide.
+        </p>
+
+        <!-- Name and Age -->
+        <b-form-row>
+          <!-- First Name -->
+          <b-form-group
+            id="input-group-first-name"
+            label="First Name*"
+            label-for="input-first-name"
+            class="col-6 col-md-6"
+          >
+            <b-form-input
+              id="input-first-name"
+              v-model="form.first_name"
+              name="firstname"
+              autocomplete="firstname"
+              placeholder="Sophie"
+              :state="valid_first_name"
+            />
+            <b-form-invalid-feedback :state="valid_first_name">
+              Please enter your first name
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <!-- Last Name -->
+          <b-form-group
+            id="input-group-last-name"
+            label="Last Name*"
+            label-for="input-last-name"
+            class="col-6 col-md-6"
+          >
+            <b-form-input
+              id="input-last-name"
+              v-model="form.last_name"
+              name="lastname"
+              autocomplete="lastname"
+              placeholder="Wilson"
+              :state="valid_last_name"
+            />
+            <b-form-invalid-feedback :state="valid_last_name">
+              Please enter your last name
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+
+        <!-- Email and Phone Number-->
+        <b-form-row>
+          <!-- Email -->
+          <b-form-group
+            id="input-group-2"
+            label="Email*"
+            label-for="input-2"
+            class="col-7 col-md-7"
+          >
+            <b-form-input
+              id="input-2"
+              v-model="form.email"
+              name="email"
+              autocomplete="email"
+              placeholder="hello@bit.camp"
+              :state="valid_email"
+              type="email"
+              @blur="emailFilledOut"
+            />
+            <b-form-invalid-feedback :state="valid_email">
+              Please enter a valid email address
+            </b-form-invalid-feedback>
+          </b-form-group>
+
+          <!-- Phone Number -->
+          <b-form-group
+            id="input-group-9"
+            label="Phone Number*"
+            label-for="input-9"
+            class="col-5 col-md-5"
+          >
+            <b-form-input
+              id="input-9"
+              v-model="form.phone"
+              name="phone"
+              autocomplete="tel"
+              placeholder="555-555-5555"
+              :state="valid_phone"
+              type="tel"
+            />
+            <b-form-invalid-feedback :state="valid_phone">
+              Please enter a valid phone number
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+
+        <h4>Background</h4>
+
+        <b-form-group
+          id="input-group-school-or-company"
+          label="Will you be attending as a student, or do you bring professional experience?*"
+          label-for="input-school-or-company"
+        >
+          <b-form-radio-group
+            id="input-school-or-company"
+            v-model="form.selected_school_or_company"
+            :state="valid_school_or_company"
+          >
+            <b-form-radio value="yes">
+              Student
+            </b-form-radio>
+            <b-form-radio value="no">
+              Professional
+            </b-form-radio>
+          </b-form-radio-group>
+          <b-form-invalid-feedback :state="valid_school_or_company">
+            Please select an answer
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <!-- School Type -->
+        <b-form-row v-if="form.selected_school_or_company === 'yes'">
+          <b-form-group
+            id="input-group-school"
+            label="School Name*"
+            label-for="input-school"
+            class="col-md-12"
+          >
+            <vue-bootstrap-autocomplete
+              id="input-school"
+              v-model="form.school"
+              :input-class="school_class"
+              input-name="school"
+              placeholder="University of Maryland, College Park"
+              :data="university_options"
+              no-results-info="No results found."
+              :disabled="school_other_selected"
+              :state="valid_school"
+            />
+            <b-form-invalid-feedback
+              v-if="form.school.length === 0"
+              :state="valid_school"
+            >
+              Please enter your school name
+            </b-form-invalid-feedback>
+            <b-form-invalid-feedback
+              v-else
+              :state="valid_school"
+            >
+              Please select a school from the list
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+
+        <b-form-row v-if="form.selected_school_or_company === 'yes'">
+          <div class="col-md-12">
+            <b-form-checkbox
+              v-model="school_other_selected"
+              :state="valid_school_other"
+              @input="resetSchool"
+            >
+              My school is not listed above
+            </b-form-checkbox>
+          </div>
+          <b-form-group class="col-md-12">
+            <b-form-input
+              v-if="school_other_selected"
+              v-model="form.school_other"
+              class="col-12 col-md-12"
+              aria-label="School Other Text Box"
+              placeholder="Other school"
+              :state="valid_school_other"
+            />
+            <b-form-invalid-feedback :state="valid_school_other">
+              Please enter your school name
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+
+        <b-form-group
+          v-if="form.selected_school_or_company === 'yes'"
+          id="input-group-schoolyear"
+          label="Current Level of Study*"
+          label-for="input-schoolyear"
+          class="col-md-6"
+          style="padding: 0rem;"
+        >
+          <b-form-select
+            id="input-schoolyear"
+            v-model="form.school_year"
+            placeholder="Choose a level of study"
+            class="form-select"
+            :options="school_year_options"
+            :state="valid_school_year"
+          />
+          <b-form-invalid-feedback :state="valid_school_year">
+            Please select a year
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <!-- Job -->
+        <b-form-group
+          v-if="form.selected_school_or_company === 'no'"
+          id="input-group-company"
+          label="Company*"
+          label-for="input-company"
+          class="col-6 col-md-12"
+          style="padding: 0rem;"
+        >
+          <b-form-input
+            id="input-company"
+            v-model="form.company"
+            name="compnay"
+            :state="valid_company"
+          />
+          <b-form-invalid-feedback :state="valid_company">
+            Please enter your company name
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <!-- T-Shirt Size -->
+        <h4 class="mb-2">
+          Select a T-shirt size!
+        </h4>
+        <p class="info">
+          We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
+          like, and your very own Bitcamp 2025 shirt will be given to you once
+          you arrive at UMD.
+        </p>
+
+        <b-form-row>
+          <b-form-group
+            id="input-group-tshirt"
+            label="T-shirt Size*"
+            label-for="input-tshirt"
+            class="col-md-12"
+          >
+            <b-form-select
+              id="input-4"
+              v-model="form.tshirt_size"
+              class="form-select"
+              placeholder="Choose a T-shirt size"
+              :options="tshirt_size_options"
+              :state="valid_tshirt_size"
+            />
+            <b-form-invalid-feedback :state="valid_tshirt_size">
+              Please select a T-shirt size
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
+
+        <h4 class="mb-2">
+          Dietary Restrictions
+        </h4>
+
+        <b-form-group
+          id="input-dietary-restrictions"
+          label="Do you have any dietary restrictions?*"
+          label-for="input-dietary-restrictions"
+          class="col-12 col-md-6"
+          style="padding: 0rem;"
+        >
+          <b-form-group
+            v-slot="{ ariaDescribedby }"
+            class="mt-2 mb-1"
+          >
+            <b-form-checkbox
+              v-model="diet_none"
+              :state="valid_diet"
+              @change="uncheckDietaryRestrictions()"
+            >
+              None
+            </b-form-checkbox>
+            <b-form-checkbox
+              v-for="option in diet_options"
+              :key="option.value"
+              v-model="diet_select"
+              :value="option.value"
+              :aria-describedby="ariaDescribedby"
+              name="flavour-3a"
+              :disabled="diet_none"
+              :state="valid_diet"
+            >
+              {{ option.text }}
+            </b-form-checkbox>
+            <b-form-checkbox
+              v-model="diet_other"
+              :disabled="diet_none"
+              :state="valid_diet"
+            >
+              Other
+            </b-form-checkbox>
+            <b-form-input
+              v-if="diet_other"
+              v-model="diet_other_text"
+              class="col-12 col-md-12"
+              aria-label="Dietary Restriction Other Text Box"
+              placeholder="Other dietary restriction"
+            />
+            <b-form-invalid-feedback :state="valid_diet">
+              Please select your dietary restrictions ("None" is an option)
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-group>
+
+        <!-- Skills and Experience -->
+        <b-form-row>
+          <h4 class="col-md-12">
+            Skills and Experience
+          </h4>
+          <b-form-group
+            id="input-group-skills"
+            label="Hackers at Bitcamp may encounter a variety of problems. What skills are you willing to assist with/teach to others? Select all that apply. Add any skills that are not listed below in 'Other'.*"
+            label-for="input-group-skills"
+            class="col-md-12"
+          >
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
+              <b-form-checkbox
+                v-for="option in skill_options"
+                :key="option.value"
+                v-model="skill_select"
+                :value="option.value"
+                :aria-describedby="ariaDescribedby"
+                :state="valid_skill"
+                :disabled="skill_prefer_no_answer"
+              >
+                {{ option.text }}
+              </b-form-checkbox>
+              <b-form-checkbox
+                v-model="skill_other"
+                :state="valid_skill"
+                :disabled="skill_prefer_no_answer"
+              >
+                Other (Please Specify)
+              </b-form-checkbox>
+            </b-form-group>
+            <b-form-input
+              v-if="skill_other"
+              v-model="skill_other_text"
+              class="col-12 col-md-5"
+              aria-label="Skill Other Text Box"
+              placeholder="Other Skill / Experience"
+            />
+          </b-form-group>
+          <b-form-invalid-feedback :state="valid_skill">
+            Please select a skill you are familiar with
+          </b-form-invalid-feedback>
+        </b-form-row>
+
+        <!-- Languages and Technologies -->
+        <b-form-row>
+          <h4 class="col-md-12">
+            Languages and Technologies
+          </h4>
+          <b-form-group
+            id="input-group-languages"
+            label="What programming languages/technologies are you willing to teach to others? Select all that apply. Add any languages/technologies that are not listed below in 'Other'.*"
+            label-for="input-group-languages"
+            class="col-md-12"
+          >
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
+              <b-form-checkbox
+                v-for="option in languages_options"
+                :key="option.value"
+                v-model="languages_select"
+                :value="option.value"
+                :aria-describedby="ariaDescribedby"
+                :state="valid_languages"
+                :disabled="languages_prefer_no_answer"
+              >
+                {{ option.text }}
+              </b-form-checkbox>
+              <b-form-checkbox
+                v-model="languages_other"
+                :state="valid_languages"
+                :disabled="languages_prefer_no_answer"
+              >
+                Other (Please Specify)
+              </b-form-checkbox>
+            </b-form-group>
+            <b-form-input
+              v-if="languages_other"
+              v-model="languages_other_text"
+              class="col-12 col-md-5"
+              aria-label="Language Other Text Box"
+              placeholder="Other Language / Technology"
+            />
+          </b-form-group>
+          <b-form-invalid-feedback :state="valid_languages">
+            Please select a language/technology you are familiar with
+          </b-form-invalid-feedback>
+        </b-form-row>
+
+        <!-- Short Questions -->
+        <h4 class="mb-2">
+          Mentorship Experience
+        </h4>
+
+        <b-form-group
+          id="input-group-prev_mentor_experience"
+          label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
+                    to start.*"
+          label-for="input-prev_mentor_experience"
+          class="col-md-12"
+          style="padding: 0rem;"
+        >
+          <b-form-textarea
+            id="input-prev_mentor_experience"
+            v-model="form.prev_mentor_experience"
+            name="prev_mentor_experience"
+            autocomplete="off"
+            placeholder="Your response here..."
+            rows="3"
+            max-rows="3"
+            :state="valid_prev_mentor_experience"
+          />
+          <b-form-invalid-feedback :state="valid_prev_mentor_experience">
+            Please summarize your previous mentoring experience
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-row>
+          <b-form-group
+            id="input-mentor-tracks"
+            label-for="input-mentor-tracks"
+            class="col-12 col-md-10"
+          >
+            <p style="font-size: 0.9rem; opacity: 100%; margin-bottom: 0rem;">
+              Are you interested in mentoring in any of the following tracks? For more information about each
+              track, click
+              <a href="https://bit.camp/#tracks">here</a>.
             </p>
-            <p style="font-size: 0.9rem; opacity: 95%">
-                Questions about mentoring? Contact us at
-                <a href="mailto:personnel@bit.camp">personnel@bit.camp</a> or learn more at <a href="https://bit.camp">bit.camp</a>!
-            </p>
-            <hr>
-            <b-form class="registration-form" autocomplete="on" @submit="registerUser">
-                <h4>Tell us about yourself!</h4>
-                <p class="info">
-                    Once you register, you'll receive more info about Bitcamp 2025 at the
-                    email you provide.
-                </p>
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
+              <b-form-checkbox
+                v-for="option in mentor_tracks_options"
+                :key="option.value"
+                v-model="mentor_tracks_select"
+                :value="option.value"
+                :aria-describedby="ariaDescribedby"
+                name="flavour-3a"
+              >
+                {{ option.text }}
+              </b-form-checkbox>
+            </b-form-group>
 
-                <!-- Name and Age -->
-                <b-form-row>
-                    <!-- First Name -->
-                    <b-form-group id="input-group-first-name" label="First Name*" label-for="input-first-name"
-                        class="col-6 col-md-6">
-                        <b-form-input id="input-first-name" v-model="form.first_name" name="firstname"
-                            autocomplete="firstname" placeholder="Sophie" :state="valid_first_name" />
-                        <b-form-invalid-feedback :state="valid_first_name">
-                            Please enter your first name
-                        </b-form-invalid-feedback>
-                    </b-form-group>
+            <b-form-input
+              v-if="mentor_tracks_other"
+              v-model="mentor_tracks_other_text"
+              class="col-12 col-md-12"
+              aria-label="Mentor Tracks Other Text Box"
+              placeholder="Other source"
+            />
+          </b-form-group>
+        </b-form-row>
 
-                    <!-- Last Name -->
-                    <b-form-group id="input-group-last-name" label="Last Name*" label-for="input-last-name"
-                        class="col-6 col-md-6">
-                        <b-form-input id="input-last-name" v-model="form.last_name" name="lastname" autocomplete="lastname"
-                            placeholder="Wilson" :state="valid_last_name" />
-                        <b-form-invalid-feedback :state="valid_last_name">
-                            Please enter your last name
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-row>
+        <b-form-row>
+          <b-form-group
+            id="input-group-prev_track_experience"
+            label="Please describe any previous experience you may have in your chosen track(s). We're looking for mentors that have completed coursework, built projects, worked professionally, or otherwise have knowledge in their chosen track(s)! *"
+            label-for="input-prev_track_experience"
+            class="col-md-12"
+          >
+            <b-form-textarea
+              id="input-prev_track_experience"
+              v-model="form.prev_track_experience"
+              name="prev_track_experience"
+              autocomplete="off"
+              placeholder="Your response here..."
+              rows="3"
+              max-rows="3"
+              :state="valid_prev_track_experience"
+            />
+            <b-form-invalid-feedback :state="valid_prev_track_experience">
+              Please describe your previous experience in your chosen track(s)
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form-row>
 
-                <!-- Email and Phone Number-->
-                <b-form-row>
-                    <!-- Email -->
-                    <b-form-group id="input-group-2" label="Email*" label-for="input-2" class="col-7 col-md-7">
-                        <b-form-input id="input-2" v-model="form.email" name="email" autocomplete="email"
-                            placeholder="hello@bit.camp" :state="valid_email" type="email" @blur="emailFilledOut" />
-                        <b-form-invalid-feedback :state="valid_email">
-                            Please enter a valid email address
-                        </b-form-invalid-feedback>
-                    </b-form-group>
+        <hr>
+        <!-- MLH Stuff -->
+        <h4 class="mb-2">
+          Rules and privacy policies
+        </h4>
 
-                    <!-- Phone Number -->
-                    <b-form-group id="input-group-9" label="Phone Number*" label-for="input-9" class="col-5 col-md-5">
-                        <b-form-input id="input-9" v-model="form.phone" name="phone" autocomplete="tel"
-                            placeholder="555-555-5555" :state="valid_phone" type="tel" />
-                        <b-form-invalid-feedback :state="valid_phone">
-                            Please enter a valid phone number
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-row>
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="form.MLH_privacy"
+          name="checkbox-1"
+          class="checkbox"
+          :state="valid_mlh_privacy"
+        >
+          I authorize you to share my application/registration information with
+          Major League Hacking for event administration, ranking, and MLH
+          administration in-line with the
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>. I further agree to the terms of
+          both
+          the
+          <a
+            href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+            target="_blank"
+          >MLH
+            Contest Terms and Conditions</a>
+          and the
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>.*
+          <b-form-invalid-feedback :state="valid_mlh_privacy">
+            Please agree to MLH's privacy policy and terms
+          </b-form-invalid-feedback>
+        </b-form-checkbox>
 
-                <h4>Background</h4>
+        <b-form-checkbox
+          id="checkbox-2"
+          v-model="form.MLH_conduct"
+          name="checkbox-2"
+          :state="valid_code_of_conduct"
+          class="checkbox"
+          style="padding-bottom: 1rem"
+        >
+          I have read and agree to the
+          <a
+            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+            target="_blank"
+          >MLH Code of Conduct</a>.*
+          <b-form-invalid-feedback :state="valid_code_of_conduct">
+            Please agree to MLH's code of conduct
+          </b-form-invalid-feedback>
+        </b-form-checkbox>
 
-                <b-form-group label="Will you be attending as a student, or do you bring professional experience?*"
-                    id="input-group-school-or-company" label-for="input-school-or-company">
-                    <b-form-radio-group id="input-school-or-company" v-model="form.selected_school_or_company"
-                        :state="valid_school_or_company">
-                        <b-form-radio value="yes">Student</b-form-radio>
-                        <b-form-radio value="no"> Professional </b-form-radio>
-                    </b-form-radio-group>
-                    <b-form-invalid-feedback :state="valid_school_or_company">
-                        Please select an answer
-                    </b-form-invalid-feedback>
-                </b-form-group>
+        <b-form-checkbox
+          id="checkbox-3"
+          v-model="form.MLH_emails"
+          name="checkbox-3"
+          class="checkbox"
+        >
+          I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.
+        </b-form-checkbox>
 
-                <!-- School Type -->
-                <b-form-row v-if="form.selected_school_or_company === 'yes'">
-                    <b-form-group id="input-group-school" label="School Name*" label-for="input-school" class="col-md-12">
-                        <vue-bootstrap-autocomplete id="input-school" v-model="form.school" :input-class="school_class"
-                            input-name="school" placeholder="University of Maryland, College Park"
-                            :data="university_options" no-results-info="No results found." :disabled="school_other_selected"
-                            :state="valid_school" />
-                        <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
-                            Please enter your school name
-                        </b-form-invalid-feedback>
-                        <b-form-invalid-feedback v-else :state="valid_school">
-                            Please select a school from the list
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-row>
-
-                <b-form-row v-if="form.selected_school_or_company === 'yes'">
-                    <div class="col-md-12">
-                        <b-form-checkbox v-model="school_other_selected" :state="valid_school_other" @input="resetSchool">
-                            My school is not listed above
-                        </b-form-checkbox>
-                    </div>
-                    <b-form-group class="col-md-12">
-                        <b-form-input v-if="school_other_selected" v-model="form.school_other" class="col-12 col-md-12"
-                            aria-label="School Other Text Box" placeholder="Other school" :state="valid_school_other" />
-                        <b-form-invalid-feedback :state="valid_school_other">
-                            Please enter your school name
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-row>
-
-                <b-form-group id="input-group-schoolyear" label="Current Level of Study*" label-for="input-schoolyear"
-                    class="col-md-6" style="padding: 0rem;" v-if="form.selected_school_or_company === 'yes'">
-                    <b-form-select id="input-schoolyear" v-model="form.school_year" placeholder="Choose a level of study"
-                        class="form-select" :options="school_year_options" :state="valid_school_year" />
-                    <b-form-invalid-feedback :state="valid_school_year">
-                        Please select a year
-                    </b-form-invalid-feedback>
-                </b-form-group>
-
-                <!-- Job -->
-                <b-form-group id="input-group-company" label="Company*" label-for="input-company" class="col-6 col-md-12"
-                    style="padding: 0rem;" v-if="form.selected_school_or_company === 'no'">
-                    <b-form-input id="input-company" v-model="form.company" name="compnay" :state="valid_company" />
-                    <b-form-invalid-feedback :state="valid_company">
-                        Please enter your company name
-                    </b-form-invalid-feedback>
-                </b-form-group>
-
-                <!-- T-Shirt Size -->
-                <h4 class="mb-2">
-                    Select a T-shirt size!
-                </h4>
-                <p class="info">
-                    We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
-                    like, and your very own Bitcamp 2025 shirt will be given to you once
-                    you arrive at UMD.
-                </p>
-
-                <b-form-row>
-                    <b-form-group id="input-group-tshirt" label="T-shirt Size*" label-for="input-tshirt" class="col-md-12">
-                        <b-form-select id="input-4" v-model="form.tshirt_size" class="form-select"
-                            placeholder="Choose a T-shirt size" :options="tshirt_size_options" :state="valid_tshirt_size" />
-                        <b-form-invalid-feedback :state="valid_tshirt_size">
-                            Please select a T-shirt size
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-row>
-
-                <h4 class="mb-2">
-                    Dietary Restrictions
-                </h4>
-
-                <b-form-group id="input-dietary-restrictions" label="Do you have any dietary restrictions?*"
-                    label-for="input-dietary-restrictions" class="col-12 col-md-6" style="padding: 0rem;">
-                    <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                        <b-form-checkbox v-model="diet_none" @change="uncheckDietaryRestrictions()" :state="valid_diet">
-                            None
-                        </b-form-checkbox>
-                        <b-form-checkbox v-for="option in diet_options" :key="option.value" v-model="diet_select"
-                            :value="option.value" :aria-describedby="ariaDescribedby" name="flavour-3a"
-                            :disabled="diet_none"
-                            :state="valid_diet">
-                            {{ option.text }}
-                        </b-form-checkbox>
-                        <b-form-checkbox v-model="diet_other" :disabled="diet_none" :state="valid_diet">
-                            Other
-                        </b-form-checkbox>
-                        <b-form-input v-if="diet_other" v-model="diet_other_text" class="col-12 col-md-12"
-                            aria-label="Dietary Restriction Other Text Box" placeholder="Other dietary restriction" />
-                        <b-form-invalid-feedback :state="valid_diet">
-                            Please select your dietary restrictions ("None" is an option)
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-group>
-
-                <!-- Skills and Experience -->
-                <b-form-row>
-                    <h4 class="col-md-12">
-                        Skills and Experience
-                    </h4>
-                    <b-form-group id="input-group-skills"
-                        label="Hackers at Bitcamp may encounter a variety of problems. What skills are you willing to assist with/teach to others? Select all that apply. Add any skills that are not listed below in 'Other'.*"
-                        label-for="input-group-skills" class="col-md-12">
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                            <b-form-checkbox v-for="option in skill_options" :key="option.value" v-model="skill_select"
-                                :value="option.value" :aria-describedby="ariaDescribedby" :state="valid_skill"
-                                :disabled="skill_prefer_no_answer">
-                                {{ option.text }}
-                            </b-form-checkbox>
-                            <b-form-checkbox v-model="skill_other" :state="valid_skill" :disabled="skill_prefer_no_answer">
-                                Other (Please Specify)
-                            </b-form-checkbox>
-                        </b-form-group>
-                        <b-form-input v-if="skill_other" v-model="skill_other_text" class="col-12 col-md-5"
-                            aria-label="Skill Other Text Box" placeholder="Other Skill / Experience" />
-                    </b-form-group>
-                    <b-form-invalid-feedback :state="valid_skill">
-                        Please select a skill you are familiar with
-                    </b-form-invalid-feedback>
-                </b-form-row>
-
-                <!-- Languages and Technologies -->
-                <b-form-row>
-                    <h4 class="col-md-12">
-                        Languages and Technologies
-                    </h4>
-                    <b-form-group id="input-group-languages"
-                        label="What programming languages/technologies are you willing to teach to others? Select all that apply. Add any languages/technologies that are not listed below in 'Other'.*"
-                        label-for="input-group-languages" class="col-md-12">
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                            <b-form-checkbox v-for="option in languages_options" :key="option.value"
-                                v-model="languages_select" :value="option.value" :aria-describedby="ariaDescribedby"
-                                :state="valid_languages" :disabled="languages_prefer_no_answer">
-                                {{ option.text }}
-                            </b-form-checkbox>
-                            <b-form-checkbox v-model="languages_other" :state="valid_languages"
-                                :disabled="languages_prefer_no_answer">
-                                Other (Please Specify)
-                            </b-form-checkbox>
-                        </b-form-group>
-                        <b-form-input v-if="languages_other" v-model="languages_other_text" class="col-12 col-md-5"
-                            aria-label="Language Other Text Box" placeholder="Other Language / Technology" />
-                    </b-form-group>
-                    <b-form-invalid-feedback :state="valid_languages">
-                        Please select a language/technology you are familiar with
-                    </b-form-invalid-feedback>
-                </b-form-row>
-
-                <!-- Short Questions -->
-                <h4 class="mb-2">
-                    Mentorship Experience
-                </h4>
-
-                <b-form-group id="input-group-prev_mentor_experience" label="What previous events have you mentored for? If the answer is none, don't worry! Bitcamp is a good place
-                    to start.*" label-for="input-prev_mentor_experience" class="col-md-12" style="padding: 0rem;">
-                    <b-form-textarea id="input-prev_mentor_experience" v-model="form.prev_mentor_experience" name="prev_mentor_experience" autocomplete="off"
-                        placeholder="Your response here..." rows="3" max-rows="3" :state="valid_prev_mentor_experience" />
-                    <b-form-invalid-feedback :state="valid_prev_mentor_experience">
-                        Please summarize your previous mentoring experience
-                    </b-form-invalid-feedback>
-                </b-form-group>
-
-                <b-form-row>
-                    <b-form-group id="input-mentor-tracks" label-for="input-mentor-tracks" class="col-12 col-md-10">
-                        <p style="font-size: 0.9rem; opacity: 100%; margin-bottom: 0rem;">
-                            Are you interested in mentoring in any of the following tracks? For more information about each
-                            track, click
-                            <a href="https://bit.camp/#tracks">here</a>.
-                        </p>
-                        <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
-                            <b-form-checkbox v-for="option in mentor_tracks_options" :key="option.value"
-                                v-model="mentor_tracks_select" :value="option.value" :aria-describedby="ariaDescribedby"
-                                name="flavour-3a">
-                                {{ option.text }}
-                            </b-form-checkbox>
-                        </b-form-group>
-
-                        <b-form-input v-if="mentor_tracks_other" v-model="mentor_tracks_other_text" class="col-12 col-md-12"
-                            aria-label="Mentor Tracks Other Text Box" placeholder="Other source" />
-                    </b-form-group>
-                </b-form-row>
-
-                <b-form-row>
-                    <b-form-group id="input-group-prev_track_experience"
-                        label="Please describe any previous experience you may have in your chosen track(s). We're looking for mentors that have completed coursework, built projects, worked professionally, or otherwise have knowledge in their chosen track(s)! *"
-                        label-for="input-prev_track_experience" class="col-md-12">
-                        <b-form-textarea id="input-prev_track_experience" v-model="form.prev_track_experience" name="prev_track_experience" autocomplete="off"
-                            placeholder="Your response here..." rows="3" max-rows="3" :state="valid_prev_track_experience" />
-                        <b-form-invalid-feedback :state="valid_prev_track_experience">
-                            Please describe your previous experience in your chosen track(s)
-                        </b-form-invalid-feedback>
-                    </b-form-group>
-                </b-form-row>
-
-                <hr>
-                <!-- MLH Stuff -->
-                <h4 class="mb-2">
-                    Rules and privacy policies
-                </h4>
-
-                <b-form-checkbox id="checkbox-1" v-model="form.MLH_privacy" name="checkbox-1" class="checkbox"
-                    :state="valid_mlh_privacy">
-                    I authorize you to share my application/registration information with
-                    Major League Hacking for event administration, ranking, and MLH
-                    administration in-line with the
-                    <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree to the terms of
-                    both
-                    the
-                    <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH
-                        Contest Terms and Conditions</a>
-                    and the
-                    <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
-                    <b-form-invalid-feedback :state="valid_mlh_privacy">
-                        Please agree to MLH's privacy policy and terms
-                    </b-form-invalid-feedback>
-                </b-form-checkbox>
-
-                <b-form-checkbox id="checkbox-2" v-model="form.MLH_conduct" name="checkbox-2" :state="valid_code_of_conduct"
-                    class="checkbox" style="padding-bottom: 1rem">
-                    I have read and agree to the
-                    <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>.*
-                    <b-form-invalid-feedback :state="valid_code_of_conduct">
-                        Please agree to MLH's code of conduct
-                    </b-form-invalid-feedback>
-                </b-form-checkbox>
-
-                <b-form-checkbox id="checkbox-3" v-model="form.MLH_emails" name="checkbox-3" class="checkbox">
-                    I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.
-                </b-form-checkbox>
-
-                <!-- Submit -->
-                <div>
-                    <b-button type="submit" class="submit-btn m1 mx-auto" style="center" :disabled="isSending">
-                        <h5 class="m-1">
-                            Confirm Registration for Bitcamp!
-                        </h5>
-                    </b-button>
-                </div>
-            </b-form>
-        </b-col>
-        <b-col md="1" />
-    </b-row>
+        <!-- Submit -->
+        <div>
+          <b-button
+            type="submit"
+            class="submit-btn m1 mx-auto"
+            style="center"
+            :disabled="isSending"
+          >
+            <h5 class="m-1">
+              Confirm Registration for Bitcamp!
+            </h5>
+          </b-button>
+        </div>
+      </b-form>
+    </b-col>
+    <b-col md="1" />
+  </b-row>
 </template>
-  
+
 <script>
 import generalMixin from "../mixins/general";
 import { v4 as uuid } from "uuid";
@@ -898,7 +1162,7 @@ export default {
     },
 };
 </script>
-  
+
 <style lang="scss">
 .input-group>.typeahead {
     border-radius: 0.4rem;
@@ -993,7 +1257,7 @@ input[type="radio"]:disabled:checked~.custom-control-label::after {
     padding-top: 3px;
 }
 </style>
-  
+
 <style scoped lang="scss">
 h4 {
     margin-top: 1.25rem;
@@ -1130,4 +1394,3 @@ hr {
     }
 }
 </style>
-  

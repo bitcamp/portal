@@ -2,11 +2,16 @@
   <b-row>
     <b-col md="1" />
     <b-col md="10">
-      <br />
-      <h1 style="text-align: left">Register for Bitcamp 2025</h1>
+      <br>
+      <h1 style="text-align: left">
+        Register for Bitcamp 2025
+      </h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
-        <b-alert show variant="danger">
+        <b-alert
+          show
+          variant="danger"
+        >
           At the moment, you can still register to join the waitlist, but registration to
           <b>guarantee</b> a spot for Bitcamp is <b>closed</b>. We will notify you on Friday night
           (4/11) if you can attend.
@@ -18,8 +23,12 @@
         <a href="mailto:hello@bit.camp">hello@bit.camp</a> or learn more at
         <a href="https://bit.camp">bit.camp</a>!
       </p>
-      <hr />
-      <b-form class="registration-form" autocomplete="on" @submit="registerUser">
+      <hr>
+      <b-form
+        class="registration-form"
+        autocomplete="on"
+        @submit="registerUser"
+      >
         <h4>Tell us about yourself!</h4>
         <p class="info">
           Once you register, you'll receive more info about Bitcamp 2025 at the email you provide.
@@ -85,7 +94,10 @@
               placeholder="19"
               :state="valid_age"
             />
-            <b-form-invalid-feedback v-if="form.age.length === 0" :state="valid_age">
+            <b-form-invalid-feedback
+              v-if="form.age.length === 0"
+              :state="valid_age"
+            >
               Please enter your age
             </b-form-invalid-feedback>
           </b-form-group>
@@ -196,7 +208,10 @@
             label-for="input-group-ethnicity"
             class="col-md-12"
           >
-            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
               <b-form-checkbox
                 v-for="option in ethnicity_options"
                 :key="option.value"
@@ -236,9 +251,9 @@
           </b-form-invalid-feedback>
         </b-form-row>
 
-        <hr />
+        <hr>
         <h4>How about your school?</h4>
-        <br />
+        <br>
 
         <!-- School Type -->
         <b-form-row>
@@ -259,10 +274,16 @@
               :disabled="school_other_selected"
               :state="valid_school"
             />
-            <b-form-invalid-feedback v-if="form.school.length === 0" :state="valid_school">
+            <b-form-invalid-feedback
+              v-if="form.school.length === 0"
+              :state="valid_school"
+            >
               Please enter your school name
             </b-form-invalid-feedback>
-            <b-form-invalid-feedback v-else :state="valid_school">
+            <b-form-invalid-feedback
+              v-else
+              :state="valid_school"
+            >
               Please select a school from the list
             </b-form-invalid-feedback>
           </b-form-group>
@@ -333,9 +354,11 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <h4>Want to get hired?</h4>
-        <p class="info">Let us know, and we'll pass your info on to our sponsors!</p>
+        <p class="info">
+          Let us know, and we'll pass your info on to our sponsors!
+        </p>
 
         <!-- recruitment info -->
         <b-form-row>
@@ -413,14 +436,18 @@
                 This information will be used for recruitment purposes only. Bitcamp will not be
                 sending this data to any third-parties outside of sponsors.
               </p>
-              <b-form-radio :value="true"> Yes </b-form-radio>
-              <b-form-radio :value="false"> No </b-form-radio>
+              <b-form-radio :value="true">
+                Yes
+              </b-form-radio>
+              <b-form-radio :value="false">
+                No
+              </b-form-radio>
             </b-form-radio-group>
           </b-form-group>
         </b-form-row>
 
         <!-- Track selection -->
-        <hr />
+        <hr>
         <h4>Choose a track!</h4>
         <TrackSelection
           :default="'general'"
@@ -429,7 +456,7 @@
         />
 
         <!-- Optional quantum selection 1 -->
-        <hr />
+        <hr>
         <b-form-row>
           <b-form-group
             v-if="selectedQuantumTrack()"
@@ -443,8 +470,12 @@
               class="font-weight pt-2"
               :state="valid_quantum_survey"
             >
-              <b-form-radio value="beginner"> Beginner </b-form-radio>
-              <b-form-radio value="advanced"> Advanced </b-form-radio>
+              <b-form-radio value="beginner">
+                Beginner
+              </b-form-radio>
+              <b-form-radio value="advanced">
+                Advanced
+              </b-form-radio>
             </b-form-radio-group>
             <b-form-invalid-feedback :state="valid_quantum_survey">
               Please select an answer
@@ -468,8 +499,12 @@
               class="font-weight-normal pt-2"
               :state="valid_beginner_survey"
             >
-              <b-form-radio :value="true"> Yes </b-form-radio>
-              <b-form-radio :value="false"> No </b-form-radio>
+              <b-form-radio :value="true">
+                Yes
+              </b-form-radio>
+              <b-form-radio :value="false">
+                No
+              </b-form-radio>
             </b-form-radio-group>
             <b-form-invalid-feedback :state="valid_beginner_survey">
               Please select an answer
@@ -493,8 +528,12 @@
                 class="pt-2"
                 @change="resetTransport"
               >
-                <b-form-radio :value="true"> Yes </b-form-radio>
-                <b-form-radio :value="false"> No </b-form-radio>
+                <b-form-radio :value="true">
+                  Yes
+                </b-form-radio>
+                <b-form-radio :value="false">
+                  No
+                </b-form-radio>
               </b-form-radio-group>
               <b-form-invalid-feedback :state="valid_transport">
                 Please select an answer
@@ -504,7 +543,7 @@
         </div>
 
         <!-- Shipping Address -->
-        <hr />
+        <hr>
         <h4>Want to give us a shipping address?</h4>
         <p class="info">
           We plan on handing out all swag in-person at the event, but in case we need to ship swag
@@ -612,13 +651,16 @@
               />
             </b-form-group>
           </b-form-row>
-          <b-form-invalid-feedback :state="valid_address" style="margin: 0">
+          <b-form-invalid-feedback
+            :state="valid_address"
+            style="margin: 0"
+          >
             Please provide a valid shipping address to apply for the hardware track
           </b-form-invalid-feedback>
         </b-form-group>
 
         <!-- Bitcamp Campfire Games Survey -->
-        <hr />
+        <hr>
         <h4>Campfire Games Survey</h4>
         <p class="info">
           This year, you'll once again be put into one of three teams based on your personality and
@@ -627,17 +669,28 @@
           the winning team will receive limited edition Bitcamp swag. So what are you waiting for?
           Take the survey and find your team!
         </p>
-        <b-form-group class="font-weight-bold" label="Which dino do you most identify with?*">
+        <b-form-group
+          class="font-weight-bold"
+          label="Which dino do you most identify with?*"
+        >
           <b-form-radio-group
             id="survey-1"
             v-model="form.selected_survey_1"
             class="font-weight-normal pt-2"
             :state="valid_survey_1"
           >
-            <b-form-radio value="r"> Triceratops </b-form-radio><br />
-            <b-form-radio value="r1"> Velociraptor </b-form-radio><br />
-            <b-form-radio value="g"> Ankylosaurus </b-form-radio><br />
-            <b-form-radio value="b"> Stegosaurus </b-form-radio><br />
+            <b-form-radio value="r">
+              Triceratops
+            </b-form-radio><br>
+            <b-form-radio value="r1">
+              Velociraptor
+            </b-form-radio><br>
+            <b-form-radio value="g">
+              Ankylosaurus
+            </b-form-radio><br>
+            <b-form-radio value="b">
+              Stegosaurus
+            </b-form-radio><br>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_1">
             Please select an answer
@@ -653,15 +706,18 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_2"
           >
-            <b-form-radio value="b"> Grind the stones into paste and make a picasso </b-form-radio
-            ><br />
-            <b-form-radio value="r"> Strike the stones and make a fire </b-form-radio><br />
+            <b-form-radio value="b">
+              Grind the stones into paste and make a picasso
+            </b-form-radio><br>
+            <b-form-radio value="r">
+              Strike the stones and make a fire
+            </b-form-radio><br>
             <b-form-radio value="g">
-              Kick the stones and invent the earliest prehistoric version of soccer </b-form-radio
-            ><br />
+              Kick the stones and invent the earliest prehistoric version of soccer
+            </b-form-radio><br>
             <b-form-radio value="b1">
-              Line the stones and embrace your territory as a homebody </b-form-radio
-            ><br />
+              Line the stones and embrace your territory as a homebody
+            </b-form-radio><br>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_2">
             Please select an answer
@@ -677,52 +733,83 @@
             class="font-weight-normal pt-2"
             :state="valid_survey_3"
           >
-            <b-form-radio value="b"> Woolly Mammoths </b-form-radio><br />
-            <b-form-radio value="g"> Dodo Birds </b-form-radio><br />
-            <b-form-radio value="r"> Saber-Toothed Tigers </b-form-radio><br />
-            <b-form-radio value="r1"> Megalodon Sharks </b-form-radio><br />
+            <b-form-radio value="b">
+              Woolly Mammoths
+            </b-form-radio><br>
+            <b-form-radio value="g">
+              Dodo Birds
+            </b-form-radio><br>
+            <b-form-radio value="r">
+              Saber-Toothed Tigers
+            </b-form-radio><br>
+            <b-form-radio value="r1">
+              Megalodon Sharks
+            </b-form-radio><br>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_3">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="What’s your favorite part of Bitcamp?*">
+        <b-form-group
+          class="font-weight-bold"
+          label="What’s your favorite part of Bitcamp?*"
+        >
           <b-form-radio-group
             id="survey-4"
             v-model="form.selected_survey_4"
             class="font-weight-normal pt-2"
             :state="valid_survey_4"
           >
-            <b-form-radio value="g"> Hunting and gathering food and swag </b-form-radio><br />
-            <b-form-radio value="b"> Hacking with axes </b-form-radio><br />
-            <b-form-radio value="r"> Late night shenanigans </b-form-radio><br />
-            <b-form-radio value="g1"> First time, I'll find out! </b-form-radio><br />
+            <b-form-radio value="g">
+              Hunting and gathering food and swag
+            </b-form-radio><br>
+            <b-form-radio value="b">
+              Hacking with axes
+            </b-form-radio><br>
+            <b-form-radio value="r">
+              Late night shenanigans
+            </b-form-radio><br>
+            <b-form-radio value="g1">
+              First time, I'll find out!
+            </b-form-radio><br>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_4">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
-        <b-form-group class="font-weight-bold" label="What would be your favorite way to unwind?*">
+        <b-form-group
+          class="font-weight-bold"
+          label="What would be your favorite way to unwind?*"
+        >
           <b-form-radio-group
             id="survey-5"
             v-model="form.selected_survey_5"
             class="font-weight-normal pt-2"
             :state="valid_survey_5"
           >
-            <b-form-radio value="r"> Play some tunes on an ivory flute </b-form-radio><br />
-            <b-form-radio value="g"> A day trip hunting bison & fishing by hand </b-form-radio
-            ><br />
-            <b-form-radio value="b"> Stargaze with a fellow neanderthal </b-form-radio><br />
-            <b-form-radio value="g1"> Munch on roots, berries, and leaves! </b-form-radio><br />
+            <b-form-radio value="r">
+              Play some tunes on an ivory flute
+            </b-form-radio><br>
+            <b-form-radio value="g">
+              A day trip hunting bison & fishing by hand
+            </b-form-radio><br>
+            <b-form-radio value="b">
+              Stargaze with a fellow neanderthal
+            </b-form-radio><br>
+            <b-form-radio value="g1">
+              Munch on roots, berries, and leaves!
+            </b-form-radio><br>
           </b-form-radio-group>
           <b-form-invalid-feedback :state="valid_survey_5">
             Please select an answer
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <hr />
+        <hr>
         <!-- T-Shirt Size -->
-        <h4 class="mb-2">Select a T-shirt size!</h4>
+        <h4 class="mb-2">
+          Select a T-shirt size!
+        </h4>
         <p class="info">
           We've got unisex T-shirts in sizes XS-2XL! Choose whichever size you like, and your very
           own Bitcamp 2025 shirt will be given to you once you arrive at UMD.
@@ -749,9 +836,11 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
         <!-- Short Questions -->
-        <h4 class="mb-2">Why Bitcamp?</h4>
+        <h4 class="mb-2">
+          Why Bitcamp?
+        </h4>
         <p class="info">
           We'd like to get to know you a little better! Help us learn more about you and make
           Bitcamp even more amazing by answering some questions!
@@ -847,7 +936,10 @@
             label-for="input-heard-from"
             class="col-12 col-md-6"
           >
-            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
               <b-form-checkbox
                 v-for="option in heard_from_options"
                 :key="option.value"
@@ -859,7 +951,10 @@
               >
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="heard_from_other" :state="valid_heard_from">
+              <b-form-checkbox
+                v-model="heard_from_other"
+                :state="valid_heard_from"
+              >
                 Other
               </b-form-checkbox>
               <b-form-invalid-feedback :state="valid_heard_from">
@@ -882,7 +977,10 @@
             label-for="input-dietary-restrictions"
             class="col-12 col-md-6"
           >
-            <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
+            <b-form-group
+              v-slot="{ ariaDescribedby }"
+              class="mt-2 mb-1"
+            >
               <b-form-checkbox
                 v-model="diet_none"
                 :state="valid_diet"
@@ -902,7 +1000,11 @@
               >
                 {{ option.text }}
               </b-form-checkbox>
-              <b-form-checkbox v-model="diet_other" :disabled="diet_none" :state="valid_diet">
+              <b-form-checkbox
+                v-model="diet_other"
+                :disabled="diet_none"
+                :state="valid_diet"
+              >
                 Other
               </b-form-checkbox>
               <b-form-invalid-feedback :state="valid_diet">
@@ -920,7 +1022,7 @@
           </b-form-group>
         </b-form-row>
 
-        <hr />
+        <hr>
 
         <!-- Minor Waivers -->
         <!-- New waiver forms for minors -->
@@ -929,40 +1031,40 @@
 
           <!-- Minor Agreement Form -->
           <h4><u>Student Organization Release and Informed Consent Form</u></h4>
-          <br />
+          <br>
           <p class="info">
             I am a participant of Bitcamp 2025 (Activity), a student organization recognized by the
             Stamp Student Union (Union) at the University of Maryland, College Park (University). I
             desire to participate in the Activity from April 11, 2025- April 13, 2025 including. In
             consideration of being permitted to participate in such Activity, I, for myself, my
             heirs, personal representative(s) and assigns hereby represent and agree as follows:
-            <br />
+            <br>
             1. I fully recognize and understand that there are risks and hazards, minor and serious,
             associated with participation in the Activity, ranging from scrapes, bruises,
             lacerations, broken bones to concussions, spinal cord injuries, paralysis and, even,
             death. These injuries may result from crashing with other participants, being hit by
-            equipment, or environmental conditions. <br />
+            equipment, or environmental conditions. <br>
             2. I understand that protective equipment, including but not limited to, headgear, pads,
             eyewear and mouthpieces may be recommended for the safety and protection of
             participants, and I agree to wear such equipment when participating in the Activity.
             However, I understand that wearing such equipment will not eliminate the risks of
-            participation. <br />
+            participation. <br>
             3. To the extent they exist, I understand that the rules and regulations of the
             Activity’s organizers are designed, in part, for the safety and protection of
-            participants and I agree to abide by those rules and regulations. <br />
+            participants and I agree to abide by those rules and regulations. <br>
             4. I understand that any physical activity requires a minimum level of fitness for safe
             participation. I also understand that the University advises that participants in the
             Activity carry personal health and accident insurance. I further understand that the
             University and Bitcamp 2023 do not provide medical, health or other insurance for
-            participants in the Activity. <br />
+            participants in the Activity. <br>
             5. In the event of a medical emergency, I hereby give my consent to emergency
             transportation and medical treatment arising out of or related to participation in the
             Activity. I understand that I am solely responsible for any and all costs associated
-            with any medical care received. <br />
+            with any medical care received. <br>
             6. Knowing the dangers, hazards and risks associated with student organization
             activities, I voluntarily assume all responsibility and risk of loss, damage, illness
             and/or injury to my person or property in any way associated with my participation in
-            the Activity. <br />
+            the Activity. <br>
             7. To the fullest extent permitted by law, I hereby release and forever discharge, and
             agree to indemnify and hold harmless the State of Maryland, the University of Maryland,
             and their departments, officers, agents, employees, and volunteers (Released Parties)
@@ -972,7 +1074,7 @@
             in or involvement with student organization activities, or use of University equipment
             and facilities, including travel thereto and therefrom, whether due to the negligence,
             default or other action or inaction of any person or entity, including the Released
-            Parties. <br />
+            Parties. <br>
             I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14
             AND 18 AND THAT I HAVE READ AND FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM
             AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS SIGNIFICANCE. AS A MINOR, THE
@@ -981,7 +1083,7 @@
 
           <!-- Photography Consent Form -->
           <h4><u>Photography Consent Form</u></h4>
-          <br />
+          <br>
           <p class="info">
             I, __________________________________________, hereby give permission to the University
             of Maryland to use and reproduce my image, likeness, voice, and name (collectively,
@@ -1122,23 +1224,23 @@
             <p class="terms-content">
               BY PARTICIPATING IN BITCAMP, YOU AGREE TO THE FOLLOWING TERMS AND ALL OTHER APPLICABLE
               DOCUMENTS.
-              <br />
-              <br />
+              <br>
+              <br>
               Henceforth, "I", “me”, "my", “myself”, and other first-person pronouns shall refer to
               the Participant. "The Organizers" shall refer to any persons or group who had
               significant participation in the creation of the event, namely (but not necessarily
               exclusively) the Bitcamp organizing team, Bitcamp Inc., Startup Shell Inc., the
               student organization named Terrapin Hackers, and the University of Maryland at College
               Park. “The Hackathon” shall refer to the Bitcamp hackathon.
-              <br />
-              <br />
+              <br>
+              <br>
               I understand that by participating in The Hackathon, I agree to the following terms
               listed in this Bitcamp Terms and Code of Conduct agreement (the “Agreement”), and to
               follow any procedures and instructions given by The Organizers. Refusal to comply and
               any violations will subject me to punishment deemed appropriate by The Organizers,
               such as the revocation of prizes and expulsion from The Hackathon.
-              <br />
-              <br />
+              <br>
+              <br>
               I have represented myself accurately on the application and all other event forms. I
               am allowed to develop a concept for a project prior to The Hackathon, but any and all
               programming and tangible creations related to a concept must be done at the time and
@@ -1195,15 +1297,15 @@
               illegal drugs, alcohol, or weapons at The Hackathon and otherwise always adhere to
               applicable state and federal contacts law. I understand that I am bound to all rules
               and regulations of Maryland state laws, as well as applicable city and federal laws.
-              <br />
-              <br />
+              <br>
+              <br>
               I ASSUME ALL RESPONSIBILITY FOR THE DAMAGE OR THEFT OF ALL PERSONAL ITEMS AND
               PROPERTY. I UNDERSTAND THAT THE HACKATHON AND THE ORGANIZERS DO NOT TAKE
               RESPONSIBILITY AND ARE NOT LIABLE FOR ANY DAMAGES OR THEFT TO PERSONAL ITEMS AND/OR
               PROPERTY.
 
-              <br />
-              <br />
+              <br>
+              <br>
               I understand that The Hackathon is 36 hours long, and that fatigue can cause delayed
               reaction time or unusual decision-making, and I indemnify and hold harmless Bitcamp
               and the University of Maryland for any liabilities or damages from and against, and
@@ -1336,15 +1438,22 @@
 
           <div v-if="form.age.length > 0 && Number(form.age) < 18">
             <h4><u>Conditional Form Question</u></h4>
-            <b-form-group label="Please select your waiver type:" label-for="waiver-type">
+            <b-form-group
+              label="Please select your waiver type:"
+              label-for="waiver-type"
+            >
               <b-form-radio-group
                 id="waiver-type"
                 v-model="form.waiverType"
                 :state="valid_waiverType"
                 name="waiver-type"
               >
-                <b-form-radio value="chaperone">I have a chaperone</b-form-radio>
-                <b-form-radio value="school">I'm coming with my school</b-form-radio>
+                <b-form-radio value="chaperone">
+                  I have a chaperone
+                </b-form-radio>
+                <b-form-radio value="school">
+                  I'm coming with my school
+                </b-form-radio>
               </b-form-radio-group>
               <b-form-invalid-feedback :state="valid_waiverType">
                 Please select a waiver type.
@@ -1358,10 +1467,13 @@
           >
             <h4><u>Chaperone Agreement Form</u></h4>
 
-            <br />
+            <br>
             <h5>Chaperone Responsibilities</h5>
             <ul>
-              <li v-for="(responsibility, index) in responsibilities" :key="index">
+              <li
+                v-for="(responsibility, index) in responsibilities"
+                :key="index"
+              >
                 {{ responsibility }}
               </li>
             </ul>
@@ -1668,7 +1780,9 @@
         </div>
 
         <!-- MLH Stuff -->
-        <h4 class="mb-2">Rules and privacy policies</h4>
+        <h4 class="mb-2">
+          Rules and privacy policies
+        </h4>
 
         <b-form-checkbox
           v-if="form.age.length > 0 && form.age < 18"
@@ -1693,13 +1807,20 @@
         >
           I authorize you to share my application/registration information with Major League Hacking
           for event administration, ranking, and MLH administration in-line with the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>. I further agree
           to the terms of both the
-          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank"
-            >MLH Contest Terms and Conditions</a
-          >
+          <a
+            href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+            target="_blank"
+          >MLH Contest Terms and Conditions</a>
           and the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.*
+          <a
+            href="https://mlh.io/privacy"
+            target="_blank"
+          >MLH Privacy Policy</a>.*
           <b-form-invalid-feedback :state="valid_mlh_privacy">
             Please agree to MLH's privacy policy and terms
           </b-form-invalid-feedback>
@@ -1714,9 +1835,10 @@
           style="padding-bottom: 1rem"
         >
           I have read and agree to the
-          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank"
-            >MLH Code of Conduct</a
-          >.*
+          <a
+            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
+            target="_blank"
+          >MLH Code of Conduct</a>.*
           <b-form-invalid-feedback :state="valid_code_of_conduct">
             Please agree to MLH's code of conduct
           </b-form-invalid-feedback>
@@ -1740,7 +1862,9 @@
             style="center"
             :disabled="isSending"
           >
-            <h5 class="m-1">Confirm Registration for Bitcamp!</h5>
+            <h5 class="m-1">
+              Confirm Registration for Bitcamp!
+            </h5>
           </b-button>
         </div>
       </b-form>
