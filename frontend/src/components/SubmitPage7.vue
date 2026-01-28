@@ -317,28 +317,29 @@ export default {
       return diet_string;
     },
 
-    createEthnicityString() {
-      let ethnicity_string = this.formData.ethnicity_select.join(",");
-      if (this.ethnicity_prefer_no_answer) return "prefer-not-to-answer";
-      if (this.ethnicity_other && this.ethnicity_other_text != "") {
-        if (ethnicity_string != "") ethnicity_string += ",";
-        ethnicity_string = ethnicity_string + "other(" + this.ethnicity_other_text + ")";
-      }
-      return ethnicity_string;
-    },
+    // createEthnicityString() {
+    //   let ethnicity_string = this.formData.ethnicity_select.join(",");
+    //   if (this.ethnicity_prefer_no_answer) return "prefer-not-to-answer";
+    //   if (this.ethnicity_other && this.ethnicity_other_text != "") {
+    //     if (ethnicity_string != "") ethnicity_string += ",";
+    //     ethnicity_string = ethnicity_string + "other(" + this.ethnicity_other_text + ")";
+    //   }
+    //   return ethnicity_string;
+    // },
 
-    createHeardFromString() {
-      let heard_from_string = this.heard_from_select.join(",");
-      if (this.heard_from_other && this.heard_from_other_text != "") {
-        if (heard_from_string != "") heard_from_string += ",";
-        heard_from_string = heard_from_string + "other(" + this.heard_from_other_text + ")";
-      }
-      return heard_from_string;
-    },
+    // createHeardFromString() {
+    //   let heard_from_string = this.heard_from_select.join(",");
+    //   if (this.heard_from_other && this.heard_from_other_text != "") {
+    //     if (heard_from_string != "") heard_from_string += ",";
+    //     heard_from_string = heard_from_string + "other(" + this.heard_from_other_text + ")";
+    //   }
+    //   return heard_from_string;
+    // },
 
-    createTransportString() {
-      return this.transport_select.join(",");
-    },
+    // createTransportString() {
+    //   return this.transport_select.join(",");
+    // },
+
     handlePrevious() {
       this.$emit("previous");
     },
