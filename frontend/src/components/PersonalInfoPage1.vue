@@ -261,16 +261,39 @@
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label> Select one <span class="text-danger">*</span> </template>
-          <b-form-select
+          <template #label> Select all that apply <span class="text-danger">*</span> </template>
+          <b-form-tags
+            id="heard-from-tags"
             v-model="formData.heard_from"
-            :options="heardFromOptions"
-            :state="showState('heard_from')"
-            @change="touched.heard_from = true"
-          />
-          <b-form-invalid-feedback :state="showState('heard_from')">
-            Required field
-          </b-form-invalid-feedback>
+            size="lg"
+            add-on-change
+            no-outer-focus
+          >
+            <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+              <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+                <li v-for="tag in tags" :key="tag" class="list-inline-item">
+                  <b-form-tag
+                    :title="tag"
+                    :disabled="disabled"
+                    variant="info"
+                    @remove="removeTag(tag)"
+                  >
+                    {{ tag }}
+                  </b-form-tag>
+                </li>
+              </ul>
+              <b-form-select
+                v-bind="inputAttrs"
+                :disabled="disabled || availableHeardFromOptions.length === 0"
+                :options="availableHeardFromOptions"
+                v-on="inputHandlers"
+              >
+                <template #first>
+                  <option disabled value="">Select...</option>
+                </template>
+              </b-form-select>
+            </template>
+          </b-form-tags>
         </b-form-group>
       </b-form-row>
 
@@ -351,7 +374,7 @@ export default {
       touched: Object.fromEntries(firstPageValidatedFields.map((key) => [key, false])),
 
       heardFromOptions: [
-        { value: "", text: "Select one...", disabled: true },
+        // { value: "", text: "Select one...", disabled: true },
         { value: "instagram", text: "Instagram" },
         { value: "facebook", text: "Facebook" },
         { value: "twitter", text: "Twitter" },
@@ -442,6 +465,10 @@ export default {
 
     availableOptions() {
       return this.ethnicityOptionsSelect.filter((opt) => this.value.indexOf(opt) === -1);
+    },
+
+    availableHeardFromOptions() {
+      return this.heardFromOptions.filter((opt) => !this.formData.heard_from.includes(opt.text));
     },
 
     school_class() {
