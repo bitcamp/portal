@@ -467,7 +467,13 @@ export default {
         this.$bvToast.toast("File size exceeds 5MB limit", {
           toaster: "b-toaster-top-center",
           variant: "danger",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
         });
+        this.formData.resume_name = "";
+        this.formData.resume_id = "";
+        this.formData.resume_link = "";
         return;
       }
 
@@ -477,7 +483,13 @@ export default {
         this.$bvToast.toast("Please upload a PDF, DOC, DOCX, or TXT file", {
           toaster: "b-toaster-top-center",
           variant: "danger",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
         });
+        this.formData.resume_name = "";
+        this.formData.resume_id = "";
+        this.formData.resume_link = "";
         return;
       }
 
@@ -486,11 +498,26 @@ export default {
 
       try {
         await this.$emit("resume-change", event);
+        this.$bvToast.toast("Resume upload success.", {
+          toaster: "b-toaster-top-center",
+          variant: "success",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
+        });
       } catch (error) {
-        this.formData.resume_name = null;
+        this.formData.resume_name = "";
+        this.formData.resume_id = "";
+        this.formData.resume_link = "";
+        if (this.$refs.resumeInput) {
+          this.$refs.resumeInput.value = "";
+        }
         this.$bvToast.toast("Resume upload failed. Please try again.", {
           toaster: "b-toaster-top-center",
           variant: "danger",
+          solid: true,
+          appendToast: false,
+          noCloseButton: true,
         });
       } finally {
         this.isUploading = false;
