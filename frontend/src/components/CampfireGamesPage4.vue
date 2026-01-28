@@ -145,7 +145,7 @@ export default {
         {
           label: "1. What color alien would you be?",
           options: [
-            { text: "Green, obviously", value: "r" },
+            { text: "Green, obviously 💚", value: "r" },
             { text: "Pink", value: "b" },
             { text: "Orange", value: "g" },
             { text: "Blue", value: "r1" },
@@ -154,27 +154,27 @@ export default {
         {
           label: "2. What is your go-to caffeine fix?",
           options: [
-            { text: "Coffee", value: "r" },
+            { text: "Coffee ☕️", value: "r" },
             { text: "Matcha", value: "b" },
             { text: "Energy drink", value: "g" },
-            { text: "Nothing", value: "g1" },
+            { text: "Nothing ❌", value: "g1" },
           ],
         },
         {
           label: "3. How do you get to class?",
           options: [
             { text: "Walking", value: "r" },
-            { text: "Bus", value: "b" },
+            { text: "Bus 🚌", value: "b" },
             { text: "Scooter", value: "g" },
-            { text: "Driving", value: "b1" },
+            { text: "Driving 🚗", value: "b1" },
           ],
         },
         {
           label: "4. What is your dream style of vacation?",
           options: [
-            { text: "Beach", value: "r" },
-            { text: "Mountains", value: "b" },
-            { text: "City", value: "g" },
+            { text: "Beach 🏖️", value: "r" },
+            { text: "Mountains 🏔️", value: "b" },
+            { text: "City 🌇", value: "g" },
             { text: "Historical", value: "r1" },
           ],
         },
