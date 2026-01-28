@@ -335,7 +335,7 @@
             ref="resumeInput"
             type="file"
             class="resume-file-input"
-            accept=".pdf,.doc,.docx"
+            accept=".pdf,.doc,.docx,.txt"
             @change="onResumeChange"
           >
         </div>
@@ -383,7 +383,12 @@ const secondPageRequiredFields = [
   "recruit",
 ];
 
-const secondPageOptionalFields = ["quantum_track", "portfolio"];
+const secondPageOptionalFields = [
+  "quantum_track",
+  "portfolio",
+  "resume_id",
+  "resume_link"
+];
 
 export default {
   name: "TrackExperiencePage2",

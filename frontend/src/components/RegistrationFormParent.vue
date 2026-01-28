@@ -17,6 +17,7 @@
         :current-page="currentPage"
         @next="goToPage(3)"
         @previous="goToPage(1)"
+        @resume-change="handleResumeChange"
       />
 
       <!-- Page 3: Travel and T-shirt -->
@@ -72,6 +73,9 @@ import TeamMatchingPage5 from "./TeamMatchingPage5.vue";
 import SubmitPage7 from "./SubmitPage7.vue";
 import { v4 as uuid } from "uuid";
 import MinorFormsPage6 from "./MinorFormsPage6.vue";
+import * as PDFJS from "pdfjs-dist/legacy/build/pdf.js";
+import "pdfjs-dist/build/pdf.worker.entry";
+import generalMixin from "../mixins/general";
 
 export default {
   name: "RegistrationFormParent",
@@ -84,6 +88,7 @@ export default {
     MinorFormsPage6,
     SubmitPage7,
   },
+  mixins: [generalMixin],
   props: {
     default_track: {
       type: String,
@@ -123,6 +128,8 @@ export default {
         question2: "",
         recruit: "",
         portfolio: "",
+        resume_link: "",
+        resume_id: "",
 
         // Page 3 data
         transport: null,
@@ -209,8 +216,6 @@ export default {
         selected_survey_5: "",
         name: "",
         resume: "",
-        resume_link: "",
-        resume_id: "",
         minors_form: false,
         transport_select: "",
         transport_deposit: null,
@@ -240,6 +245,107 @@ export default {
     handleEmailFilled(email) {
       this.formData.email = email;
       // You can add analytics tracking here if needed
+    },
+    getFileExtension(filename) {
+      const parts = filename.split('.');
+      const extension = parts.pop();
+      return extension;
+    },
+    async handleResumeChange(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file || !file.name) return;
+
+      // 5MB upload limit
+      if (file.size > 1024 * 1024 * 5) {
+        this.showErrorToastCustom("Please ensure that your resume file size does not exceed 5MB.");
+        return;
+      }
+
+      const fileExtension = this.getFileExtension(file.name);
+      const cleanname =
+          this.formData.first_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "_" +
+          this.formData.last_name
+            .replace(/[^a-z0-9_-]/gi, "_")
+            .toLowerCase()
+            .replace(/_{2,}/g, "_")
+            .substring(0, 48) +
+          "." +
+          fileExtension;
+
+      const userParams = {
+        id: this.random_id,
+        filename: cleanname,
+        filetype: fileExtension,
+      };
+
+      const r = await this.performPostRequest(
+        this.getEnvVariable("BACKEND_ENDPOINT"),
+        "upload_resume",
+        userParams
+      );
+
+      if (!(r && r.putUrl)) {
+        this.showErrorToastCustom("Oops! We couldn't upload your resume, try again later!");
+        return;
+      }
+
+      const cleanFile = new File([file], cleanname, {
+        type: file.type,
+        lastModified: file.lastModified,
+      });
+
+      const r2 = await this.performRawPostRequest(r.putUrl, cleanFile);
+      this.formData.resume_link = r.uploadUrl;
+      this.formData.resume_id = this.random_id;
+
+      if (!(r2 && r2.status == 200)) {
+        this.showErrorToastCustom("Oops! We couldn't upload your resume, try again later!");
+        return;
+      }
+
+      // below is for resume parsing
+      let text = "";
+      const pdfVersion = "2.10.377";
+      // eslint-disable-next-line no-import-assign
+      PDFJS.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
+
+      const loadingTask = PDFJS.getDocument(this.formData.resume_link);
+      await loadingTask.promise.then((doc) => {
+        const { numPages } = doc;
+
+        let lastPromise;
+        lastPromise = doc.getMetadata();
+
+        const loadPage = async (pageNum) => {
+          const page = await doc.getPage(pageNum);
+
+          return page.getTextContent().then((content) => {
+            // we only want the page text (strings)
+            const strings = content.items.map((item) => item.str);
+            text += strings.join(" ");
+          });
+        };
+
+        for (let i = 1; i <= numPages; i += 1) {
+          lastPromise = lastPromise.then(loadPage.bind(null, i));
+        }
+        return lastPromise;
+      });
+
+      const resumeParams = {
+        user_id: this.random_id,
+        resume_text: text,
+      };
+      await this.performPostRequest(
+        this.getEnvVariable("BACKEND_ENDPOINT"),
+        "upload_text_resume",
+        resumeParams
+      );
     },
   },
 };
