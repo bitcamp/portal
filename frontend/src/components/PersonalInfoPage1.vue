@@ -1,17 +1,11 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">
-      Register for Bitcamp 2026
-    </h1>
+    <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a
-        href="https://bit.camp"
-        target="_blank"
-        rel="noopener"
-      >bit.camp</a>!
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -26,10 +20,7 @@
         }"
       >
         <div class="stepper-circle">
-          <span
-            v-if="step.number < currentPage"
-            class="checkmark"
-          >✓</span>
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">
@@ -38,21 +29,17 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <b-form @submit="handleNext">
-      <h4 class="section-title">
-        Tell us about yourself!
-      </h4>
+      <h4 class="section-title">Tell us about yourself!</h4>
       <p class="info">
         Once you register, you'll receive more info about Bitcamp 2026 at the email you provide.
       </p>
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label>
-            First Name <span class="text-danger">*</span>
-          </template>
+          <template #label> First Name <span class="text-danger">*</span> </template>
           <b-form-input
             id="input-first-name"
             v-model="formData.first_name"
@@ -65,9 +52,7 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label>
-            Last Name <span class="text-danger">*</span>
-          </template>
+          <template #label> Last Name <span class="text-danger">*</span> </template>
           <b-form-input
             id="input-last-name"
             v-model="formData.last_name"
@@ -82,9 +67,7 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label>
-            Email <span class="text-danger">*</span>
-          </template>
+          <template #label> Email <span class="text-danger">*</span> </template>
           <b-form-input
             v-model="formData.email"
             type="email"
@@ -97,9 +80,7 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label>
-            Phone Number <span class="text-danger">*</span>
-          </template>
+          <template #label> Phone Number <span class="text-danger">*</span> </template>
           <b-form-input
             v-model="formData.phone"
             type="tel"
@@ -114,9 +95,7 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label>
-            Age <span class="text-danger">*</span>
-          </template>
+          <template #label> Age <span class="text-danger">*</span> </template>
           <b-form-input
             v-model="formData.age"
             type="number"
@@ -129,9 +108,7 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label>
-            Country of Residence <span class="text-danger">*</span>
-          </template>
+          <template #label> Country of Residence <span class="text-danger">*</span> </template>
           <b-form-select
             v-model="formData.country_of_residence"
             :options="countryOptions"
@@ -146,9 +123,7 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label>
-            Gender Identity <span class="text-danger">*</span>
-          </template>
+          <template #label> Gender Identity <span class="text-danger">*</span> </template>
           <b-form-select
             v-model="formData.gender"
             :options="genderOptions"
@@ -161,10 +136,41 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label>
-            Race / Ethnicity <span class="text-danger">*</span>
-          </template>
-          <b-form-select
+          <template #label> Race / Ethnicity <span class="text-danger">*</span> </template>
+          <b-form-tags
+            id="tags-component-select"
+            v-model="value"
+            size="lg"
+            class="mb-2"
+            add-on-change
+            no-outer-focus
+          >
+            <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+              <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+                <li v-for="tag in tags" :key="tag" class="list-inline-item">
+                  <b-form-tag
+                    :title="tag"
+                    :disabled="disabled"
+                    variant="info"
+                    @remove="removeTag(tag)"
+                  >
+                    {{ tag }}
+                  </b-form-tag>
+                </li>
+              </ul>
+              <b-form-select
+                v-bind="inputAttrs"
+                :disabled="disabled || availableOptions.length === 0"
+                :options="availableOptions"
+                v-on="inputHandlers"
+              >
+                <template #first>
+                  <option disabled value="">Select...</option>
+                </template>
+              </b-form-select>
+            </template>
+          </b-form-tags>
+          <!-- <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
             :state="showState('ethnicity')"
@@ -172,21 +178,17 @@
           />
           <b-form-invalid-feedback :state="showState('ethnicity')">
             Required field
-          </b-form-invalid-feedback>
+          </b-form-invalid-feedback> -->
         </b-form-group>
       </b-form-row>
 
-      <hr>
+      <hr />
 
-      <h4 class="section-title">
-        How about your school?
-      </h4>
+      <h4 class="section-title">How about your school?</h4>
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label>
-            School Name <span class="text-danger">*</span>
-          </template>
+          <template #label> School Name <span class="text-danger">*</span> </template>
           <vue-bootstrap-autocomplete
             v-model="formData.school"
             no-results-info="No results found."
@@ -195,16 +197,10 @@
             :disabled="formData.school_other_selected"
             @input="touched.school = true"
           />
-          <b-form-invalid-feedback
-            v-if="formData.school.length === 0"
-            :state="showState('school')"
-          >
+          <b-form-invalid-feedback v-if="formData.school.length === 0" :state="showState('school')">
             Please enter your school name
           </b-form-invalid-feedback>
-          <b-form-invalid-feedback
-            v-else
-            :state="showState('school')"
-          >
+          <b-form-invalid-feedback v-else :state="showState('school')">
             Please select a school from the list
           </b-form-invalid-feedback>
         </b-form-group>
@@ -212,10 +208,7 @@
 
       <b-form-row>
         <div class="col-12">
-          <b-form-checkbox
-            v-model="formData.school_other_selected"
-            @change="resetSchool"
-          >
+          <b-form-checkbox v-model="formData.school_other_selected" @change="resetSchool">
             My school is not listed
           </b-form-checkbox>
         </div>
@@ -236,9 +229,7 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label>
-            Current Level of Study <span class="text-danger">*</span>
-          </template>
+          <template #label> Current Level of Study <span class="text-danger">*</span> </template>
           <b-form-select
             v-model="formData.school_year"
             :options="schoolYearOptions"
@@ -251,9 +242,7 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label>
-            Primary Major <span class="text-danger">*</span>
-          </template>
+          <template #label> Primary Major <span class="text-danger">*</span> </template>
           <b-form-select
             v-model="formData.major"
             :options="majorOptions"
@@ -266,17 +255,13 @@
         </b-form-group>
       </b-form-row>
 
-      <hr>
+      <hr />
 
-      <h4 class="section-title">
-        How did you hear about us?
-      </h4>
+      <h4 class="section-title">How did you hear about us?</h4>
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label>
-            Select one <span class="text-danger">*</span>
-          </template>
+          <template #label> Select one <span class="text-danger">*</span> </template>
           <b-form-select
             v-model="formData.heard_from"
             :options="heardFromOptions"
@@ -290,25 +275,12 @@
       </b-form-row>
 
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="$emit('previous')"
-        >
-          <b-icon
-            icon="arrow-left"
-            class="mr-1"
-          /> Previous
+        <b-button type="button" class="submit-btn prev-btn" @click="$emit('previous')">
+          <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
 
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
-          Next Step <b-icon
-            icon="arrow-right"
-            class="ml-1"
-          />
+        <b-button type="submit" class="submit-btn next-btn">
+          Next Step <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
@@ -403,7 +375,7 @@ export default {
       ],
 
       ethnicityOptionsSelect: [
-        { value: "", text: "Select one...", disabled: true },
+        // { value: "", text: "Select one...", disabled: true },
         { value: "asian-indian", text: "Asian Indian" },
         { value: "black-african", text: "Black or African" },
         { value: "chinese", text: "Chinese" },
@@ -440,6 +412,7 @@ export default {
       universityOptions: [...university_list],
 
       countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
+      value: [],
     };
   },
 
@@ -467,6 +440,10 @@ export default {
       };
     },
 
+    availableOptions() {
+      return this.ethnicityOptionsSelect.filter((opt) => this.value.indexOf(opt) === -1);
+    },
+
     school_class() {
       const state = this.showState("school");
       if (state === true) return "typeahead is-valid";
@@ -484,7 +461,6 @@ export default {
       if (!this.touched[field]) return null;
       return this.validations[field] === true ? true : false;
     },
-
     resetSchool() {
       if (this.formData.school_other_selected) {
         this.formData.school = "";
@@ -539,6 +515,10 @@ export default {
   font-size: 2.3rem;
   font-weight: 700;
   margin-bottom: 10px;
+}
+
+::v-deep .b-form-tag {
+  background-color: #f97345;
 }
 
 .page-subtitle {
@@ -618,6 +598,13 @@ export default {
   background: #f97345;
   color: white;
   box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
+}
+
+::v-deep .b-form-tags.form-control {
+  height: auto;
+  padding: 0;
+  border: none;
+  background: none;
 }
 
 .stepper-item.active .stepper-label {
