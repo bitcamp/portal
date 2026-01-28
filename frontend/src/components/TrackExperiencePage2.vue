@@ -287,7 +287,11 @@
       </b-form-row>
 
       <b-form-group label="Resume (.pdf .doc .docx)">
-        <div class="resume-upload" @click="triggerResumeFile">
+        <div
+          class="resume-upload"
+          :class="{ 'resume-uploading': isUploading }"
+          @click="triggerResumeFile"
+        >
           <span class="resume-placeholder">
             {{ resumeLabel }}
           </span>
@@ -368,7 +372,8 @@ export default {
         { value: "maybe", text: "Maybe later" },
       ],
       // NEW: label text for the resume upload UI
-      resumeLabel: "Upload Resume (size limit: 5MB)",
+      isUploading: false,
+      uploadError: null,
     };
   },
   computed: {
@@ -413,6 +418,12 @@ export default {
 
       return res;
     },
+    resumeLabel() {
+      if (this.isUploading) return "Uploading...";
+      if (this.formData.resume_name) return this.formData.resume_name;
+      if (this.formData.resume_link) return this.formData.resume_id;
+      return "Upload Resume (size limit: 5MB)";
+    },
   },
   methods: {
     isValidUrl(string) {
@@ -448,10 +459,42 @@ export default {
     },
 
     // NEW: update label + bubble event to parent
-    onResumeChange(event) {
+    async onResumeChange(event) {
       const file = event.target.files && event.target.files[0];
-      this.resumeLabel = file ? file.name : "Upload Resume (size limit: 5MB)";
-      this.$emit("resume-change", event);
+      if (!file) return;
+
+      if (file.size > 5 * 1024 * 1024) {
+        this.$bvToast.toast("File size exceeds 5MB limit", {
+          toaster: "b-toaster-top-center",
+          variant: "danger",
+        });
+        return;
+      }
+
+      const validTypes = [".pdf", ".doc", ".docx", ".txt"];
+      const ext = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
+      if (!validTypes.includes(ext)) {
+        this.$bvToast.toast("Please upload a PDF, DOC, DOCX, or TXT file", {
+          toaster: "b-toaster-top-center",
+          variant: "danger",
+        });
+        return;
+      }
+
+      this.isUploading = true;
+      this.formData.resume_name = file.name;
+
+      try {
+        await this.$emit("resume-change", event);
+      } catch (error) {
+        this.formData.resume_name = null;
+        this.$bvToast.toast("Resume upload failed. Please try again.", {
+          toaster: "b-toaster-top-center",
+          variant: "danger",
+        });
+      } finally {
+        this.isUploading = false;
+      }
     },
 
     validateForm() {
@@ -465,6 +508,14 @@ export default {
       console.log("TOUCHED", this.touched);
       console.log("FORM DATA", this.formData);
       event.preventDefault();
+
+      if (this.isUploading) {
+        this.$bvToast.toast("Please wait for resume upload to complete", {
+          toaster: "b-toaster-top-center",
+          variant: "warning",
+        });
+        return;
+      }
 
       secondPageRequiredFields.forEach((key) => {
         this.touched[key] = true;
@@ -538,6 +589,11 @@ body {
 }
 .page-subtitle a:hover {
   text-decoration: underline;
+}
+
+.resume-upload.resume-uploading {
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .section-title {

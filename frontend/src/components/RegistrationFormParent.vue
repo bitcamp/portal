@@ -128,6 +128,7 @@ export default {
         question2: "",
         recruit: "",
         portfolio: "",
+        resume_name: "",
         resume_link: "",
         resume_id: "",
 
