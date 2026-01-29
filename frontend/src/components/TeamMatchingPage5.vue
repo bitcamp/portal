@@ -1,17 +1,11 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">
-      Register for Bitcamp 2026
-    </h1>
+    <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a
-        href="https://bit.camp"
-        target="_blank"
-        rel="noopener"
-      >bit.camp</a>!
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -26,10 +20,7 @@
         }"
       >
         <div class="stepper-circle">
-          <span
-            v-if="step.number < 5"
-            class="checkmark"
-          >✓</span>
+          <span v-if="step.number < 5" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">
@@ -38,12 +29,10 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <b-form @submit.prevent="handleNext">
-      <h4 class="section-title">
-        Team Matching Preferences
-      </h4>
+      <h4 class="section-title">Team Matching Preferences</h4>
       <p class="info">
         Tell us a little about your skills and interests so we can find you the perfect team! If you
         have already found a team, you may opt out.
@@ -58,25 +47,16 @@
           name="opt_in_team_matching"
           @click="touched.opt_in_team_matching = true"
         >
-          <b-form-radio value="yes">
-            Yes
-          </b-form-radio>
-          <b-form-radio value="no">
-            No
-          </b-form-radio>
+          <b-form-radio value="yes"> Yes </b-form-radio>
+          <b-form-radio value="no"> No </b-form-radio>
         </b-form-radio-group>
-        <div
-          v-if="showInvalid('opt_in_team_matching')"
-          class="invalid-feedback d-block"
-        >
+        <div v-if="showInvalid('opt_in_team_matching')" class="invalid-feedback d-block">
           Please select an answer
         </div>
       </b-form-group>
 
       <div v-if="formData.opt_in_team_matching === 'yes'">
-        <h4 class="header">
-          Track & Skills
-        </h4>
+        <h4 class="header">Track & Skills</h4>
         <div class="section-divider" />
 
         <b-form-group>
@@ -89,61 +69,45 @@
             stacked
             @click="touched.track = true"
           >
-            <b-form-radio value="general">
-              General
-            </b-form-radio>
-            <b-form-radio value="quantum">
-              Quantum
-            </b-form-radio>
-            <b-form-radio value="cybersecurity">
-              Cybersecurity
-            </b-form-radio>
-            <b-form-radio value="ml">
-              Machine Learning
-            </b-form-radio>
-            <b-form-radio value="app dev">
-              App Development
-            </b-form-radio>
+            <b-form-radio value="general"> General </b-form-radio>
+            <b-form-radio value="quantum"> Quantum </b-form-radio>
+            <b-form-radio value="cybersecurity"> Cybersecurity </b-form-radio>
+            <b-form-radio value="ml"> Machine Learning </b-form-radio>
+            <b-form-radio value="app dev"> App Development </b-form-radio>
           </b-form-radio-group>
-          <div
-            v-if="showInvalid('track')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('track')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span>Have you participated in a hackathon before? <span class="text-danger">*</span></span>
+            <span
+              >Have you participated in a hackathon before? <span class="text-danger">*</span></span
+            >
           </template>
           <b-form-radio-group
             v-model="formData.hackathon"
             name="hackathon"
             @click="touched.hackathon = true"
           >
-            <b-form-radio value="yes">
-              Yes
-            </b-form-radio>
-            <b-form-radio value="no">
-              No
-            </b-form-radio>
+            <b-form-radio value="yes"> Yes </b-form-radio>
+            <b-form-radio value="no"> No </b-form-radio>
           </b-form-radio-group>
-          <div
-            v-if="showInvalid('hackathon')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('hackathon')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span>What programming languages and frameworks are you comfortable with?
-              <span class="text-danger">*</span></span>
+            <span
+              >What programming languages and frameworks are you comfortable with?
+              <span class="text-danger">*</span></span
+            >
           </template>
           <b-form-checkbox-group
-            v-model="form.languages"
+            v-model="formData.languages"
             stacked
             @change="touched.languages = true"
           >
@@ -156,10 +120,12 @@
             <b-form-checkbox value="java">Java</b-form-checkbox>
             <b-form-checkbox value="other">Other</b-form-checkbox>
           </b-form-checkbox-group>
-          <div v-if="form.languages && form.languages.includes('other')" class="mt-2">
-            <b-form-group label="Please specify other languages/frameworks (comma separated, e.g. Go, Rust, Swift):">
+          <div v-if="formData.languages && formData.languages.includes('other')" class="mt-2">
+            <b-form-group
+              label="Please specify other languages/frameworks (comma separated, e.g. Go, Rust, Swift):"
+            >
               <b-form-input
-                v-model="form.languages_other"
+                v-model="formData.languages_other"
                 placeholder="e.g. Go, Rust, Swift"
                 required
               ></b-form-input>
@@ -167,7 +133,7 @@
             </b-form-group>
           </div>
           <div
-            v-if="touched.languages && (!form.languages || form.languages.length === 0)"
+            v-if="touched.languages && (!formData.languages || formData.languages.length === 0)"
             class="invalid-feedback d-block"
           >
             Please select an answer
@@ -184,64 +150,48 @@
             stacked
             @change="touched.experience = true"
           >
-            <b-form-radio value="beginner">
-              Beginner (skill level 1-2)
-            </b-form-radio>
-            <b-form-radio value="inter">
-              Intermediate (skill level 3-4)
-            </b-form-radio>
-            <b-form-radio value="advanced">
-              Advanced (skill level 5)
-            </b-form-radio>
+            <b-form-radio value="beginner"> Beginner (skill level 1-2) </b-form-radio>
+            <b-form-radio value="inter"> Intermediate (skill level 3-4) </b-form-radio>
+            <b-form-radio value="advanced"> Advanced (skill level 5) </b-form-radio>
           </b-form-radio-group>
-          <div
-            v-if="showInvalid('experience')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('experience')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
-        <h4 class="header">
-          Team Preferences
-        </h4>
+        <h4 class="header">Team Preferences</h4>
         <div class="section-divider" />
 
         <b-form-group>
           <template #label>
-            <span>Do you prefer working with someone with a similar skill level?
-              <span class="text-danger">*</span></span>
+            <span
+              >Do you prefer working with someone with a similar skill level?
+              <span class="text-danger">*</span></span
+            >
           </template>
           <b-form-radio-group
             v-model="formData.skill_level"
             name="skill-level"
             @click="touched.skill_level = true"
           >
-            <b-form-radio value="yes">
-              Yes
-            </b-form-radio>
-            <b-form-radio value="no">
-              No
-            </b-form-radio>
-            <b-form-radio value="idc">
-              Don't Care
-            </b-form-radio>
+            <b-form-radio value="yes"> Yes </b-form-radio>
+            <b-form-radio value="no"> No </b-form-radio>
+            <b-form-radio value="idc"> Don't Care </b-form-radio>
           </b-form-radio-group>
-          <div
-            v-if="showInvalid('skill_level')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('skill_level')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span>What kind of technologies do you want your teammates to have knowledge of?
-              <span class="text-danger">*</span></span>
+            <span
+              >What kind of technologies do you want your teammates to have knowledge of?
+              <span class="text-danger">*</span></span
+            >
           </template>
           <b-form-checkbox-group
-            v-model="form.skills_wanted"
+            v-model="formData.skills_wanted"
             stacked
             @change="touched.skills_wanted = true"
           >
@@ -254,10 +204,15 @@
             <b-form-checkbox value="java">Java</b-form-checkbox>
             <b-form-checkbox value="other">Other</b-form-checkbox>
           </b-form-checkbox-group>
-          <div v-if="form.skills_wanted && form.skills_wanted.includes('other')" class="mt-2">
-            <b-form-group label="Please specify other technologies (comma separated, e.g. Go, Rust, Swift):">
+          <div
+            v-if="formData.skills_wanted && formData.skills_wanted.includes('other')"
+            class="mt-2"
+          >
+            <b-form-group
+              label="Please specify other technologies (comma separated, e.g. Go, Rust, Swift):"
+            >
               <b-form-input
-                v-model="form.skills_wanted_other"
+                v-model="formData.skills_wanted_other"
                 placeholder="e.g. Go, Rust, Swift"
                 required
               ></b-form-input>
@@ -265,7 +220,10 @@
             </b-form-group>
           </div>
           <div
-            v-if="touched.skills_wanted && (!form.skills_wanted || form.skills_wanted.length === 0)"
+            v-if="
+              touched.skills_wanted &&
+              (!formData.skills_wanted || formData.skills_wanted.length === 0)
+            "
             class="invalid-feedback d-block"
           >
             Please select an answer
@@ -274,120 +232,75 @@
 
         <b-form-group>
           <template #label>
-            <span>How many team members do you already have? (Select 1 if you are the only one in the
-              team) <span class="text-danger">*</span></span>
+            <span
+              >How many team members do you already have? (Select 1 if you are the only one in the
+              team) <span class="text-danger">*</span></span
+            >
           </template>
           <b-form-radio-group
             v-model="formData.num_team_members"
             name="team-members"
             @click="touched.num_team_members = true"
           >
-            <b-form-radio value="one">
-              1
-            </b-form-radio>
-            <b-form-radio value="two">
-              2
-            </b-form-radio>
-            <b-form-radio value="three">
-              3
-            </b-form-radio>
+            <b-form-radio value="one"> 1 </b-form-radio>
+            <b-form-radio value="two"> 2 </b-form-radio>
+            <b-form-radio value="three"> 3 </b-form-radio>
           </b-form-radio-group>
-          <div
-            v-if="showInvalid('num_team_members')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('num_team_members')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
-        <h4 class="header">
-          Project Preferences
-        </h4>
+        <h4 class="header">Project Preferences</h4>
         <div class="section-divider" />
 
         <b-form-group>
           <template #label>
-            <span>What kind of projects are you interested in (i.e. web, mobile, AI, etc.)?
-              <span class="text-danger">*</span></span>
+            <span
+              >What kind of projects are you interested in (i.e. web, mobile, AI, etc.)?
+              <span class="text-danger">*</span></span
+            >
           </template>
           <b-form-checkbox-group
             v-model="formData.projects"
             stacked
             @change="touched.projects = true"
           >
-            <b-form-checkbox value="web_dev">
-              Web Development
-            </b-form-checkbox>
-            <b-form-checkbox value="mobile_app">
-              Mobile App
-            </b-form-checkbox>
-            <b-form-checkbox value="ai/ml">
-              AI/ML
-            </b-form-checkbox>
+            <b-form-checkbox value="web_dev"> Web Development </b-form-checkbox>
+            <b-form-checkbox value="mobile_app"> Mobile App </b-form-checkbox>
+            <b-form-checkbox value="ai/ml"> AI/ML </b-form-checkbox>
           </b-form-checkbox-group>
-          <div
-            v-if="showInvalid('projects')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('projects')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span>What Bitcamp prizes are you interested in catering your project towards?
-              <span class="text-danger">*</span></span>
+            <span
+              >What Bitcamp prizes are you interested in catering your project towards?
+              <span class="text-danger">*</span></span
+            >
           </template>
-          <b-form-checkbox-group
-            v-model="formData.prizes"
-            stacked
-            @change="touched.prizes = true"
-          >
-            <b-form-checkbox value="hardware">
-              Best Hardware Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="bitcamp">
-              Best Bitcamp Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="first_time">
-              Best First Time Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="ui/ux">
-              Best UI/UX Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="moonshot">
-              Best Moonshot Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="razzle_dazzle">
-              Best Razzle Dazzle Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="social_good">
-              Best Social Good Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="gamification">
-              Best Gamification Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="peoples_choice">
-              People's Choice Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="sustainability">
-              Best Sustainability Hack
-            </b-form-checkbox>
-            <b-form-checkbox value="no_pref">
-              No Preference
-            </b-form-checkbox>
+          <b-form-checkbox-group v-model="formData.prizes" stacked @change="touched.prizes = true">
+            <b-form-checkbox value="hardware"> Best Hardware Hack </b-form-checkbox>
+            <b-form-checkbox value="bitcamp"> Best Bitcamp Hack </b-form-checkbox>
+            <b-form-checkbox value="first_time"> Best First Time Hack </b-form-checkbox>
+            <b-form-checkbox value="ui/ux"> Best UI/UX Hack </b-form-checkbox>
+            <b-form-checkbox value="moonshot"> Best Moonshot Hack </b-form-checkbox>
+            <b-form-checkbox value="razzle_dazzle"> Best Razzle Dazzle Hack </b-form-checkbox>
+            <b-form-checkbox value="social_good"> Best Social Good Hack </b-form-checkbox>
+            <b-form-checkbox value="gamification"> Best Gamification Hack </b-form-checkbox>
+            <b-form-checkbox value="peoples_choice"> People's Choice Hack </b-form-checkbox>
+            <b-form-checkbox value="sustainability"> Best Sustainability Hack </b-form-checkbox>
+            <b-form-checkbox value="no_pref"> No Preference </b-form-checkbox>
           </b-form-checkbox-group>
-          <div
-            v-if="showInvalid('prizes')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('prizes')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
-        <h4 class="header">
-          Commitment
-        </h4>
+        <h4 class="header">Commitment</h4>
         <div class="section-divider" />
 
         <b-form-group>
@@ -399,73 +312,42 @@
             name="serious"
             @click="touched.serious = true"
           >
-            <b-form-radio value="win">
-              I want to win! (16-20 hours)
-            </b-form-radio>
-            <b-form-radio value="funsies">
-              I'm just doing this for fun (9-13 hours)
-            </b-form-radio>
+            <b-form-radio value="win"> I want to win! (16-20 hours) </b-form-radio>
+            <b-form-radio value="funsies"> I'm just doing this for fun (9-13 hours) </b-form-radio>
             <b-form-radio value="learning">
               I want to learn, if I win that will be a plus (1-8 hours)
             </b-form-radio>
           </b-form-radio-group>
-          <div
-            v-if="showInvalid('serious')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('serious')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span>Which way would you prefer collaborating with your team?
-              <span class="text-danger">*</span></span>
+            <span
+              >Which way would you prefer collaborating with your team?
+              <span class="text-danger">*</span></span
+            >
           </template>
-          <b-form-checkbox-group
-            v-model="formData.collab"
-            stacked
-            @change="touched.collab = true"
-          >
-            <b-form-checkbox value="remote">
-              Remote
-            </b-form-checkbox>
-            <b-form-checkbox value="hybrid">
-              Hybrid
-            </b-form-checkbox>
-            <b-form-checkbox value="in-person">
-              In Person
-            </b-form-checkbox>
+          <b-form-checkbox-group v-model="formData.collab" stacked @change="touched.collab = true">
+            <b-form-checkbox value="remote"> Remote </b-form-checkbox>
+            <b-form-checkbox value="hybrid"> Hybrid </b-form-checkbox>
+            <b-form-checkbox value="in-person"> In Person </b-form-checkbox>
           </b-form-checkbox-group>
-          <div
-            v-if="showInvalid('collab')"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid('collab')" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
       </div>
 
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="handlePrevious"
-        >
-          <b-icon
-            icon="arrow-left"
-            class="mr-1"
-          /> Previous
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
+          <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
-          <b-icon
-            icon="arrow-right"
-            class="ml-1"
-          />
+          <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
@@ -547,12 +429,6 @@ export default {
       requiredFields: requiredFields,
       arrayFields: ["languages", "skills_wanted", "projects", "prizes", "collab"],
       formFieldsDefaults: formFieldsDefaults,
-      form: {
-        languages: [],
-        languages_other: '',
-        skills_wanted: [],
-        skills_wanted_other: '',
-      },
     };
   },
 
@@ -609,19 +485,41 @@ export default {
       });
 
       // Combine 'other' values for languages
-      if (this.form.languages && this.form.languages.includes('other') && this.form.languages_other) {
-        const otherLangs = this.form.languages_other.split(',').map(s => s.trim()).filter(Boolean);
-        this.formData.languages = this.form.languages.filter(v => v !== 'other').concat(otherLangs);
+      if (
+        this.formData.languages &&
+        this.formData.languages.includes("other") &&
+        this.formData.languages_other
+      ) {
+        const otherLangs = this.formData.languages_other
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        this.formData.languages = this.formData.languages
+          .filter((v) => v !== "other")
+          .concat(otherLangs);
       } else {
-        this.formData.languages = this.form.languages ? this.form.languages.filter(v => v !== 'other') : [];
+        this.formData.languages = this.formData.languages
+          ? this.formData.languages.filter((v) => v !== "other")
+          : [];
       }
 
       // Combine 'other' values for skills_wanted
-      if (this.form.skills_wanted && this.form.skills_wanted.includes('other') && this.form.skills_wanted_other) {
-        const otherSkills = this.form.skills_wanted_other.split(',').map(s => s.trim()).filter(Boolean);
-        this.formData.skills_wanted = this.form.skills_wanted.filter(v => v !== 'other').concat(otherSkills);
+      if (
+        this.formData.skills_wanted &&
+        this.formData.skills_wanted.includes("other") &&
+        this.formData.skills_wanted_other
+      ) {
+        const otherSkills = this.formData.skills_wanted_other
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        this.formData.skills_wanted = this.formData.skills_wanted
+          .filter((v) => v !== "other")
+          .concat(otherSkills);
       } else {
-        this.formData.skills_wanted = this.form.skills_wanted ? this.form.skills_wanted.filter(v => v !== 'other') : [];
+        this.formData.skills_wanted = this.formData.skills_wanted
+          ? this.formData.skills_wanted.filter((v) => v !== "other")
+          : [];
       }
 
       if (this.validateForm()) {
