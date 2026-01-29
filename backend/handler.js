@@ -183,16 +183,12 @@ const registerTeamMatching = async (ddb, body) => {
   }
 
 
-  // Merge 'other' values for languages and skills_wanted if present
   const mergeWithOther = (main, other) => {
-    let arr = Array.isArray(main) ? main : (main ? [main] : []);
-    if (other && typeof other === 'string') {
-      // Split by comma, trim whitespace, filter out empty
-      const otherArr = other.split(',').map(s => s.trim()).filter(Boolean);
-      arr = arr.concat(otherArr);
-    }
-    // Remove duplicates
-    return Array.from(new Set(arr));
+    const mainArr = Array.isArray(main) ? main : (main ? [main] : []);
+    const otherArr = Array.isArray(other) ? other : [];
+
+    const combined = [...mainArr, ...otherArr].filter(item => item !== 'other');
+    return Array.from(new Set(combined));
   };
 
   const mergedLanguages = mergeWithOther(body.languages, body.languages_other);
