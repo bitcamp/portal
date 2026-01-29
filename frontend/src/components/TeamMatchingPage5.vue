@@ -121,15 +121,13 @@
             <b-form-checkbox value="other">Other</b-form-checkbox>
           </b-form-checkbox-group>
           <div v-if="formData.languages && formData.languages.includes('other')" class="mt-2">
-            <b-form-group
-              label="Please specify other languages/frameworks (comma separated, e.g. Go, Rust, Swift):"
-            >
-              <b-form-input
-                v-model="formData.languages_other"
+            <b-form-group label="Please specify other languages/frameworks (e.g. Go, Rust, Swift):">
+              <b-form-tags
                 placeholder="e.g. Go, Rust, Swift"
-                required
-              ></b-form-input>
-              <small class="text-muted">Enter multiple values separated by commas.</small>
+                input-id="tags-basic"
+                remove-on-delete
+                v-model="formData.languages_other"
+              ></b-form-tags>
             </b-form-group>
           </div>
           <div
@@ -211,12 +209,12 @@
             <b-form-group
               label="Please specify other technologies (comma separated, e.g. Go, Rust, Swift):"
             >
-              <b-form-input
-                v-model="formData.skills_wanted_other"
+              <b-form-tags
                 placeholder="e.g. Go, Rust, Swift"
-                required
-              ></b-form-input>
-              <small class="text-muted">Enter multiple values separated by commas.</small>
+                input-id="tags-basic"
+                remove-on-delete
+                v-model="formData.skills_wanted_other"
+              ></b-form-tags>
             </b-form-group>
           </div>
           <div
@@ -456,6 +454,8 @@ export default {
         collab: checkValidBox("collab"),
       };
     },
+
+
   },
 
   mounted() {
@@ -596,6 +596,10 @@ export default {
 
 .stepper-item.completed:not(:last-child)::after {
   background: #f97345 !important;
+}
+
+::v-deep .b-form-tag {
+  background-color: #f97345;
 }
 
 .stepper-circle {
