@@ -316,6 +316,8 @@ export default {
         collab: this.formData.collab,
         experience: this.formData.experience,
         languages: this.formData.languages,
+        languages_other: this.formData.languages_other,
+        skills_wanted_other: this.formData.skills_wanted_other,
         num_team_members: this.formData.num_team_members,
         prizes: this.formData.prizes,
         projects: this.formData.projects,
