@@ -154,7 +154,7 @@
                     variant="info"
                     @remove="removeTag(tag)"
                   >
-                    {{ tag }}
+                    {{ getTagText(tag, ethnicityOptionsSelect) }}
                   </b-form-tag>
                 </li>
               </ul>
@@ -278,7 +278,7 @@
                     variant="info"
                     @remove="removeTag(tag)"
                   >
-                    {{ tag }}
+                    {{ getTagText(tag, heardFromOptions) }}
                   </b-form-tag>
                 </li>
               </ul>
@@ -473,12 +473,12 @@ export default {
 
     availableOptions() {
       return this.ethnicityOptionsSelect.filter(
-        (opt) => !this.formData.ethnicity.includes(opt.text)
+        (opt) => !this.formData.ethnicity.includes(opt.value)
       );
     },
 
     availableHeardFromOptions() {
-      return this.heardFromOptions.filter((opt) => !this.formData.heard_from.includes(opt.text));
+      return this.heardFromOptions.filter((opt) => !this.formData.heard_from.includes(opt.value));
     },
 
     school_class() {
@@ -506,6 +506,10 @@ export default {
         this.formData.school_other = "";
         this.touched.school_other = false;
       }
+    },
+    getTagText(value, optionsList) {
+      const option = optionsList.find((opt) => opt.value === value);
+      return option ? option.text : value;
     },
 
     validate() {
