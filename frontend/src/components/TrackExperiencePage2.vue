@@ -141,7 +141,8 @@
 
       <div v-if="formData.track_selected === 'quantum'" class="mt-4 form-group">
         <label class="form-label">
-          Would you like to be placed in the beginner quantum or advanced quantum track?*
+          Would you like to be placed in the beginner quantum or advanced quantum track?
+          <span class="text-danger">*</span>
         </label>
         <div class="radio-inline-group">
           <label class="radio-inline">

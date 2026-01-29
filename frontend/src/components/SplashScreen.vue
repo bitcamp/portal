@@ -2,24 +2,13 @@
   <b-container class="screen-container">
     <b-row class="mb-4 pb-5">
       <div class="logos">
-        <img
-          src="@/assets/logotype.svg"
-          alt="Bitcamp logo"
-          class="bitcamp-logo"
-        >
-        <img
-          src="@/assets/register.svg"
-          alt="Register Sign"
-          class="register-logo"
-        >
+        <img src="@/assets/logotype.svg" alt="Bitcamp logo" class="bitcamp-logo" />
+        <img src="@/assets/register.svg" alt="Register Sign" class="register-logo" />
       </div>
     </b-row>
     <b-container class="card-container mb-5">
       <b-row>
-        <b-col
-          :md="screenWidth >= 768 ? 6 : 4"
-          class="mb-4 marshie-card"
-        >
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="mentor"
             role-title="MENTOR"
@@ -30,10 +19,7 @@
             svg-image-path="splash-screen/red-dino.svg"
           />
         </b-col>
-        <b-col
-          :md="screenWidth >= 768 ? 6 : 4"
-          class="mb-4 marshie-card"
-        >
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="hacker"
             role-title="HACKER"
@@ -45,10 +31,7 @@
           />
         </b-col>
 
-        <b-col
-          :md="screenWidth >= 768 ? 6 : 4"
-          class="mb-4 marshie-card"
-        >
+        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="volunteer"
             role-title="VOLUNTEER"
@@ -70,6 +53,22 @@ import CardButton from "../components/CardButton.vue";
 export default {
   components: {
     CardButton,
+  },
+  data() {
+    return {
+      screenWidth: window.innerWidth,
+    };
+  },
+  mounted() {
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      this.screenWidth = window.innerWidth;
+    },
   },
 };
 </script>
@@ -97,7 +96,6 @@ export default {
 
 .mb-4 {
   margin-bottom: 0 !important;
-
 }
 
 .card-container {
@@ -128,7 +126,6 @@ export default {
   height: auto; /* Maintain aspect ratio */
   margin-top: 100px;
   margin-bottom: 20px;
-
 }
 
 @media (max-width: 768px) {
@@ -158,6 +155,5 @@ export default {
   .mb-4 {
     padding: 0;
   }
-
 }
 </style>
