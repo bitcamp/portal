@@ -1,17 +1,11 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">
-      Register for Bitcamp 2026
-    </h1>
+    <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a
-        href="https://bit.camp"
-        target="_blank"
-        rel="noopener"
-      >bit.camp</a>!
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -26,10 +20,7 @@
         }"
       >
         <div class="stepper-circle">
-          <span
-            v-if="step.number < currentPage"
-            class="checkmark"
-          >✓</span>
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">
@@ -38,15 +29,10 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
-    <b-form
-      :disabled="isSending"
-      @submit.prevent="handleNext"
-    >
-      <h4 class="section-title">
-        Rules and privacy policies
-      </h4>
+    <b-form :disabled="isSending" @submit.prevent="handleNext">
+      <h4 class="section-title">Rules and privacy policies</h4>
       <p class="info">
         Please read and agree to the necessary terms and conditions to proceed with your
         registration.
@@ -63,20 +49,13 @@
         >
           I authorize you to share my application/registration information with Major League Hacking
           for event administration, ranking, and MLH administration in-line with the
-          <a
-            href="https://mlh.io/privacy"
-            target="_blank"
-          >MLH Privacy Policy</a>. I further agree
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
           to the terms of both the
-          <a
-            href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
-            target="_blank"
-          >MLH Contest Terms and Conditions</a>
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank"
+            >MLH Contest Terms and Conditions</a
+          >
           and the
-          <a
-            href="https://mlh.io/privacy"
-            target="_blank"
-          >MLH Privacy Policy</a>.
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
           <span class="text-danger">*</span>
           <b-form-invalid-feedback :state="validations.valid_mlh_privacy">
             Please agree to MLH's privacy policy and terms
@@ -93,10 +72,9 @@
           @change="clearValidation('valid_code_of_conduct')"
         >
           I have read and agree to the
-          <a
-            href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
-            target="_blank"
-          >MLH Code of Conduct</a>. <span class="text-danger">*</span>
+          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank"
+            >MLH Code of Conduct</a
+          >. <span class="text-danger">*</span>
           <b-form-invalid-feedback :state="validations.valid_code_of_conduct">
             Please agree to MLH's code of conduct
           </b-form-invalid-feedback>
@@ -117,22 +95,20 @@
         <b-button
           type="button"
           class="submit-btn prev-btn"
+          :disabled="isSending"
           @click="handlePrevious"
         >
-          <b-icon
-            icon="arrow-left"
-            class="mr-1"
-          /> Previous
+          <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
-          Complete Registration
-          <b-icon
-            icon="arrow-right"
-            class="ml-1"
-          />
+        <b-button type="submit" class="submit-btn next-btn" :disabled="isSending">
+          <template v-if="isSending">
+            <b-spinner small class="mr-2" />
+            Submitting...
+          </template>
+          <template v-else>
+            Complete Registration
+            <b-icon icon="arrow-right" class="ml-1" />
+          </template>
         </b-button>
       </div>
     </b-form>
@@ -380,13 +356,13 @@ export default {
           school_principal_name: this.formData.school_principal_name,
           school_principal_date: this.formData.school_principal_date,
           school_principal_signature: this.formData.school_principal_signature,
-        })
+        });
       }
 
       const response = await this.performPostRequest(
         this.getEnvVariable("BACKEND_ENDPOINT"),
         endpoint,
-        requestBody,
+        requestBody
       );
       this.isSending = false;
       return response;
@@ -414,11 +390,11 @@ export default {
       return [
         this.formData.address1,
         this.formData.address2,
-        [this.formData.city, this.formData.state, this.formData.zip]
-          .filter(Boolean)
-          .join(" "),
+        [this.formData.city, this.formData.state, this.formData.zip].filter(Boolean).join(" "),
         this.formData.country,
-      ].filter(Boolean).join(", ");
+      ]
+        .filter(Boolean)
+        .join(", ");
     },
 
     createDietaryRestrictionString() {
