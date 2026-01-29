@@ -178,7 +178,7 @@ const makeAddon = (length) => {
 
 // registerTeamMatching adds team matching data to a DynamoDB Table
 const registerTeamMatching = async (ddb, body) => {
-  if (!body.opt_in_team_matching) {
+  if (!(body.opt_in_team_matching === "yes")) {
     return;
   }
 
