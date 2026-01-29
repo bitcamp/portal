@@ -182,6 +182,22 @@ const registerTeamMatching = async (ddb, body) => {
     return;
   }
 
+
+  // Merge 'other' values for languages and skills_wanted if present
+  const mergeWithOther = (main, other) => {
+    let arr = Array.isArray(main) ? main : (main ? [main] : []);
+    if (other && typeof other === 'string') {
+      // Split by comma, trim whitespace, filter out empty
+      const otherArr = other.split(',').map(s => s.trim()).filter(Boolean);
+      arr = arr.concat(otherArr);
+    }
+    // Remove duplicates
+    return Array.from(new Set(arr));
+  };
+
+  const mergedLanguages = mergeWithOther(body.languages, body.languages_other);
+  const mergedSkillsWanted = mergeWithOther(body.skills_wanted, body.skills_wanted_other);
+
   var params = {
     TableName: process.env.TEAM_MATCHING_TABLE,
     Item: {
@@ -189,14 +205,14 @@ const registerTeamMatching = async (ddb, body) => {
       collab: body.collab,
       experience: body.experience,
       first_name: body.first_name,
-      languages: body.languages,
+      languages: mergedLanguages,
       last_name: body.last_name,
       num_team_members: body.num_team_members,
       prizes: body.prizes,
       projects: body.projects,
       serious: body.serious,
       skill_level: body.skill_level,
-      skills_wanted: body.skills_wanted,
+      skills_wanted: mergedSkillsWanted,
       track: body.track,
       year: body.school_year,
     },

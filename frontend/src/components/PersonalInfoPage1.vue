@@ -399,13 +399,14 @@ export default {
 
       ethnicityOptionsSelect: [
         // { value: "", text: "Select one...", disabled: true },
-        { value: "asian-indian", text: "Asian Indian" },
+        { value: "american-indian/alaska-native", text: "American Indian or Alaska Native" },
+        { value: "asian", text: "Asian" },
         { value: "black-african", text: "Black or African" },
-        { value: "chinese", text: "Chinese" },
-        { value: "filipino", text: "Filipino" },
         { value: "hispanic", text: "Hispanic / Latino" },
+        { value: "native-hawaiian", text: "Native Hawaiian or Other Pacific Islander" },
+        { value: "multiracial", text: "Two or more races" },
         { value: "white", text: "White" },
-        { value: "other", text: "Other" },
+        { value: "n/a", text: "I don't wish to answer" },
       ],
 
       schoolYearOptions: [

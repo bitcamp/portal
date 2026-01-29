@@ -233,9 +233,6 @@
           placeholder="Your response here..."
           @input="touched.question1 = true"
         />
-        <small class="char-counter">
-          {{ whyBitcampChars }} / 1000 characters (minimum 50 required)
-        </small>
       </b-form-group>
 
       <b-form-group>
@@ -250,9 +247,6 @@
           placeholder="Your response here..."
           @input="touched.question2 = true"
         />
-        <small class="char-counter">
-          {{ whatBuildChars }} / 1000 characters (minimum 50 required)
-        </small>
       </b-form-group>
 
       <hr class="mt-4" />
