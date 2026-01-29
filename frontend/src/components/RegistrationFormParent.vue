@@ -221,7 +221,7 @@ export default {
         // transport_select: "",
         // transport_deposit: null,
         // address1: "",
-        // gmaps_place_id: "",
+        gmaps_place_id: "",
         // referred_by: "",
         // waitlist_track_selected: "",
         // citizen: null,

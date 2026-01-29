@@ -1,17 +1,11 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">
-      Register for Bitcamp 2026
-    </h1>
+    <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a
-        href="https://bit.camp"
-        target="_blank"
-        rel="noopener"
-      >bit.camp</a>!
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -26,10 +20,7 @@
         }"
       >
         <div class="stepper-circle">
-          <span
-            v-if="step.number < currentPage"
-            class="checkmark"
-          >✓</span>
+          <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">
@@ -38,13 +29,11 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <b-form @submit.prevent="handleNext">
       <div v-if="!atNoTransportUnis()">
-        <h4 class="section-title">
-          Travel and Transportation
-        </h4>
+        <h4 class="section-title">Travel and Transportation</h4>
         <div class="mt-2 form-group">
           <label class="form-label">
             Would you need travel assistance to the hackathon?
@@ -58,7 +47,7 @@
                 type="radio"
                 value="yes"
                 @change="touched.transport = true"
-              >
+              />
               Yes
             </label>
 
@@ -68,7 +57,7 @@
                 type="radio"
                 value="no"
                 @change="touched.transport = true"
-              >
+              />
               No
             </label>
           </div>
@@ -76,11 +65,7 @@
       </div>
 
       <b-form-row>
-        <b-form-group
-          label="Shipping Address"
-          label-for="shipping-address"
-          class="col-md-6"
-        >
+        <b-form-group label="Shipping Address" label-for="shipping-address" class="col-md-6">
           <b-form-input
             id="shipping-address"
             v-model="formData.address1"
@@ -106,11 +91,7 @@
       </b-form-row>
 
       <b-form-row>
-        <b-form-group
-          label="City"
-          label-for="shipping-city"
-          class="col-md-3"
-        >
+        <b-form-group label="City" label-for="shipping-city" class="col-md-3">
           <b-form-input
             id="shipping-city"
             v-model="formData.city"
@@ -120,11 +101,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="State"
-          label-for="shipping-state"
-          class="col-md-2"
-        >
+        <b-form-group label="State" label-for="shipping-state" class="col-md-2">
           <b-form-input
             id="shipping-state"
             v-model="formData.state"
@@ -134,11 +111,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="Zip Code"
-          label-for="shipping-zip"
-          class="col-md-3"
-        >
+        <b-form-group label="Zip Code" label-for="shipping-zip" class="col-md-3">
           <b-form-input
             id="shipping-zip"
             v-model="formData.zip"
@@ -148,11 +121,7 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="Country"
-          label-for="shipping-country"
-          class="col-md-4"
-        >
+        <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
           <b-form-input
             id="shipping-country"
             v-model="formData.country"
@@ -163,24 +132,17 @@
         </b-form-group>
       </b-form-row>
 
-      <hr>
+      <hr />
 
-      <h4 class="section-title mb-2">
-        Select a T-shirt size!
-      </h4>
+      <h4 class="section-title mb-2">Select a T-shirt size!</h4>
       <p class="info">
         We've got unisex T-shirts in sizes XS–2XL! Choose whichever size you like, and your very own
         Bitcamp 2026 shirt will be given to you once you arrive.
       </p>
 
       <b-form-row>
-        <b-form-group
-          id="input-group-tshirt"
-          class="col-md-12"
-        >
-          <template #label>
-            T-shirt Size <span class="text-danger">*</span>
-          </template>
+        <b-form-group id="input-group-tshirt" class="col-md-12">
+          <template #label> T-shirt Size <span class="text-danger">*</span> </template>
 
           <b-form-select
             id="input-tshirt"
@@ -197,42 +159,27 @@
         </b-form-group>
       </b-form-row>
 
-      <hr>
+      <hr />
 
-      <h4 class="section-title">
-        Do you have any dietary restrictions?
-      </h4>
-      <p class="info">
-        Select all that apply <span class="text-danger">*</span>
-      </p>
+      <h4 class="section-title">Do you have any dietary restrictions?</h4>
+      <p class="info">Select all that apply <span class="text-danger">*</span></p>
 
       <b-form-row>
-        <b-form-group
-          id="input-dietary-restrictions"
-          class="col-12 col-md-12"
-        >
+        <b-form-group id="input-dietary-restrictions" class="col-12 col-md-12">
           <div class="checkbox-group">
             <label class="checkbox-inline">
-              <input
-                type="checkbox"
-                :checked="formData.diet_none"
-                @change="toggleDietNoneOption"
-              >
+              <input type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
               None
             </label>
 
-            <label
-              v-for="option in dietOptions"
-              :key="option.value"
-              class="checkbox-inline"
-            >
+            <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
               <input
                 v-model="formData.diet_select"
                 type="checkbox"
                 :value="option.value"
                 :disabled="formData.diet_none"
                 @change="touched.diet_select = true"
-              >
+              />
               {{ option.text }}
             </label>
 
@@ -242,14 +189,11 @@
                 type="checkbox"
                 :disabled="formData.diet_none"
                 @change="touched.diet_other = true"
-              >
+              />
               Other
             </label>
 
-            <div
-              v-if="showInvalid('diet')"
-              class="invalid-feedback d-block"
-            >
+            <div v-if="showInvalid('diet')" class="invalid-feedback d-block">
               Please select your dietary restrictions ("None" is an option)
             </div>
           </div>
@@ -267,27 +211,14 @@
       </b-form-row>
 
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="handlePrevious"
-        >
-          <b-icon
-            icon="arrow-left"
-            class="mr-1"
-          />
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
+          <b-icon icon="arrow-left" class="mr-1" />
           Previous
         </b-button>
 
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
-          <b-icon
-            icon="arrow-right"
-            class="ml-1"
-          />
+          <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
@@ -402,7 +333,70 @@ export default {
     },
   },
 
+  mounted() {
+    this.$nextTick(() => {
+      const input = document.getElementById("shipping-address");
+      if (!input || typeof google === "undefined") return;
+
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["address"],
+      });
+
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        this.formData.gmaps_place_id = place.place_id;
+        this.formData.address1 = place.formatted_address;
+        this.fillInAddress(place);
+      });
+
+      input.addEventListener("keydown", (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+        }
+      });
+
+      const typeahead = document.getElementsByClassName("typeahead")[0];
+      if (typeahead) {
+        typeahead.setAttribute("autocomplete", "off");
+      }
+    });
+  },
+
   methods: {
+    fillInAddress(place) {
+      const components = place.address_components || [];
+
+      let streetNumber = "";
+      let route = "";
+
+      for (const component of components) {
+        const type = component.types[0];
+
+        switch (type) {
+          case "street_number":
+            streetNumber = component.long_name;
+            break;
+          case "route":
+            route = component.long_name;
+            break;
+          case "locality":
+            this.formData.city = component.long_name;
+            break;
+          case "administrative_area_level_1":
+            this.formData.state = component.short_name;
+            break;
+          case "postal_code":
+            this.formData.zip = component.long_name;
+            break;
+          case "country":
+            this.formData.country = component.long_name;
+            break;
+        }
+      }
+
+      this.formData.address1 = `${streetNumber} ${route}`.trim();
+    },
+
     showState(field) {
       if (thirdPageOptionalFields.includes(field) && !this.optionalFieldsRequired.includes(field)) {
         return null;

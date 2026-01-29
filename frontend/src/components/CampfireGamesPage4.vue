@@ -1,17 +1,11 @@
 <template>
   <div class="register-page">
-    <h1 class="page-title">
-      Register for Bitcamp 2026
-    </h1>
+    <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a
-        href="https://bit.camp"
-        target="_blank"
-        rel="noopener"
-      >bit.camp</a>!
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
     <div class="stepper">
@@ -26,10 +20,7 @@
         }"
       >
         <div class="stepper-circle">
-          <span
-            v-if="step.number < 4"
-            class="checkmark"
-          >✓</span>
+          <span v-if="step.number < 4" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">
@@ -38,12 +29,10 @@
       </div>
     </div>
 
-    <hr>
+    <hr />
 
     <b-form @submit.prevent="handleNext">
-      <h4 class="section-title">
-        Campfire Games Survey
-      </h4>
+      <h4 class="section-title">Campfire Games Survey</h4>
       <p class="info">
         This year, you'll once again be put into one of three teams based on your personality and
         interests. By winning unique challenges and attending workshops and mini-events, you and
@@ -53,10 +42,7 @@
       </p>
 
       <div class="campfire-questions-wrapper">
-        <b-form-group
-          v-for="(q, i) in questions"
-          :key="i"
-        >
+        <b-form-group v-for="(q, i) in questions" :key="i">
           <template #label>
             <span class="form-label font-weight-bold">
               {{ q.label }} <span class="text-danger">*</span>
@@ -79,35 +65,19 @@
             </b-form-radio>
           </b-form-radio-group>
 
-          <div
-            v-if="showInvalid(`q${i + 1}`)"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="showInvalid(`q${i + 1}`)" class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
       </div>
 
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="handlePrevious"
-        >
-          <b-icon
-            icon="arrow-left"
-            class="mr-1"
-          /> Previous
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
+          <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
-          <b-icon
-            icon="arrow-right"
-            class="ml-1"
-          />
+          <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
