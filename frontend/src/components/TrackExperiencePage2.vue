@@ -393,12 +393,6 @@ export default {
         portfolio: req(this.formData.portfolio) && this.isValidUrl(this.formData.portfolio),
       };
     },
-    whyBitcampChars() {
-      return (this.formData.question1 || "").length;
-    },
-    whatBuildChars() {
-      return (this.formData.question2 || "").length;
-    },
     optionalFieldsRequired() {
       const res = [];
 
