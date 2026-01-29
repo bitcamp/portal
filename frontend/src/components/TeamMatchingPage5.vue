@@ -124,10 +124,15 @@
             <b-form-group label="Please specify other languages/frameworks (e.g. Go, Rust, Swift):">
               <b-form-tags
                 placeholder="e.g. Go, Rust, Swift"
-                input-id="tags-basic"
+                input-id="tags-languages-other"
+                @input="touched.languages_other = true"
                 remove-on-delete
+                :state="showState('languages_other')"
                 v-model="formData.languages_other"
               ></b-form-tags>
+              <div v-if="showInvalid('languages_other')" class="invalid-feedback d-block">
+                Please add at least one language/framework
+              </div>
             </b-form-group>
           </div>
           <div
@@ -206,15 +211,18 @@
             v-if="formData.skills_wanted && formData.skills_wanted.includes('other')"
             class="mt-2"
           >
-            <b-form-group
-              label="Please specify other technologies (comma separated, e.g. Go, Rust, Swift):"
-            >
+            <b-form-group label="Please specify other technologies:">
               <b-form-tags
                 placeholder="e.g. Go, Rust, Swift"
-                input-id="tags-basic"
+                input-id="tags-skills-other"
                 remove-on-delete
+                :state="showState('skills_wanted_other')"
+                @input="touched.skills_wanted_other = true"
                 v-model="formData.skills_wanted_other"
               ></b-form-tags>
+              <div v-if="showInvalid('skills_wanted_other')" class="invalid-feedback d-block">
+                Please add at least one technology
+              </div>
             </b-form-group>
           </div>
           <div
@@ -371,6 +379,8 @@ const fifthPageRequiredFields = [
   "collab",
 ];
 
+const fifthPageOptionalFields = ["languages_other", "skills_wanted_other"];
+
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
@@ -383,38 +393,10 @@ export default {
     },
   },
   data() {
-    const requiredFields = [
-      "opt_in_team_matching",
-      "track",
-      "hackathon",
-      "languages",
-      "experience",
-      "skill_level",
-      "skills_wanted",
-      "projects",
-      "prizes",
-      "serious",
-      "collab",
-      "num_team_members",
-    ];
-
-    const formFieldsDefaults = {
-      opt_in_team_matching: null,
-      track: null,
-      hackathon: null,
-      languages: [],
-      experience: null,
-      skill_level: null,
-      skills_wanted: [],
-      projects: [],
-      prizes: [],
-      serious: null,
-      collab: [],
-      num_team_members: null,
-    };
-
     return {
-      touched: Object.fromEntries([...fifthPageRequiredFields].map((key) => [key, false])),
+      touched: Object.fromEntries(
+        [...fifthPageRequiredFields, ...fifthPageOptionalFields].map((key) => [key, false])
+      ),
       steps: [
         { number: 1, label: "Personal Info" },
         { number: 2, label: "Track & Experience" },
@@ -424,9 +406,6 @@ export default {
         { number: 6, label: "Minor Waivers" },
         { number: 7, label: "Finalize & Submit" },
       ],
-      requiredFields: requiredFields,
-      arrayFields: ["languages", "skills_wanted", "projects", "prizes", "collab"],
-      formFieldsDefaults: formFieldsDefaults,
     };
   },
 
@@ -452,18 +431,24 @@ export default {
         prizes: checkValidBox("prizes"),
         serious: this.formData.serious !== null,
         collab: checkValidBox("collab"),
+        languages_other: this.formData.languages_other.length > 0,
+        skills_wanted_other: this.formData.skills_wanted_other.length > 0,
       };
     },
 
+    optionalFieldsRequired() {
+      const res = [];
 
-  },
-
-  mounted() {
-    Object.keys(this.formFieldsDefaults).forEach((key) => {
-      if (!this.formData.hasOwnProperty(key)) {
-        this.$set(this.formData, key, this.formFieldsDefaults[key]);
+      if (this.formData.languages.includes("other")) {
+        res.push("languages_other");
       }
-    });
+
+      if (this.formData.skills_wanted.includes("other")) {
+        res.push("skills_wanted_other");
+      }
+
+      return res;
+    },
   },
 
   methods: {
@@ -471,11 +456,22 @@ export default {
       return this.touched[field] === true && this.validations[field] === false;
     },
 
+    showState(field) {
+      if (fifthPageOptionalFields.includes(field) && !this.optionalFieldsRequired.includes(field)) {
+        return null;
+      }
+      if (!this.touched[field]) return null;
+      return this.validations[field] === true ? true : false;
+    },
+
     validateForm() {
       if (this.formData.opt_in_team_matching === "no") {
         return this.validations.opt_in_team_matching;
       }
-      return fifthPageRequiredFields.every((fieldName) => this.validations[fieldName]);
+      return (
+        fifthPageRequiredFields.every((fieldName) => this.validations[fieldName]) &&
+        this.optionalFieldsRequired.every((fieldName) => this.validations[fieldName])
+      );
     },
 
     handleNext(event) {
@@ -484,43 +480,13 @@ export default {
         this.touched[key] = true;
       });
 
-      // Combine 'other' values for languages
-      if (
-        this.formData.languages &&
-        this.formData.languages.includes("other") &&
-        this.formData.languages_other
-      ) {
-        const otherLangs = this.formData.languages_other
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
-        this.formData.languages = this.formData.languages
-          .filter((v) => v !== "other")
-          .concat(otherLangs);
-      } else {
-        this.formData.languages = this.formData.languages
-          ? this.formData.languages.filter((v) => v !== "other")
-          : [];
-      }
-
-      // Combine 'other' values for skills_wanted
-      if (
-        this.formData.skills_wanted &&
-        this.formData.skills_wanted.includes("other") &&
-        this.formData.skills_wanted_other
-      ) {
-        const otherSkills = this.formData.skills_wanted_other
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
-        this.formData.skills_wanted = this.formData.skills_wanted
-          .filter((v) => v !== "other")
-          .concat(otherSkills);
-      } else {
-        this.formData.skills_wanted = this.formData.skills_wanted
-          ? this.formData.skills_wanted.filter((v) => v !== "other")
-          : [];
-      }
+      fifthPageOptionalFields.forEach((key) => {
+        if (this.optionalFieldsRequired.includes(key)) {
+          this.touched[key] = true;
+        } else {
+          this.touched[key] = false;
+        }
+      });
 
       if (this.validateForm()) {
         this.$emit("next");

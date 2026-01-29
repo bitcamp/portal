@@ -144,6 +144,7 @@
             class="mb-2"
             add-on-change
             no-outer-focus
+            @input="touched.ethnicity = true"
           >
             <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
               <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
@@ -265,6 +266,7 @@
           <b-form-tags
             id="heard-from-tags"
             v-model="formData.heard_from"
+            @input="touched.heard_from = true"
             size="lg"
             add-on-change
             no-outer-focus
