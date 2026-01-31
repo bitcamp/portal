@@ -7,29 +7,17 @@
     <p class="page-subtitle">
       Questions? Chat with us in the bottom right hand corner or email
       <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
-      <a
-        href="https://bit.camp"
-        target="_blank"
-        rel="noopener"
-      >bit.camp</a>!
+      <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
     <div class="stepper">
-      <div
-        v-for="step in steps"
-        :key="step.number"
-        class="stepper-item"
-        :class="{
-          active: step.number === 6,
-          completed: step.number < 6,
-          inactive: step.number > 6
-        }"
-      >
+      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
+        active: step.number === 6,
+        completed: step.number < 6,
+        inactive: step.number > 6
+      }">
         <div class="stepper-circle">
-          <span
-            v-if="step.number < 6"
-            class="checkmark"
-          >✓</span>
+          <span v-if="step.number < 6" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
         <div class="stepper-label">
@@ -41,23 +29,12 @@
     <hr>
     <b-form @submit.prevent="handleNext">
       <div class="info-box">
-        <div
-          class="info-header"
-          @click="togglePhoto"
-        >
+        <div class="info-header" @click="togglePhoto">
           <span class="title header-title">Photography Consent Form</span>
-          <img
-            :src="openImg"
-            class="arrow"
-            :class="{open : photoIsOpen}"
-            @click.stop="togglePhoto"
-          >
+          <img :src="openImg" class="arrow" :class="{ open: photoIsOpen }" @click.stop="togglePhoto">
         </div>
 
-        <div
-          v-if="photoIsOpen"
-          class="info-content"
-        >
+        <div v-if="photoIsOpen" class="info-content">
           <p>
             I, __________________________________________, hereby give permission to the University
             of Maryland to use and reproduce my image, likeness, voice, and name (collectively,
@@ -89,12 +66,8 @@
             <template #label>
               Minor Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-photo-name"
-              v-model="formData.photo_name"
-              :state="showState('photo_name')"
-              @input="touched.photo_name = true"
-            />
+            <b-form-input id="input-photo-name" v-model="formData.photo_name" :state="showState('photo_name')"
+              @input="touched.photo_name = true" />
             <b-form-invalid-feedback :state="showState('photo_name')">
               Required field
             </b-form-invalid-feedback>
@@ -103,13 +76,8 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="photo-date"
-              v-model="formData.photo_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('photo_date')"
-              @input="touched.photo_date = true"
-            />
+            <b-form-input id="photo-date" v-model="formData.photo_date" placeholder="MM/DD/YYYY"
+              :state="showState('photo_date')" @input="touched.photo_date = true" />
             <b-form-invalid-feedback :state="showState('photo_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -121,12 +89,8 @@
             <template #label>
               Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-photo-signature"
-              v-model="formData.photo_signature"
-              :state="showState('photo_signature')"
-              @input="touched.photo_signature = true"
-            />
+            <b-form-input id="input-photo-signature" v-model="formData.photo_signature"
+              :state="showState('photo_signature')" @input="touched.photo_signature = true" />
             <b-form-invalid-feedback :state="showState('photo_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -138,12 +102,8 @@
             <template #label>
               Parent/Guardian Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-p-photo-name"
-              v-model="formData.p_photo_name"
-              :state="showState('p_photo_name')"
-              @input="touched.p_photo_name = true"
-            />
+            <b-form-input id="input-p-photo-name" v-model="formData.p_photo_name" :state="showState('p_photo_name')"
+              @input="touched.p_photo_name = true" />
             <b-form-invalid-feedback :state="showState('p_photo_name')">
               Required field
             </b-form-invalid-feedback>
@@ -152,13 +112,8 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="p-photo-date"
-              v-model="formData.p_photo_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('p_photo_date')"
-              @input="touched.p_photo_date = true"
-            />
+            <b-form-input id="p-photo-date" v-model="formData.p_photo_date" placeholder="MM/DD/YYYY"
+              :state="showState('p_photo_date')" @input="touched.p_photo_date = true" />
             <b-form-invalid-feedback :state="showState('p_photo_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -170,12 +125,8 @@
             <template #label>
               Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-p-photo-signature"
-              v-model="formData.p_photo_signature"
-              :state="showState('p_photo_signature')"
-              @input="touched.p_photo_signature = true"
-            />
+            <b-form-input id="input-p-photo-signature" v-model="formData.p_photo_signature"
+              :state="showState('p_photo_signature')" @input="touched.p_photo_signature = true" />
             <b-form-invalid-feedback :state="showState('p_photo_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -185,23 +136,12 @@
       </div>
 
       <div class="info-box">
-        <div
-          class="info-header"
-          @click="toggleStu"
-        >
+        <div class="info-header" @click="toggleStu">
           <span class="title header-title">Student Organization Release and Informed Consent Form</span>
-          <img
-            :src="openImg"
-            class="arrow"
-            :class="{open : stuIsOpen}"
-            @click.stop="toggleStu"
-          >
+          <img :src="openImg" class="arrow" :class="{ open: stuIsOpen }" @click.stop="toggleStu">
         </div>
 
-        <div
-          v-if="stuIsOpen"
-          class="info-content"
-        >
+        <div v-if="stuIsOpen" class="info-content">
           <p>
             I am a participant of Bitcamp 2026 (Activity), a student organization recognized by
             the Stamp Student Union (Union) at the University of Maryland, College Park (University).
@@ -210,52 +150,78 @@
             personal representative(s) and assigns hereby represent and agree as follows:
             <br>
             <br>
-            <ol>
-              <li>
-                I fully recognize and understand that there are risks and hazards, minor and serious, associated
-                with participation in the Activity, ranging from scrapes, bruises, lacerations, broken bones to concussions,
-                spinal cord injuries, paralysis and, even, death. These injuries may result from crashing with other
-                participants, being hit by equipment, or environmental conditions.
-              </li>
-              <li>
-                I understand that protective equipment, including but not limited to, headgear, pads, eyewear and mouthpieces
-                may be recommended for the safety and protection of participants, and I agree to wear such equipment when
-                participating in the Activity. However, I understand that wearing such equipment will not eliminate the risks of
-                participation.
-              </li>
-              <li>
-                To the extent they exist, I understand that the rules and regulations of the Activity's organizers are designed,
-                in part, for the safety and protection of participants and I agree to abide by those rules and regulations.
-              </li>
-              <li>
-                I understand that any physical activity requires a minimum level of fitness for safe participation. I also
-                understand that the University advises that participants in the Activity carry personal health and accident
-                insurance. I further understand that the University and Bitcamp 2026 do not provide medical, health or other
-                insurance for participants in the Activity.
-              </li>
-              <li>
-                In the event of a medical emergency, I hereby give my consent to emergency transportation and medical treatment
-                arising out of or related to participation in the Activity. I understand that I am solely responsible for any and all
-                costs associated with any medical care received.
-              </li>
-              <li>
-                Knowing the dangers, hazards and risks associated with student organization activities, I voluntarily assume all
-                responsibility and risk of loss, damage, illness and/or injury to my person or property in any way associated with
-                my participation in the Activity.
-              </li>
-              <li>
-                To the fullest extent permitted by law, I hereby release and forever discharge, and agree to indemnify and hold
-                harmless the State of Maryland, the University of Maryland, and their departments, officers, agents, employees, and
-                volunteers (Released Parties) and Bitcamp 2026 from and against any and all liabilities, claims, demands, causes of
-                action, costs and expenses, (including attorneys' fees and related litigation costs) incurred by any of the Released Parties arising
-                out of or relating to my participation in or involvement with student organization activities, or use of University equipment and
-                facilities, including travel thereto and therefrom, whether due to the negligence, default or other action or inaction of any
-                person or entity, including the Released Parties.
-              </li>
-            </ol>
-            I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14 AND 18 AND THAT I HAVE READ AND
-            FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS SIGNIFICANCE.
-            AS A MINOR, THE SIGNATURE BELOW IS THAT OF A PARENT OR LEGAL GUARDIAN AUTHORIZED TO SIGN ON MY BEHALF.
+          <ol>
+            <li>
+              I fully recognize and understand that there are risks and hazards, minor and serious, associated
+              with participation in the Activity, ranging from scrapes, bruises, lacerations, broken bones to
+              concussions,
+              spinal cord injuries, paralysis and, even, death. These injuries may result from crashing with other
+              participants, being hit by equipment, or environmental conditions.
+            </li>
+            <li>
+              I understand that protective equipment, including but not limited to, headgear, pads, eyewear and
+              mouthpieces
+              may be recommended for the safety and protection of participants, and I agree to wear such equipment when
+              participating in the Activity. However, I understand that wearing such equipment will not eliminate the
+              risks of
+              participation.
+            </li>
+            <li>
+              To the extent they exist, I understand that the rules and regulations of the Activity's organizers are
+              designed,
+              in part, for the safety and protection of participants and I agree to abide by those rules and
+              regulations.
+            </li>
+            <li>
+              I understand that any physical activity requires a minimum level of fitness for safe participation. I also
+              understand that the University advises that participants in the Activity carry personal health and
+              accident
+              insurance. I further understand that the University and Bitcamp 2026 do not provide medical, health or
+              other
+              insurance for participants in the Activity.
+            </li>
+            <li>
+              In the event of a medical emergency, I hereby give my consent to emergency transportation and medical
+              treatment
+              arising out of or related to participation in the Activity. I understand that I am solely responsible for
+              any
+              and all
+              costs associated with any medical care received.
+            </li>
+            <li>
+              Knowing the dangers, hazards and risks associated with student organization activities, I voluntarily
+              assume all
+              responsibility and risk of loss, damage, illness and/or injury to my person or property in any way
+              associated
+              with
+              my participation in the Activity.
+            </li>
+            <li>
+              To the fullest extent permitted by law, I hereby release and forever discharge, and agree to indemnify and
+              hold
+              harmless the State of Maryland, the University of Maryland, and their departments, officers, agents,
+              employees,
+              and
+              volunteers (Released Parties) and Bitcamp 2026 from and against any and all liabilities, claims, demands,
+              causes
+              of
+              action, costs and expenses, (including attorneys' fees and related litigation costs) incurred by any of
+              the
+              Released Parties arising
+              out of or relating to my participation in or involvement with student organization activities, or use of
+              University equipment and
+              facilities, including travel thereto and therefrom, whether due to the negligence, default or other action
+              or
+              inaction of any
+              person or entity, including the Released Parties.
+            </li>
+          </ol>
+          I, _________________________________________, CERTIFY THAT I AM BETWEEN THE AGES OF 14 AND 18 AND THAT I HAVE
+          READ
+          AND
+          FULLY UNDERSTAND THIS RELEASE AND INFORMED CONSENT FORM AND I SIGN IT VOLUNTARILY WITH FULL KNOWLEDGE OF ITS
+          SIGNIFICANCE.
+          AS A MINOR, THE SIGNATURE BELOW IS THAT OF A PARENT OR LEGAL GUARDIAN AUTHORIZED TO SIGN ON MY BEHALF.
           </p>
         </div>
       </div>
@@ -266,12 +232,8 @@
             <template #label>
               Minor Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-terms-minor-name"
-              v-model="formData.terms_minor_name"
-              :state="showState('terms_minor_name')"
-              @input="touched.terms_minor_name = true"
-            />
+            <b-form-input id="input-terms-minor-name" v-model="formData.terms_minor_name"
+              :state="showState('terms_minor_name')" @input="touched.terms_minor_name = true" />
             <b-form-invalid-feedback :state="showState('terms_minor_name')">
               Required field
             </b-form-invalid-feedback>
@@ -280,13 +242,8 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="terms-minor-date"
-              v-model="formData.terms_minor_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('terms_minor_date')"
-              @input="touched.terms_minor_date = true"
-            />
+            <b-form-input id="terms-minor-date" v-model="formData.terms_minor_date" placeholder="MM/DD/YYYY"
+              :state="showState('terms_minor_date')" @input="touched.terms_minor_date = true" />
             <b-form-invalid-feedback :state="showState('terms_minor_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -298,12 +255,8 @@
             <template #label>
               Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-terms-minor-signature"
-              v-model="formData.terms_minor_signature"
-              :state="showState('terms_minor_signature')"
-              @input="touched.terms_minor_signature = true"
-            />
+            <b-form-input id="input-terms-minor-signature" v-model="formData.terms_minor_signature"
+              :state="showState('terms_minor_signature')" @input="touched.terms_minor_signature = true" />
             <b-form-invalid-feedback :state="showState('terms_minor_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -315,12 +268,8 @@
             <template #label>
               Parent/Guardian Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-terms-parent-name"
-              v-model="formData.terms_parent_name"
-              :state="showState('terms_parent_name')"
-              @input="touched.terms_parent_name = true"
-            />
+            <b-form-input id="input-terms-parent-name" v-model="formData.terms_parent_name"
+              :state="showState('terms_parent_name')" @input="touched.terms_parent_name = true" />
             <b-form-invalid-feedback :state="showState('terms_parent_name')">
               Required field
             </b-form-invalid-feedback>
@@ -329,13 +278,8 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="terms-parent-date"
-              v-model="formData.terms_parent_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('terms_parent_date')"
-              @input="touched.terms_parent_date = true"
-            />
+            <b-form-input id="terms-parent-date" v-model="formData.terms_parent_date" placeholder="MM/DD/YYYY"
+              :state="showState('terms_parent_date')" @input="touched.terms_parent_date = true" />
             <b-form-invalid-feedback :state="showState('terms_parent_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -347,12 +291,8 @@
             <template #label>
               Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="terms-parent-signature"
-              v-model="formData.terms_parent_signature"
-              :state="showState('terms_parent_signature')"
-              @input="touched.terms_parent_signature = true"
-            />
+            <b-form-input id="terms-parent-signature" v-model="formData.terms_parent_signature"
+              :state="showState('terms_parent_signature')" @input="touched.terms_parent_signature = true" />
             <b-form-invalid-feedback :state="showState('terms_parent_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -362,33 +302,18 @@
       </div>
 
       <div class="info-box">
-        <div
-          class="info-header"
-          @click="toggleCond"
-        >
+        <div class="info-header" @click="toggleCond">
           <span class="title header-title">Conditional Form Question</span>
-          <img
-            :src="openImg"
-            class="arrow"
-            :class="{ open: condIsOpen }"
-            @click.stop="toggleCond"
-          >
+          <img :src="openImg" class="arrow" :class="{ open: condIsOpen }" @click.stop="toggleCond">
         </div>
 
-        <div
-          v-if="condIsOpen"
-          class="info-content"
-        >
+        <div v-if="condIsOpen" class="info-content">
           <p>
             <b-form-group>
               <template #label>
                 <span>Please select your waiver type: <span class="text-danger">*</span></span>
               </template>
-              <b-form-radio-group
-                v-model="formData.waiverType"
-                name="chaperone"
-                @click="touched.waiverType = true"
-              >
+              <b-form-radio-group v-model="formData.waiverType" name="chaperone" @click="touched.waiverType = true">
                 <b-form-radio value="chaperone">
                   I have a chaperone
                 </b-form-radio>
@@ -408,33 +333,33 @@
             </h4>
             <h5>Chaperone Responsibilities</h5>
             <p>
-              <ul>
-                <li>
-                  Responsible for their minor(s) the entire time they are on the University of Maryland,
-                  College Park campus, including inside the Armory.
-                </li>
-                <li>Required to be aware of their student's location within the Armory at all times.</li>
-                <li>
-                  Required to ensure that their students remain inside the Armory at all times unless
-                  accompanied by their chaperone(s).
-                </li>
-                <li>
-                  Responsible for their student(s) behavior and are required to ensure that their
-                  student(s) adhere to Bitcamp's Terms and Code of Conduct.
-                </li>
-                <li>Required to remain in the Armory as long as their student(s) are there.</li>
-                <li>
-                  Responsible for ensuring that their student(s) do not remain in the Armory after 12am
-                  (midnight) and do not arrive before 7am.
-                </li>
-                <li>
-                  Required to alert organizers, police, EMT, or fire marshal in case of an emergency.
-                </li>
-                <li>
-                  Responsible for knowing their student(s) food allergies and medical conditions, as well
-                  as ensuring that their health needs are being met.
-                </li>
-              </ul>
+            <ul>
+              <li>
+                Responsible for their minor(s) the entire time they are on the University of Maryland,
+                College Park campus, including inside the Armory.
+              </li>
+              <li>Required to be aware of their student's location within the Armory at all times.</li>
+              <li>
+                Required to ensure that their students remain inside the Armory at all times unless
+                accompanied by their chaperone(s).
+              </li>
+              <li>
+                Responsible for their student(s) behavior and are required to ensure that their
+                student(s) adhere to Bitcamp's Terms and Code of Conduct.
+              </li>
+              <li>Required to remain in the Armory as long as their student(s) are there.</li>
+              <li>
+                Responsible for ensuring that their student(s) do not remain in the Armory after 12am
+                (midnight) and do not arrive before 7am.
+              </li>
+              <li>
+                Required to alert organizers, police, EMT, or fire marshal in case of an emergency.
+              </li>
+              <li>
+                Responsible for knowing their student(s) food allergies and medical conditions, as well
+                as ensuring that their health needs are being met.
+              </li>
+            </ul>
             </p>
           </div>
 
@@ -461,12 +386,8 @@
             <template #label>
               Minor Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-chap-name"
-              v-model="formData.chap_name"
-              :state="showState('chap_name')"
-              @input="touched.chap_name = true"
-            />
+            <b-form-input id="input-chap-name" v-model="formData.chap_name" :state="showState('chap_name')"
+              @input="touched.chap_name = true" />
             <b-form-invalid-feedback :state="showState('chap_name')">
               Required field
             </b-form-invalid-feedback>
@@ -475,13 +396,8 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="chap-date"
-              v-model="formData.chap_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('chap_date')"
-              @input="touched.chap_date = true"
-            />
+            <b-form-input id="chap-date" v-model="formData.chap_date" placeholder="MM/DD/YYYY"
+              :state="showState('chap_date')" @input="touched.chap_date = true" />
             <b-form-invalid-feedback :state="showState('chap_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -493,12 +409,8 @@
             <template #label>
               Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-chap-signature"
-              v-model="formData.chap_signature"
-              :state="showState('chap_signature')"
-              @input="touched.chap_signature = true"
-            />
+            <b-form-input id="input-chap-signature" v-model="formData.chap_signature"
+              :state="showState('chap_signature')" @input="touched.chap_signature = true" />
             <b-form-invalid-feedback :state="showState('chap_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -510,12 +422,8 @@
             <template #label>
               Chaperone Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-p-chap-name"
-              v-model="formData.p_chap_name"
-              :state="showState('p_chap_name')"
-              @input="touched.p_chap_name = true"
-            />
+            <b-form-input id="input-p-chap-name" v-model="formData.p_chap_name" :state="showState('p_chap_name')"
+              @input="touched.p_chap_name = true" />
             <b-form-invalid-feedback :state="showState('p_chap_name')">
               Required field
             </b-form-invalid-feedback>
@@ -524,13 +432,8 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="p-chap-date"
-              v-model="formData.p_chap_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('p_chap_date')"
-              @input="touched.p_chap_date = true"
-            />
+            <b-form-input id="p-chap-date" v-model="formData.p_chap_date" placeholder="MM/DD/YYYY"
+              :state="showState('p_chap_date')" @input="touched.p_chap_date = true" />
             <b-form-invalid-feedback :state="showState('p_chap_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -542,12 +445,8 @@
             <template #label>
               Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-p-chap-signature"
-              v-model="formData.p_chap_signature"
-              :state="showState('p_chap_signature')"
-              @input="touched.p_chap_signature = true"
-            />
+            <b-form-input id="input-p-chap-signature" v-model="formData.p_chap_signature"
+              :state="showState('p_chap_signature')" @input="touched.p_chap_signature = true" />
             <b-form-invalid-feedback :state="showState('p_chap_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -561,12 +460,8 @@
             <template #label>
               Minor Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-school-minor-name"
-              v-model="formData.school_minor_name"
-              :state="showState('school_minor_name')"
-              @input="touched.school_minor_name = true"
-            />
+            <b-form-input id="input-school-minor-name" v-model="formData.school_minor_name"
+              :state="showState('school_minor_name')" @input="touched.school_minor_name = true" />
             <b-form-invalid-feedback :state="showState('school_minor_name')">
               Required field
             </b-form-invalid-feedback>
@@ -575,13 +470,8 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="school-school-minor-date"
-              v-model="formData.school_minor_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('school_minor_date')"
-              @input="touched.school_minor_date = true"
-            />
+            <b-form-input id="school-school-minor-date" v-model="formData.school_minor_date" placeholder="MM/DD/YYYY"
+              :state="showState('school_minor_date')" @input="touched.school_minor_date = true" />
             <b-form-invalid-feedback :state="showState('school_minor_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -593,12 +483,8 @@
             <template #label>
               Minor Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-school-minor-signature"
-              v-model="formData.school_minor_signature"
-              :state="showState('school_minor_signature')"
-              @input="touched.school_minor_signature = true"
-            />
+            <b-form-input id="input-school-minor-signature" v-model="formData.school_minor_signature"
+              :state="showState('school_minor_signature')" @input="touched.school_minor_signature = true" />
             <b-form-invalid-feedback :state="showState('school_minor_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -610,12 +496,8 @@
             <template #label>
               Teacher Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-school-teacher-name"
-              v-model="formData.school_teacher_name"
-              :state="showState('school_teacher_name')"
-              @input="touched.school_teacher_name = true"
-            />
+            <b-form-input id="input-school-teacher-name" v-model="formData.school_teacher_name"
+              :state="showState('school_teacher_name')" @input="touched.school_teacher_name = true" />
             <b-form-invalid-feedback :state="showState('school_teacher_name')">
               Required field
             </b-form-invalid-feedback>
@@ -624,13 +506,9 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="school-school-teacher-date"
-              v-model="formData.school_teacher_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('school_teacher_date')"
-              @input="touched.school_teacher_date = true"
-            />
+            <b-form-input id="school-school-teacher-date" v-model="formData.school_teacher_date"
+              placeholder="MM/DD/YYYY" :state="showState('school_teacher_date')"
+              @input="touched.school_teacher_date = true" />
             <b-form-invalid-feedback :state="showState('school_teacher_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -642,12 +520,8 @@
             <template #label>
               Teacher Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-school-teacher-signature"
-              v-model="formData.school_teacher_signature"
-              :state="showState('school_teacher_signature')"
-              @input="touched.school_teacher_signature = true"
-            />
+            <b-form-input id="input-school-teacher-signature" v-model="formData.school_teacher_signature"
+              :state="showState('school_teacher_signature')" @input="touched.school_teacher_signature = true" />
             <b-form-invalid-feedback :state="showState('school_teacher_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -659,12 +533,8 @@
             <template #label>
               Principal Full Name <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-school-principal-name"
-              v-model="formData.school_principal_name"
-              :state="showState('school_principal_name')"
-              @input="touched.school_principal_name = true"
-            />
+            <b-form-input id="input-school-principal-name" v-model="formData.school_principal_name"
+              :state="showState('school_principal_name')" @input="touched.school_principal_name = true" />
             <b-form-invalid-feedback :state="showState('school_principal_name')">
               Required field
             </b-form-invalid-feedback>
@@ -673,13 +543,9 @@
             <template #label>
               Date <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="school-school-principal-date"
-              v-model="formData.school_principal_date"
-              placeholder="MM/DD/YYYY"
-              :state="showState('school_principal_date')"
-              @input="touched.school_principal_date = true"
-            />
+            <b-form-input id="school-school-principal-date" v-model="formData.school_principal_date"
+              placeholder="MM/DD/YYYY" :state="showState('school_principal_date')"
+              @input="touched.school_principal_date = true" />
             <b-form-invalid-feedback :state="showState('school_principal_date')">
               Please enter today's date
             </b-form-invalid-feedback>
@@ -691,12 +557,8 @@
             <template #label>
               Principal Signature <span class="text-danger">*</span>
             </template>
-            <b-form-input
-              id="input-school-principal-signature"
-              v-model="formData.school_principal_signature"
-              :state="showState('school_principal_signature')"
-              @input="touched.school_principal_signature = true"
-            />
+            <b-form-input id="input-school-principal-signature" v-model="formData.school_principal_signature"
+              :state="showState('school_principal_signature')" @input="touched.school_principal_signature = true" />
             <b-form-invalid-feedback :state="showState('school_principal_signature')">
               Required field
             </b-form-invalid-feedback>
@@ -705,22 +567,12 @@
       </div>
 
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          @click="handlePrevious"
-        >
+        <b-button type="button" class="submit-btn prev-btn" @click="handlePrevious">
           <b-icon icon="arrow-left" /> Previous
         </b-button>
-        <b-button
-          type="submit"
-          class="submit-btn next-btn"
-        >
+        <b-button type="submit" class="submit-btn next-btn">
           Next Step
-          <b-icon
-            icon="arrow-right"
-            class="ml-1"
-          />
+          <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
       </div>
     </b-form>
@@ -748,38 +600,38 @@ export default {
   },
   data() {
     const sixthPageRequiredFields = [
-        "photo_name",
-        "photo_date",
-        "photo_signature",
-        "p_photo_name",
-        "p_photo_date",
-        "p_photo_signature",
-        "terms_minor_name",
-        "terms_minor_date",
-        "terms_minor_signature",
-        "terms_parent_name",
-        "terms_parent_date",
-        "terms_parent_signature",
-        "waiverType",
-        "chap_name",
-        "chap_date",
-        "chap_signature",
-        "p_chap_name",
-        "p_chap_date",
-        "p_chap_signature",
-        "school_minor_name",
-        "school_minor_date",
-        "school_minor_signature",
-        "school_teacher_name",
-        "school_teacher_date",
-        "school_teacher_signature",
-        "school_principal_name",
-        "school_principal_date",
-        "school_principal_signature",
+      "photo_name",
+      "photo_date",
+      "photo_signature",
+      "p_photo_name",
+      "p_photo_date",
+      "p_photo_signature",
+      "terms_minor_name",
+      "terms_minor_date",
+      "terms_minor_signature",
+      "terms_parent_name",
+      "terms_parent_date",
+      "terms_parent_signature",
+      "waiverType",
+      "chap_name",
+      "chap_date",
+      "chap_signature",
+      "p_chap_name",
+      "p_chap_date",
+      "p_chap_signature",
+      "school_minor_name",
+      "school_minor_date",
+      "school_minor_signature",
+      "school_teacher_name",
+      "school_teacher_date",
+      "school_teacher_signature",
+      "school_principal_name",
+      "school_principal_date",
+      "school_principal_signature",
     ];
 
     return {
-       sixthPageRequiredFields : [
+      sixthPageRequiredFields: [
         "photo_name",
         "photo_date",
         "photo_signature",
@@ -808,7 +660,7 @@ export default {
         "school_principal_name",
         "school_principal_date",
         "school_principal_signature",
-    ],
+      ],
 
       touched: Object.fromEntries([...sixthPageRequiredFields].map((key) => [key, false])),
       steps: [
@@ -830,73 +682,73 @@ export default {
 
   computed: {
     validations() {
-        const req = (v) => v !== null && v !== undefined && v.toString().trim().length > 0;
+      const req = (v) => v !== null && v !== undefined && v.toString().trim().length > 0;
 
-        return {
-            photo_name: req(this.formData.photo_name),
-            photo_date: req(this.formData.photo_date) && this.isValidDateFormat(this.formData.photo_date),
-            photo_signature: req(this.formData.photo_signature),
-            p_photo_name: req(this.formData.p_photo_name),
-            p_photo_date: req(this.formData.p_photo_date) && this.isValidDateFormat(this.formData.p_photo_date),
-            p_photo_signature: req(this.formData.p_photo_signature),
-            terms_minor_name: req(this.formData.terms_minor_name),
-            terms_minor_date: req(this.formData.terms_minor_date) && this.isValidDateFormat(this.formData.terms_minor_date),
-            terms_minor_signature: req(this.formData.terms_minor_signature),
-            terms_parent_name: req(this.formData.terms_parent_name),
-            terms_parent_date: req(this.formData.terms_parent_date) && this.isValidDateFormat(this.formData.terms_parent_date),
-            terms_parent_signature: req(this.formData.terms_parent_signature),
-            waiverType: req(this.formData.waiverType),
-            chap_name: this.formData.waiverType === "chaperone" ? req(this.formData.chap_name) : true,
-            chap_date: this.formData.waiverType === "chaperone" ? req(this.formData.chap_date) && this.isValidDateFormat(this.formData.chap_date): true,
-            chap_signature: this.formData.waiverType === "chaperone" ? req(this.formData.chap_signature): true,
-            p_chap_name: this.formData.waiverType === "chaperone" ? req(this.formData.p_chap_name): true,
-            p_chap_date: this.formData.waiverType === "chaperone" ? req(this.formData.p_chap_date) && this.isValidDateFormat(this.formData.p_chap_date) : true,
-            p_chap_signature: this.formData.waiverType === "chaperone" ? req(this.formData.p_chap_signature) : true,
-            school_minor_name: this.formData.waiverType === "school" ? req(this.formData.school_minor_name) : true,
-            school_minor_date: this.formData.waiverType === "school" ? req(this.formData.school_minor_date) && this.isValidDateFormat(this.formData.school_minor_date) : true,
-            school_minor_signature: this.formData.waiverType === "school" ? req(this.formData.school_minor_signature) : true,
-            school_teacher_name: this.formData.waiverType === "school" ? req(this.formData.school_teacher_name) : true,
-            school_teacher_date: this.formData.waiverType === "school" ? req(this.formData.school_teacher_date) && this.isValidDateFormat(this.formData.school_teacher_date) : true,
-            school_teacher_signature: this.formData.waiverType === "school" ? req(this.formData.school_teacher_signature) : true,
-            school_principal_name: this.formData.waiverType === "school" ? req(this.formData.school_principal_name) : true,
-            school_principal_date: this.formData.waiverType === "school" ? req(this.formData.school_principal_date) && this.isValidDateFormat(this.formData.school_principal_date) : true,
-            school_principal_signature: this.formData.waiverType === "school" ? req(this.formData.school_principal_signature) : true,
-        };
+      return {
+        photo_name: req(this.formData.photo_name),
+        photo_date: req(this.formData.photo_date) && this.isValidDateFormat(this.formData.photo_date),
+        photo_signature: req(this.formData.photo_signature),
+        p_photo_name: req(this.formData.p_photo_name),
+        p_photo_date: req(this.formData.p_photo_date) && this.isValidDateFormat(this.formData.p_photo_date),
+        p_photo_signature: req(this.formData.p_photo_signature),
+        terms_minor_name: req(this.formData.terms_minor_name),
+        terms_minor_date: req(this.formData.terms_minor_date) && this.isValidDateFormat(this.formData.terms_minor_date),
+        terms_minor_signature: req(this.formData.terms_minor_signature),
+        terms_parent_name: req(this.formData.terms_parent_name),
+        terms_parent_date: req(this.formData.terms_parent_date) && this.isValidDateFormat(this.formData.terms_parent_date),
+        terms_parent_signature: req(this.formData.terms_parent_signature),
+        waiverType: req(this.formData.waiverType),
+        chap_name: this.formData.waiverType === "chaperone" ? req(this.formData.chap_name) : true,
+        chap_date: this.formData.waiverType === "chaperone" ? req(this.formData.chap_date) && this.isValidDateFormat(this.formData.chap_date) : true,
+        chap_signature: this.formData.waiverType === "chaperone" ? req(this.formData.chap_signature) : true,
+        p_chap_name: this.formData.waiverType === "chaperone" ? req(this.formData.p_chap_name) : true,
+        p_chap_date: this.formData.waiverType === "chaperone" ? req(this.formData.p_chap_date) && this.isValidDateFormat(this.formData.p_chap_date) : true,
+        p_chap_signature: this.formData.waiverType === "chaperone" ? req(this.formData.p_chap_signature) : true,
+        school_minor_name: this.formData.waiverType === "school" ? req(this.formData.school_minor_name) : true,
+        school_minor_date: this.formData.waiverType === "school" ? req(this.formData.school_minor_date) && this.isValidDateFormat(this.formData.school_minor_date) : true,
+        school_minor_signature: this.formData.waiverType === "school" ? req(this.formData.school_minor_signature) : true,
+        school_teacher_name: this.formData.waiverType === "school" ? req(this.formData.school_teacher_name) : true,
+        school_teacher_date: this.formData.waiverType === "school" ? req(this.formData.school_teacher_date) && this.isValidDateFormat(this.formData.school_teacher_date) : true,
+        school_teacher_signature: this.formData.waiverType === "school" ? req(this.formData.school_teacher_signature) : true,
+        school_principal_name: this.formData.waiverType === "school" ? req(this.formData.school_principal_name) : true,
+        school_principal_date: this.formData.waiverType === "school" ? req(this.formData.school_principal_date) && this.isValidDateFormat(this.formData.school_principal_date) : true,
+        school_principal_signature: this.formData.waiverType === "school" ? req(this.formData.school_principal_signature) : true,
+      };
     },
   },
 
   methods: {
     getToday() {
-    const today = new Date();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // 0-indexed months
-    const day = String(today.getDate()).padStart(2, '0');
-    const year = today.getFullYear();
-    return `${month}/${day}/${year}`; // "MM/DD/YYYY"
-  },
+      const today = new Date();
+      const month = String(today.getMonth() + 1).padStart(2, '0'); // 0-indexed months
+      const day = String(today.getDate()).padStart(2, '0');
+      const year = today.getFullYear();
+      return `${month}/${day}/${year}`; // "MM/DD/YYYY"
+    },
 
     isValidDateFormat(dateStr) {
-        if (!dateStr) return false;
+      if (!dateStr) return false;
 
-        const parts = dateStr.split('/');
-        if (parts.length !== 3) return false;
+      const parts = dateStr.split('/');
+      if (parts.length !== 3) return false;
 
-        const [monthStr, dayStr, yearStr] = parts;
-        const month = Number(monthStr);
-        const day = Number(dayStr);
-        const year = Number(yearStr);
+      const [monthStr, dayStr, yearStr] = parts;
+      const month = Number(monthStr);
+      const day = Number(dayStr);
+      const year = Number(yearStr);
 
-        if (isNaN(month) || isNaN(day) || isNaN(year)) return false;
+      if (isNaN(month) || isNaN(day) || isNaN(year)) return false;
 
-        if (month < 1 || month > 12) return false;
-        if (day < 1 || day > 31) return false;
-        if (yearStr.length !== 4) return false;
+      if (month < 1 || month > 12) return false;
+      if (day < 1 || day > 31) return false;
+      if (yearStr.length !== 4) return false;
 
-        const daysInMonth = [31, (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if (day > daysInMonth[month - 1]) return false;
+      const daysInMonth = [31, (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      if (day > daysInMonth[month - 1]) return false;
 
-        const today = this.getToday();
-        return dateStr == today;
-  },
+      const today = this.getToday();
+      return dateStr == today;
+    },
 
     showInvalid(field) {
       return this.touched[field] === true && this.validations[field] === false;
@@ -908,7 +760,7 @@ export default {
     },
 
     validateForm() {
-        return this.sixthPageRequiredFields.every(
+      return this.sixthPageRequiredFields.every(
         (field) => this.validations[field] === true);
     },
 
@@ -947,8 +799,8 @@ export default {
       this.photoIsOpen = !this.photoIsOpen;
     },
 
-    toggleCond(){
-        this.condIsOpen = !this.condIsOpen;
+    toggleCond() {
+      this.condIsOpen = !this.condIsOpen;
     }
   },
 };
@@ -1031,7 +883,8 @@ export default {
 .stepper-label {
   font-size: 0.75rem !important;
   font-weight: 600;
-  color: #837d7d !important; /* Force all labels to stay grey */
+  color: #837d7d !important;
+  /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
   width: 65px;
@@ -1102,46 +955,71 @@ export default {
   border-radius: 2px;
 }
 
+::v-deep .custom-control {
+  align-items: center;
+}
+
+::v-deep .custom-control-label {
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+::v-deep .custom-control-label::before,
+::v-deep .custom-control-label::after {
+  top: 45%;
+  transform: translateY(-55%);
+}
+
 @media (max-width: 768px) {
   .page-content {
     padding: 30px 20px;
   }
+
   .page-title {
     font-size: 1.8rem;
   }
+
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 10px;
   }
+
   .stepper-item {
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .stepper-circle {
     width: 40px;
     height: 40px;
     font-size: 1.2rem !important;
     margin-bottom: 2px;
   }
+
   .checkmark {
     font-size: 1.2rem;
   }
+
   .stepper-label {
     font-size: 0.65rem !important;
     width: 55px;
   }
+
   .stepper-item:not(:last-child)::after {
     top: 20px;
     height: 2px;
   }
+
   .stepper-item:nth-child(4)::after {
     display: none !important;
   }
+
   .actions {
     flex-direction: column-reverse;
     gap: 15px;
   }
+
   .submit-btn {
     width: 100%;
     padding: 12px;
@@ -1180,8 +1058,7 @@ export default {
   transform: rotate(180deg);
 }
 
-.arrow.open{
+.arrow.open {
   transform: rotate(0deg);
 }
-
 </style>

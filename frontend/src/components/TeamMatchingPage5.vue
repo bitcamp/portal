@@ -9,16 +9,11 @@
     </p>
 
     <div class="stepper">
-      <div
-        v-for="step in steps"
-        :key="step.number"
-        class="stepper-item"
-        :class="{
-          active: step.number === 5,
-          completed: step.number < 5,
-          inactive: step.number > 5,
-        }"
-      >
+      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
+        active: step.number === 5,
+        completed: step.number < 5,
+        inactive: step.number > 5,
+      }">
         <div class="stepper-circle">
           <span v-if="step.number < 5" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -42,11 +37,8 @@
         <template #label>
           <span>Do you want to opt into team matching? <span class="text-danger">*</span></span>
         </template>
-        <b-form-radio-group
-          v-model="formData.opt_in_team_matching"
-          name="opt_in_team_matching"
-          @click="touched.opt_in_team_matching = true"
-        >
+        <b-form-radio-group v-model="formData.opt_in_team_matching" name="opt_in_team_matching"
+          @click="touched.opt_in_team_matching = true">
           <b-form-radio value="yes"> Yes </b-form-radio>
           <b-form-radio value="no"> No </b-form-radio>
         </b-form-radio-group>
@@ -63,12 +55,7 @@
           <template #label>
             <span>What track are you in? <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group
-            v-model="formData.track"
-            name="track"
-            stacked
-            @click="touched.track = true"
-          >
+          <b-form-radio-group v-model="formData.track" name="track" stacked @click="touched.track = true">
             <b-form-radio value="general"> General </b-form-radio>
             <b-form-radio value="quantum"> Quantum </b-form-radio>
             <b-form-radio value="cybersecurity"> Cybersecurity </b-form-radio>
@@ -82,15 +69,9 @@
 
         <b-form-group>
           <template #label>
-            <span
-              >Have you participated in a hackathon before? <span class="text-danger">*</span></span
-            >
+            <span>Have you participated in a hackathon before? <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group
-            v-model="formData.hackathon"
-            name="hackathon"
-            @click="touched.hackathon = true"
-          >
+          <b-form-radio-group v-model="formData.hackathon" name="hackathon" @click="touched.hackathon = true">
             <b-form-radio value="yes"> Yes </b-form-radio>
             <b-form-radio value="no"> No </b-form-radio>
           </b-form-radio-group>
@@ -101,16 +82,10 @@
 
         <b-form-group>
           <template #label>
-            <span
-              >What programming languages and frameworks are you comfortable with?
-              <span class="text-danger">*</span></span
-            >
+            <span>What programming languages and frameworks are you comfortable with?
+              <span class="text-danger">*</span></span>
           </template>
-          <b-form-checkbox-group
-            v-model="formData.languages"
-            stacked
-            @change="touched.languages = true"
-          >
+          <b-form-checkbox-group v-model="formData.languages" stacked @change="touched.languages = true">
             <b-form-checkbox value="html/css">HTML/CSS</b-form-checkbox>
             <b-form-checkbox value="javascript">Javascript</b-form-checkbox>
             <b-form-checkbox value="react/vue">React/Vue</b-form-checkbox>
@@ -122,23 +97,16 @@
           </b-form-checkbox-group>
           <div v-if="formData.languages && formData.languages.includes('other')" class="mt-2">
             <b-form-group label="Please specify other languages/frameworks (e.g. Go, Rust, Swift):">
-              <b-form-tags
-                placeholder="e.g. Go, Rust, Swift"
-                input-id="tags-languages-other"
-                @input="touched.languages_other = true"
-                remove-on-delete
-                :state="showState('languages_other')"
-                v-model="formData.languages_other"
-              ></b-form-tags>
+              <b-form-tags placeholder="e.g. Go, Rust, Swift" input-id="tags-languages-other"
+                @input="touched.languages_other = true" remove-on-delete :state="showState('languages_other')"
+                v-model="formData.languages_other"></b-form-tags>
               <div v-if="showInvalid('languages_other')" class="invalid-feedback d-block">
                 Please add at least one language/framework
               </div>
             </b-form-group>
           </div>
-          <div
-            v-if="touched.languages && (!formData.languages || formData.languages.length === 0)"
-            class="invalid-feedback d-block"
-          >
+          <div v-if="touched.languages && (!formData.languages || formData.languages.length === 0)"
+            class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
@@ -147,12 +115,8 @@
           <template #label>
             <span>What is your experience level? <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group
-            v-model="formData.experience"
-            name="experience"
-            stacked
-            @change="touched.experience = true"
-          >
+          <b-form-radio-group v-model="formData.experience" name="experience" stacked
+            @change="touched.experience = true">
             <b-form-radio value="beginner"> Beginner (skill level 1-2) </b-form-radio>
             <b-form-radio value="inter"> Intermediate (skill level 3-4) </b-form-radio>
             <b-form-radio value="advanced"> Advanced (skill level 5) </b-form-radio>
@@ -167,16 +131,10 @@
 
         <b-form-group>
           <template #label>
-            <span
-              >Do you prefer working with someone with a similar skill level?
-              <span class="text-danger">*</span></span
-            >
+            <span>Do you prefer working with someone with a similar skill level?
+              <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group
-            v-model="formData.skill_level"
-            name="skill-level"
-            @click="touched.skill_level = true"
-          >
+          <b-form-radio-group v-model="formData.skill_level" name="skill-level" @click="touched.skill_level = true">
             <b-form-radio value="yes"> Yes </b-form-radio>
             <b-form-radio value="no"> No </b-form-radio>
             <b-form-radio value="idc"> Don't Care </b-form-radio>
@@ -188,16 +146,10 @@
 
         <b-form-group>
           <template #label>
-            <span
-              >What kind of technologies do you want your teammates to have knowledge of?
-              <span class="text-danger">*</span></span
-            >
+            <span>What kind of technologies do you want your teammates to have knowledge of?
+              <span class="text-danger">*</span></span>
           </template>
-          <b-form-checkbox-group
-            v-model="formData.skills_wanted"
-            stacked
-            @change="touched.skills_wanted = true"
-          >
+          <b-form-checkbox-group v-model="formData.skills_wanted" stacked @change="touched.skills_wanted = true">
             <b-form-checkbox value="html/css">HTML/CSS</b-form-checkbox>
             <b-form-checkbox value="javascript">Javascript</b-form-checkbox>
             <b-form-checkbox value="react/vue">React/Vue</b-form-checkbox>
@@ -207,47 +159,31 @@
             <b-form-checkbox value="java">Java</b-form-checkbox>
             <b-form-checkbox value="other">Other</b-form-checkbox>
           </b-form-checkbox-group>
-          <div
-            v-if="formData.skills_wanted && formData.skills_wanted.includes('other')"
-            class="mt-2"
-          >
+          <div v-if="formData.skills_wanted && formData.skills_wanted.includes('other')" class="mt-2">
             <b-form-group label="Please specify other technologies:">
-              <b-form-tags
-                placeholder="e.g. Go, Rust, Swift"
-                input-id="tags-skills-other"
-                remove-on-delete
-                :state="showState('skills_wanted_other')"
-                @input="touched.skills_wanted_other = true"
-                v-model="formData.skills_wanted_other"
-              ></b-form-tags>
+              <b-form-tags placeholder="e.g. Go, Rust, Swift" input-id="tags-skills-other" remove-on-delete
+                :state="showState('skills_wanted_other')" @input="touched.skills_wanted_other = true"
+                v-model="formData.skills_wanted_other"></b-form-tags>
               <div v-if="showInvalid('skills_wanted_other')" class="invalid-feedback d-block">
                 Please add at least one technology
               </div>
             </b-form-group>
           </div>
-          <div
-            v-if="
-              touched.skills_wanted &&
-              (!formData.skills_wanted || formData.skills_wanted.length === 0)
-            "
-            class="invalid-feedback d-block"
-          >
+          <div v-if="
+            touched.skills_wanted &&
+            (!formData.skills_wanted || formData.skills_wanted.length === 0)
+          " class="invalid-feedback d-block">
             Please select an answer
           </div>
         </b-form-group>
 
         <b-form-group>
           <template #label>
-            <span
-              >How many team members do you already have? (Select 1 if you are the only one in the
-              team) <span class="text-danger">*</span></span
-            >
+            <span>How many team members do you already have? (Select 1 if you are the only one in the
+              team) <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group
-            v-model="formData.num_team_members"
-            name="team-members"
-            @click="touched.num_team_members = true"
-          >
+          <b-form-radio-group v-model="formData.num_team_members" name="team-members"
+            @click="touched.num_team_members = true">
             <b-form-radio value="one"> 1 </b-form-radio>
             <b-form-radio value="two"> 2 </b-form-radio>
             <b-form-radio value="three"> 3 </b-form-radio>
@@ -262,16 +198,10 @@
 
         <b-form-group>
           <template #label>
-            <span
-              >What kind of projects are you interested in (i.e. web, mobile, AI, etc.)?
-              <span class="text-danger">*</span></span
-            >
+            <span>What kind of projects are you interested in (i.e. web, mobile, AI, etc.)?
+              <span class="text-danger">*</span></span>
           </template>
-          <b-form-checkbox-group
-            v-model="formData.projects"
-            stacked
-            @change="touched.projects = true"
-          >
+          <b-form-checkbox-group v-model="formData.projects" stacked @change="touched.projects = true">
             <b-form-checkbox value="web_dev"> Web Development </b-form-checkbox>
             <b-form-checkbox value="mobile_app"> Mobile App </b-form-checkbox>
             <b-form-checkbox value="ai/ml"> AI/ML </b-form-checkbox>
@@ -283,10 +213,8 @@
 
         <b-form-group>
           <template #label>
-            <span
-              >What Bitcamp prizes are you interested in catering your project towards?
-              <span class="text-danger">*</span></span
-            >
+            <span>What Bitcamp prizes are you interested in catering your project towards?
+              <span class="text-danger">*</span></span>
           </template>
           <b-form-checkbox-group v-model="formData.prizes" stacked @change="touched.prizes = true">
             <b-form-checkbox value="hardware"> Best Hardware Hack </b-form-checkbox>
@@ -313,11 +241,7 @@
           <template #label>
             <span>How serious are you? <span class="text-danger">*</span></span>
           </template>
-          <b-form-radio-group
-            v-model="formData.serious"
-            name="serious"
-            @click="touched.serious = true"
-          >
+          <b-form-radio-group v-model="formData.serious" name="serious" @click="touched.serious = true">
             <b-form-radio value="win"> I want to win! (16-20 hours) </b-form-radio>
             <b-form-radio value="funsies"> I'm just doing this for fun (9-13 hours) </b-form-radio>
             <b-form-radio value="learning">
@@ -331,10 +255,8 @@
 
         <b-form-group>
           <template #label>
-            <span
-              >Which way would you prefer collaborating with your team?
-              <span class="text-danger">*</span></span
-            >
+            <span>Which way would you prefer collaborating with your team?
+              <span class="text-danger">*</span></span>
           </template>
           <b-form-checkbox-group v-model="formData.collab" stacked @change="touched.collab = true">
             <b-form-checkbox value="remote"> Remote </b-form-checkbox>
@@ -587,7 +509,8 @@ export default {
 .stepper-label {
   font-size: 0.75rem !important;
   font-weight: 600;
-  color: #837d7d !important; /* Force all labels to stay grey */
+  color: #837d7d !important;
+  /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
   width: 65px;
@@ -607,6 +530,23 @@ export default {
 .checkmark {
   font-size: 1.4rem;
 }
+
+::v-deep .custom-control {
+  display: flex;
+  align-items: center;
+}
+
+::v-deep .custom-control-label {
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+::v-deep .custom-control-label::before,
+::v-deep .custom-control-label::after {
+  top: 45%;
+  transform: translateY(-55%);
+}
+
 
 /* --- ACTIONS --- */
 .actions {
@@ -662,42 +602,52 @@ export default {
   .page-content {
     padding: 30px 20px;
   }
+
   .page-title {
     font-size: 1.8rem;
   }
+
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 10px;
   }
+
   .stepper-item {
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .stepper-circle {
     width: 40px;
     height: 40px;
     font-size: 1.2rem !important;
     margin-bottom: 2px;
   }
+
   .checkmark {
     font-size: 1.2rem;
   }
+
   .stepper-label {
     font-size: 0.65rem !important;
     width: 55px;
   }
+
   .stepper-item:not(:last-child)::after {
     top: 20px;
     height: 2px;
   }
+
   .stepper-item:nth-child(4)::after {
     display: none !important;
   }
+
   .actions {
     flex-direction: column-reverse;
     gap: 15px;
   }
+
   .submit-btn {
     width: 100%;
     padding: 12px;

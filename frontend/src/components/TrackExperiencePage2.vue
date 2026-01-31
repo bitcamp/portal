@@ -9,16 +9,11 @@
     </p>
 
     <div class="stepper">
-      <div
-        v-for="step in steps"
-        :key="step.number"
-        class="stepper-item"
-        :class="{
-          active: step.number === currentPage,
-          completed: step.number < currentPage,
-          inactive: step.number > currentPage,
-        }"
-      >
+      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
+        active: step.number === currentPage,
+        completed: step.number < currentPage,
+        inactive: step.number > currentPage,
+      }">
         <div class="stepper-circle">
           <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -41,16 +36,10 @@
 
       <div class="track-scroll">
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="general"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card general-card"
-            :class="{ 'track-card--active': formData.track_selected === 'general' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="general"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card general-card"
+            :class="{ 'track-card--active': formData.track_selected === 'general' }">
             <h5 class="track-title">General</h5>
             <p>
               For any and all hackers! Build the perfect hack using hardware, software, and
@@ -61,16 +50,9 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="quantum"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'quantum' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="quantum"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'quantum' }">
             <h5 class="track-title">Quantum</h5>
             <p>
               Hackers will delve into the field of quantum computing with exclusive mentors,
@@ -81,16 +63,9 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="machine_learning"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'machine_learning' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="machine_learning"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'machine_learning' }">
             <h5 class="track-title">Machine Learning</h5>
             <p>
               If you are amazed by AI breakthroughs like ChatGPT and driven to create something
@@ -101,16 +76,9 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="app_dev"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'app_dev' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="app_dev"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'app_dev' }">
             <h5 class="track-title">App Dev</h5>
             <p>
               Ready to turn your innovative app idea into a reality? Join the App Dev track and
@@ -120,16 +88,9 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="cybersecurity"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'cybersecurity' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="cybersecurity"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'cybersecurity' }">
             <h5 class="track-title">Cybersecurity</h5>
             <p>
               Explore the realm of cybersecurity and understand various aspects of the field through
@@ -146,21 +107,13 @@
         </label>
         <div class="radio-inline-group">
           <label class="radio-inline">
-            <input
-              v-model="formData.quantum_track"
-              type="radio"
-              value="beginner"
-              @click="touched.quantum_track = true"
-            />
+            <input v-model="formData.quantum_track" type="radio" value="beginner"
+              @click="touched.quantum_track = true" />
             Beginner
           </label>
           <label class="radio-inline">
-            <input
-              v-model="formData.quantum_track"
-              type="radio"
-              value="advanced"
-              @click="touched.quantum_track = true"
-            />
+            <input v-model="formData.quantum_track" type="radio" value="advanced"
+              @click="touched.quantum_track = true" />
             Advanced
           </label>
         </div>
@@ -177,21 +130,13 @@
         </label>
         <div class="radio-inline-group">
           <label class="radio-inline">
-            <input
-              v-model="formData.beginner_content_opt_in"
-              type="radio"
-              :value="true"
-              @click="touched.beginner_content_opt_in = true"
-            />
+            <input v-model="formData.beginner_content_opt_in" type="radio" :value="true"
+              @click="touched.beginner_content_opt_in = true" />
             Yes
           </label>
           <label class="radio-inline">
-            <input
-              v-model="formData.beginner_content_opt_in"
-              type="radio"
-              :value="false"
-              @click="touched.beginner_content_opt_in = true"
-            />
+            <input v-model="formData.beginner_content_opt_in" type="radio" :value="false"
+              @click="touched.beginner_content_opt_in = true" />
             No
           </label>
         </div>
@@ -212,42 +157,22 @@
           How many hackathons have you participated in before?
           <span class="text-danger">*</span>
         </template>
-        <b-form-input
-          id="num-hackathons"
-          v-model="formData.hack_count"
-          type="number"
-          :state="showState('hack_count')"
-          placeholder="Number of hackathons here..."
-          @input="touched.hack_count = true"
-        />
+        <b-form-input id="num-hackathons" v-model="formData.hack_count" type="number" :state="showState('hack_count')"
+          placeholder="Number of hackathons here..." @input="touched.hack_count = true" />
       </b-form-group>
 
       <b-form-group>
         <template #label> Why are you interested in attending Bitcamp? </template>
-        <b-form-textarea
-          id="why-bitcamp"
-          v-model="formData.question1"
-          class="form-control"
-          :state="showState('question1')"
-          rows="4"
-          :maxlength="1000"
-          placeholder="Your response here..."
-          @input="touched.question1 = true"
-        />
+        <b-form-textarea id="why-bitcamp" v-model="formData.question1" class="form-control"
+          :state="showState('question1')" rows="4" :maxlength="1000" placeholder="Your response here..."
+          @input="touched.question1 = true" />
       </b-form-group>
 
       <b-form-group>
         <template #label> What do you plan on building at Bitcamp? </template>
-        <b-form-textarea
-          id="what-build"
-          v-model="formData.question2"
-          class="form-control"
-          :state="showState('question2')"
-          rows="4"
-          :maxlength="1000"
-          placeholder="Your response here..."
-          @input="touched.question2 = true"
-        />
+        <b-form-textarea id="what-build" v-model="formData.question2" class="form-control"
+          :state="showState('question2')" rows="4" :maxlength="1000" placeholder="Your response here..."
+          @input="touched.question2 = true" />
       </b-form-group>
 
       <hr class="mt-4" />
@@ -260,45 +185,24 @@
             Do you want to be recruited for jobs?
             <span class="text-danger">*</span>
           </template>
-          <b-form-select
-            id="recruit-select"
-            v-model="formData.recruit"
-            :options="recruitOptions"
-            :state="showState('recruit')"
-            class="form-select"
-            @change="touched.recruit = true"
-          />
+          <b-form-select id="recruit-select" v-model="formData.recruit" :options="recruitOptions"
+            :state="showState('recruit')" class="form-select" @change="touched.recruit = true" />
         </b-form-group>
 
         <b-form-group label="GitHub or Portfolio Link" class="col-md-6">
-          <b-form-input
-            id="github-link"
-            v-model="formData.portfolio"
-            :state="showState('portfolio')"
-            placeholder="github.com/username"
-            @input="touched.portfolio = true"
-          />
+          <b-form-input id="github-link" v-model="formData.portfolio" :state="showState('portfolio')"
+            placeholder="github.com/username" @input="touched.portfolio = true" />
         </b-form-group>
       </b-form-row>
 
       <b-form-group label="Resume (.pdf .doc .docx)">
-        <div
-          class="resume-upload"
-          :class="{ 'resume-uploading': isUploading }"
-          @click="triggerResumeFile"
-        >
+        <div class="resume-upload" :class="{ 'resume-uploading': isUploading }" @click="triggerResumeFile">
           <span class="resume-placeholder">
             {{ resumeLabel }}
           </span>
           <span class="resume-browse"> Browse </span>
-          <input
-            id="resume-upload"
-            ref="resumeInput"
-            type="file"
-            class="resume-file-input"
-            accept=".pdf,.doc,.docx,.txt"
-            @change="onResumeChange"
-          />
+          <input id="resume-upload" ref="resumeInput" type="file" class="resume-file-input"
+            accept=".pdf,.doc,.docx,.txt" @change="onResumeChange" />
         </div>
       </b-form-group>
 
@@ -579,7 +483,8 @@ body {
 
 /* center content, no big card */
 .register-page {
-  max-width: 820px; /* Slightly wider for labels */
+  max-width: 820px;
+  /* Slightly wider for labels */
   margin: 40px auto 80px;
   padding: 0 20px 40px;
   text-align: left;
@@ -603,6 +508,7 @@ body {
   color: #ff6b35;
   text-decoration: none;
 }
+
 .page-subtitle a:hover {
   text-decoration: underline;
 }
@@ -687,7 +593,8 @@ body {
 .stepper-label {
   font-size: 0.75rem !important;
   font-weight: 600;
-  color: #837d7d !important; /* Force all labels to stay grey */
+  color: #837d7d !important;
+  /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
   width: 65px;
@@ -786,6 +693,7 @@ body {
   border-color: #f97345 !important;
   color: #ffffff !important;
 }
+
 .track-card--active h5,
 .track-card--active p {
   color: #ffffff !important;
@@ -828,13 +736,14 @@ label.form-label {
 
 .radio-inline {
   font-size: 0.85rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  line-height: 1;
 }
 
 .radio-inline input[type="radio"] {
-  display: inline-block !important;
-  margin-right: 6px;
+  transform: translateY(-1px);
+  margin: 0 6px 0 0;
 }
 
 /* Character counter */
@@ -887,42 +796,52 @@ label.form-label {
   .page-content {
     padding: 30px 20px;
   }
+
   .page-title {
     font-size: 1.8rem;
   }
+
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 10px;
   }
+
   .stepper-item {
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .stepper-circle {
     width: 40px;
     height: 40px;
     font-size: 1.2rem !important;
     margin-bottom: 2px;
   }
+
   .checkmark {
     font-size: 1.2rem;
   }
+
   .stepper-label {
     font-size: 0.65rem !important;
     width: 55px;
   }
+
   .stepper-item:not(:last-child)::after {
     top: 20px;
     height: 2px;
   }
+
   .stepper-item:nth-child(4)::after {
     display: none !important;
   }
+
   .actions {
     flex-direction: column-reverse;
     gap: 15px;
   }
+
   .submit-btn {
     width: 100%;
     padding: 12px;

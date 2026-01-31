@@ -9,16 +9,11 @@
     </p>
 
     <div class="stepper">
-      <div
-        v-for="step in steps"
-        :key="step.number"
-        class="stepper-item"
-        :class="{
-          active: step.number === 4,
-          completed: step.number < 4,
-          inactive: step.number > 4,
-        }"
-      >
+      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
+        active: step.number === 4,
+        completed: step.number < 4,
+        inactive: step.number > 4,
+      }">
         <div class="stepper-circle">
           <span v-if="step.number < 4" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -49,18 +44,9 @@
             </span>
           </template>
 
-          <b-form-radio-group
-            v-model="formData[`q${i + 1}`]"
-            :name="'q' + (i + 1)"
-            stacked
-            @change="touched[`q${i + 1}`] = true"
-          >
-            <b-form-radio
-              v-for="opt in q.options"
-              :key="opt.value"
-              :value="opt.value"
-              class="d-block py-1"
-            >
+          <b-form-radio-group v-model="formData[`q${i + 1}`]" :name="'q' + (i + 1)" stacked
+            @change="touched[`q${i + 1}`] = true">
+            <b-form-radio v-for="opt in q.options" :key="opt.value" :value="opt.value" class="d-block py-1">
               {{ opt.text }}
             </b-form-radio>
           </b-form-radio-group>
@@ -283,7 +269,8 @@ export default {
 .stepper-label {
   font-size: 0.75rem !important;
   font-weight: 600;
-  color: #837d7d !important; /* Force all labels to stay grey */
+  color: #837d7d !important;
+  /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
   width: 65px;
@@ -298,6 +285,22 @@ export default {
   background: #f97345 !important;
   color: #ffffff !important;
   box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
+}
+
+::v-deep .custom-control.custom-radio {
+  display: flex;
+  align-items: center;
+}
+
+::v-deep .custom-control.custom-radio .custom-control-label {
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+::v-deep .custom-control.custom-radio .custom-control-label::before,
+::v-deep .custom-control.custom-radio .custom-control-label::after {
+  top: 45%;
+  transform: translateY(-55%);
 }
 
 .checkmark {
@@ -344,42 +347,52 @@ export default {
   .page-content {
     padding: 30px 20px;
   }
+
   .page-title {
     font-size: 1.8rem;
   }
+
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 10px;
   }
+
   .stepper-item {
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .stepper-circle {
     width: 40px;
     height: 40px;
     font-size: 1.2rem !important;
     margin-bottom: 2px;
   }
+
   .checkmark {
     font-size: 1.2rem;
   }
+
   .stepper-label {
     font-size: 0.65rem !important;
     width: 55px;
   }
+
   .stepper-item:not(:last-child)::after {
     top: 20px;
     height: 2px;
   }
+
   .stepper-item:nth-child(4)::after {
     display: none !important;
   }
+
   .actions {
     flex-direction: column-reverse;
     gap: 15px;
   }
+
   .submit-btn {
     width: 100%;
     padding: 12px;

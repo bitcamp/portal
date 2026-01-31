@@ -9,16 +9,11 @@
     </p>
 
     <div class="stepper">
-      <div
-        v-for="step in steps"
-        :key="step.number"
-        class="stepper-item"
-        :class="{
-          active: step.number === currentPage,
-          completed: step.number < currentPage,
-          inactive: step.number > currentPage,
-        }"
-      >
+      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
+        active: step.number === currentPage,
+        completed: step.number < currentPage,
+        inactive: step.number > currentPage,
+      }">
         <div class="stepper-circle">
           <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -39,21 +34,14 @@
       </p>
 
       <div class="checkbox-wrapper">
-        <b-form-checkbox
-          id="checkbox-1"
-          v-model="formData.MLH_privacy"
-          name="checkbox-1"
-          class="checkbox mb-3"
-          :state="validations.valid_mlh_privacy"
-          @change="clearValidation('valid_mlh_privacy')"
-        >
+        <b-form-checkbox id="checkbox-1" v-model="formData.MLH_privacy" name="checkbox-1" class="checkbox mb-3"
+          :state="validations.valid_mlh_privacy" @change="clearValidation('valid_mlh_privacy')">
           I authorize you to share my application/registration information with Major League Hacking
           for event administration, ranking, and MLH administration in-line with the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
           to the terms of both the
-          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank"
-            >MLH Contest Terms and Conditions</a
-          >
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH Contest Terms and
+            Conditions</a>
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
           <span class="text-danger">*</span>
@@ -62,42 +50,25 @@
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox
-          id="checkbox-2"
-          v-model="formData.MLH_conduct"
-          name="checkbox-2"
-          :state="validations.valid_code_of_conduct"
-          class="checkbox mb-3"
-          style="padding-bottom: 1rem"
-          @change="clearValidation('valid_code_of_conduct')"
-        >
+        <b-form-checkbox id="checkbox-2" v-model="formData.MLH_conduct" name="checkbox-2"
+          :state="validations.valid_code_of_conduct" class="checkbox mb-3" style="padding-bottom: 1rem"
+          @change="clearValidation('valid_code_of_conduct')">
           I have read and agree to the
-          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank"
-            >MLH Code of Conduct</a
-          >. <span class="text-danger">*</span>
+          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>. <span
+            class="text-danger">*</span>
           <b-form-invalid-feedback :state="validations.valid_code_of_conduct">
             Please agree to MLH's code of conduct
           </b-form-invalid-feedback>
         </b-form-checkbox>
 
-        <b-form-checkbox
-          id="checkbox-3"
-          v-model="formData.MLH_emails"
-          name="checkbox-3"
-          class="checkbox"
-        >
+        <b-form-checkbox id="checkbox-3" v-model="formData.MLH_emails" name="checkbox-3" class="checkbox">
           I authorize MLH to send me occasional emails about relevant events, career opportunities,
           and community announcements.
         </b-form-checkbox>
       </div>
 
       <div class="actions">
-        <b-button
-          type="button"
-          class="submit-btn prev-btn"
-          :disabled="isSending"
-          @click="handlePrevious"
-        >
+        <b-button type="button" class="submit-btn prev-btn" :disabled="isSending" @click="handlePrevious">
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
         <b-button type="submit" class="submit-btn next-btn" :disabled="isSending">
@@ -516,7 +487,8 @@ export default {
 .stepper-label {
   font-size: 0.75rem !important;
   font-weight: 600;
-  color: #837d7d !important; /* Force all labels to stay grey */
+  color: #837d7d !important;
+  /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
   width: 65px;
@@ -584,6 +556,21 @@ export default {
   color: #555;
 }
 
+::v-deep .custom-control {
+  align-items: center;
+}
+
+::v-deep .custom-control-label {
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+::v-deep .custom-control-label::before,
+::v-deep .custom-control-label::after {
+  top: 0%;
+  transform: translateY(-5%);
+}
+
 .checkbox a {
   color: #f97345;
   text-decoration: underline;
@@ -593,42 +580,52 @@ export default {
   .page-content {
     padding: 30px 20px;
   }
+
   .page-title {
     font-size: 1.8rem;
   }
+
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 10px;
   }
+
   .stepper-item {
     flex: 0 0 25%;
     max-width: 25%;
   }
+
   .stepper-circle {
     width: 40px;
     height: 40px;
     font-size: 1.2rem !important;
     margin-bottom: 2px;
   }
+
   .checkmark {
     font-size: 1.2rem;
   }
+
   .stepper-label {
     font-size: 0.65rem !important;
     width: 55px;
   }
+
   .stepper-item:not(:last-child)::after {
     top: 20px;
     height: 2px;
   }
+
   .stepper-item:nth-child(4)::after {
     display: none !important;
   }
+
   .actions {
     flex-direction: column-reverse;
     gap: 15px;
   }
+
   .submit-btn {
     width: 100%;
     padding: 12px;
