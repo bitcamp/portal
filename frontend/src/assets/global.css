@@ -11,16 +11,21 @@
 /* Aleo */
 
 body {
-  background-color: #34045b;
-  background-image: url("Brownandpurplecaves.svg");
-  background-size: cover;
+  background-image: none !important;
+  background-color: transparent !important;
 
-  /* background-image: url("./hero-clouds.png");
-  background-size: cover; */
-  /*centered on x, starting 56px lower than top for y so that the navbar doesn't cover image*/
-  /*background-position: center 56px;*/
-  background-repeat: no-repeat;
-  /* height: 100vh; */
+  /* Full-page orange gradient */
+  background: linear-gradient(
+    135deg,
+    #f97345 0%,
+    #f9ad4b 55%,
+    #f5a13e 100%
+  ) fixed !important;
+
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
