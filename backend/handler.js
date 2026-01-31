@@ -5,6 +5,8 @@ const { IncomingWebhook } = require("@slack/webhook");
 
 AWS.config.update({ region: "us-east-1" });
 
+const WAITLIST_ENABLED = false;
+
 const HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
@@ -112,8 +114,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_red: body.red,
       survey_blue: body.blue,
 
-      // remove this after 2024 season
-      // waitlist: body.waitlist,
+      waitlist: WAITLIST_ENABLED,
     },
   };
 

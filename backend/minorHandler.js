@@ -3,6 +3,8 @@ const withSentry = require("serverless-sentry-lib");
 
 AWS.config.update({ region: "us-east-1" });
 
+const WAITLIST_ENABLED = false;
+
 const HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
@@ -102,7 +104,7 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
       minors_form: body.minors_form,
 
       referred_by: body.referred_by,
-      // waitlist: body.waitlist,
+      waitlist: WAITLIST_ENABLED,
 
       waiver_type: body.waiverType,
 
