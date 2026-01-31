@@ -13,7 +13,7 @@
               <span v-else>
                 for the waitlist
               </span>
-              for Bitcamp 2025!</h1> -->
+              for Bitcamp 2026!</h1> -->
 
             <img style="width: 20vh; height: 20vh" src="@/assets/marshy.svg" />
 

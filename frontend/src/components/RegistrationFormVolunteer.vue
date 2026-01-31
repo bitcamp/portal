@@ -5,7 +5,7 @@
     <b-col md="10">
       <br>
       <h1 style="text-align: left">
-        Register for Bitcamp 2025 - Volunteer
+        Register for Bitcamp 2026 - Volunteer
       </h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
@@ -23,7 +23,7 @@
       >
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2025 at the
+          Once you register, you'll receive more info about Bitcamp 2026 at the
           email you provide.
         </p>
 
@@ -246,7 +246,7 @@
         </h4>
         <p class="info">
           We've got unisex T-shirts in XS-XL sizes! Choose whichever size you
-          like, and your very own Bitcamp 2025 shirt will be given to you once
+          like, and your very own Bitcamp 2026 shirt will be given to you once
           you arrive at UMD.
         </p>
 

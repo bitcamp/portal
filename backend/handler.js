@@ -113,7 +113,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       survey_blue: body.blue,
 
       // remove this after 2024 season
-      waitlist: body.waitlist,
+      // waitlist: body.waitlist,
     },
   };
 

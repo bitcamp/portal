@@ -3,7 +3,7 @@
     <b-col md="1" />
     <b-col md="10">
       <br />
-      <h1 style="text-align: left">Register for Bitcamp 2025</h1>
+      <h1 style="text-align: left">Register for Bitcamp 2026</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
         <b-alert show variant="danger">
@@ -22,7 +22,7 @@
       <b-form class="registration-form" autocomplete="on" @submit="registerUser">
         <h4>Tell us about yourself!</h4>
         <p class="info">
-          Once you register, you'll receive more info about Bitcamp 2025 at the email you provide.
+          Once you register, you'll receive more info about Bitcamp 2026 at the email you provide.
         </p>
 
         <!-- Name and Age -->
@@ -725,7 +725,7 @@
         <h4 class="mb-2">Select a T-shirt size!</h4>
         <p class="info">
           We've got unisex T-shirts in sizes XS-2XL! Choose whichever size you like, and your very
-          own Bitcamp 2025 shirt will be given to you once you arrive at UMD.
+          own Bitcamp 2026 shirt will be given to you once you arrive at UMD.
         </p>
 
         <b-form-row>
@@ -931,9 +931,9 @@
           <h4><u>Student Organization Release and Informed Consent Form</u></h4>
           <br />
           <p class="info">
-            I am a participant of Bitcamp 2025 (Activity), a student organization recognized by the
+            I am a participant of Bitcamp 2026 (Activity), a student organization recognized by the
             Stamp Student Union (Union) at the University of Maryland, College Park (University). I
-            desire to participate in the Activity from April 11, 2025- April 13, 2025 including. In
+            desire to participate in the Activity from April 10, 2026- April 12, 2026 including. In
             consideration of being permitted to participate in such Activity, I, for myself, my
             heirs, personal representative(s) and assigns hereby represent and agree as follows:
             <br />
@@ -1489,7 +1489,7 @@
             been background checked and is cleared to legally take responsibility for students on
             off‐campus trips. The school also understands that neither Bitcamp, nor the University
             of Maryland, will be taking legal custody of your students during the course of Bitcamp
-            2025.
+            2026.
           </p>
 
           <!-- Minor's Information -->

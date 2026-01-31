@@ -374,7 +374,7 @@
               been background checked and is cleared to legally take responsibility for students on
               off‐campus trips. The school also understands that neither Bitcamp, nor the University
               of Maryland, will be taking legal custody of your students during the course of Bitcamp
-              2025.
+              2026.
             </p>
           </div>
         </div>

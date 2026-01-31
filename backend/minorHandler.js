@@ -102,7 +102,7 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
       minors_form: body.minors_form,
 
       referred_by: body.referred_by,
-      waitlist: body.waitlist,
+      // waitlist: body.waitlist,
 
       waiver_type: body.waiverType,
 
