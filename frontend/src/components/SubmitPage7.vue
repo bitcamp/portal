@@ -35,7 +35,7 @@
 
       <div class="checkbox-wrapper">
         <b-form-checkbox id="checkbox-1" v-model="formData.MLH_privacy" name="checkbox-1" class="checkbox mb-3"
-          :state="validations.valid_mlh_privacy" @change="clearValidation('valid_mlh_privacy')">
+          :state="showState('MLH_privacy')" @change="touched.MLH_privacy = true">
           I authorize you to share my application/registration information with Major League Hacking
           for event administration, ranking, and MLH administration in-line with the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
@@ -45,20 +45,20 @@
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
           <span class="text-danger">*</span>
-          <b-form-invalid-feedback :state="validations.valid_mlh_privacy">
+          <div v-if="showInvalid('MLH_privacy')" class="invalid-feedback d-block">
             Please agree to MLH's privacy policy and terms
-          </b-form-invalid-feedback>
+          </div>
         </b-form-checkbox>
 
         <b-form-checkbox id="checkbox-2" v-model="formData.MLH_conduct" name="checkbox-2"
-          :state="validations.valid_code_of_conduct" class="checkbox mb-3" style="padding-bottom: 1rem"
-          @change="clearValidation('valid_code_of_conduct')">
+          :state="showState('MLH_conduct')" class="checkbox mb-3" style="padding-bottom: 1rem"
+          @change="touched.MLH_conduct = true">
           I have read and agree to the
           <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>. <span
             class="text-danger">*</span>
-          <b-form-invalid-feedback :state="validations.valid_code_of_conduct">
+          <div v-if="showInvalid('MLH_conduct')" class="invalid-feedback d-block">
             Please agree to MLH's code of conduct
-          </b-form-invalid-feedback>
+          </div>
         </b-form-checkbox>
 
         <b-form-checkbox id="checkbox-3" v-model="formData.MLH_emails" name="checkbox-3" class="checkbox">
@@ -94,6 +94,8 @@ import generalMixin from "../mixins/general";
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 
+const submitPageRequiredFields = ["MLH_privacy", "MLH_conduct"];
+
 export default {
   name: "SubmitPage7",
   mixins: [generalMixin],
@@ -115,10 +117,7 @@ export default {
         { number: 7, label: "Finalize & Submit" },
       ],
 
-      validations: {
-        valid_mlh_privacy: null,
-        valid_code_of_conduct: null,
-      },
+      touched: Object.fromEntries(submitPageRequiredFields.map((key) => [key, false])),
 
       isSending: false,
     };
@@ -134,6 +133,12 @@ export default {
     whatBuildChars() {
       return (this.formData.question2 || "").length;
     },
+    validations() {
+      return {
+        MLH_privacy: this.formData.MLH_privacy === true,
+        MLH_conduct: this.formData.MLH_conduct === true,
+      };
+    },
   },
 
   mounted() {
@@ -146,14 +151,22 @@ export default {
   },
 
   methods: {
-    clearValidation(key) {
-      if (key in this.validations) {
-        this.validations[key] = null;
-      }
+    showState(field) {
+      if (!this.touched[field]) return null;
+      return this.validations[field] ? null : false;
+    },
+
+    showInvalid(field) {
+      return this.touched[field] === true && this.validations[field] === false;
     },
 
     async handleNext(event) {
       event.preventDefault();
+
+      submitPageRequiredFields.forEach((key) => {
+        this.touched[key] = true;
+      });
+
       if (!this.validateForm()) {
         this.$bvToast.toast("Please fill out all required fields", {
           toaster: "b-toaster-top-center",
@@ -342,21 +355,7 @@ export default {
     },
 
     validateForm() {
-      let valid = true;
-      const form = this.formData;
-      if (!form.MLH_privacy) {
-        this.validations.valid_mlh_privacy = false;
-        valid = false;
-      } else {
-        this.validations.valid_mlh_privacy = null;
-      }
-      if (!form.MLH_conduct) {
-        this.validations.valid_code_of_conduct = false;
-        valid = false;
-      } else {
-        this.validations.valid_code_of_conduct = null;
-      }
-      return valid;
+      return submitPageRequiredFields.every((field) => this.validations[field]);
     },
 
     createAddressString() {
