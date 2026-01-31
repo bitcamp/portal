@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 import SplashScreen from '../components/SplashScreen.vue';
 import RegistrationFormParent from '../components/RegistrationFormParent.vue';
 import RegistrationClosed from '../components/RegistrationClosed.vue';
+import RegisterMentors from '../views/RegisterMentors.vue';
+import RegisterVolunteer from '../views/RegisterVolunteers.vue'
 
 Vue.use(VueRouter);
 
@@ -33,8 +35,8 @@ const routes = [
   {
     path: '/mentor',
     name: 'MentorRegister',
-    component: RegistrationClosed,
-    // component: RegisterMentor,
+    // component: RegistrationClosed,
+    component: RegisterMentors,
     props: (route) => ({
       default_track: route.query.t,
       type: 'mentor'
@@ -43,8 +45,8 @@ const routes = [
   {
     path: '/volunteer',
     name: 'VolunteerRegister',
-    component: RegistrationClosed,
-    // component: RegisterVolunteer,
+    // component: RegistrationClosed,
+    component: RegisterVolunteer,
     props: (route) => ({
       default_track: route.query.t,
       type: 'volunteer'
