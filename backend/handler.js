@@ -529,6 +529,7 @@ module.exports.update = withSentry(async () => {
   let pageViews = 0;
   let volunteerRegistrations = 0;
   let mentorRegistrations = 0;
+  let teamMatchingOptIns = 0;
 
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
@@ -539,6 +540,8 @@ module.exports.update = withSentry(async () => {
       mentorRegistrations = mentors.Count;
     } else if (stat.statistic === "page-view") {
       pageViews = stat.value;
+    } else if (stat.statistic === "team-matching-opt-in") {
+      teamMatchingOptIns = stat.value;
     } else if (stat.statistic.startsWith("track-")) {
       let track = stat.statistic.replace("track-", "");
 
@@ -577,6 +580,7 @@ module.exports.update = withSentry(async () => {
   statArr.push(`*${minorsCount} Minor Hacker Registrations*`);
   statArr.push(`*${mentorRegistrations} Mentor Registrations*`);
   statArr.push(`*${volunteerRegistrations} Volunteer Registrations*`);
+  statArr.push(`*${teamMatchingOptIns} Team Matching Opt-Ins*`);
   statArr.push("~~~~~~~~~~~");
   statArr = statArr.concat(trackArr.sort(sortWithoutStatisticValue));
   statArr.push("~~~~~~~~~~~");
