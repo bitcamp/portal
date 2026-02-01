@@ -371,15 +371,16 @@ module.exports.upload_resume_text = withSentry(async (event) => {
 module.exports.track = withSentry(async (event) => {
   const body = JSON.parse(event.body);
   const ddb = new AWS.DynamoDB.DocumentClient();
-  // Checks if any field is missing
-  if (!body.random_id && !body.referral_id) {
+
+  if (!body.key) {
     return {
       statusCode: 500,
       body: "/track is missing a field",
+      headers: HEADERS,
     };
   }
 
-  // Handle "how i found out about technica"
+  // Handle "how i found out about bitcamp"
   if (body.key.startsWith("hf")) {
     body.value = event.requestContext.identity.sourceIp;
     await logStatistic(ddb, body.key, 1);
@@ -391,31 +392,19 @@ module.exports.track = withSentry(async (event) => {
     await logStatistic(ddb, "page-view", 1);
   }
 
-  // Find user's random id from referral id
-  if (!body.random_id) {
-    var resp = await ddb
-      .query({
+  // Append key:value pair to the user's row if random_id is provided
+  if (body.random_id) {
+    await ddb
+      .update({
         TableName: process.env.TRACKING_TABLE,
-        IndexName: "referralsIndex",
-        KeyConditionExpression: "referral_id = :v_refer",
-        ExpressionAttributeValues: { ":v_refer": body.referral_id },
+        Key: { random_id: body.random_id },
+        ReturnValues: "ALL_NEW",
+        UpdateExpression: "set #key = :value",
+        ExpressionAttributeNames: { "#key": body.key },
+        ExpressionAttributeValues: { ":value": body.value },
       })
       .promise();
-
-    body.random_id = resp.Items[0].random_id;
   }
-
-  // Append key:value pair to the user's row
-  await ddb
-    .update({
-      TableName: process.env.TRACKING_TABLE,
-      Key: { random_id: body.random_id },
-      ReturnValues: "ALL_NEW",
-      UpdateExpression: "set #key = :value",
-      ExpressionAttributeNames: { "#key": body.key },
-      ExpressionAttributeValues: { ":value": body.value },
-    })
-    .promise();
 
   // Return success
   return {

@@ -88,6 +88,7 @@
 
 <script>
 import Vue from "vue";
+import { v4 as uuid } from "uuid";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import generalMixin from "../mixins/general";
 
@@ -120,6 +121,7 @@ export default {
       touched: Object.fromEntries(submitPageRequiredFields.map((key) => [key, false])),
 
       isSending: false,
+      random_id: uuid(),
     };
   },
 
