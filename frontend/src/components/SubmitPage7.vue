@@ -88,7 +88,6 @@
 
 <script>
 import Vue from "vue";
-import { v4 as uuid } from "uuid";
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import generalMixin from "../mixins/general";
 
@@ -103,6 +102,14 @@ export default {
   props: {
     formData: {
       type: Object,
+      required: true,
+    },
+    randomId: {
+      type: String,
+      required: true,
+    },
+    formStart: {
+      type: Number,
       required: true,
     },
   },
@@ -121,7 +128,6 @@ export default {
       touched: Object.fromEntries(submitPageRequiredFields.map((key) => [key, false])),
 
       isSending: false,
-      random_id: uuid(),
     };
   },
 
@@ -181,6 +187,11 @@ export default {
       }
       const response = await this.registerUser();
       if (response && response.referral_id) {
+        this.track({
+          random_id: this.randomId,
+          key: "referral_id",
+          value: response.referral_id,
+        });
         this.$router.push({ path: "thanks", query: { r: response.referral_id } });
       } else {
         this.$bvToast.toast("Something went wrong when submitting your registration", {
@@ -203,21 +214,20 @@ export default {
         return;
       }
 
-      const time_taken = (Date.now() - this.form_start) / 1000;
+      const time_taken = (Date.now() - this.formStart) / 1000;
       let referred_by = null;
       if (this.$route.params.referral) {
         this.$gtag.event("got-referred", { method: "Google" });
         referred_by = this.$route.params.referral;
         this.track({
-          random_id: this.random_id,
+          random_id: this.randomId,
           key: "got-referred",
           value: this.$route.params.referral,
         });
       }
 
-      this.track({ random_id: this.random_id, key: `hf-${this.heard_from}`, value: 1 });
-      if (this.heard_from_other) {
-        this.track({ random_id: this.random_id, key: "hf-other", value: 1 });
+      for (const heardFrom of this.formData.heard_from) {
+        this.track({ random_id: this.randomId, key: `hf-${heardFrom}`, value: 1 });
       }
 
       this.$gtag.event("submit-registration", { method: "Google" });
@@ -227,7 +237,7 @@ export default {
         event_category: "Form completion duration",
       });
       this.track({
-        random_id: this.random_id,
+        random_id: this.randomId,
         key: "form-submitted",
         value: time_taken,
       });

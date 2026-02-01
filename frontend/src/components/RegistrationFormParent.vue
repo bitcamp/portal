@@ -56,6 +56,8 @@
       <SubmitPage7
         v-if="currentPage === 7"
         :form-data="formData"
+        :random-id="random_id"
+        :form-start="form_start"
         @next="goToPage(8)"
         @previous="goToPage(isMinor ? 6 : 5)"
       />
@@ -233,6 +235,13 @@ export default {
       form_start: Date.now(),
     };
   },
+  mounted() {
+    this.track({
+      random_id: this.random_id,
+      key: "open-registration",
+      value: true,
+    });
+  },
   computed: {
     isMinor() {
       const age = parseInt(this.formData.age, 10);
@@ -247,7 +256,11 @@ export default {
     },
     handleEmailFilled(email) {
       this.formData.email = email;
-      // You can add analytics tracking here if needed
+      this.track({
+        random_id: this.random_id,
+        key: "filled-email",
+        value: email,
+      });
     },
     getFileExtension(filename) {
       const parts = filename.split(".");

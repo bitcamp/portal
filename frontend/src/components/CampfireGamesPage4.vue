@@ -9,11 +9,16 @@
     </p>
 
     <div class="stepper">
-      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
-        active: step.number === 4,
-        completed: step.number < 4,
-        inactive: step.number > 4,
-      }">
+      <div
+        v-for="step in steps"
+        :key="step.number"
+        class="stepper-item"
+        :class="{
+          active: step.number === 4,
+          completed: step.number < 4,
+          inactive: step.number > 4,
+        }"
+      >
         <div class="stepper-circle">
           <span v-if="step.number < 4" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -44,9 +49,18 @@
             </span>
           </template>
 
-          <b-form-radio-group v-model="formData[`q${i + 1}`]" :name="'q' + (i + 1)" stacked
-            @change="touched[`q${i + 1}`] = true">
-            <b-form-radio v-for="opt in q.options" :key="opt.value" :value="opt.value" class="d-block py-1">
+          <b-form-radio-group
+            v-model="formData[`q${i + 1}`]"
+            :name="'q' + (i + 1)"
+            stacked
+            @change="touched[`q${i + 1}`] = true"
+          >
+            <b-form-radio
+              v-for="opt in q.options"
+              :key="opt.value"
+              :value="opt.value"
+              class="d-block py-1"
+            >
               {{ opt.text }}
             </b-form-radio>
           </b-form-radio-group>
@@ -137,7 +151,7 @@ export default {
         {
           label: "5. What is your favorite thing about Bitcamp?",
           options: [
-            { text: "Hacking", value: "r" },
+            { text: "Hacking 👾", value: "r" },
             { text: "Free stuff", value: "b" },
             { text: "Late night shenanigans", value: "g" },
             { text: "First time, I’ll find out!", value: "g1" },
