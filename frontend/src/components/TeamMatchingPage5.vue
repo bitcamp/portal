@@ -531,18 +531,18 @@ export default {
   font-size: 1.4rem;
 }
 
-::v-deep .custom-control {
+::v-deep .custom-control.custom-radio {
   display: flex;
   align-items: center;
 }
 
-::v-deep .custom-control-label {
+::v-deep .custom-control.custom-radio .custom-control-label {
   margin-bottom: 0;
   line-height: 1.2;
 }
 
-::v-deep .custom-control-label::before,
-::v-deep .custom-control-label::after {
+::v-deep .custom-control.custom-radio .custom-control-label::before,
+::v-deep .custom-control.custom-radio .custom-control-label::after {
   top: 45%;
   transform: translateY(-55%);
 }
