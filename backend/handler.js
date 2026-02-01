@@ -148,10 +148,17 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
     }
   };
 
+  const logTeamMatchingOptIn = () => {
+    if (body.opt_in_team_matching === "yes") {
+      return logStatistic(ddb, "team-matching-opt-in", 1);
+    }
+  };
+
   await Promise.all([
     logStatistic(ddb, "track-" + body.track_selected, 1),
     logWaitlistTrack(),
     logStatistic(ddb, "registrations", 1),
+    logTeamMatchingOptIn(),
     // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
     // Send confirmation email
