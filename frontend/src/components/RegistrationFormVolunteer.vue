@@ -32,10 +32,10 @@
           <!-- First Name -->
           <b-form-group
             id="input-group-first-name"
-            label="First Name*"
             label-for="input-first-name"
             class="col-6 col-md-6"
           >
+            <template #label>First Name <span class="text-danger">*</span></template>
             <b-form-input
               id="input-first-name"
               v-model="form.first_name"
@@ -52,10 +52,10 @@
           <!-- Last Name -->
           <b-form-group
             id="input-group-last-name"
-            label="Last Name*"
             label-for="input-last-name"
             class="col-6 col-md-6"
           >
+            <template #label>Last Name <span class="text-danger">*</span></template>
             <b-form-input
               id="input-last-name"
               v-model="form.last_name"
@@ -75,10 +75,10 @@
           <!-- Email -->
           <b-form-group
             id="input-group-2"
-            label="Email*"
             label-for="input-2"
             class="col-7 col-md-7"
           >
+            <template #label>Email <span class="text-danger">*</span></template>
             <b-form-input
               id="input-2"
               v-model="form.email"
@@ -97,10 +97,10 @@
           <!-- Phone Number -->
           <b-form-group
             id="input-group-9"
-            label="Phone Number*"
             label-for="input-9"
             class="col-5 col-md-5"
           >
+            <template #label>Phone Number <span class="text-danger">*</span></template>
             <b-form-input
               id="input-9"
               v-model="form.phone"
@@ -120,9 +120,9 @@
 
         <b-form-group
           id="input-group-school-or-company"
-          label="Will you be attending as a student, or do you bring professional experience?*"
           label-for="input-school-or-company"
         >
+          <template #label>Will you be attending as a student, or do you bring professional experience? <span class="text-danger">*</span></template>
           <b-form-radio-group
             id="input-school-or-company"
             v-model="form.selected_school_or_company"
@@ -144,10 +144,10 @@
         <b-form-row v-if="form.selected_school_or_company === 'yes'">
           <b-form-group
             id="input-group-school"
-            label="School Name*"
             label-for="input-school"
             class="col-md-12"
           >
+            <template #label>School Name <span class="text-danger">*</span></template>
             <vue-bootstrap-autocomplete
               id="input-school"
               v-model="form.school"
@@ -202,11 +202,11 @@
         <b-form-group
           v-if="form.selected_school_or_company === 'yes'"
           id="input-group-schoolyear"
-          label="Current Level of Study*"
           label-for="input-schoolyear"
           class="col-md-6"
           style="padding: 0rem;"
         >
+          <template #label>Current Level of Study <span class="text-danger">*</span></template>
           <b-form-select
             id="input-schoolyear"
             v-model="form.school_year"
@@ -224,11 +224,11 @@
         <b-form-group
           v-if="form.selected_school_or_company === 'no'"
           id="input-group-company"
-          label="Company*"
           label-for="input-company"
           class="col-6 col-md-12"
           style="padding: 0rem;"
         >
+          <template #label>Company <span class="text-danger">*</span></template>
           <b-form-input
             id="input-company"
             v-model="form.company"
@@ -253,10 +253,10 @@
         <b-form-row>
           <b-form-group
             id="input-group-tshirt"
-            label="T-shirt Size*"
             label-for="input-tshirt"
             class="col-md-12"
           >
+            <template #label>T-shirt Size <span class="text-danger">*</span></template>
             <b-form-select
               id="input-4"
               v-model="form.tshirt_size"
@@ -277,11 +277,11 @@
 
         <b-form-group
           id="input-dietary-restrictions"
-          label="Do you have any dietary restrictions?*"
           label-for="input-dietary-restrictions"
           class="col-12 col-md-6"
           style="padding: 0rem;"
         >
+          <template #label>Do you have any dietary restrictions? <span class="text-danger">*</span></template>
           <b-form-group
             v-slot="{ ariaDescribedby }"
             class="mt-2 mb-1"
@@ -356,7 +356,7 @@
           <a
             href="https://mlh.io/privacy"
             target="_blank"
-          >MLH Privacy Policy</a>.*
+          >MLH Privacy Policy</a>. <span class="text-danger">*</span>
           <b-form-invalid-feedback :state="valid_mlh_privacy">
             Please agree to MLH's privacy policy and terms
           </b-form-invalid-feedback>
@@ -374,7 +374,7 @@
           <a
             href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf"
             target="_blank"
-          >MLH Code of Conduct</a>.*
+          >MLH Code of Conduct</a>. <span class="text-danger">*</span>
           <b-form-invalid-feedback :state="valid_code_of_conduct">
             Please agree to MLH's code of conduct
           </b-form-invalid-feedback>
