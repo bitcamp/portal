@@ -290,7 +290,11 @@
           />
         </b-form-group>
 
-        <b-form-group label="GitHub or Portfolio Link" class="col-md-6">
+        <b-form-group class="col-md-6">
+          <template #label>
+            GitHub or Portfolio Link
+            <span v-if="formData.recruit === 'yes'" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="github-link"
             v-model="formData.portfolio"
