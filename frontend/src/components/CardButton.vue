@@ -1,7 +1,38 @@
 <!-- CardButton.vue -->
 <template>
   <b-card class="role-card">
-    <div>
+    <div class="card-content-wrapper"> 
+      <div class="image-container">
+        <img
+          v-if="svgImagePath"
+          :src="require(`@/assets/${svgImagePath}`)"
+          class="role-logo"
+        >
+      </div>
+
+      <div class="title-container" @click="redirectToRole">
+        <div class="effect-box" />
+        <h2 class="role-title">
+          {{ roleTitle }}
+        </h2>
+      </div>
+    </div>
+
+    <div
+      v-b-tooltip.hover.bottom
+      :title="roleDescription"
+    >
+      <b-icon
+        style="color: white;"
+        scale="1.5"
+        icon="info-circle"
+      />
+    </div>
+  </b-card>
+</template>
+
+
+    <!-- <div>
       <img
         v-if="svgImagePath"
         :src="require(`@/assets/${svgImagePath}`)"
@@ -31,7 +62,7 @@
       />
     </div>
   </b-card>
-</template>
+</template> -->
 
 <script>
 import Vue from 'vue';
@@ -58,12 +89,30 @@ export default {
 </script>
 
 <style scoped>
-.role-card {
+.role-card {  
   background-color: #ffffff00;
   border: none;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-content-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
+  height: 250px; /* Adjust this value if they look too high/low */
+  width: 100%;
+  display: flex;
+  align-items: flex-end; /* Marshies stand on the bottom of this box */
+  justify-content: center;
 }
 
 .card-body {
@@ -83,8 +132,6 @@ export default {
   /*max-width: 100%; */
 }
 
-
-
 .role-title {
   font-size: calc(0.8rem + 0.7vw);
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
@@ -94,7 +141,6 @@ export default {
   transition: all .3s ease;
 
 }
-
 
 .role-description {
   font-size: calc(0.8rem + 0.2vw);
@@ -130,9 +176,29 @@ export default {
 }
 
 .role-logo {
-  width: 110%;
-  max-height: 250px;
+  width: auto;
+  max-width: 110%;
+  max-height: 100%; /* Keeps the image within the 250px box */
   margin-bottom: 10px;
+}
+
+@media (max-width: 990px) {
+
+  .role-card[data-role="hacker"] {
+    max-width: 70%; 
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+
+  .role-logo {
+    width: 80%;
+    padding-right: 10px;
+  }
+
+  .role-description {
+    text-align: center;
+  }
+
 }
 
 @media (max-width: 768px) {
@@ -143,6 +209,16 @@ export default {
 
   .role-card[data-role="volunteer"] {
     padding-top: 15px;
+  }
+
+  .role-card[data-role="volunteer"] {
+    max-width: 90%; 
+    margin: 0 auto;
+  }
+
+  .role-card[data-role="hacker"] {
+    max-width: 70%; 
+    margin: 0 auto;
   }
 
   .role-logo {

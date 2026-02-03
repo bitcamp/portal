@@ -16,7 +16,7 @@
             the next generation of tech enthusiasts. Become a key figure in shaping the
             experience for participants as they navigate through the hackathon challenges."
             role-u-r-l="/mentor"
-            svg-image-path="splash-screen/red-dino.svg"
+            svg-image-path="splash-screen/red-alien.svg"
           />
         </b-col>
         <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
@@ -27,7 +27,7 @@
             and innovation. Dive into challenging projects, showcase your coding skills,
             and be part of a community dedicated to pushing the boundaries of technology."
             role-u-r-l="/hacker"
-            svg-image-path="splash-screen/blue-marshie-updated.svg"
+            svg-image-path="splash-screen/green-alien.svg"
           />
         </b-col>
 
@@ -39,7 +39,7 @@
             of our hackathon. From logistics to participant assistance, your
             contribution will help create a positive environment for everyone!"
             role-u-r-l="/volunteer"
-            svg-image-path="splash-screen/Green Dino.svg"
+            svg-image-path="splash-screen/blue-alien.svg"
           />
         </b-col>
       </b-row>
@@ -110,6 +110,24 @@ export default {
   height: auto; /* Maintain aspect ratio */
   margin-top: 100px;
   margin-bottom: 20px;
+}
+
+/* Ensure the row stretches its children to the same height */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Make sure each column and the component inside it takes up full height */
+.marshie-card {
+  display: flex;
+}
+
+/* This targets the CardButton component itself */
+.marshie-card > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 768px) {

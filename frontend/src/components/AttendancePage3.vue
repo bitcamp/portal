@@ -37,12 +37,12 @@
 
           <div class="radio-inline-group">
             <label class="radio-inline">
-              <input v-model="formData.transport" type="radio" value="yes" @change="touched.transport = true" />
+              <b-form-radio v-model="formData.transport" type="radio" value="yes" @change="touched.transport = true" />
               Yes
             </label>
 
             <label class="radio-inline">
-              <input v-model="formData.transport" type="radio" value="no" @change="touched.transport = true" />
+              <b-form-radio v-model="formData.transport" type="radio" value="no" @change="touched.transport = true" />
               No
             </label>
           </div>
@@ -114,18 +114,18 @@
         <b-form-group id="input-dietary-restrictions" class="col-12 col-md-12">
           <div class="checkbox-group">
             <label class="checkbox-inline">
-              <input type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
+              <b-form-checkbox type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
               None
             </label>
 
             <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
-              <input v-model="formData.diet_select" type="checkbox" :value="option.value" :disabled="formData.diet_none"
+              <b-form-checkbox v-model="formData.diet_select" type="checkbox" :value="option.value" :disabled="formData.diet_none"
                 @change="touched.diet_select = true" />
               {{ option.text }}
             </label>
 
             <label class="checkbox-inline">
-              <input v-model="formData.diet_other" type="checkbox" :disabled="formData.diet_none"
+              <b-form-checkbox v-model="formData.diet_other" type="checkbox" :disabled="formData.diet_none"
                 @change="touched.diet_other = true" />
               Other
             </label>
@@ -567,6 +567,22 @@ label.form-label {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+::v-deep .custom-control.custom-radio {
+  display: flex;
+  align-items: center;
+}
+
+::v-deep .custom-control.custom-radio .custom-control-label {
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+::v-deep .custom-control.custom-radio .custom-control-label::before,
+::v-deep .custom-control.custom-radio .custom-control-label::after {
+  top: 45%;
+  transform: translateY(-55%);
 }
 
 @media (max-width: 768px) {
