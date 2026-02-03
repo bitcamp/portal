@@ -81,7 +81,7 @@ export default {
 .card-container {
   display: flex;
   flex-direction: row;
-  margin-top: 20px; /* Adds space below the register logo */
+  margin-bottom: 60px;
 }
 
 .register-logo {
@@ -140,7 +140,7 @@ export default {
   .card-container {
     display: flex;
     flex-direction: row;
-    margin-top: 10px; /* Adjusted top margin to fine-tune spacing */
+    margin-bottom: 10px;
   }
   .bitcamp-logo {
     width: 50%;
@@ -152,4 +152,5 @@ export default {
     padding: 0;
   }
 }
+
 </style>
