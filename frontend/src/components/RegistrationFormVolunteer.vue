@@ -594,11 +594,11 @@ export default {
     // logic goes here so feedback is only shown after submission
     formCheck() {
       let valid_form = true;
-      console.log("\nvalid form" + valid_form);
+      // console.log("\nvalid form" + valid_form);
 
       this.form.name = `${this.form.first_name} ${this.form.last_name}`;
 
-      console.log("fname: " + (this.form.first_name.length === 0));
+      // console.log("fname: " + (this.form.first_name.length === 0));
       if (this.form.first_name.length === 0) {
         this.valid_first_name = false;
         valid_form = false;
@@ -615,7 +615,7 @@ export default {
         this.form.last_name = this.form.last_name.trim();
       }
 
-      console.log("email: " + !EmailValidator.validate(this.form.email));
+      // console.log("email: " + !EmailValidator.validate(this.form.email));
       if (!EmailValidator.validate(this.form.email)) {
         this.valid_email = false;
         valid_form = false;
@@ -623,7 +623,7 @@ export default {
         this.valid_email = null;
       }
 
-      console.log("phone: " + (!phoneNumber || !phoneNumber.isValid()));
+      // console.log("phone: " + (!phoneNumber || !phoneNumber.isValid()));
       const phoneNumber = parsePhoneNumber(this.form.phone, DEFAULT_COUNTRY_PHONE);
       if (!phoneNumber || !phoneNumber.isValid()) {
         this.valid_phone = false;
@@ -717,7 +717,7 @@ export default {
         this.form.company = this.form.company.trim();
       }
 
-      console.log("tshirt: " + (this.form.tshirt_size.length === 0));
+      // console.log("tshirt: " + (this.form.tshirt_size.length === 0));
       if (this.form.tshirt_size.length === 0) {
         this.valid_tshirt_size = false;
         valid_form = false;
@@ -725,7 +725,7 @@ export default {
         this.valid_tshirt_size = null;
       }
 
-      console.log("diet: " + (this.createDietaryRestrictionString().length === 0));
+      // console.log("diet: " + (this.createDietaryRestrictionString().length === 0));
       if (this.createDietaryRestrictionString().length === 0) {
         this.valid_diet = false;
         valid_form = false;
@@ -733,7 +733,7 @@ export default {
         this.valid_diet = null;
       }
 
-      console.log("mlh1: " + !this.form.MLH_conduct);
+      // console.log("mlh1: " + !this.form.MLH_conduct);
       if (!this.form.MLH_conduct) {
         this.valid_code_of_conduct = false;
         valid_form = false;
@@ -741,7 +741,7 @@ export default {
         this.valid_code_of_conduct = null;
       }
 
-      console.log("mlh2: " + !this.form.MLH_privacy);
+      // console.log("mlh2: " + !this.form.MLH_privacy);
       if (!this.form.MLH_privacy) {
         this.valid_mlh_privacy = false;
         valid_form = false;
@@ -751,7 +751,7 @@ export default {
       return valid_form;
     },
     resetSchool(other) {
-      console.log(other);
+      // console.log(other);
       if (other) {
         this.form.school = "Other";
         this.form.school_other = "";

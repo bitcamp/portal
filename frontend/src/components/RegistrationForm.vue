@@ -2304,7 +2304,7 @@ export default {
     },
     async registerUser(event) {
       event.preventDefault();
-      console.log(this.form);
+      // console.log(this.form);
       if (this.formCheck()) {
         // prevent blacklisted hackers from registering
         if (this.form.name === "Auran Shereef" || this.form.name === "Monte James") {
@@ -2834,7 +2834,7 @@ export default {
       return valid_form;
     },
     resetSchool(other) {
-      console.log(other);
+      // console.log(other);
       if (other) {
         this.form.school = "Other";
         this.form.school_other = "";
