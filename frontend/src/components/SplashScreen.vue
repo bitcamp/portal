@@ -74,10 +74,6 @@ export default {
   height: 100%;
 }
 
-.marshie-card {
-  padding: 0 0vw;
-}
-
 .mb-4 {
   margin-bottom: 0 !important;
 }
@@ -112,18 +108,16 @@ export default {
   margin-bottom: 20px;
 }
 
-/* Ensure the row stretches its children to the same height */
 .row {
   display: flex;
   flex-wrap: wrap;
 }
 
-/* Make sure each column and the component inside it takes up full height */
 .marshie-card {
   display: flex;
+  padding: 0 30px;
 }
 
-/* This targets the CardButton component itself */
 .marshie-card > * {
   flex: 1;
   display: flex;

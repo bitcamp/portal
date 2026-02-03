@@ -182,44 +182,21 @@ export default {
   margin-bottom: 10px;
 }
 
-@media (max-width: 990px) {
+.role-card[data-role="hacker"] {
+  max-width: 70%; 
+  margin: 0 auto;
+  padding-top: 20px;
+}
 
-  .role-card[data-role="hacker"] {
-    max-width: 70%; 
-    margin: 0 auto;
-    padding-top: 20px;
-  }
+.role-card[data-role="volunteer"] {
+  max-width: 90%; 
+}
 
-  .role-logo {
-    width: 80%;
-    padding-right: 10px;
-  }
-
-  .role-description {
-    text-align: center;
-  }
-
+.role-card[data-role="volunteer"] .role-logo {
+  margin-bottom: -2px; 
 }
 
 @media (max-width: 768px) {
-
-  .role-card[data-role="mentor"] {
-    padding-top: 10px;
-  }
-
-  .role-card[data-role="volunteer"] {
-    padding-top: 15px;
-  }
-
-  .role-card[data-role="volunteer"] {
-    max-width: 90%; 
-    margin: 0 auto;
-  }
-
-  .role-card[data-role="hacker"] {
-    max-width: 70%; 
-    margin: 0 auto;
-  }
 
   .role-logo {
     width: 80%;
