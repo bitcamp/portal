@@ -7,13 +7,22 @@
       <h1 style="text-align: left">Register for Bitcamp 2026 - Mentor</h1>
 
       <p style="font-size: 0.9rem; opacity: 95%">
-        As a mentor, you will assist attendees with their projects and provide any additional
-        guidance. Be prepared to answer any questions hackers may have, ranging from hardware to
-        front-end and back-end.
+        To register as a mentor, please fill out the form below! Feel free to reach out to
+        personnel@bit.camp with any additional questions you may have about the mentoring process!
       </p>
       <p style="font-size: 0.9rem; opacity: 95%">
-        Questions about mentoring? Contact us at
-        <a href="mailto:personnel@bit.camp">personnel@bit.camp</a> or learn more at
+        As a mentor, you will assist attendees with their projects and provide any additional
+        guidance. Be prepared to answer any questions hackers may have, based on your listed
+        expertise.
+      </p>
+      <p style="font-size: 0.9rem; opacity: 95%">
+        This year's event will take place from April 10th to 12th at the Reckord Armory at the
+        University of Maryland, College Park.
+      </p>
+      <p style="font-size: 0.9rem; opacity: 95%">
+        Feel free to reach out to
+        <a href="mailto:personnel@bit.camp">personnel@bit.camp</a> with any additional questions you
+        may have about the mentoring process, or learn more at
         <a href="https://bit.camp">bit.camp</a>!
       </p>
       <hr />
