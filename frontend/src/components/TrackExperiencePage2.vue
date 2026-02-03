@@ -191,8 +191,8 @@
 
       <div class="mt-4 form-group">
         <label class="form-label">
-          Although we are not offering a beginner (general) track this year, Bitcamp remains
-          committed to being a hackathon for hackers of all skill levels. Would you like us to share
+          Although we are not offering a beginner track this year, Bitcamp remains committed to
+          being a hackathon for hackers of all skill levels. Would you like us to share
           beginner-friendly content with you? <span class="text-danger">*</span>
         </label>
         <div class="radio-inline-group">

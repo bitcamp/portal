@@ -9,11 +9,16 @@
     </p>
 
     <div class="stepper">
-      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
-        active: step.number === currentPage,
-        completed: step.number < currentPage,
-        inactive: step.number > currentPage,
-      }">
+      <div
+        v-for="step in steps"
+        :key="step.number"
+        class="stepper-item"
+        :class="{
+          active: step.number === currentPage,
+          completed: step.number < currentPage,
+          inactive: step.number > currentPage,
+        }"
+      >
         <div class="stepper-circle">
           <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -37,12 +42,22 @@
 
           <div class="radio-inline-group">
             <label class="radio-inline">
-              <input v-model="formData.transport" type="radio" value="yes" @change="touched.transport = true" />
+              <input
+                v-model="formData.transport"
+                type="radio"
+                value="yes"
+                @change="touched.transport = true"
+              />
               Yes
             </label>
 
             <label class="radio-inline">
-              <input v-model="formData.transport" type="radio" value="no" @change="touched.transport = true" />
+              <input
+                v-model="formData.transport"
+                type="radio"
+                value="no"
+                @change="touched.transport = true"
+              />
               No
             </label>
           </div>
@@ -51,36 +66,69 @@
 
       <b-form-row>
         <b-form-group label="Shipping Address" label-for="shipping-address" class="col-md-6">
-          <b-form-input id="shipping-address" v-model="formData.address1" placeholder="8125 Paint Branch Dr"
-            :state="showState('address1')" @input="touched.address1 = true" />
+          <b-form-input
+            id="shipping-address"
+            v-model="formData.address1"
+            placeholder="8125 Paint Branch Dr"
+            :state="showState('address1')"
+            @input="touched.address1 = true"
+          />
         </b-form-group>
 
-        <b-form-group label="Shipping Address Line 2" label-for="shipping-address2" class="col-md-6">
-          <b-form-input id="shipping-address2" v-model="formData.address2"
-            placeholder="Apartment or Unit Number (optional)" :state="showState('address2')"
-            @input="touched.address2 = true" />
+        <b-form-group
+          label="Shipping Address Line 2"
+          label-for="shipping-address2"
+          class="col-md-6"
+        >
+          <b-form-input
+            id="shipping-address2"
+            v-model="formData.address2"
+            placeholder="Apartment or Unit Number (optional)"
+            :state="showState('address2')"
+            @input="touched.address2 = true"
+          />
         </b-form-group>
       </b-form-row>
 
       <b-form-row>
         <b-form-group label="City" label-for="shipping-city" class="col-md-3">
-          <b-form-input id="shipping-city" v-model="formData.city" placeholder="College Park" :state="showState('city')"
-            @input="touched.city = true" />
+          <b-form-input
+            id="shipping-city"
+            v-model="formData.city"
+            placeholder="College Park"
+            :state="showState('city')"
+            @input="touched.city = true"
+          />
         </b-form-group>
 
         <b-form-group label="State" label-for="shipping-state" class="col-md-2">
-          <b-form-input id="shipping-state" v-model="formData.state" placeholder="MD" :state="showState('state')"
-            @input="touched.state = true" />
+          <b-form-input
+            id="shipping-state"
+            v-model="formData.state"
+            placeholder="MD"
+            :state="showState('state')"
+            @input="touched.state = true"
+          />
         </b-form-group>
 
         <b-form-group label="Zip Code" label-for="shipping-zip" class="col-md-3">
-          <b-form-input id="shipping-zip" v-model="formData.zip" placeholder="20740" :state="showState('zip')"
-            @input="touched.zip = true" />
+          <b-form-input
+            id="shipping-zip"
+            v-model="formData.zip"
+            placeholder="20740"
+            :state="showState('zip')"
+            @input="touched.zip = true"
+          />
         </b-form-group>
 
         <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
-          <b-form-input id="shipping-country" v-model="formData.country" placeholder="USA" :state="showState('country')"
-            @input="touched.country = true" />
+          <b-form-input
+            id="shipping-country"
+            v-model="formData.country"
+            placeholder="USA"
+            :state="showState('country')"
+            @input="touched.country = true"
+          />
         </b-form-group>
       </b-form-row>
 
@@ -96,8 +144,14 @@
         <b-form-group id="input-group-tshirt" class="col-md-12">
           <template #label> T-shirt Size <span class="text-danger">*</span> </template>
 
-          <b-form-select id="input-tshirt" v-model="formData.tshirt_size" class="form-select"
-            :options="tshirtSizeOptions" :state="showState('tshirt_size')" @change="touched.tshirt_size = true" />
+          <b-form-select
+            id="input-tshirt"
+            v-model="formData.tshirt_size"
+            class="form-select"
+            :options="tshirtSizeOptions"
+            :state="showState('tshirt_size')"
+            @change="touched.tshirt_size = true"
+          />
 
           <b-form-invalid-feedback :state="validations.tshirt_size">
             Please select a T-shirt size
@@ -119,14 +173,23 @@
             </label>
 
             <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
-              <input v-model="formData.diet_select" type="checkbox" :value="option.value" :disabled="formData.diet_none"
-                @change="touched.diet_select = true" />
+              <input
+                v-model="formData.diet_select"
+                type="checkbox"
+                :value="option.value"
+                :disabled="formData.diet_none"
+                @change="touched.diet_select = true"
+              />
               {{ option.text }}
             </label>
 
             <label class="checkbox-inline">
-              <input v-model="formData.diet_other" type="checkbox" :disabled="formData.diet_none"
-                @change="touched.diet_other = true" />
+              <input
+                v-model="formData.diet_other"
+                type="checkbox"
+                :disabled="formData.diet_none"
+                @change="touched.diet_other = true"
+              />
               Other
             </label>
 
@@ -135,9 +198,15 @@
             </div>
           </div>
 
-          <b-form-input v-if="formData.diet_other" v-model="formData.diet_other_text"
-            :state="showState('diet_other_text')" class="mt-2" aria-label="Dietary Restriction Other Text Box"
-            placeholder="Other dietary restriction" @input="touched.diet_other_text = true" />
+          <b-form-input
+            v-if="formData.diet_other"
+            v-model="formData.diet_other_text"
+            :state="showState('diet_other_text')"
+            class="mt-2"
+            aria-label="Dietary Restriction Other Text Box"
+            placeholder="Other dietary restriction"
+            @input="touched.diet_other_text = true"
+          />
         </b-form-group>
       </b-form-row>
 
