@@ -16,8 +16,8 @@
         expertise.
       </p>
       <p style="font-size: 0.9rem; opacity: 95%">
-        This year's event will take place from April 10th to 12th at the Reckord Armory at the
-        University of Maryland, College Park.
+        This year's event will take place from <b>April 10th to 12th</b> at the
+        <b>Reckord Armory</b> at the University of Maryland, College Park.
       </p>
       <p style="font-size: 0.9rem; opacity: 95%">
         Feel free to reach out to
@@ -453,12 +453,18 @@
             class="col-md-12"
           >
             <template #label
-              >Please describe any previous experience you may have in your chosen track(s). We're
-              looking for mentors that have completed coursework, built projects, worked
-              professionally, or otherwise have knowledge in their chosen track(s)! If you answered
-              "Not Interested" in the previous question, please type "NA" into the box below.
-              <span class="text-danger">*</span></template
-            >
+              >Please describe any previous experience you may have in your chosen track(s).
+              <span class="text-danger">*</span>
+              <br />
+              <p style="font-size: 0.9rem; opacity: 95%; margin-top: 0.5rem; margin-bottom: 0.5rem">
+                We're looking for mentors that have completed coursework, built projects, worked
+                professionally, or otherwise have knowledge in their chosen track(s)!
+              </p>
+              <p style="font-size: 0.9rem; opacity: 95%; margin-bottom: 0rem">
+                If you answered "Not Interested" in the previous question, please type "NA" into the
+                box below.
+              </p>
+            </template>
             <b-form-textarea
               id="input-prev_track_experience"
               v-model="form.prev_track_experience"
