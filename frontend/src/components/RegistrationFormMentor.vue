@@ -383,8 +383,8 @@
           style="padding: 0rem"
         >
           <template #label
-            >What previous events have you mentored for? If the answer is none, don't worry! Bitcamp
-            is a good place to start. <span class="text-danger">*</span></template
+            >Have you mentored for any other events before? If not, it's okay! Bitcamp is a great
+            place to start! <span class="text-danger">*</span></template
           >
           <b-form-textarea
             id="input-prev_mentor_experience"
@@ -402,14 +402,16 @@
         </b-form-group>
 
         <b-form-row>
+          <h4 class="mb-2">Track Specific Questions</h4>
           <b-form-group
             id="input-mentor-tracks"
             label-for="input-mentor-tracks"
             class="col-12 col-md-10"
           >
             <p style="font-size: 0.9rem; opacity: 100%; margin-bottom: 0rem">
-              Are you interested in mentoring in any of the following tracks? For more information
-              about each track, click
+              At Bitcamp, hackers can choose to engage in a variety of tracks, and could benefit
+              from mentors with specific experience. Are you interested in mentoring in any of the
+              following tracks? For more information about each track, click
               <a href="https://bit.camp/#tracks">here</a>.
             </p>
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
@@ -444,7 +446,8 @@
             <template #label
               >Please describe any previous experience you may have in your chosen track(s). We're
               looking for mentors that have completed coursework, built projects, worked
-              professionally, or otherwise have knowledge in their chosen track(s)!
+              professionally, or otherwise have knowledge in their chosen track(s)! If you answered
+              "Not Interested" in the previous question, please type "NA" into the box below.
               <span class="text-danger">*</span></template
             >
             <b-form-textarea
@@ -482,7 +485,7 @@
             >MLH Contest Terms and Conditions</a
           >
           and the
-          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. 
+          <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
           <span class="text-danger">*</span>
           <b-form-invalid-feedback :state="valid_mlh_privacy">
             Please agree to MLH's privacy policy and terms
@@ -727,14 +730,12 @@ export default {
       mentor_tracks_other: false,
       mentor_tracks_other_text: "",
       mentor_tracks_options: [
-        { value: "app_dev", text: "App Dev" },
-        { value: "game_dev", text: "Game Development" },
-        {
-          value: "quantum",
-          text: "Quantum Technology (familiarity with Qiskit, or a comparable quantum language is expected)",
-        },
-        { value: "machine_learning", text: "Machine Learning" },
+        { value: "app_dev", text: "App Development" },
         { value: "data_science", text: "Data Science" },
+        { value: "game_dev", text: "Game Development" },
+        { value: "machine_learning", text: "Machine Learning" },
+        { value: "quantum", text: "Quantum" },
+        { value: "not_interested", text: "Not Interested" },
       ],
 
       diet_select: [],
