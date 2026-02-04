@@ -676,6 +676,7 @@ export default {
       skill_options: [
         { value: "web-development", text: "Web Development" },
         { value: "mobile-application-development", text: "Mobile Application Development" },
+        { value: "game-development", text: "Game Development" },
         { value: "ar-vr", text: "AR/VR" },
         { value: "artificial-intelligence", text: "Artificial Intelligence" },
         { value: "machine-learning", text: "Machine Learning" },
@@ -687,7 +688,6 @@ export default {
         { value: "hardware", text: "Hardware" },
         { value: "ui-ux", text: "UI/UX" },
         { value: "git-github-and-version-control", text: "Git/GitHub and Version Control" },
-        // { value: "game-development", text: "Game Development" },
         // { value: "quantum-computing", text: "Quantum Computing" },
         // { value: "cybersecurity", text: "Cybersecurity" },
         // { value: "user-interface-design", text: "User Interface Design" },

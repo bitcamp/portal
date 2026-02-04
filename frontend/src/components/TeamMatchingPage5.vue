@@ -73,7 +73,8 @@
             <b-form-radio value="quantum"> Quantum </b-form-radio>
             <b-form-radio value="cybersecurity"> Game Dev </b-form-radio>
             <b-form-radio value="ml"> Machine Learning </b-form-radio>
-            <b-form-radio value="app dev"> App Dev </b-form-radio>
+            <b-form-radio value="data_science"> Data Science </b-form-radio>
+            <b-form-radio value="app_dev"> App Dev </b-form-radio>
           </b-form-radio-group>
           <div v-if="showInvalid('track')" class="invalid-feedback d-block">
             Please select an answer
