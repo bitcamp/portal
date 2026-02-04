@@ -152,8 +152,10 @@
           >
             <h5 class="track-title">Game Development</h5>
             <p>
-              Explore the realm of cybersecurity and understand various aspects of the field through
-              interactive workshops and real-world applications.
+              Ever wanted to make a game in a weekend? Join the Game Dev track! Build a game around
+              a surprise theme using any tools or engines you like, attend optional
+              beginner-friendly workshops, collaborate with others, and showcase your creativity by
+              the end of the hackathon!
             </p>
           </b-card>
         </label>

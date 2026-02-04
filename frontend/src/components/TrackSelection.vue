@@ -116,10 +116,10 @@
             <b-card class="h-100 w-100 general" :class="{ active: card === 'game_dev' }">
               <h4>Game Development</h4>
               <p>
-                One of our newest tracks! Explore the realm of cybersecurity and understand various
-                aspects of the field through interactive workshops that include discussions of web
-                vulnerabilities, real-world applications of combating security weaknesses, and
-                ethical decision-making.
+                Ever wanted to make a game in a weekend? Join the Game Dev track! Build a game
+                around a surprise theme using any tools or engines you like, attend optional
+                beginner-friendly workshops, collaborate with others, and showcase your creativity
+                by the end of the hackathon!
               </p>
             </b-card>
           </div>
