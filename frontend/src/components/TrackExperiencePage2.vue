@@ -150,7 +150,7 @@
             class="track-card"
             :class="{ 'track-card--active': formData.track_selected === 'game_dev' }"
           >
-            <h5 class="track-title">Game Development</h5>
+            <h5 class="track-title">Game Dev</h5>
             <p>
               Ever wanted to make a game in a weekend? Join the Game Dev track! Build a game around
               a surprise theme using any tools or engines you like, attend optional

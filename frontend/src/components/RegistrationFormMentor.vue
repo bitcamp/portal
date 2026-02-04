@@ -745,9 +745,9 @@ export default {
       mentor_tracks_other: false,
       mentor_tracks_other_text: "",
       mentor_tracks_options: [
-        { value: "app_dev", text: "App Development" },
+        { value: "app_dev", text: "App Dev" },
         { value: "data_science", text: "Data Science" },
-        { value: "game_dev", text: "Game Development" },
+        { value: "game_dev", text: "Game Dev" },
         { value: "machine_learning", text: "Machine Learning" },
         { value: "quantum", text: "Quantum" },
         { value: "not_interested", text: "Not Interested" },

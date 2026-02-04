@@ -114,7 +114,7 @@
               @click="onSelectTrack('game_dev')"
             />
             <b-card class="h-100 w-100 general" :class="{ active: card === 'game_dev' }">
-              <h4>Game Development</h4>
+              <h4>Game Dev</h4>
               <p>
                 Ever wanted to make a game in a weekend? Join the Game Dev track! Build a game
                 around a surprise theme using any tools or engines you like, attend optional
