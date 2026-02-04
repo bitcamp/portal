@@ -289,7 +289,6 @@
             >
           </template>
           <b-form-checkbox-group v-model="formData.prizes" stacked @change="touched.prizes = true">
-            <b-form-checkbox value="unwrapped"> Bitcamp Unwrapped </b-form-checkbox>
             <b-form-checkbox value="hardware"> Best Hardware Hack </b-form-checkbox>
             <b-form-checkbox value="bitcamp"> Best Bitcamp Hack </b-form-checkbox>
             <b-form-checkbox value="first_time"> Best First Time Hack </b-form-checkbox>
