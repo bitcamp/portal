@@ -11,30 +11,30 @@
         <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="mentor"
-            role-title="MENTOR"
+            role-title="REGISTER"
             role-description="As a mentor, leverage your expertise to guide and inspire
             the next generation of tech enthusiasts. Become a key figure in shaping the
             experience for participants as they navigate through the hackathon challenges."
             role-u-r-l="/mentor"
-            svg-image-path="splash-screen/red-alien.svg"
+            svg-image-path="splash-screen/green-alien.svg"
           />
         </b-col>
         <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="hacker"
-            role-title="HACKER"
+            role-title="REGISTER"
             role-description="As a hacker, you'll be at the forefront of problem-solving
             and innovation. Dive into challenging projects, showcase your coding skills,
             and be part of a community dedicated to pushing the boundaries of technology."
             role-u-r-l="/hacker"
-            svg-image-path="splash-screen/green-alien.svg"
+            svg-image-path="splash-screen/red-alien.svg"
           />
         </b-col>
 
         <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
           <CardButton
             data-role="volunteer"
-            role-title="VOLUNTEER"
+            role-title="REGISTER"
             role-description="As a volunteer, your support ensures the smooth execution
             of our hackathon. From logistics to participant assistance, your
             contribution will help create a positive environment for everyone!"
@@ -111,6 +111,8 @@ export default {
 .row {
   display: flex;
   flex-wrap: wrap;
+  align-items: center; 
+  justify-content: center;
 }
 
 .marshie-card {
@@ -122,6 +124,10 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.7); 
+  
+  /* Rounded Corners */
+  border-radius: 13.83px;
 }
 
 @media (max-width: 768px) {

@@ -2,6 +2,9 @@
 <template>
   <b-card class="role-card">
     <div class="card-content-wrapper"> 
+      <div class="marshie-label">
+        {{ $attrs['data-role'] }}
+      </div>
       <div class="image-container">
         <img
           v-if="svgImagePath"
@@ -30,39 +33,6 @@
     </div>
   </b-card>
 </template>
-
-
-    <!-- <div>
-      <img
-        v-if="svgImagePath"
-        :src="require(`@/assets/${svgImagePath}`)"
-        class="role-logo"
-      >
-
-      <div
-        class="title-container"
-        @click="redirectToRole"
-      >
-        <div class="effect-box" />
-        <div>
-          <h2 class="role-title">
-            {{ roleTitle }}
-          </h2>
-        </div>
-      </div>
-    </div>
-    <div
-      v-b-tooltip.hover.bottom
-      :title="roleDescription"
-    >
-      <b-icon
-        style="color: white;"
-        scale="1.5"
-        icon="info-circle"
-      />
-    </div>
-  </b-card>
-</template> -->
 
 <script>
 import Vue from 'vue';
@@ -108,11 +78,22 @@ export default {
 }
 
 .image-container {
-  height: 250px; /* Adjust this value if they look too high/low */
-  width: 100%;
+  height: 180px; 
+  width: 110%;
   display: flex;
-  align-items: flex-end; /* Marshies stand on the bottom of this box */
-  justify-content: center;
+  align-items: center; 
+  justify-content: center; 
+  flex-shrink: 0;
+}
+
+.marshie-label {
+  color: #000000; /* Solid black */
+  font-family: 'Aleo';
+  font-weight: 800;
+  font-size: 2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
 }
 
 .card-body {
@@ -135,7 +116,7 @@ export default {
 .role-title {
   font-size: calc(0.8rem + 0.7vw);
   /* font-family: "M PLUS Rounded 1c", sans-serif; */
-  border-radius: 5px;
+  border-radius: 50px;
   padding: 5px 20px;
   margin-bottom: 0;
   transition: all .3s ease;
@@ -153,7 +134,8 @@ export default {
 
 /* Specific styles for each button */
 .role-card .role-title {
-  background: linear-gradient(90deg, #ea1d9b, #fca5a5);
+  background: #FF6F3F;
+  border: 2.33px solid #E54D1A;
 
   color: white;
   display: flex;
@@ -176,24 +158,29 @@ export default {
 }
 
 .role-logo {
-  width: auto;
+  width: 80%;
   max-width: 110%;
   max-height: 100%; /* Keeps the image within the 250px box */
   margin-bottom: 10px;
 }
 
-.role-card[data-role="hacker"] {
-  max-width: 70%; 
-  margin: 0 auto;
-  padding-top: 20px;
-}
-
-.role-card[data-role="volunteer"] {
-  max-width: 90%; 
-}
-
 .role-card[data-role="volunteer"] .role-logo {
   margin-bottom: -2px; 
+  width: 70%;
+}
+
+.role-card[data-role="mentor"] .role-logo {
+  width: 55%; 
+}
+
+.role-card[data-role="hacker"] .role-logo {
+  transform: rotate(10.81deg);
+}
+
+.b-icon {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #666 !important;
 }
 
 @media (max-width: 768px) {
