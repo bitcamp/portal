@@ -421,7 +421,7 @@
               At Bitcamp, hackers can choose to engage in a variety of tracks, and could benefit
               from mentors with specific experience. Are you interested in mentoring in any of the
               following tracks? For more information about each track, click
-              <a href="https://bit.camp/#tracks">here</a>.
+              <a href="https://bit.camp/#tracks" target="_blank" rel="noopener noreferrer">here</a>.
             </p>
             <b-form-group v-slot="{ ariaDescribedby }" class="mt-2 mb-1">
               <b-form-checkbox
