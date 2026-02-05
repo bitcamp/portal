@@ -193,5 +193,16 @@ export default {
   .role-description {
     text-align: center;
   }
+
+  .title-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  padding: 4px 7px;
+  border-radius: 10px;
+  transition: all .3s ease;
+  width: 100%;
+}
 }
 </style>

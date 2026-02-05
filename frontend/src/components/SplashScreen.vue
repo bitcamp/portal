@@ -67,7 +67,7 @@ export default {
   width: 100%;
 
   /* background image from assets */
-  background-image: url("~@/assets/registerpagefinal.svg");
+  background-image: url("~@/assets/updated-reg-page.svg");
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
@@ -166,14 +166,18 @@ export default {
 }
 
 @media (max-width: 768px) {
+
   .screen-container {
     display: grid;
-    /* margin-top: 3vw; */
     padding: 0 7vh 10vw;
+    background-position: center center;
+    background-image: url("~@/assets/reg-page-mobile.svg") !important;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   .register-logo {
-    width: 100%;
+    width: 60%;
     height: auto; /* Maintain aspect ratio */
     margin: 0 7.5vw 10px; /* Reduced bottom margin to bring it closer to the card container */
   }
@@ -183,12 +187,14 @@ export default {
     flex-direction: row;
     margin-bottom: 10px;
   }
+
   .bitcamp-logo {
-    width: 50%;
+    width: 40%;
     height: auto; /* Maintain aspect ratio */
     margin-top: 100px;
     margin-bottom: 20px;
   }
+  
   .mb-4 {
     padding: 0;
   }
