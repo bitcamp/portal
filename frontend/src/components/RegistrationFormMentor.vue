@@ -1216,7 +1216,7 @@ p {
 }
 
 .info {
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-align: left !important;
   margin-bottom: 1.25rem;
 }

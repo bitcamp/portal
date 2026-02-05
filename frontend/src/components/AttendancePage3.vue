@@ -34,6 +34,9 @@
     <b-form @submit.prevent="handleNext">
       <div v-if="!atNoTransportUnis()">
         <h4 class="section-title">Travel and Transportation</h4>
+        <p class="info">
+          Bitcamp is offering travel reimbursements through a rolling application this year. The application will be emailed to hackers who expressed interest in travel reimbursement during registration. We will consider reimbursing public transportation, rideshare, and inter-state travel. Please note that we cannot guarantee reimbursement or full coverage due to budget limits. Reimbursement decisions will be sent within 3-4 days after applying. For more details, check out our website FAQ or BitBot.
+        </p>
         <div class="mt-2 form-group">
           <label class="form-label">
             Would you need travel assistance to the hackathon?
@@ -486,7 +489,7 @@ export default {
 .info {
   font-size: 0.95rem;
   opacity: 0.9;
-  color: #777;
+  color: #555;
   margin-bottom: 18px;
 }
 
