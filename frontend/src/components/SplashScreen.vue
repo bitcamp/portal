@@ -1,50 +1,52 @@
 <template>
-  <b-container class="screen-container">
-    <b-row class="mb-4 pb-5">
-      <div class="logos">
-        <img src="@/assets/logotype.svg" alt="Bitcamp logo" class="bitcamp-logo" />
-        <img src="@/assets/register.svg" alt="Register Sign" class="register-logo" />
-      </div>
-    </b-row>
-    <b-container class="card-container mb-5">
-      <b-row>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
-          <CardButton
-            data-role="mentor"
-            role-title="REGISTER"
-            role-description="As a mentor, leverage your expertise to guide and inspire
-            the next generation of tech enthusiasts. Become a key figure in shaping the
-            experience for participants as they navigate through the hackathon challenges."
-            role-u-r-l="/mentor"
-            svg-image-path="splash-screen/green-alien.svg"
-          />
-        </b-col>
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
-          <CardButton
-            data-role="hacker"
-            role-title="REGISTER"
-            role-description="As a hacker, you'll be at the forefront of problem-solving
-            and innovation. Dive into challenging projects, showcase your coding skills,
-            and be part of a community dedicated to pushing the boundaries of technology."
-            role-u-r-l="/hacker"
-            svg-image-path="splash-screen/red-alien.svg"
-          />
-        </b-col>
-
-        <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
-          <CardButton
-            data-role="volunteer"
-            role-title="REGISTER"
-            role-description="As a volunteer, your support ensures the smooth execution
-            of our hackathon. From logistics to participant assistance, your
-            contribution will help create a positive environment for everyone!"
-            role-u-r-l="/volunteer"
-            svg-image-path="splash-screen/blue-alien.svg"
-          />
-        </b-col>
+  <div class="screen-container">
+    <b-container>
+      <b-row class="mb-4 pb-5">
+        <div class="logos">
+          <img src="@/assets/logotype.svg" alt="Bitcamp logo" class="bitcamp-logo" />
+          <img src="@/assets/register.svg" alt="Register Sign" class="register-logo" />
+        </div>
       </b-row>
+      <b-container class="card-container mb-5">
+        <b-row>
+          <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+            <CardButton
+              data-role="mentor"
+              role-title="REGISTER"
+              role-description="As a mentor, leverage your expertise to guide and inspire
+              the next generation of tech enthusiasts. Become a key figure in shaping the
+              experience for participants as they navigate through the hackathon challenges."
+              role-u-r-l="/mentor"
+              svg-image-path="splash-screen/green-alien.svg"
+            />
+          </b-col>
+          <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+            <CardButton
+              data-role="hacker"
+              role-title="REGISTER"
+              role-description="As a hacker, you'll be at the forefront of problem-solving
+              and innovation. Dive into challenging projects, showcase your coding skills,
+              and be part of a community dedicated to pushing the boundaries of technology."
+              role-u-r-l="/hacker"
+              svg-image-path="splash-screen/red-alien.svg"
+            />
+          </b-col>
+
+          <b-col :md="screenWidth >= 768 ? 6 : 4" class="mb-4 marshie-card">
+            <CardButton
+              data-role="volunteer"
+              role-title="REGISTER"
+              role-description="As a volunteer, your support ensures the smooth execution
+              of our hackathon. From logistics to participant assistance, your
+              contribution will help create a positive environment for everyone!"
+              role-u-r-l="/volunteer"
+              svg-image-path="splash-screen/blue-alien.svg"
+            />
+          </b-col>
+        </b-row>
+      </b-container>
     </b-container>
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -60,11 +62,24 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500&display=swap");
 .screen-container {
-  align-items: center;
-  justify-content: center;
+  /* ensure the container fills the viewport so the background image covers fully */
+  min-height: 100vh;
+  width: 100%;
+
+  /* background image from assets */
+  background-image: url("~@/assets/registerpagefinal.svg");
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+
   display: flex;
   flex-direction: column;
-  height: 100vh;
+
+  /* padding-top: 40px; */
+}
+
+.screen-container .row:first-child {
+  margin-top: 0;
 }
 
 .role-card {
@@ -104,7 +119,7 @@ export default {
 .bitcamp-logo {
   width: 20%;
   height: auto; /* Maintain aspect ratio */
-  margin-top: 100px;
+  /* margin-top: 100px; */
   margin-bottom: 20px;
 }
 
@@ -133,7 +148,7 @@ export default {
 @media (max-width: 768px) {
   .screen-container {
     display: grid;
-    margin-top: 3vw;
+    /* margin-top: 3vw; */
     padding: 0 7vh 10vw;
   }
 

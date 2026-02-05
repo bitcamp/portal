@@ -11,19 +11,19 @@
 /* Aleo */
 
 body {
-  background-image: none !important;
+  background-image: url("~@/assets/registerpagefinal.svg") !important;
   background-color: transparent !important;
 
   /* Full-page orange gradient */
-  background: linear-gradient(
+  /* background: linear-gradient(
     135deg,
     #f97345 0%,
     #f9ad4b 55%,
     #f5a13e 100%
-  ) fixed !important;
+  ) fixed !important; */
 
-  background-repeat: no-repeat !important;
   background-size: cover !important;
+  background-repeat: no-repeat !important;
   margin: 0;
   padding: 0;
 }
@@ -31,17 +31,17 @@ body {
 @media (max-width: 768px) {
   body {
     background-repeat: no-repeat;
-    height: auto;
-    background-image: url("Purplecavestretchedevenmore-new.svg");
-    max-height: 100vh;
+    height: 100vh;
+    background-image: url("~@/assets/registerpagefinal.svg");
+    background-size: 100% 100%;
   }
 }
 @media (max-width: 564px) {
   body {
     background-repeat: no-repeat;
-    height: auto;
-    background-image: url("Purplecavestretchedevenmore.svg");
-    max-height: 100vh;
+    height: 100vh;
+    background-image: url("~@/assets/registerpagefinal.svg");
+    background-size: 100% 100%;
   }
 }
 
