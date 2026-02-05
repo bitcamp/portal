@@ -11,39 +11,44 @@
 /* Aleo */
 
 body {
-  /* background-image: url("~@/assets/updated-reg-page.svg");
-  background-color: transparent !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: top center; */
-
-  /* Full-page blue gradient */
-  background: linear-gradient(
-    #010218 0%,
-    #121743 33%,
-    #1F2C52 67%,
-    #282F59 100%
-  ) fixed;
+  background-image:
+  url("~@/assets/orange-planet.svg"),
+    linear-gradient(
+      #010218 0%,
+      #121743 33%,
+      #1F2C52 67%,
+      #282F59 100%
+    );
   margin: 0;
   padding: 0;
+  background-repeat: no-repeat;
+  background-size: 100%, cover; 
+  background-position: center bottom, top center; 
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
+  body {
+    background-image:
+    url("~@/assets/orange-planet.svg"),
+      linear-gradient(
+        #010218 0%,
+        #121743 33%,
+        #1F2C52 67%,
+        #282F59 100%
+      );
+    background-repeat: no-repeat;
+    background-size: cover, cover; 
+  background-position: center bottom, top center; 
+  }
+} */
+/* @media (max-width: 564px) {
   body {
     background-image: url("~@/assets/reg-page-mobile.svg");
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
   }
-}
-@media (max-width: 564px) {
-  body {
-    background-image: url("~@/assets/reg-page-mobile.svg");
-    background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
-}
+} */
 
 /* COLORS */
 :root {

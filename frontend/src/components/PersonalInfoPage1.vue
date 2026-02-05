@@ -240,10 +240,6 @@
       </b-form-row>
 
       <div class="actions">
-        <b-button type="button" class="submit-btn prev-btn" @click="$emit('previous')">
-          <b-icon icon="arrow-left" class="mr-1" /> Previous
-        </b-button>
-
         <b-button type="submit" class="submit-btn next-btn">
           Next Step <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
@@ -583,7 +579,7 @@ export default {
 
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 40px;
 }
 
@@ -591,12 +587,6 @@ export default {
   padding: 12px 24px;
   font-weight: 700;
   border-radius: 8px;
-}
-
-.prev-btn {
-  background: transparent;
-  color: #f97345 !important;
-  border: 1px solid #f97345 !important;
 }
 
 .next-btn {
