@@ -145,6 +145,26 @@ export default {
   border-radius: 13.83px;
 }
 
+@keyframes slideUp {
+  from {
+    background-position: center 120%;
+  }
+  to {
+    background-position: top center;
+  }
+}
+
+.screen-container {
+  animation: slideUp 1s ease-out forwards;
+}
+
+@media (max-width: 990px) {
+  .marshie-card {
+    flex: 0 0 100%;
+    max-width: 60%;
+  }
+}
+
 @media (max-width: 768px) {
   .screen-container {
     display: grid;
