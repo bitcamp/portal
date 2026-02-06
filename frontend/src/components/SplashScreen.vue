@@ -100,7 +100,7 @@ export default {
 }
 
 .register-logo {
-  width: 65%;
+  width: 45%;
   height: auto; /* Maintain aspect ratio */
   margin: 0px 0;
 }
@@ -126,7 +126,7 @@ export default {
 .row {
   display: flex;
   flex-wrap: wrap;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
 }
 
@@ -139,8 +139,8 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.7); 
-  
+  background-color: rgba(255, 255, 255, 0.7);
+
   /* Rounded Corners */
   border-radius: 13.83px;
 }
@@ -161,12 +161,11 @@ export default {
 @media (max-width: 990px) {
   .marshie-card {
     flex: 0 0 100%;
-    max-width: 60%;
+    max-width: 75%;
   }
 }
 
 @media (max-width: 768px) {
-
   .screen-container {
     display: grid;
     padding: 0 7vh 10vw;
@@ -177,9 +176,9 @@ export default {
   }
 
   .register-logo {
-    width: 60%;
+    width: 100%;
     height: auto; /* Maintain aspect ratio */
-    margin: 0 7.5vw 10px; /* Reduced bottom margin to bring it closer to the card container */
+    margin: 0 7.5vw 10px;
   }
 
   .card-container {
@@ -194,10 +193,9 @@ export default {
     margin-top: 100px;
     margin-bottom: 20px;
   }
-  
+
   .mb-4 {
     padding: 0;
   }
 }
-
 </style>
