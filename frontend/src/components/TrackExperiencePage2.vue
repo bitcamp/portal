@@ -9,16 +9,11 @@
     </p>
 
     <div class="stepper">
-      <div
-        v-for="step in steps"
-        :key="step.number"
-        class="stepper-item"
-        :class="{
-          active: step.number === currentPage,
-          completed: step.number < currentPage,
-          inactive: step.number > currentPage,
-        }"
-      >
+      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
+        active: step.number === currentPage,
+        completed: step.number < currentPage,
+        inactive: step.number > currentPage,
+      }">
         <div class="stepper-circle">
           <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -41,16 +36,10 @@
 
       <div class="track-scroll">
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="general"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card general-card"
-            :class="{ 'track-card--active': formData.track_selected === 'general' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="general"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card general-card"
+            :class="{ 'track-card--active': formData.track_selected === 'general' }">
             <h5 class="track-title">General</h5>
             <p>
               For any and all hackers! Build the perfect hack using hardware, software, and
@@ -61,16 +50,9 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="quantum"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'quantum' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="quantum"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'quantum' }">
             <h5 class="track-title">Quantum</h5>
             <p>
               Hackers will delve into the field of quantum computing with exclusive mentors,
@@ -81,36 +63,9 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="data_science"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'data_science' }"
-          >
-            <h5 class="track-title">Data Science</h5>
-            <p>
-              The Data Science track introduces beginners to working with data through workshops and
-              guided mini-projects. Hackers will explore data cleaning, analysis, and visualization
-              to discover meaning and patterns from data!
-            </p>
-          </b-card>
-        </label>
-
-        <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="machine_learning"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'machine_learning' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="machine_learning"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'machine_learning' }">
             <h5 class="track-title">Machine Learning</h5>
             <p>
               If you are amazed by AI breakthroughs like ChatGPT and driven to create something
@@ -121,16 +76,9 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="app_dev"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'app_dev' }"
-          >
+          <input v-model="formData.track_selected" type="radio" value="app_dev"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'app_dev' }">
             <h5 class="track-title">App Dev</h5>
             <p>
               Ready to turn your innovative app idea into a reality? Join the App Dev track and
@@ -140,22 +88,13 @@
         </label>
 
         <label class="track-card-wrapper">
-          <input
-            v-model="formData.track_selected"
-            type="radio"
-            value="game_dev"
-            @click="touched.track_selected = true"
-          />
-          <b-card
-            class="track-card"
-            :class="{ 'track-card--active': formData.track_selected === 'game_dev' }"
-          >
-            <h5 class="track-title">Game Dev</h5>
+          <input v-model="formData.track_selected" type="radio" value="cybersecurity"
+            @click="touched.track_selected = true" />
+          <b-card class="track-card" :class="{ 'track-card--active': formData.track_selected === 'cybersecurity' }">
+            <h5 class="track-title">Cybersecurity</h5>
             <p>
-              Ever wanted to make a game in a weekend? Join the Game Dev track! Build a game around
-              a surprise theme using any tools or engines you like, attend optional
-              beginner-friendly workshops, collaborate with others, and showcase your creativity by
-              the end of the hackathon!
+              Explore the realm of cybersecurity and understand various aspects of the field through
+              interactive workshops and real-world applications.
             </p>
           </b-card>
         </label>
@@ -168,21 +107,13 @@
         </label>
         <div class="radio-inline-group">
           <label class="radio-inline">
-            <input
-              v-model="formData.quantum_track"
-              type="radio"
-              value="beginner"
-              @click="touched.quantum_track = true"
-            />
+            <input v-model="formData.quantum_track" type="radio" value="beginner"
+              @click="touched.quantum_track = true" />
             Beginner
           </label>
           <label class="radio-inline">
-            <input
-              v-model="formData.quantum_track"
-              type="radio"
-              value="advanced"
-              @click="touched.quantum_track = true"
-            />
+            <input v-model="formData.quantum_track" type="radio" value="advanced"
+              @click="touched.quantum_track = true" />
             Advanced
           </label>
         </div>
@@ -193,8 +124,8 @@
 
       <div class="mt-4 form-group">
         <label class="form-label">
-          Although we are not offering a beginner track this year, Bitcamp remains committed to
-          being a hackathon for hackers of all skill levels. Would you like us to share
+          Although we are not offering a beginner (general) track this year, Bitcamp remains
+          committed to being a hackathon for hackers of all skill levels. Would you like us to share
           beginner-friendly content with you? <span class="text-danger">*</span>
         </label>
         <div class="radio-inline-group">
@@ -226,42 +157,22 @@
           How many hackathons have you participated in before?
           <span class="text-danger">*</span>
         </template>
-        <b-form-input
-          id="num-hackathons"
-          v-model="formData.hack_count"
-          type="number"
-          :state="showState('hack_count')"
-          placeholder="Number of hackathons here..."
-          @input="touched.hack_count = true"
-        />
+        <b-form-input id="num-hackathons" v-model="formData.hack_count" type="number" :state="showState('hack_count')"
+          placeholder="Number of hackathons here..." @input="touched.hack_count = true" />
       </b-form-group>
 
       <b-form-group>
         <template #label> Why are you interested in attending Bitcamp? </template>
-        <b-form-textarea
-          id="why-bitcamp"
-          v-model="formData.question1"
-          class="form-control"
-          :state="showState('question1')"
-          rows="4"
-          :maxlength="1000"
-          placeholder="Your response here..."
-          @input="touched.question1 = true"
-        />
+        <b-form-textarea id="why-bitcamp" v-model="formData.question1" class="form-control"
+          :state="showState('question1')" rows="4" :maxlength="1000" placeholder="Your response here..."
+          @input="touched.question1 = true" />
       </b-form-group>
 
       <b-form-group>
         <template #label> What do you plan on building at Bitcamp? </template>
-        <b-form-textarea
-          id="what-build"
-          v-model="formData.question2"
-          class="form-control"
-          :state="showState('question2')"
-          rows="4"
-          :maxlength="1000"
-          placeholder="Your response here..."
-          @input="touched.question2 = true"
-        />
+        <b-form-textarea id="what-build" v-model="formData.question2" class="form-control"
+          :state="showState('question2')" rows="4" :maxlength="1000" placeholder="Your response here..."
+          @input="touched.question2 = true" />
       </b-form-group>
 
       <hr class="mt-4" />
@@ -274,49 +185,24 @@
             Do you want to be recruited for jobs?
             <span class="text-danger">*</span>
           </template>
-          <b-form-select
-            id="recruit-select"
-            v-model="formData.recruit"
-            :options="recruitOptions"
-            :state="showState('recruit')"
-            class="form-select"
-            @change="touched.recruit = true"
-          />
+          <b-form-select id="recruit-select" v-model="formData.recruit" :options="recruitOptions"
+            :state="showState('recruit')" class="form-select" @change="touched.recruit = true" />
         </b-form-group>
 
-        <b-form-group class="col-md-6">
-          <template #label>
-            GitHub or Portfolio Link
-            <span v-if="formData.recruit === 'yes'" class="text-danger">*</span>
-          </template>
-          <b-form-input
-            id="github-link"
-            v-model="formData.portfolio"
-            :state="showState('portfolio')"
-            placeholder="github.com/username"
-            @input="touched.portfolio = true"
-          />
+        <b-form-group label="GitHub or Portfolio Link" class="col-md-6">
+          <b-form-input id="github-link" v-model="formData.portfolio" :state="showState('portfolio')"
+            placeholder="github.com/username" @input="touched.portfolio = true" />
         </b-form-group>
       </b-form-row>
 
       <b-form-group label="Resume (.pdf .doc .docx)">
-        <div
-          class="resume-upload"
-          :class="{ 'resume-uploading': isUploading }"
-          @click="triggerResumeFile"
-        >
+        <div class="resume-upload" :class="{ 'resume-uploading': isUploading }" @click="triggerResumeFile">
           <span class="resume-placeholder">
             {{ resumeLabel }}
           </span>
           <span class="resume-browse"> Browse </span>
-          <input
-            id="resume-upload"
-            ref="resumeInput"
-            type="file"
-            class="resume-file-input"
-            accept=".pdf,.doc,.docx,.txt"
-            @change="onResumeChange"
-          />
+          <input id="resume-upload" ref="resumeInput" type="file" class="resume-file-input"
+            accept=".pdf,.doc,.docx,.txt" @change="onResumeChange" />
         </div>
       </b-form-group>
 
@@ -539,8 +425,8 @@ export default {
     },
 
     handleNext(event) {
-      // console.log("TOUCHED", this.touched);
-      // console.log("FORM DATA", this.formData);
+      console.log("TOUCHED", this.touched);
+      console.log("FORM DATA", this.formData);
       event.preventDefault();
 
       if (this.isUploading) {

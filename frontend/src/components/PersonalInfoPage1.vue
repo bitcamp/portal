@@ -13,10 +13,10 @@
         v-for="step in steps"
         :key="step.number"
         class="stepper-item"
-        :class="{
-          active: step.number === currentPage,
+        :class="{ 
+          active: step.number === currentPage, 
           completed: step.number < currentPage,
-          inactive: step.number > currentPage,
+          inactive: step.number > currentPage 
         }"
       >
         <div class="stepper-circle">
@@ -37,12 +37,12 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> First Name <span class="text-danger">*</span> </template>
+          <template #label> First Name <span class="text-danger">*</span></template>
           <b-form-input
             id="input-first-name"
             v-model="formData.first_name"
-            :state="showState('first_name')"
             @input="touched.first_name = true"
+            :state="showState('first_name')"
           />
           <b-form-invalid-feedback :state="showState('first_name')">
             Required field
@@ -50,12 +50,12 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Last Name <span class="text-danger">*</span> </template>
+          <template #label> Last Name <span class="text-danger">*</span></template>
           <b-form-input
             id="input-last-name"
             v-model="formData.last_name"
-            :state="showState('last_name')"
             @input="touched.last_name = true"
+            :state="showState('last_name')"
           />
           <b-form-invalid-feedback :state="showState('last_name')">
             Required field
@@ -65,12 +65,12 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Email <span class="text-danger">*</span> </template>
+          <template #label> Email <span class="text-danger">*</span></template>
           <b-form-input
             v-model="formData.email"
             type="email"
-            :state="showState('email')"
             @input="touched.email = true"
+            :state="showState('email')"
           />
           <b-form-invalid-feedback :state="showState('email')">
             Please enter a valid email
@@ -78,19 +78,12 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Phone Number <span class="text-danger">*</span> </template>
-          <!-- <b-form-input v-model="formData.phone" type="tel" :state="showState('phone')" @input="touched.phone = true" /> -->
+          <template #label> Phone Number <span class="text-danger">*</span></template>
           <b-form-input
             v-model="formData.phone"
             type="tel"
-            inputmode="numeric"
-            pattern="[0-9]*"
+            @input="touched.phone = true"
             :state="showState('phone')"
-            @input="
-              touched.phone = true;
-              phoneHasNonDigits = /\D/.test($event || '');
-            "
-            placeholder="3014051000"
           />
           <b-form-invalid-feedback :state="showState('phone')">
             Please enter a valid phone number
@@ -100,12 +93,12 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Age <span class="text-danger">*</span> </template>
+          <template #label> Age <span class="text-danger">*</span></template>
           <b-form-input
             v-model="formData.age"
             type="number"
-            :state="showState('age')"
             @input="touched.age = true"
+            :state="showState('age')"
           />
           <b-form-invalid-feedback :state="showState('age')">
             Please enter your real age
@@ -113,12 +106,12 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Country of Residence <span class="text-danger">*</span> </template>
+          <template #label> Country of Residence <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.country_of_residence"
             :options="countryOptions"
-            :state="showState('country_of_residence')"
             @change="touched.country_of_residence = true"
+            :state="showState('country_of_residence')"
           />
           <b-form-invalid-feedback :state="showState('country_of_residence')">
             Required field
@@ -128,12 +121,12 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Gender Identity <span class="text-danger">*</span> </template>
+          <template #label> Gender Identity <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.gender"
             :options="genderOptions"
-            :state="showState('gender')"
             @change="touched.gender = true"
+            :state="showState('gender')"
           />
           <b-form-invalid-feedback :state="showState('gender')">
             Required field
@@ -141,44 +134,8 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Race / Ethnicity <span class="text-danger">*</span> </template>
-          <b-form-tags
-            id="tags-component-select"
-            v-model="formData.ethnicity"
-            size="lg"
-            class="mb-2"
-            add-on-change
-            no-outer-focus
-            @input="touched.ethnicity = true"
-          >
-            <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-              <b-form-select
-                v-bind="inputAttrs"
-                :disabled="disabled || availableOptions.length === 0"
-                :options="availableOptions"
-                v-on="inputHandlers"
-                class="mb-2"
-              >
-                <template #first>
-                  <option disabled value="">Select...</option>
-                </template>
-              </b-form-select>
-              <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                  <b-form-tag
-                    :title="tag"
-                    :disabled="disabled"
-                    variant="info"
-                    @remove="removeTag(tag)"
-                    class="mb-1"
-                  >
-                    {{ getTagText(tag, ethnicityOptionsSelect) }}
-                  </b-form-tag>
-                </li>
-              </ul>
-            </template>
-          </b-form-tags>
-          <!-- <b-form-select
+          <template #label> Race / Ethnicity <span class="text-danger">*</span></template>
+          <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
             @change="touched.ethnicity = true"
@@ -196,7 +153,7 @@
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label> School Name <span class="text-danger">*</span> </template>
+          <template #label> School Name <span class="text-danger">*</span></template>
           <vue-bootstrap-autocomplete
             v-model="formData.school"
             no-results-info="No results found."
@@ -216,11 +173,7 @@
 
       <b-form-row>
         <div class="col-12">
-          <b-form-checkbox
-            v-model="formData.school_other_selected"
-            class="school-not-listed"
-            @change="resetSchool"
-          >
+          <b-form-checkbox v-model="formData.school_other_selected" @change="resetSchool">
             My school is not listed
           </b-form-checkbox>
         </div>
@@ -229,9 +182,9 @@
           <b-form-input
             v-if="formData.school_other_selected"
             v-model="formData.school_other"
+            @input="touched.school_other = true"
             :state="showState('school_other')"
             placeholder="Other school"
-            @input="touched.school_other = true"
           />
           <b-form-invalid-feedback :state="showState('school_other')">
             Please enter a valid school
@@ -241,12 +194,12 @@
 
       <b-form-row>
         <b-form-group class="col-md-6">
-          <template #label> Current Level of Study <span class="text-danger">*</span> </template>
+          <template #label> Current Level of Study <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.school_year"
             :options="schoolYearOptions"
-            :state="showState('school_year')"
             @change="touched.school_year = true"
+            :state="showState('school_year')"
           />
           <b-form-invalid-feedback :state="showState('school_year')">
             Required Field
@@ -254,12 +207,12 @@
         </b-form-group>
 
         <b-form-group class="col-md-6">
-          <template #label> Primary Major <span class="text-danger">*</span> </template>
+          <template #label> Primary Major <span class="text-danger">*</span></template>
           <b-form-select
             v-model="formData.major"
             :options="majorOptions"
-            :state="showState('major')"
             @change="touched.major = true"
+            :state="showState('major')"
           />
           <b-form-invalid-feedback :state="showState('major')">
             Required Field
@@ -273,42 +226,16 @@
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label> Select all that apply <span class="text-danger">*</span> </template>
-          <b-form-tags
-            id="heard-from-tags"
+          <template #label> Select one <span class="text-danger">*</span></template>
+          <b-form-select
             v-model="formData.heard_from"
-            @input="touched.heard_from = true"
-            size="lg"
-            add-on-change
-            no-outer-focus
-          >
-            <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-              <b-form-select
-                v-bind="inputAttrs"
-                :disabled="disabled || availableHeardFromOptions.length === 0"
-                :options="availableHeardFromOptions"
-                v-on="inputHandlers"
-                class="mb-2"
-              >
-                <template #first>
-                  <option disabled value="">Select...</option>
-                </template>
-              </b-form-select>
-              <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                  <b-form-tag
-                    :title="tag"
-                    :disabled="disabled"
-                    variant="info"
-                    @remove="removeTag(tag)"
-                    class="mb-1"
-                  >
-                    {{ getTagText(tag, heardFromOptions) }}
-                  </b-form-tag>
-                </li>
-              </ul>
-            </template>
-          </b-form-tags>
+            :options="heardFromOptions"
+            @change="touched.heard_from = true"
+            :state="showState('heard_from')"
+          />
+          <b-form-invalid-feedback :state="showState('heard_from')">
+            Required field
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
