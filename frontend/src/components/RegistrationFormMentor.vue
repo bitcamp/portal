@@ -676,7 +676,7 @@ export default {
       skill_options: [
         { value: "web-development", text: "Web Development" },
         { value: "mobile-application-development", text: "Mobile Application Development" },
-        { value: "game-development", text: "Game Development" },
+        { value: "game-development", text: "Gamee Development" },
         { value: "ar-vr", text: "AR/VR" },
         { value: "artificial-intelligence", text: "Artificial Intelligence" },
         { value: "machine-learning", text: "Machine Learning" },
