@@ -10,6 +10,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Aleo');
 /* Aleo */
 
+html,
+body {
+  min-height: 100%;
+  height: auto;
+}
+
 body {
   background-image:
   url("~@/assets/orange-planet.svg"),
