@@ -23,9 +23,7 @@
           <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
         </div>
-        <div class="stepper-label">
-          {{ step.label }}
-        </div>
+        <div class="stepper-label">{{ step.label }}</div>
       </div>
     </div>
 
@@ -183,12 +181,12 @@
           <!-- <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
-            :state="showState('ethnicity')"
             @change="touched.ethnicity = true"
+            :state="showState('ethnicity')"
           />
           <b-form-invalid-feedback :state="showState('ethnicity')">
             Required field
-          </b-form-invalid-feedback> -->
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -315,10 +313,6 @@
       </b-form-row>
 
       <div class="actions">
-        <b-button type="button" class="submit-btn prev-btn" @click="$emit('previous')">
-          <b-icon icon="arrow-left" class="mr-1" /> Previous
-        </b-button>
-
         <b-button type="submit" class="submit-btn next-btn">
           Next Step <b-icon icon="arrow-right" class="ml-1" />
         </b-button>
@@ -391,7 +385,7 @@ export default {
       touched: Object.fromEntries(firstPageValidatedFields.map((key) => [key, false])),
 
       heardFromOptions: [
-        // { value: "", text: "Select one...", disabled: true },
+        { value: "", text: "Select one...", disabled: true },
         { value: "instagram", text: "Instagram" },
         { value: "facebook", text: "Facebook" },
         { value: "twitter", text: "Twitter" },
@@ -415,23 +409,14 @@ export default {
       ],
 
       ethnicityOptionsSelect: [
-        // { value: "", text: "Select one...", disabled: true },
+        { value: "", text: "Select one...", disabled: true },
         { value: "asian-indian", text: "Asian Indian" },
         { value: "black-african", text: "Black or African" },
         { value: "chinese", text: "Chinese" },
         { value: "filipino", text: "Filipino" },
-        { value: "guamanian-chamorro", text: "Guamanian or Chamorro" },
-        { value: "hispanic", text: "Hispanic / Latino / Spanish Origin" },
-        { value: "japanese", text: "Japanese" },
-        { value: "korean", text: "Korean" },
-        { value: "middle-eastern", text: "Middle Eastern" },
-        { value: "native-american-alaskan-native", text: "Native American or Alaskan Native" },
-        { value: "hawaiian", text: "Native Hawaiian" },
-        { value: "samoan", text: "Samoan" },
-        { value: "vietnamese", text: "Vietnamese" },
+        { value: "hispanic", text: "Hispanic / Latino" },
         { value: "white", text: "White" },
-        { value: "other-asian", text: "Other Asian (Thai, Cambodian, etc.)" },
-        { value: "other-pacific-islander", text: "Other Pacific Islander" },
+        { value: "other", text: "Other" },
       ],
 
       schoolYearOptions: [
@@ -461,8 +446,6 @@ export default {
       universityOptions: [...university_list],
 
       countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
-
-      phoneHasNonDigits: false,
     };
   },
 
@@ -477,27 +460,17 @@ export default {
         age: req(this.formData.age) && this.formData.age > 0 && this.formData.age <= 120,
         gender: req(this.formData.gender),
         country_of_residence: req(this.formData.country_of_residence),
-        ethnicity: this.formData.ethnicity.length > 0,
+        ethnicity: req(this.formData.ethnicity),
         school_year: req(this.formData.school_year),
         major: req(this.formData.major),
-        heard_from: this.formData.heard_from.length > 0,
+        heard_from: req(this.formData.heard_from),
         email: EmailValidator.validate(this.formData.email),
-        phone: !this.phoneHasNonDigits && phone && phone.isValid(),
+        phone: phone && phone.isValid(),
         school: !this.formData.school_other_selected
           ? req(this.formData.school) && university_list.includes(this.formData.school)
           : true,
         school_other: this.formData.school_other_selected ? req(this.formData.school_other) : true,
       };
-    },
-
-    availableOptions() {
-      return this.ethnicityOptionsSelect.filter(
-        (opt) => !this.formData.ethnicity.includes(opt.value)
-      );
-    },
-
-    availableHeardFromOptions() {
-      return this.heardFromOptions.filter((opt) => !this.formData.heard_from.includes(opt.value));
     },
 
     school_class() {
@@ -517,6 +490,7 @@ export default {
       if (!this.touched[field]) return null;
       return this.validations[field] === true ? true : false;
     },
+
     resetSchool() {
       if (this.formData.school_other_selected) {
         this.formData.school = "";
@@ -525,10 +499,6 @@ export default {
         this.formData.school_other = "";
         this.touched.school_other = false;
       }
-    },
-    getTagText(value, optionsList) {
-      const option = optionsList.find((opt) => opt.value === value);
-      return option ? option.text : value;
     },
 
     validate() {
@@ -575,10 +545,6 @@ export default {
   font-size: 2.3rem;
   font-weight: 700;
   margin-bottom: 10px;
-}
-
-::v-deep .b-form-tag {
-  background-color: #f97345;
 }
 
 .page-subtitle {
@@ -642,14 +608,11 @@ export default {
 .stepper-label {
   font-size: 0.75rem !important;
   font-weight: 600;
-  color: #837d7d !important;
-  /* Force all labels to stay grey */
+  color: #837d7d !important; /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
   width: 65px;
-  overflow-wrap: normal;
-  word-break: normal;
-  hyphens: none;
+  word-wrap: break-word;
   margin-top: 8px;
 }
 
@@ -659,19 +622,6 @@ export default {
   background: #f97345;
   color: white;
   box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
-}
-
-::v-deep .b-form-tags.form-control {
-  height: auto;
-  padding: 0;
-  border: none;
-  background: none;
-}
-
-::v-deep .school-not-listed .custom-control-label::before,
-::v-deep .school-not-listed .custom-control-label::after {
-  top: 45% !important;
-  transform: translateY(-50%) !important;
 }
 
 .stepper-item.active .stepper-label {
@@ -702,7 +652,7 @@ export default {
 
 .actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 40px;
 }
 
@@ -712,68 +662,68 @@ export default {
   border-radius: 8px;
 }
 
-.prev-btn {
-  background: transparent;
-  color: #f97345 !important;
-  border: 1px solid #f97345 !important;
-}
-
 .next-btn {
   background: #f97345 !important;
   border: none !important;
   color: white !important;
 }
 
+::v-deep .custom-control.custom-radio {
+  display: flex;
+  align-items: center;
+}
+
+::v-deep .custom-control.custom-radio .custom-control-label {
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+::v-deep .custom-control.custom-radio .custom-control-label::before,
+::v-deep .custom-control.custom-radio .custom-control-label::after {
+  top: 45%;
+  transform: translateY(-55%);
+}
+
 @media (max-width: 768px) {
   .page-content {
     padding: 30px 20px;
   }
-
   .page-title {
     font-size: 1.8rem;
   }
-
   .stepper {
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 10px;
   }
-
   .stepper-item {
     flex: 0 0 25%;
     max-width: 25%;
   }
-
   .stepper-circle {
     width: 40px;
     height: 40px;
     font-size: 1.2rem !important;
     margin-bottom: 2px;
   }
-
   .checkmark {
     font-size: 1.2rem;
   }
-
   .stepper-label {
     font-size: 0.65rem !important;
     width: 55px;
   }
-
   .stepper-item:not(:last-child)::after {
     top: 20px;
     height: 2px;
   }
-
   .stepper-item:nth-child(4)::after {
     display: none !important;
   }
-
   .actions {
     flex-direction: column-reverse;
     gap: 15px;
   }
-
   .submit-btn {
     width: 100%;
     padding: 12px;
