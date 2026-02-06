@@ -813,6 +813,8 @@ input[type="radio"]:checked ~ .custom-control-label::after {
   transform: scale(0.7);
   border-radius: 50%;
   box-shadow: 0px 0px 0px 10px inset var(--light-orange);
+  top: 45% !important;
+  transform: translateY(-50%) !important;
 }
 
 input[type="radio"]:checked ~ .custom-control-label::before {
