@@ -1,10 +1,17 @@
 @font-face {
   font-family: "Avenir";
   font-style: normal;
-  font-weight: 301;
-  font-display: auto;
+  font-weight: 300;
   font-display: swap;
-  src: local("Avenir"), url("./AvenirLTStd-Light.otf") format("opentype");
+  src: local("Avenir"), url("/AvenirLTStd-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Avenir"), url("/AvenirLTStd-Light.otf") format("opentype");
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Aleo");

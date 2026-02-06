@@ -1,208 +1,316 @@
-<!-- CardButton.vue -->
 <template>
-  <b-card class="role-card">
-    <div class="card-content-wrapper"> 
+  <b-card class="role-card" :data-role="$attrs['data-role']">
+    <div class="card-content-wrapper">
       <div class="marshie-label">
-        {{ $attrs['data-role'] }}
+        {{ $attrs["data-role"] }}
       </div>
       <div class="image-container">
-        <img
-          v-if="svgImagePath"
-          :src="require(`@/assets/${svgImagePath}`)"
-          class="role-logo"
-        >
+        <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
       </div>
-
       <div class="title-container" @click="redirectToRole">
-        <div class="effect-box" />
         <h2 class="role-title">
           {{ roleTitle }}
         </h2>
       </div>
     </div>
-
-    <div
-      v-b-tooltip.hover.bottom
-      :title="roleDescription"
-    >
-      <b-icon
-        style="color: white;"
-        scale="1.5"
-        icon="info-circle"
-      />
+    <div v-b-tooltip.hover.bottom :title="roleDescription" class="info-icon">
+      <b-icon style="color: white" scale="1.5" icon="info-circle" />
     </div>
   </b-card>
 </template>
-
 <script>
-import Vue from 'vue';
-import { VBTooltipPlugin } from 'bootstrap-vue'
-import { IconsPlugin } from 'bootstrap-vue'
-Vue.use(IconsPlugin)
-Vue.use(VBTooltipPlugin)
-
+import Vue from "vue";
+import { VBTooltipPlugin, IconsPlugin } from "bootstrap-vue";
+Vue.use(IconsPlugin);
+Vue.use(VBTooltipPlugin);
 export default {
   name: "CardButtonComponent",
   props: {
     roleTitle: String,
     roleDescription: String,
     svgImagePath: String,
-    roleURL: String, // The route path to redirect when the card is clicked
+    roleURL: String,
   },
   methods: {
     redirectToRole() {
-      // Use router to navigate to the specified role path
       this.$router.push({ path: this.roleURL });
     },
   },
 };
 </script>
-
 <style scoped>
-.role-card {  
-  background-color: #ffffff00;
+.role-card {
+  background-color: rgba(255, 255, 255, 0.7);
   border: none;
-  position: relative;
+  border-radius: 14px;
   overflow: visible;
-  margin: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.role-card :deep(.card-body) {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .card-content-wrapper {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.image-container {
-  height: 180px; 
-  width: 110%;
-  display: flex;
-  align-items: center; 
-  justify-content: center; 
-  flex-shrink: 0;
-}
-
-.marshie-label {
-  color: #000000; /* Solid black */
-  font-family: 'Aleo';
-  font-weight: 800;
-  font-size: 2rem;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-transform: capitalize;
-}
-
-.card-body {
-  padding: 0;
   height: 100%;
 }
 
-.title-container {
-  display: inline-block;
-  position: relative;
-  cursor: pointer;
-  padding: 4px 7px;
-  border-radius: 10px;
-  transition: all .3s ease;
-
-
-  /*max-width: 100%; */
+.marshie-label {
+  color: #1a2e33;
+  font-family: "Aleo", serif;
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 30px 0 15px 0;
+  text-transform: capitalize;
 }
 
-.role-title {
-  font-size: calc(0.8rem + 0.7vw);
-  /* font-family: "M PLUS Rounded 1c", sans-serif; */
-  border-radius: 50px;
-  padding: 5px 20px;
-  margin-bottom: 0;
-  transition: all .3s ease;
-
-}
-
-.role-description {
-  font-size: calc(0.8rem + 0.2vw);
-  /* font-family: "M PLUS Rounded 1c", sans-serif; */
-}
-
-.tooltip {
-  top: 0;
-}
-
-/* Specific styles for each button */
-.role-card .role-title {
-  background: #FF6F3F;
-  border: 2.33px solid #E54D1A;
-
-  color: white;
+.image-container {
+  height: 200px;
+  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-
-  margin-bottom: 10px;
-  height: 50px;
-  width: 200px;
-  text-align: center;
-}
-
-.role-card .role-title:hover {
-  background-color: #FFB169;
-  color: #d1c2c1;
-}
-
-.role-description {
-  text-align: left;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .role-logo {
   width: 80%;
-  max-width: 110%;
-  max-height: 100%; /* Keeps the image within the 250px box */
-  margin-bottom: 10px;
+  max-width: 100%;
+  height: auto;
 }
 
 .role-card[data-role="volunteer"] .role-logo {
-  margin-bottom: -2px; 
   width: 70%;
 }
 
 .role-card[data-role="mentor"] .role-logo {
-  width: 55%; 
+  width: 55%;
 }
 
 .role-card[data-role="hacker"] .role-logo {
+  width: 80%;
   transform: rotate(10.81deg);
 }
 
-.b-icon {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: #666 !important;
-}
-
-@media (max-width: 768px) {
-
-  .role-logo {
-    width: 80%;
-    padding-right: 10px;
-  }
-
-  .role-description {
-    text-align: center;
-  }
-
-  .title-container {
+.title-container {
   display: flex;
   justify-content: center;
-  position: relative;
   cursor: pointer;
   padding: 4px 7px;
   border-radius: 10px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
+  margin-top: 60px;
   width: 100%;
 }
+
+.role-title {
+  font-size: 1.4rem;
+  border-radius: 50px;
+  padding: 0.6em 1.5em;
+  margin: 0;
+  background: #ff6f3f;
+  border: 2.33px solid #e54d1a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.3s ease;
 }
+
+.role-title:hover {
+  background-color: #ffb169;
+  color: #d1c2c1;
+}
+
+.info-icon {
+  margin-top: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.b-icon {
+  color: #666 !important;
+}
+
+/* ---- Mobile: cards stacked vertically (below 768px) ---- */
+@media (max-width: 480px) {
+  .marshie-label {
+    font-size: 1.2rem;
+    margin: 15px 0 8px 0;
+  }
+
+  .image-container {
+    height: 130px;
+  }
+
+  .role-logo {
+    width: 65% !important;
+  }
+
+  .role-card[data-role="volunteer"] .role-logo {
+    width: 55% !important;
+  }
+
+  .role-card[data-role="mentor"] .role-logo {
+    width: 42% !important;
+  }
+
+  .role-card[data-role="hacker"] .role-logo {
+    width: 65% !important;
+  }
+
+  .role-title {
+    font-size: 0.85rem;
+    padding: 0.5em 1.2em;
+  }
+
+  .title-container {
+    margin-top: 20px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 600px) {
+  .marshie-label {
+    font-size: 1.3rem;
+    margin: 18px 0 10px 0;
+  }
+
+  .image-container {
+    height: 145px;
+  }
+
+  .role-logo {
+    width: 68% !important;
+  }
+
+  .role-card[data-role="volunteer"] .role-logo {
+    width: 58% !important;
+  }
+
+  .role-card[data-role="mentor"] .role-logo {
+    width: 45% !important;
+  }
+
+  .role-card[data-role="hacker"] .role-logo {
+    width: 68% !important;
+  }
+
+  .role-title {
+    font-size: 0.9rem;
+    padding: 0.5em 1.2em;
+  }
+
+  .title-container {
+    margin-top: 22px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+  .marshie-label {
+    font-size: 1.4rem;
+    margin: 20px 0 12px 0;
+  }
+
+  .image-container {
+    height: 160px;
+  }
+
+  .role-logo {
+    width: 70% !important;
+  }
+
+  .role-card[data-role="volunteer"] .role-logo {
+    width: 60% !important;
+  }
+
+  .role-card[data-role="mentor"] .role-logo {
+    width: 47% !important;
+  }
+
+  .role-card[data-role="hacker"] .role-logo {
+    width: 70% !important;
+  }
+
+  .role-title {
+    font-size: 1rem;
+    padding: 0.55em 1.3em;
+  }
+
+  .title-container {
+    margin-top: 25px;
+  }
+}
+
+/* ---- Cards side by side (768px+), aligned with Bootstrap md breakpoint ---- */
+@media (min-width: 768px) and (max-width: 991px) {
+  .marshie-label {
+    font-size: 1.4rem;
+    margin: 20px 0 10px 0;
+  }
+
+  .image-container {
+    height: 150px;
+  }
+
+  .role-title {
+    font-size: 0.95rem;
+    padding: 0.5em 1.1em;
+  }
+
+  .title-container {
+    margin-top: 25px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .marshie-label {
+    font-size: 1.6rem;
+    margin: 25px 0 12px 0;
+  }
+
+  .image-container {
+    height: 170px;
+  }
+
+  .role-title {
+    font-size: 1.1rem;
+    padding: 0.55em 1.3em;
+  }
+
+  .title-container {
+    margin-top: 35px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .marshie-label {
+    font-size: 1.8rem;
+    margin: 28px 0 14px 0;
+  }
+
+  .image-container {
+    height: 185px;
+  }
+
+  .role-title {
+    font-size: 1.25rem;
+  }
+
+  .title-container {
+    margin-top: 45px;
+  }
+}
+
+/* 1440px+ uses the defaults defined above */
 </style>
