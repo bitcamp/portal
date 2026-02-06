@@ -9,7 +9,7 @@
       </b-row>
       <b-container fluid class="card-container mb-5">
         <b-row class="cards-row g-4">
-          <b-col cols="12" md="4" class="mb-4 marshie-card">
+          <b-col cols="12" md="4" class="mb-4 marshie-card marshie-card-mentor">
             <CardButton
               data-role="mentor"
               role-title="REGISTER"
@@ -20,7 +20,7 @@
               svg-image-path="splash-screen/green-alien.svg"
             />
           </b-col>
-          <b-col cols="12" md="4" class="mb-4 marshie-card">
+          <b-col cols="12" md="4" class="mb-4 marshie-card marshie-card-hacker">
             <CardButton
               data-role="hacker"
               role-title="REGISTER"
@@ -32,7 +32,7 @@
             />
           </b-col>
 
-          <b-col cols="12" md="4" class="mb-4 marshie-card">
+          <b-col cols="12" md="4" class="mb-4 marshie-card marshie-card-volunteer">
             <CardButton
               data-role="volunteer"
               role-title="REGISTER"
@@ -120,9 +120,20 @@ export default {
 }
 
 /* ---- Mobile stacked (below 768px to match md="4" breakpoint) ---- */
+@media (max-width: 767px) {
+  .cards-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .marshie-card-hacker {
+    order: -1;
+  }
+}
+
 @media (max-width: 480px) {
   .screen-container {
-    padding: 0 20px 40px;
+    padding: 0 50px 40px;
     background-position: center center;
     background-image: url("~@/assets/reg-page-mobile.svg") !important;
     background-size: cover;
@@ -148,15 +159,12 @@ export default {
 
   .marshie-card {
     padding: 0;
-    max-width: 280px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 
 @media (min-width: 481px) and (max-width: 600px) {
   .screen-container {
-    padding: 0 25px 45px;
+    padding: 0 80px 45px;
     background-position: center center;
     background-image: url("~@/assets/reg-page-mobile.svg") !important;
     background-size: cover;
@@ -182,15 +190,12 @@ export default {
 
   .marshie-card {
     padding: 0 10px;
-    max-width: 310px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 
 @media (min-width: 601px) and (max-width: 767px) {
   .screen-container {
-    padding: 0 30px 50px;
+    padding: 0 140px 50px;
     background-position: center center;
     background-image: url("~@/assets/reg-page-mobile.svg") !important;
     background-size: cover;
@@ -216,9 +221,6 @@ export default {
 
   .marshie-card {
     padding: 0 15px;
-    max-width: 340px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }
 

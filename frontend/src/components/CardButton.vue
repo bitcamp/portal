@@ -145,81 +145,13 @@ export default {
 
 /* ---- Mobile: cards stacked vertically (below 768px) ---- */
 @media (max-width: 480px) {
+  .role-card {
+    min-height: 280px;
+  }
+
   .marshie-label {
-    font-size: 1.2rem;
-    margin: 15px 0 8px 0;
-  }
-
-  .image-container {
-    height: 130px;
-  }
-
-  .role-logo {
-    width: 65% !important;
-  }
-
-  .role-card[data-role="volunteer"] .role-logo {
-    width: 55% !important;
-  }
-
-  .role-card[data-role="mentor"] .role-logo {
-    width: 42% !important;
-  }
-
-  .role-card[data-role="hacker"] .role-logo {
-    width: 65% !important;
-  }
-
-  .role-title {
-    font-size: 0.85rem;
-    padding: 0.5em 1.2em;
-  }
-
-  .title-container {
-    margin-top: 20px;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 600px) {
-  .marshie-label {
-    font-size: 1.3rem;
-    margin: 18px 0 10px 0;
-  }
-
-  .image-container {
-    height: 145px;
-  }
-
-  .role-logo {
-    width: 68% !important;
-  }
-
-  .role-card[data-role="volunteer"] .role-logo {
-    width: 58% !important;
-  }
-
-  .role-card[data-role="mentor"] .role-logo {
-    width: 45% !important;
-  }
-
-  .role-card[data-role="hacker"] .role-logo {
-    width: 68% !important;
-  }
-
-  .role-title {
-    font-size: 0.9rem;
-    padding: 0.5em 1.2em;
-  }
-
-  .title-container {
-    margin-top: 22px;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 767px) {
-  .marshie-label {
-    font-size: 1.4rem;
-    margin: 20px 0 12px 0;
+    font-size: 1.1rem;
+    margin: 20px 0 10px 0;
   }
 
   .image-container {
@@ -227,7 +159,7 @@ export default {
   }
 
   .role-logo {
-    width: 70% !important;
+    width: 35% !important;
   }
 
   .role-card[data-role="volunteer"] .role-logo {
@@ -235,20 +167,116 @@ export default {
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 47% !important;
+    width: 55% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
-    width: 70% !important;
+    width: 75% !important;
   }
 
   .role-title {
     font-size: 1rem;
-    padding: 0.55em 1.3em;
   }
 
   .title-container {
-    margin-top: 25px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  .info-icon {
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 600px) {
+  .role-card {
+    min-height: 300px;
+  }
+
+  .marshie-label {
+    font-size: 1.2rem;
+    margin: 22px 0 10px 0;
+  }
+
+  .image-container {
+    height: 170px;
+  }
+
+  .role-logo {
+    width: 32% !important;
+  }
+
+  .role-card[data-role="volunteer"] .role-logo {
+    width: 28% !important;
+  }
+
+  .role-card[data-role="mentor"] .role-logo {
+    width: 22% !important;
+  }
+
+  .role-card[data-role="hacker"] .role-logo {
+    width: 32% !important;
+  }
+
+  .role-title {
+    font-size: 0.75rem;
+    padding: 0.4em 1em;
+  }
+
+  .title-container {
+    margin-top: 18px;
+    margin-bottom: 10px;
+  }
+
+  .info-icon {
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+  .role-card {
+    min-height: 320px;
+  }
+
+  .marshie-label {
+    font-size: 1.3rem;
+    margin: 22px 0 12px 0;
+  }
+
+  .image-container {
+    height: 180px;
+  }
+
+  .role-logo {
+    width: 28% !important;
+  }
+
+  .role-card[data-role="volunteer"] .role-logo {
+    width: 84% !important;
+  }
+
+  .role-card[data-role="mentor"] .role-logo {
+    width: 70% !important;
+  }
+
+  .role-card[data-role="hacker"] .role-logo {
+    width: 88% !important;
+  }
+
+  .role-title {
+    font-size: 1.2rem;
+  }
+
+  .title-container {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .info-icon {
+    padding-top: 5px;
+    padding-bottom: 10px;
   }
 }
 
