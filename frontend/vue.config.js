@@ -1,5 +1,12 @@
 module.exports = {
   lintOnSave: false,
+  chainWebpack: (config) => {
+    config.module
+      .rule("ignore-md")
+      .test(/\.md$/i)
+      .use("null-loader")
+      .loader("null-loader")
+  },
   devServer: {
     disableHostCheck: true,
   },

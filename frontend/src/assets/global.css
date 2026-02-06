@@ -1,49 +1,64 @@
 @font-face {
-  font-family: 'Avenir';
+  font-family: "Avenir";
   font-style: normal;
-  font-weight: 301;
-  font-display: auto;
+  font-weight: 300;
   font-display: swap;
-  src: local('Avenir'), url('./AvenirLTStd-Light.otf') format('opentype');
+  src: local("Avenir"), url("/AvenirLTStd-Light.otf") format("opentype");
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Aleo');
+@font-face {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Avenir"), url("/AvenirLTStd-Light.otf") format("opentype");
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Aleo");
 /* Aleo */
 
+html {
+  min-height: 100%;
+  height: auto;
+  background-color: #010218;
+}
+
 body {
-  background-image: none !important;
-  background-color: transparent !important;
-
-  /* Full-page orange gradient */
-  background: linear-gradient(
-    135deg,
-    #f97345 0%,
-    #f9ad4b 55%,
-    #f5a13e 100%
-  ) fixed !important;
-
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
+  min-height: 100%;
+  height: auto;
+  background-image: url("~@/assets/orange-planet.svg"),
+    linear-gradient(#010218 0%, #121743 33%, #1f2c52 67%, #282f59 100%);
   margin: 0;
   padding: 0;
+  background-repeat: no-repeat;
+  background-size: 100%, cover;
+  background-position: center bottom, top center;
+  background-attachment: fixed;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   body {
+    background-image:
+    url("~@/assets/orange-planet.svg"),
+      linear-gradient(
+        #010218 0%,
+        #121743 33%,
+        #1F2C52 67%,
+        #282F59 100%
+      );
     background-repeat: no-repeat;
-    height: auto;
-    background-image: url("Purplecavestretchedevenmore-new.svg");
-    max-height: 100vh;
+    background-size: cover, cover; 
+  background-position: center bottom, top center; 
   }
-}
-@media (max-width: 564px) {
+} */
+/* @media (max-width: 564px) {
   body {
+    background-image: url("~@/assets/reg-page-mobile.svg");
+    background-size: 100% 100%;
+    background-position: center center;
     background-repeat: no-repeat;
-    height: auto;
-    background-image: url("Purplecavestretchedevenmore.svg");
-    max-height: 100vh;
   }
-}
+} */
 
 /* COLORS */
 :root {
@@ -61,9 +76,11 @@ body {
   --asphalt-grey: #2d2d2d;
   --charcoal-grey: #464343;
   --dark-hero-blue: #087f8a;
-  --orange_grad: radial-gradient(50% 49.08% at 0% 50.92%,
-      #ff793f 48.23%,
-      #ffaf3f 100%);
+  --orange_grad: radial-gradient(
+    50% 49.08% at 0% 50.92%,
+    #ff793f 48.23%,
+    #ffaf3f 100%
+  );
   --light-orange: #ff6f3f;
   --mango-orange: #ffaf3f;
   --flame-red: #ff3f46;
@@ -85,7 +102,7 @@ body {
 }
 
 body {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
 
 h1,
@@ -93,7 +110,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Aleo', sans-serif;
+  font-family: "Aleo", sans-serif;
   font-weight: 600;
   -webkit-font-smoothing: antialiased;
 }
@@ -125,7 +142,7 @@ label {
 
 /* Body 2 */
 .body-2 {
-  font-family: 'Avenir', sans-serif;
+  font-family: "Avenir", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -158,5 +175,5 @@ hr {
 
 /* Google autocomplete styles */
 .pac-container {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
 }
