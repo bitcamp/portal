@@ -765,8 +765,8 @@ export default {
     },
 
     handleNext(event) {
-      console.log("TOUCHED", this.touched);
-      console.log("FORM DATA", this.formData);
+      // console.log("TOUCHED", this.touched);
+      // console.log("FORM DATA", this.formData);
 
       event.preventDefault();
 

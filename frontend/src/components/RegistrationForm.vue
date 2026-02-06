@@ -454,7 +454,7 @@
           <!-- Quantum selection 2 -->
 
           <b-form-group
-            label="Although we are not offering a beginner (general) track this year, Bitcamp remains committed to being a
+            label="Although we are not offering a beginner track this year, Bitcamp remains committed to being a
                   hackathon for hackers of all skill levels and experiences, and we’re working to ensure that our workshops
                   are beginner-friendly. Additionally, we will be creating and offering access to hacker guides, tips on how
                   to make the most of your Bitcamp weekend, and different resources that you can leverage when creating your hack!
@@ -2304,7 +2304,7 @@ export default {
     },
     async registerUser(event) {
       event.preventDefault();
-      console.log(this.form);
+      // console.log(this.form);
       if (this.formCheck()) {
         // prevent blacklisted hackers from registering
         if (this.form.name === "Auran Shereef" || this.form.name === "Monte James") {
@@ -2834,7 +2834,7 @@ export default {
       return valid_form;
     },
     resetSchool(other) {
-      console.log(other);
+      // console.log(other);
       if (other) {
         this.form.school = "Other";
         this.form.school_other = "";
