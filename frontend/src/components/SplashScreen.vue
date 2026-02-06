@@ -71,6 +71,7 @@ export default {
   display: flex;
   flex-direction: column;
   animation: slideUp 1s ease-out forwards;
+  overflow: hidden;
 }
 
 @keyframes slideUp {

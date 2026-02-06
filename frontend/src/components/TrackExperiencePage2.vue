@@ -168,7 +168,7 @@
         </label>
         <div class="radio-inline-group">
           <label class="radio-inline">
-            <input
+            <b-form-radio
               v-model="formData.quantum_track"
               type="radio"
               value="beginner"
@@ -177,7 +177,7 @@
             Beginner
           </label>
           <label class="radio-inline">
-            <input
+            <b-form-radio
               v-model="formData.quantum_track"
               type="radio"
               value="advanced"

@@ -168,7 +168,7 @@
                   <b-form-tag
                     :title="tag"
                     :disabled="disabled"
-                    variant="info"
+                    :style="{ backgroundColor: '#f97345', color: 'white', border: 'none',  }"
                     @remove="removeTag(tag)"
                     class="mb-1"
                   >
@@ -299,7 +299,7 @@
                   <b-form-tag
                     :title="tag"
                     :disabled="disabled"
-                    variant="info"
+                    :style="{ backgroundColor: '#f97345', color: 'white', border: 'none' }"
                     @remove="removeTag(tag)"
                     class="mb-1"
                   >
