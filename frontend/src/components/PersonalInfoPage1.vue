@@ -186,7 +186,7 @@
           />
           <b-form-invalid-feedback :state="showState('ethnicity')">
             Required field
-          </b-form-invalid-feedback>
+          </b-form-invalid-feedback>-->
         </b-form-group>
       </b-form-row>
 
@@ -385,7 +385,7 @@ export default {
       touched: Object.fromEntries(firstPageValidatedFields.map((key) => [key, false])),
 
       heardFromOptions: [
-        { value: "", text: "Select one...", disabled: true },
+        // { value: "", text: "Select one...", disabled: true },
         { value: "instagram", text: "Instagram" },
         { value: "facebook", text: "Facebook" },
         { value: "twitter", text: "Twitter" },
@@ -409,14 +409,23 @@ export default {
       ],
 
       ethnicityOptionsSelect: [
-        { value: "", text: "Select one...", disabled: true },
+        // { value: "", text: "Select one...", disabled: true },
         { value: "asian-indian", text: "Asian Indian" },
         { value: "black-african", text: "Black or African" },
         { value: "chinese", text: "Chinese" },
         { value: "filipino", text: "Filipino" },
-        { value: "hispanic", text: "Hispanic / Latino" },
+        { value: "guamanian-chamorro", text: "Guamanian or Chamorro" },
+        { value: "hispanic", text: "Hispanic / Latino / Spanish Origin" },
+        { value: "japanese", text: "Japanese" },
+        { value: "korean", text: "Korean" },
+        { value: "middle-eastern", text: "Middle Eastern" },
+        { value: "native-american-alaskan-native", text: "Native American or Alaskan Native" },
+        { value: "hawaiian", text: "Native Hawaiian" },
+        { value: "samoan", text: "Samoan" },
+        { value: "vietnamese", text: "Vietnamese" },
         { value: "white", text: "White" },
-        { value: "other", text: "Other" },
+        { value: "other-asian", text: "Other Asian (Thai, Cambodian, etc.)" },
+        { value: "other-pacific-islander", text: "Other Pacific Islander" },
       ],
 
       schoolYearOptions: [
@@ -446,6 +455,8 @@ export default {
       universityOptions: [...university_list],
 
       countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
+
+      phoneHasNonDigits: false,
     };
   },
 
@@ -460,17 +471,27 @@ export default {
         age: req(this.formData.age) && this.formData.age > 0 && this.formData.age <= 120,
         gender: req(this.formData.gender),
         country_of_residence: req(this.formData.country_of_residence),
-        ethnicity: req(this.formData.ethnicity),
+        ethnicity: this.formData.ethnicity.length > 0,
         school_year: req(this.formData.school_year),
         major: req(this.formData.major),
-        heard_from: req(this.formData.heard_from),
+        heard_from: this.formData.heard_from.length > 0,
         email: EmailValidator.validate(this.formData.email),
-        phone: phone && phone.isValid(),
+        phone: !this.phoneHasNonDigits && phone && phone.isValid(),
         school: !this.formData.school_other_selected
           ? req(this.formData.school) && university_list.includes(this.formData.school)
           : true,
         school_other: this.formData.school_other_selected ? req(this.formData.school_other) : true,
       };
+    },
+
+    availableOptions() {
+      return this.ethnicityOptionsSelect.filter(
+        (opt) => !this.formData.ethnicity.includes(opt.value)
+      );
+    },
+
+    availableHeardFromOptions() {
+      return this.heardFromOptions.filter((opt) => !this.formData.heard_from.includes(opt.value));
     },
 
     school_class() {
@@ -499,6 +520,10 @@ export default {
         this.formData.school_other = "";
         this.touched.school_other = false;
       }
+    },
+    getTagText(value, optionsList) {
+      const option = optionsList.find((opt) => opt.value === value);
+      return option ? option.text : value;
     },
 
     validate() {
@@ -626,6 +651,19 @@ export default {
 
 .stepper-item.active .stepper-label {
   color: #000;
+}
+
+::v-deep .b-form-tags.form-control {
+  height: auto;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+::v-deep .school-not-listed .custom-control-label::before,
+::v-deep .school-not-listed .custom-control-label::after {
+  top: 45% !important;
+  transform: translateY(-50%) !important;
 }
 
 /* Inactive State Styling */
