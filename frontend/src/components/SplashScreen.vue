@@ -119,7 +119,6 @@ export default {
   padding: 0 40px;
 }
 
-/* ---- Mobile stacked (below 768px to match md="4" breakpoint) ---- */
 @media (max-width: 767px) {
   .cards-row {
     display: flex;
@@ -224,7 +223,6 @@ export default {
   }
 }
 
-/* ---- Side by side (768px+) ---- */
 @media (min-width: 768px) and (max-width: 991px) {
   .bitcamp-logo {
     width: 18%;

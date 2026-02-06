@@ -143,7 +143,6 @@ export default {
   color: #666 !important;
 }
 
-/* ---- Mobile: cards stacked vertically (below 768px) ---- */
 @media (max-width: 480px) {
   .role-card {
     min-height: 280px;
@@ -280,7 +279,6 @@ export default {
   }
 }
 
-/* ---- Cards side by side (768px+), aligned with Bootstrap md breakpoint ---- */
 @media (min-width: 768px) and (max-width: 991px) {
   .marshie-label {
     font-size: 1.4rem;
@@ -340,5 +338,4 @@ export default {
   }
 }
 
-/* 1440px+ uses the defaults defined above */
 </style>
