@@ -101,7 +101,7 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
       question2: body.question2,
       heard_from: body.heard_from,
       dietary_restrictions: body.dietary_restrictions,
-      gmaps_place_id: body.gmaps_place_id,
+      // gmaps_place_id: body.gmaps_place_id,
       referred_by: body.referred_by,
       track: body.track_selected,
       track_waitlist: body.waitlist_track_selected,

@@ -322,13 +322,13 @@ export default {
       const input = document.getElementById("shipping-address");
       if (!input || typeof google === "undefined") return;
 
-      const autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ["address"],
-      });
+      // const autocomplete = new google.maps.places.Autocomplete(input, {
+      //   types: ["address"],
+      // });
 
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
-        this.formData.gmaps_place_id = place.place_id;
+        // this.formData.gmaps_place_id = place.place_id;
         this.formData.address1 = place.formatted_address;
         this.fillInAddress(place);
       });

@@ -13,8 +13,10 @@
         </h2>
       </div>
     </div>
-    <div v-b-tooltip.hover.bottom :title="roleDescription" class="info-icon">
-      <b-icon style="color: white" scale="1.5" icon="info-circle" />
+    <div class="info-icon">
+      <span class="info-icon-wrap" v-b-tooltip.hover.bottom :title="roleDescription">
+        <b-icon style="color: white" scale="1.5" icon="info-circle" />
+      </span>
     </div>
   </b-card>
 </template>
@@ -141,6 +143,11 @@ export default {
 
 .b-icon {
   color: #666 !important;
+}
+
+.info-icon-wrap {
+  display: inline-block;
+  padding: 4px; 
 }
 
 @media (max-width: 480px) {

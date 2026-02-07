@@ -1849,7 +1849,7 @@ export default {
         question2: "",
         heard_from: "",
         dietary_restrictions: "",
-        gmaps_place_id: "",
+        // gmaps_place_id: "",
         referred_by: "",
         track_selected: "general",
         waitlist_track_selected: "",
@@ -2125,25 +2125,25 @@ export default {
     // this.sendAnalyticsEvent("registration_page_visit");
     document.addEventListener("DOMContentLoaded", () => {
       const input = document.getElementById("input-5");
-      const autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ["address"],
-      });
+      // const autocomplete = new google.maps.places.Autocomplete(input, {
+      //   types: ["address"],
+      // });
 
-      google.maps.event.addListener(autocomplete, "place_changed", () => {
-        const place = autocomplete.getPlace();
+      // google.maps.event.addListener(autocomplete, "place_changed", () => {
+      //   const place = autocomplete.getPlace();
 
-        //updates v-model value
-        this.form.gmaps_place_id = place.place_id;
-        this.form.address = place.formatted_address;
-        this.fillInAddress(place);
-      });
+      //   //updates v-model value
+      //   this.form.gmaps_place_id = place.place_id;
+      //   this.form.address = place.formatted_address;
+      //   this.fillInAddress(place);
+      // });
 
-      google.maps.event.addDomListener(input, "keydown", function (event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          this.form.gmaps_place_id = place.place_id;
-        }
-      });
+      // google.maps.event.addDomListener(input, "keydown", function (event) {
+      //   if (event.keyCode === 13) {
+      //     event.preventDefault();
+      //     this.form.gmaps_place_id = place.place_id;
+      //   }
+      // });
 
       document.getElementsByClassName("typeahead")[0].setAttribute("autocomplete", "off");
 
