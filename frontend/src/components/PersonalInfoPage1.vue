@@ -160,7 +160,7 @@
                 class="mb-2"
               >
                 <template #first>
-                  <option disabled value="">Select...</option>
+                  <option disabled value="">Select all that apply...</option>
                 </template>
               </b-form-select>
               <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
@@ -272,7 +272,7 @@
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label> Select all that apply <span class="text-danger">*</span> </template>
+          <!-- <template #label> Select all that apply <span class="text-danger">*</span> </template> -->
           <b-form-tags
             id="heard-from-tags"
             v-model="formData.heard_from"
@@ -290,7 +290,7 @@
                 class="mb-2"
               >
                 <template #first>
-                  <option disabled value="">Select...</option>
+                  <option disabled value="">Select all that apply...</option>
                 </template>
               </b-form-select>
               <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
