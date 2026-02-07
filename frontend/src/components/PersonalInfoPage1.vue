@@ -146,9 +146,9 @@
             id="tags-component-select"
             v-model="formData.ethnicity"
             size="lg"
-            class="mb-2"
             add-on-change
             no-outer-focus
+            :state="showState('ethnicity')"
             @input="touched.ethnicity = true"
           >
             <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
@@ -156,8 +156,9 @@
                 v-bind="inputAttrs"
                 :disabled="disabled || availableOptions.length === 0"
                 :options="availableOptions"
-                v-on="inputHandlers"
                 class="mb-2"
+                :state="showState('ethnicity')"
+                v-on="inputHandlers"
               >
                 <template #first>
                   <option disabled value="">Select all that apply...</option>
@@ -177,6 +178,9 @@
               </ul>
             </template>
           </b-form-tags>
+          <b-form-invalid-feedback :state="showState('ethnicity')">
+            Please select at least one option
+          </b-form-invalid-feedback>
           <!-- <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
@@ -276,6 +280,7 @@
           <b-form-tags
             id="heard-from-tags"
             v-model="formData.heard_from"
+            :state="showState('heard_from')"
             @input="touched.heard_from = true"
             size="lg"
             add-on-change
@@ -286,8 +291,9 @@
                 v-bind="inputAttrs"
                 :disabled="disabled || availableHeardFromOptions.length === 0"
                 :options="availableHeardFromOptions"
-                v-on="inputHandlers"
+                :state="showState('heard_from')"
                 class="mb-2"
+                v-on="inputHandlers"
               >
                 <template #first>
                   <option disabled value="">Select all that apply...</option>
@@ -307,6 +313,9 @@
               </ul>
             </template>
           </b-form-tags>
+          <b-form-invalid-feedback :state="showState('heard_from')">
+            Please select at least one option
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
