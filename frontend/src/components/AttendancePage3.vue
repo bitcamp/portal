@@ -112,6 +112,9 @@
             :state="showState('zip')"
             @input="touched.zip = true"
           />
+          <b-form-invalid-feedback :state="showState('zip')">
+            Please enter a valid zip code
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
@@ -274,6 +277,11 @@ export default {
     },
     validations() {
       const req = (v) => v && v.toString().trim().length > 0;
+      
+      const isValidZip = (zip) => {
+        const zipRegex = /^\d{5}(-\d{4})?$/;
+        return zipRegex.test(zip.trim());
+      };
 
       const createDietaryRestrictionString = () => {
         let diet_string = this.formData.diet_select.join(",");
@@ -296,7 +304,7 @@ export default {
         address1: req(this.formData.address1),
         city: req(this.formData.city),
         state: req(this.formData.state),
-        zip: req(this.formData.zip),
+        zip: req(this.formData.zip) && isValidZip(this.formData.zip),
         country: req(this.formData.country),
         diet: isValidDiet,
         diet_other_text: req(this.formData.diet_other_text),
