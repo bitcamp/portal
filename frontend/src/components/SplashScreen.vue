@@ -64,7 +64,7 @@ export default {
   min-height: 100vh;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   width: 100%;
-  background-image: url("~@/assets/updated-reg-page.svg");
+
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
@@ -134,9 +134,6 @@ export default {
 @media (max-width: 480px) {
   .screen-container {
     padding: 0 50px 40px;
-    background-position: center center;
-    background-image: url("~@/assets/reg-page-mobile.svg") !important;
-    background-size: cover;
   }
 
   .bitcamp-logo {
@@ -165,9 +162,6 @@ export default {
 @media (min-width: 481px) and (max-width: 600px) {
   .screen-container {
     padding: 0 80px 45px;
-    background-position: center center;
-    background-image: url("~@/assets/reg-page-mobile.svg") !important;
-    background-size: cover;
   }
 
   .bitcamp-logo {
@@ -196,9 +190,6 @@ export default {
 @media (min-width: 601px) and (max-width: 767px) {
   .screen-container {
     padding: 0 140px 50px;
-    background-position: center center;
-    background-image: url("~@/assets/reg-page-mobile.svg") !important;
-    background-size: cover;
   }
 
   .bitcamp-logo {

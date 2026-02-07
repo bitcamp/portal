@@ -147,7 +147,7 @@ export default {
 
 .info-icon-wrap {
   display: inline-block;
-  padding: 4px; 
+  padding: 4px;
 }
 
 @media (max-width: 480px) {
@@ -214,15 +214,15 @@ export default {
   }
 
   .role-card[data-role="volunteer"] .role-logo {
-    width: 28% !important;
+    width: 78% !important;
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 22% !important;
+    width: 62% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
-    width: 32% !important;
+    width: 82% !important;
   }
 
   .role-title {
@@ -260,15 +260,15 @@ export default {
   }
 
   .role-card[data-role="volunteer"] .role-logo {
-    width: 84% !important;
+    width: 64% !important;
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 70% !important;
+    width: 50% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
-    width: 88% !important;
+    width: 78% !important;
   }
 
   .role-title {
@@ -344,5 +344,4 @@ export default {
     margin-top: 45px;
   }
 }
-
 </style>
