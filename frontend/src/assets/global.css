@@ -17,11 +17,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Aleo");
 /* Aleo */
 
-html {
-  min-height: 100%;
-  height: auto;
-  background-color: #010218;
-}
+/* html { */
+/* min-height: 100%; */
+/* height: auto; */
+/* background-color: #010218; */
+/* } */
 
 body {
   min-height: 100%;
