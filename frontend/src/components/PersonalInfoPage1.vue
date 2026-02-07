@@ -168,7 +168,6 @@
                   <b-form-tag
                     :title="tag"
                     :disabled="disabled"
-                    :style="{ backgroundColor: '#f97345', color: 'white', border: 'none',  }"
                     @remove="removeTag(tag)"
                     class="mb-1"
                   >
@@ -299,7 +298,6 @@
                   <b-form-tag
                     :title="tag"
                     :disabled="disabled"
-                    :style="{ backgroundColor: '#f97345', color: 'white', border: 'none' }"
                     @remove="removeTag(tag)"
                     class="mb-1"
                   >
@@ -606,7 +604,7 @@ export default {
   /* Subtracts 70px (35px for each side) to create the gap */
   width: calc(100% - 70px);
   height: 4px;
-  background: #DEDEDE;
+  background: #dedede;
   z-index: -1;
 }
 
@@ -619,7 +617,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #DEDEDE;
+  background: #dedede;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -651,6 +649,9 @@ export default {
 
 .stepper-item.active .stepper-label {
   color: #000;
+}
+::v-deep .b-form-tag {
+  background-color: #f97345;
 }
 
 ::v-deep .b-form-tags.form-control {

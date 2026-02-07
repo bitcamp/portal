@@ -35,7 +35,12 @@
       <div v-if="!atNoTransportUnis()">
         <h4 class="section-title">Travel and Transportation</h4>
         <p class="info">
-          Bitcamp is offering travel reimbursements through a rolling application this year. The application will be emailed to hackers who expressed interest in travel reimbursement during registration. We will consider reimbursing public transportation, rideshare, and inter-state travel. Please note that we cannot guarantee reimbursement or full coverage due to budget limits. Reimbursement decisions will be sent within 3-4 days after applying. For more details, check out our website FAQ or BitBot.
+          Bitcamp is offering travel reimbursements through a rolling application this year. The
+          application will be emailed to hackers who expressed interest in travel reimbursement
+          during registration. We will consider reimbursing public transportation, rideshare, and
+          inter-state travel. Please note that we cannot guarantee reimbursement or full coverage
+          due to budget limits. Reimbursement decisions will be sent within 3-4 days after applying.
+          For more details, check out our website FAQ or BitBot.
         </p>
         <div class="mt-2 form-group">
           <label class="form-label">
@@ -45,12 +50,22 @@
 
           <div class="radio-inline-group">
             <label class="radio-inline">
-              <b-form-radio v-model="formData.transport" type="radio" value="yes" @change="touched.transport = true" />
+              <b-form-radio
+                v-model="formData.transport"
+                type="radio"
+                value="yes"
+                @change="touched.transport = true"
+              />
               Yes
             </label>
 
             <label class="radio-inline">
-              <b-form-radio v-model="formData.transport" type="radio" value="no" @change="touched.transport = true" />
+              <b-form-radio
+                v-model="formData.transport"
+                type="radio"
+                value="no"
+                @change="touched.transport = true"
+              />
               No
             </label>
           </div>
@@ -164,19 +179,32 @@
         <b-form-group id="input-dietary-restrictions" class="col-12 col-md-12">
           <div class="checkbox-group">
             <label class="checkbox-inline">
-              <b-form-checkbox type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
+              <b-form-checkbox
+                type="checkbox"
+                :checked="formData.diet_none"
+                @change="toggleDietNoneOption"
+              />
               None
             </label>
 
             <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
-              <b-form-checkbox v-model="formData.diet_select" type="checkbox" :value="option.value" :disabled="formData.diet_none"
-                @change="touched.diet_select = true" />
+              <b-form-checkbox
+                v-model="formData.diet_select"
+                type="checkbox"
+                :value="option.value"
+                :disabled="formData.diet_none"
+                @change="touched.diet_select = true"
+              />
               {{ option.text }}
             </label>
 
             <label class="checkbox-inline">
-              <b-form-checkbox v-model="formData.diet_other" type="checkbox" :disabled="formData.diet_none"
-                @change="touched.diet_other = true" />
+              <b-form-checkbox
+                v-model="formData.diet_other"
+                type="checkbox"
+                :disabled="formData.diet_none"
+                @change="touched.diet_other = true"
+              />
               Other
             </label>
 
@@ -277,9 +305,9 @@ export default {
     },
     validations() {
       const req = (v) => v && v.toString().trim().length > 0;
-      
+
       const isValidZip = (zip) => {
-        const zipRegex = /^\d{5}(-\d{4})?$/;
+        const zipRegex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
         return zipRegex.test(zip.trim());
       };
 
@@ -516,7 +544,7 @@ export default {
   /* Subtracts 70px (35px for each side) to create the gap */
   width: calc(100% - 70px);
   height: 4px;
-  background: #DEDEDE;
+  background: #dedede;
   z-index: -1;
 }
 
@@ -528,7 +556,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #DEDEDE;
+  background: #dedede;
   color: #a0a0a0;
   display: flex;
   align-items: center;
