@@ -173,7 +173,7 @@ export default {
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 55% !important;
+    width: 45% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
@@ -214,15 +214,15 @@ export default {
   }
 
   .role-card[data-role="volunteer"] .role-logo {
-    width: 78% !important;
+    width: 55% !important;
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 62% !important;
+    width: 40% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
-    width: 82% !important;
+    width: 60% !important;
   }
 
   .role-title {
@@ -260,15 +260,15 @@ export default {
   }
 
   .role-card[data-role="volunteer"] .role-logo {
-    width: 64% !important;
+    width: 44% !important;
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 50% !important;
+    width: 30% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
-    width: 78% !important;
+    width: 58% !important;
   }
 
   .role-title {

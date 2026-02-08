@@ -129,11 +129,14 @@ export default {
   .marshie-card-hacker {
     order: -1;
   }
+  .logos img {
+    margin-top: 13%;
+  }
 }
 
 @media (max-width: 480px) {
   .screen-container {
-    padding: 0 50px 40px;
+    padding: 0 20px 40px;
   }
 
   .bitcamp-logo {
@@ -157,11 +160,14 @@ export default {
   .marshie-card {
     padding: 0;
   }
+  .logos img {
+    margin-top: 13%;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 600px) {
   .screen-container {
-    padding: 0 80px 45px;
+    padding: 0 40px 45px;
   }
 
   .bitcamp-logo {
@@ -189,7 +195,7 @@ export default {
 
 @media (min-width: 601px) and (max-width: 767px) {
   .screen-container {
-    padding: 0 140px 50px;
+    padding: 0 60px 50px;
   }
 
   .bitcamp-logo {
