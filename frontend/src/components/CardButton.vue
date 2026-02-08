@@ -138,7 +138,7 @@ export default {
 .info-icon {
   margin-top: auto;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 25px;
 }
 
 .b-icon {
