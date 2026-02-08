@@ -73,7 +73,11 @@
       </div>
 
       <b-form-row>
-        <b-form-group label="Shipping Address" label-for="shipping-address" class="col-md-6">
+        <b-form-group label-for="shipping-address" class="col-md-6">
+          <template #label>
+            Shipping Address
+            <span v-if="optionalFieldsRequired.includes('address1')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-address"
             v-model="formData.address1"
@@ -83,11 +87,8 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="Shipping Address Line 2"
-          label-for="shipping-address2"
-          class="col-md-6"
-        >
+        <b-form-group label-for="shipping-address2" class="col-md-6">
+          <template #label> Shipping Address Line 2 </template>
           <b-form-input
             id="shipping-address2"
             v-model="formData.address2"
@@ -99,7 +100,11 @@
       </b-form-row>
 
       <b-form-row>
-        <b-form-group label="City" label-for="shipping-city" class="col-md-3">
+        <b-form-group label-for="shipping-city" class="col-md-3">
+          <template #label>
+            City
+            <span v-if="optionalFieldsRequired.includes('city')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-city"
             v-model="formData.city"
@@ -107,9 +112,17 @@
             :state="showState('city')"
             @input="touched.city = true"
           />
+          <b-form-text class="helper-text"> e.g., "New York", "Los Angeles" </b-form-text>
+          <b-form-invalid-feedback :state="showState('city')">
+            Please enter a valid city name
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label="State" label-for="shipping-state" class="col-md-2">
+        <b-form-group label-for="shipping-state" class="col-md-2">
+          <template #label>
+            State
+            <span v-if="optionalFieldsRequired.includes('state')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-state"
             v-model="formData.state"
@@ -117,9 +130,17 @@
             :state="showState('state')"
             @input="touched.state = true"
           />
+          <b-form-text class="helper-text"> e.g., "MD", "CA" </b-form-text>
+          <b-form-invalid-feedback :state="showState('state')">
+            Please enter a valid state code
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label="Zip Code" label-for="shipping-zip" class="col-md-3">
+        <b-form-group label-for="shipping-zip" class="col-md-3">
+          <template #label>
+            Zip Code
+            <span v-if="optionalFieldsRequired.includes('zip')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-zip"
             v-model="formData.zip"
@@ -132,7 +153,11 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
+        <b-form-group label-for="shipping-country" class="col-md-4">
+          <template #label>
+            Country
+            <span v-if="optionalFieldsRequired.includes('country')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-country"
             v-model="formData.country"
@@ -140,6 +165,10 @@
             :state="showState('country')"
             @input="touched.country = true"
           />
+          <b-form-text class="helper-text"> e.g., "USA", "United States", "Canada" </b-form-text>
+          <b-form-invalid-feedback :state="showState('country')">
+            Please enter a valid country name or code
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -243,6 +272,7 @@
 <script>
 import { IconsPlugin } from "bootstrap-vue";
 import Vue from "vue";
+import { Country, State, City } from "country-state-city";
 
 Vue.use(IconsPlugin);
 
@@ -311,6 +341,32 @@ export default {
         return zipRegex.test(zip.trim());
       };
 
+      const isValidCountry = (country) => {
+        if (!country) return false;
+        const allCountries = Country.getAllCountries();
+        return allCountries.some(
+          (c) =>
+            c.name.toLowerCase() === country.trim().toLowerCase() ||
+            c.isoCode.toLowerCase() === country.trim().toLowerCase()
+        );
+      };
+
+      const isValidState = (state) => {
+        if (!state) return false;
+        const allStates = State.getAllStates();
+        return allStates.some(
+          (s) =>
+            s.name.toLowerCase() === state.trim().toLowerCase() ||
+            s.isoCode.toLowerCase() === state.trim().toLowerCase()
+        );
+      };
+
+      const isValidCity = (city) => {
+        if (!city) return false;
+        const allCities = City.getAllCities();
+        return allCities.some((c) => c.name.toLowerCase() === city.trim().toLowerCase());
+      };
+
       const createDietaryRestrictionString = () => {
         let diet_string = this.formData.diet_select.join(",");
         if (this.formData.diet_none) return "none";
@@ -330,10 +386,10 @@ export default {
         transport: this.formData.transport !== null && this.formData.transport !== undefined,
         tshirt_size: req(this.formData.tshirt_size),
         address1: req(this.formData.address1),
-        city: req(this.formData.city),
-        state: req(this.formData.state),
+        city: req(this.formData.city) && isValidCity(this.formData.city),
+        state: req(this.formData.state) && isValidState(this.formData.state),
         zip: req(this.formData.zip) && isValidZip(this.formData.zip),
-        country: req(this.formData.country),
+        country: req(this.formData.country) && isValidCountry(this.formData.country),
         diet: isValidDiet,
         diet_other_text: req(this.formData.diet_other_text),
       };
@@ -672,6 +728,13 @@ label.form-label {
 ::v-deep .custom-control.custom-radio .custom-control-label::after {
   top: 45%;
   transform: translateY(-55%);
+}
+
+.helper-text {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 2px;
 }
 
 @media (max-width: 768px) {

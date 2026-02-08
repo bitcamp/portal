@@ -272,7 +272,7 @@
 
       <hr />
 
-      <h4 class="section-title">How did you hear about us?</h4>
+      <h4 class="section-title">How did you hear about us? <span class="text-danger">*</span></h4>
 
       <b-form-row>
         <b-form-group class="col-12">

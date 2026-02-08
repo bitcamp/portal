@@ -11,6 +11,7 @@
     }
   },
   "dependencies": {
+    "country-state-city": "^3.2.1",
     "serverless": "^4.26.1",
     "sls": "^0.1.0",
     "vue-tel-input": "^9.5.1"
