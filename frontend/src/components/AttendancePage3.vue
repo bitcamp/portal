@@ -35,7 +35,12 @@
       <div v-if="!atNoTransportUnis()">
         <h4 class="section-title">Travel and Transportation</h4>
         <p class="info">
-          Bitcamp is offering travel reimbursements through a rolling application this year. The application will be emailed to hackers who expressed interest in travel reimbursement during registration. We will consider reimbursing public transportation, rideshare, and inter-state travel. Please note that we cannot guarantee reimbursement or full coverage due to budget limits. Reimbursement decisions will be sent within 3-4 days after applying. For more details, check out our website FAQ or BitBot.
+          Bitcamp is offering travel reimbursements through a rolling application this year. The
+          application will be emailed to hackers who expressed interest in travel reimbursement
+          during registration. We will consider reimbursing public transportation, rideshare, and
+          inter-state travel. Please note that we cannot guarantee reimbursement or full coverage
+          due to budget limits. Reimbursement decisions will be sent within 3-4 days after applying.
+          For more details, check out our website FAQ or BitBot.
         </p>
         <div class="mt-2 form-group">
           <label class="form-label">
@@ -45,12 +50,22 @@
 
           <div class="radio-inline-group">
             <label class="radio-inline">
-              <b-form-radio v-model="formData.transport" type="radio" value="yes" @change="touched.transport = true" />
+              <b-form-radio
+                v-model="formData.transport"
+                type="radio"
+                value="yes"
+                @change="touched.transport = true"
+              />
               Yes
             </label>
 
             <label class="radio-inline">
-              <b-form-radio v-model="formData.transport" type="radio" value="no" @change="touched.transport = true" />
+              <b-form-radio
+                v-model="formData.transport"
+                type="radio"
+                value="no"
+                @change="touched.transport = true"
+              />
               No
             </label>
           </div>
@@ -58,7 +73,11 @@
       </div>
 
       <b-form-row>
-        <b-form-group label="Shipping Address" label-for="shipping-address" class="col-md-6">
+        <b-form-group label-for="shipping-address" class="col-md-6">
+          <template #label>
+            Shipping Address
+            <span v-if="optionalFieldsRequired.includes('address1')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-address"
             v-model="formData.address1"
@@ -68,11 +87,8 @@
           />
         </b-form-group>
 
-        <b-form-group
-          label="Shipping Address Line 2"
-          label-for="shipping-address2"
-          class="col-md-6"
-        >
+        <b-form-group label-for="shipping-address2" class="col-md-6">
+          <template #label> Shipping Address Line 2 </template>
           <b-form-input
             id="shipping-address2"
             v-model="formData.address2"
@@ -84,7 +100,11 @@
       </b-form-row>
 
       <b-form-row>
-        <b-form-group label="City" label-for="shipping-city" class="col-md-3">
+        <b-form-group label-for="shipping-city" class="col-md-3">
+          <template #label>
+            City
+            <span v-if="optionalFieldsRequired.includes('city')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-city"
             v-model="formData.city"
@@ -92,9 +112,17 @@
             :state="showState('city')"
             @input="touched.city = true"
           />
+          <b-form-text class="helper-text"> e.g., "New York", "Los Angeles" </b-form-text>
+          <b-form-invalid-feedback :state="showState('city')">
+            Please enter a valid city name
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label="State" label-for="shipping-state" class="col-md-2">
+        <b-form-group label-for="shipping-state" class="col-md-2">
+          <template #label>
+            State
+            <span v-if="optionalFieldsRequired.includes('state')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-state"
             v-model="formData.state"
@@ -102,9 +130,17 @@
             :state="showState('state')"
             @input="touched.state = true"
           />
+          <b-form-text class="helper-text"> e.g., "MD", "CA" </b-form-text>
+          <b-form-invalid-feedback :state="showState('state')">
+            Please enter a valid state code
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label="Zip Code" label-for="shipping-zip" class="col-md-3">
+        <b-form-group label-for="shipping-zip" class="col-md-3">
+          <template #label>
+            Zip Code
+            <span v-if="optionalFieldsRequired.includes('zip')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-zip"
             v-model="formData.zip"
@@ -112,16 +148,27 @@
             :state="showState('zip')"
             @input="touched.zip = true"
           />
+          <b-form-invalid-feedback :state="showState('zip')">
+            Please enter a valid zip code
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label="Country" label-for="shipping-country" class="col-md-4">
+        <b-form-group label-for="shipping-country" class="col-md-4">
+          <template #label>
+            Country
+            <span v-if="optionalFieldsRequired.includes('country')" class="text-danger">*</span>
+          </template>
           <b-form-input
             id="shipping-country"
             v-model="formData.country"
-            placeholder="USA"
+            placeholder="US"
             :state="showState('country')"
             @input="touched.country = true"
           />
+          <b-form-text class="helper-text"> e.g., "US", "United States", "Canada" </b-form-text>
+          <b-form-invalid-feedback :state="showState('country')">
+            Please enter a valid country name or code
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -161,19 +208,32 @@
         <b-form-group id="input-dietary-restrictions" class="col-12 col-md-12">
           <div class="checkbox-group">
             <label class="checkbox-inline">
-              <b-form-checkbox type="checkbox" :checked="formData.diet_none" @change="toggleDietNoneOption" />
+              <b-form-checkbox
+                type="checkbox"
+                :checked="formData.diet_none"
+                @change="toggleDietNoneOption"
+              />
               None
             </label>
 
             <label v-for="option in dietOptions" :key="option.value" class="checkbox-inline">
-              <b-form-checkbox v-model="formData.diet_select" type="checkbox" :value="option.value" :disabled="formData.diet_none"
-                @change="touched.diet_select = true" />
+              <b-form-checkbox
+                v-model="formData.diet_select"
+                type="checkbox"
+                :value="option.value"
+                :disabled="formData.diet_none"
+                @change="touched.diet_select = true"
+              />
               {{ option.text }}
             </label>
 
             <label class="checkbox-inline">
-              <b-form-checkbox v-model="formData.diet_other" type="checkbox" :disabled="formData.diet_none"
-                @change="touched.diet_other = true" />
+              <b-form-checkbox
+                v-model="formData.diet_other"
+                type="checkbox"
+                :disabled="formData.diet_none"
+                @change="touched.diet_other = true"
+              />
               Other
             </label>
 
@@ -212,6 +272,7 @@
 <script>
 import { IconsPlugin } from "bootstrap-vue";
 import Vue from "vue";
+import { Country, State, City } from "country-state-city";
 
 Vue.use(IconsPlugin);
 
@@ -275,6 +336,37 @@ export default {
     validations() {
       const req = (v) => v && v.toString().trim().length > 0;
 
+      const isValidZip = (zip) => {
+        const zipRegex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+        return zipRegex.test(zip.trim());
+      };
+
+      const isValidCountry = (country) => {
+        if (!country) return false;
+        const allCountries = Country.getAllCountries();
+        return allCountries.some(
+          (c) =>
+            c.name.toLowerCase() === country.trim().toLowerCase() ||
+            c.isoCode.toLowerCase() === country.trim().toLowerCase()
+        );
+      };
+
+      const isValidState = (state) => {
+        if (!state) return false;
+        const allStates = State.getAllStates();
+        return allStates.some(
+          (s) =>
+            s.name.toLowerCase() === state.trim().toLowerCase() ||
+            s.isoCode.toLowerCase() === state.trim().toLowerCase()
+        );
+      };
+
+      const isValidCity = (city) => {
+        if (!city) return false;
+        const allCities = City.getAllCities();
+        return allCities.some((c) => c.name.toLowerCase() === city.trim().toLowerCase());
+      };
+
       const createDietaryRestrictionString = () => {
         let diet_string = this.formData.diet_select.join(",");
         if (this.formData.diet_none) return "none";
@@ -290,14 +382,17 @@ export default {
       else if (this.formData.diet_other && !this.formData.diet_other_text.trim())
         isValidDiet = false;
 
+      const country = this.formData.country ? this.formData.country.trim().toLowerCase() : "";
+      const isUS = ["us", "usa", "united states", "united states of america"].includes(country);
+
       return {
         transport: this.formData.transport !== null && this.formData.transport !== undefined,
         tshirt_size: req(this.formData.tshirt_size),
         address1: req(this.formData.address1),
-        city: req(this.formData.city),
-        state: req(this.formData.state),
-        zip: req(this.formData.zip),
-        country: req(this.formData.country),
+        city: req(this.formData.city) && isValidCity(this.formData.city),
+        state: isUS ? req(this.formData.state) && isValidState(this.formData.state) : true,
+        zip: req(this.formData.zip) && isValidZip(this.formData.zip),
+        country: req(this.formData.country) && isValidCountry(this.formData.country),
         diet: isValidDiet,
         diet_other_text: req(this.formData.diet_other_text),
       };
@@ -306,13 +401,22 @@ export default {
       const res = [];
       if (!this.atNoTransportUnis()) res.push("transport");
       if (this.formData.diet_other) res.push("diet_other_text");
-      if (
-        ["address1", "city", "state", "zip", "country"].some(
-          (fieldName) => this.formData[fieldName] && this.formData[fieldName].trim() !== ""
-        )
-      ) {
-        res.push(...["address1", "city", "state", "zip", "country"]);
+
+      const addressFields = ["address1", "city", "state", "zip", "country"];
+      const anyAddressFilled = addressFields.some(
+        (fieldName) => this.formData[fieldName] && this.formData[fieldName].trim() !== ""
+      );
+
+      if (anyAddressFilled) {
+        res.push("address1", "city", "zip", "country");
+        const country = this.formData.country ? this.formData.country.trim().toLowerCase() : "";
+        const isUS = ["us", "usa", "united states", "united states of america"].includes(country);
+
+        if (isUS) {
+          res.push("state");
+        }
       }
+
       return res;
     },
   },
@@ -322,16 +426,16 @@ export default {
       const input = document.getElementById("shipping-address");
       if (!input || typeof google === "undefined") return;
 
-      const autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ["address"],
-      });
+      // const autocomplete = new google.maps.places.Autocomplete(input, {
+      //   types: ["address"],
+      // });
 
-      autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-        this.formData.gmaps_place_id = place.place_id;
-        this.formData.address1 = place.formatted_address;
-        this.fillInAddress(place);
-      });
+      // autocomplete.addListener("place_changed", () => {
+      //   const place = autocomplete.getPlace();
+      //   // this.formData.gmaps_place_id = place.place_id;
+      //   this.formData.address1 = place.formatted_address;
+      //   this.fillInAddress(place);
+      // });
 
       input.addEventListener("keydown", (event) => {
         if (event.keyCode === 13) {
@@ -508,7 +612,7 @@ export default {
   /* Subtracts 70px (35px for each side) to create the gap */
   width: calc(100% - 70px);
   height: 4px;
-  background: #e9ecef;
+  background: #dedede;
   z-index: -1;
 }
 
@@ -520,7 +624,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb;
+  background: #dedede;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -636,6 +740,13 @@ label.form-label {
 ::v-deep .custom-control.custom-radio .custom-control-label::after {
   top: 45%;
   transform: translateY(-55%);
+}
+
+.helper-text {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 2px;
 }
 
 @media (max-width: 768px) {

@@ -146,9 +146,9 @@
             id="tags-component-select"
             v-model="formData.ethnicity"
             size="lg"
-            class="mb-2"
             add-on-change
             no-outer-focus
+            :state="showState('ethnicity')"
             @input="touched.ethnicity = true"
           >
             <template #default="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
@@ -156,11 +156,12 @@
                 v-bind="inputAttrs"
                 :disabled="disabled || availableOptions.length === 0"
                 :options="availableOptions"
-                v-on="inputHandlers"
                 class="mb-2"
+                :state="showState('ethnicity')"
+                v-on="inputHandlers"
               >
                 <template #first>
-                  <option disabled value="">Select...</option>
+                  <option disabled value="">Select all that apply...</option>
                 </template>
               </b-form-select>
               <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
@@ -168,7 +169,6 @@
                   <b-form-tag
                     :title="tag"
                     :disabled="disabled"
-                    variant="info"
                     @remove="removeTag(tag)"
                     class="mb-1"
                   >
@@ -178,6 +178,9 @@
               </ul>
             </template>
           </b-form-tags>
+          <b-form-invalid-feedback :state="showState('ethnicity')">
+            Please select at least one option
+          </b-form-invalid-feedback>
           <!-- <b-form-select
             v-model="formData.ethnicity"
             :options="ethnicityOptionsSelect"
@@ -269,14 +272,15 @@
 
       <hr />
 
-      <h4 class="section-title">How did you hear about us?</h4>
+      <h4 class="section-title">How did you hear about us? <span class="text-danger">*</span></h4>
 
       <b-form-row>
         <b-form-group class="col-12">
-          <template #label> Select all that apply <span class="text-danger">*</span> </template>
+          <!-- <template #label> Select all that apply <span class="text-danger">*</span> </template> -->
           <b-form-tags
             id="heard-from-tags"
             v-model="formData.heard_from"
+            :state="showState('heard_from')"
             @input="touched.heard_from = true"
             size="lg"
             add-on-change
@@ -287,11 +291,12 @@
                 v-bind="inputAttrs"
                 :disabled="disabled || availableHeardFromOptions.length === 0"
                 :options="availableHeardFromOptions"
-                v-on="inputHandlers"
+                :state="showState('heard_from')"
                 class="mb-2"
+                v-on="inputHandlers"
               >
                 <template #first>
-                  <option disabled value="">Select...</option>
+                  <option disabled value="">Select all that apply...</option>
                 </template>
               </b-form-select>
               <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
@@ -299,7 +304,6 @@
                   <b-form-tag
                     :title="tag"
                     :disabled="disabled"
-                    variant="info"
                     @remove="removeTag(tag)"
                     class="mb-1"
                   >
@@ -309,6 +313,9 @@
               </ul>
             </template>
           </b-form-tags>
+          <b-form-invalid-feedback :state="showState('heard_from')">
+            Please select at least one option
+          </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
 
@@ -606,7 +613,7 @@ export default {
   /* Subtracts 70px (35px for each side) to create the gap */
   width: calc(100% - 70px);
   height: 4px;
-  background: #e9ecef;
+  background: #dedede;
   z-index: -1;
 }
 
@@ -619,7 +626,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb;
+  background: #dedede;
   color: #a0a0a0;
   display: flex;
   align-items: center;
@@ -651,6 +658,9 @@ export default {
 
 .stepper-item.active .stepper-label {
   color: #000;
+}
+::v-deep .b-form-tag {
+  background-color: #f97345;
 }
 
 ::v-deep .b-form-tags.form-control {

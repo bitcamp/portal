@@ -13,8 +13,10 @@
         </h2>
       </div>
     </div>
-    <div v-b-tooltip.hover.bottom :title="roleDescription" class="info-icon">
-      <b-icon style="color: white" scale="1.5" icon="info-circle" />
+    <div class="info-icon">
+      <span class="info-icon-wrap" v-b-tooltip.hover.bottom :title="roleDescription">
+        <b-icon style="color: white" scale="1.5" icon="info-circle" />
+      </span>
     </div>
   </b-card>
 </template>
@@ -136,11 +138,16 @@ export default {
 .info-icon {
   margin-top: auto;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 25px;
 }
 
 .b-icon {
   color: #666 !important;
+}
+
+.info-icon-wrap {
+  display: inline-block;
+  padding: 4px;
 }
 
 @media (max-width: 480px) {
@@ -166,7 +173,7 @@ export default {
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 55% !important;
+    width: 45% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
@@ -207,15 +214,15 @@ export default {
   }
 
   .role-card[data-role="volunteer"] .role-logo {
-    width: 28% !important;
+    width: 55% !important;
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 22% !important;
+    width: 40% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
-    width: 32% !important;
+    width: 60% !important;
   }
 
   .role-title {
@@ -253,15 +260,15 @@ export default {
   }
 
   .role-card[data-role="volunteer"] .role-logo {
-    width: 84% !important;
+    width: 44% !important;
   }
 
   .role-card[data-role="mentor"] .role-logo {
-    width: 70% !important;
+    width: 30% !important;
   }
 
   .role-card[data-role="hacker"] .role-logo {
-    width: 88% !important;
+    width: 58% !important;
   }
 
   .role-title {
@@ -337,5 +344,4 @@ export default {
     margin-top: 45px;
   }
 }
-
 </style>

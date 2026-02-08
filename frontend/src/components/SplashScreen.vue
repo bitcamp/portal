@@ -64,13 +64,14 @@ export default {
   min-height: 100vh;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   width: 100%;
-  background-image: url("~@/assets/updated-reg-page.svg");
+
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   animation: slideUp 1s ease-out forwards;
+  overflow: hidden;
 }
 
 @keyframes slideUp {
@@ -128,14 +129,14 @@ export default {
   .marshie-card-hacker {
     order: -1;
   }
+  .logos img {
+    margin-top: 13%;
+  }
 }
 
 @media (max-width: 480px) {
   .screen-container {
-    padding: 0 50px 40px;
-    background-position: center center;
-    background-image: url("~@/assets/reg-page-mobile.svg") !important;
-    background-size: cover;
+    padding: 0 20px 40px;
   }
 
   .bitcamp-logo {
@@ -159,14 +160,14 @@ export default {
   .marshie-card {
     padding: 0;
   }
+  .logos img {
+    margin-top: 13%;
+  }
 }
 
 @media (min-width: 481px) and (max-width: 600px) {
   .screen-container {
-    padding: 0 80px 45px;
-    background-position: center center;
-    background-image: url("~@/assets/reg-page-mobile.svg") !important;
-    background-size: cover;
+    padding: 0 40px 45px;
   }
 
   .bitcamp-logo {
@@ -194,10 +195,7 @@ export default {
 
 @media (min-width: 601px) and (max-width: 767px) {
   .screen-container {
-    padding: 0 140px 50px;
-    background-position: center center;
-    background-image: url("~@/assets/reg-page-mobile.svg") !important;
-    background-size: cover;
+    padding: 0 60px 50px;
   }
 
   .bitcamp-logo {

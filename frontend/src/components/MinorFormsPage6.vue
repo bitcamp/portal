@@ -856,7 +856,7 @@ export default {
   /* Subtracts 70px (35px for each side) to create the gap */
   width: calc(100% - 70px);
   height: 4px;
-  background: #e9ecef;
+  background: #DEDEDE;
   z-index: -1;
 }
 
@@ -868,7 +868,7 @@ export default {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #ebebeb;
+  background: #DEDEDE;
   color: #a0a0a0;
   display: flex;
   align-items: center;
