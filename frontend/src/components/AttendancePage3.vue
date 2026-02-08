@@ -161,11 +161,11 @@
           <b-form-input
             id="shipping-country"
             v-model="formData.country"
-            placeholder="USA"
+            placeholder="US"
             :state="showState('country')"
             @input="touched.country = true"
           />
-          <b-form-text class="helper-text"> e.g., "USA", "United States", "Canada" </b-form-text>
+          <b-form-text class="helper-text"> e.g., "US", "United States", "Canada" </b-form-text>
           <b-form-invalid-feedback :state="showState('country')">
             Please enter a valid country name or code
           </b-form-invalid-feedback>
@@ -382,12 +382,15 @@ export default {
       else if (this.formData.diet_other && !this.formData.diet_other_text.trim())
         isValidDiet = false;
 
+      const country = this.formData.country ? this.formData.country.trim().toLowerCase() : "";
+      const isUS = ["us", "usa", "united states", "united states of america"].includes(country);
+
       return {
         transport: this.formData.transport !== null && this.formData.transport !== undefined,
         tshirt_size: req(this.formData.tshirt_size),
         address1: req(this.formData.address1),
         city: req(this.formData.city) && isValidCity(this.formData.city),
-        state: req(this.formData.state) && isValidState(this.formData.state),
+        state: isUS ? req(this.formData.state) && isValidState(this.formData.state) : true,
         zip: req(this.formData.zip) && isValidZip(this.formData.zip),
         country: req(this.formData.country) && isValidCountry(this.formData.country),
         diet: isValidDiet,
@@ -398,13 +401,22 @@ export default {
       const res = [];
       if (!this.atNoTransportUnis()) res.push("transport");
       if (this.formData.diet_other) res.push("diet_other_text");
-      if (
-        ["address1", "city", "state", "zip", "country"].some(
-          (fieldName) => this.formData[fieldName] && this.formData[fieldName].trim() !== ""
-        )
-      ) {
-        res.push(...["address1", "city", "state", "zip", "country"]);
+
+      const addressFields = ["address1", "city", "state", "zip", "country"];
+      const anyAddressFilled = addressFields.some(
+        (fieldName) => this.formData[fieldName] && this.formData[fieldName].trim() !== ""
+      );
+
+      if (anyAddressFilled) {
+        res.push("address1", "city", "zip", "country");
+        const country = this.formData.country ? this.formData.country.trim().toLowerCase() : "";
+        const isUS = ["us", "usa", "united states", "united states of america"].includes(country);
+
+        if (isUS) {
+          res.push("state");
+        }
       }
+
       return res;
     },
   },
