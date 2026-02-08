@@ -430,12 +430,12 @@ export default {
       //   types: ["address"],
       // });
 
-      autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-        // this.formData.gmaps_place_id = place.place_id;
-        this.formData.address1 = place.formatted_address;
-        this.fillInAddress(place);
-      });
+      // autocomplete.addListener("place_changed", () => {
+      //   const place = autocomplete.getPlace();
+      //   // this.formData.gmaps_place_id = place.place_id;
+      //   this.formData.address1 = place.formatted_address;
+      //   this.fillInAddress(place);
+      // });
 
       input.addEventListener("keydown", (event) => {
         if (event.keyCode === 13) {
