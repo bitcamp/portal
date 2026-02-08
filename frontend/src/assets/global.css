@@ -30,6 +30,12 @@ body {
     linear-gradient(#010218 0%, #121743 33%, #1f2c52 67%, #282f59 100%);
   margin: 0;
   padding: 0;
+  background-color: linear-gradient(
+    #010218 0%,
+    #121743 33%,
+    #1f2c52 67%,
+    #282f59 100%
+  );
   background-repeat: no-repeat;
   background-size: 100%, cover;
   background-position: center bottom, top center;
