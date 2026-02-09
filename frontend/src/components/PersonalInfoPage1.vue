@@ -4,7 +4,7 @@
 
     <p class="page-subtitle">
       Questions? Email us at
-      <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also chat with us through Bitbot at the bottom right corner on
+      <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
       <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
@@ -580,7 +580,7 @@ export default {
 }
 
 .page-subtitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   opacity: 0.95;
   color: #555;
   margin-bottom: 30px;
