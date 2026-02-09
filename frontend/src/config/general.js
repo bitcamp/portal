@@ -7,7 +7,7 @@ export default {
     BACKEND_ENDPOINT: 'https://9jbrbhkot3.execute-api.us-east-1.amazonaws.com',
   },
   stg: {
-    BACKEND_ENDPOINT: 'https://muvpwuuw00.execute-api.us-east-1.amazonaws.com',
+    BACKEND_ENDPOINT: 'https://rbr167h922.execute-api.us-east-1.amazonaws.com',
   },
   prd: {
     BACKEND_ENDPOINT: 'https://nxos84bay0.execute-api.us-east-1.amazonaws.com',

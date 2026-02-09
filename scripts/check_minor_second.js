@@ -16,11 +16,11 @@ let old_minors = Papa.parse(fs.readFileSync('./minors-list.csv', 'utf8'), { head
 let main_template = {
   Template: {
     TemplateName: "MainTemplate",
-    SubjectPart: "RSVP for Bitcamp 2025!",
-    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2025! 
-    \n\nWe're excited to have you join us at Bitcamp 2025!
+    SubjectPart: "RSVP for Bitcamp 2026!",
+    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2026! 
+    \n\nWe're excited to have you join us at Bitcamp 2026!
     \n\nBefore you come, we want to make sure that we're ready to make Bytecamp the best Bitcamp ever!
-    \n\nPlease fill out this RSVP form {{link}} so that we have a better idea of how many people are coming to Bitcamp 2025.
+    \n\nPlease fill out this RSVP form {{link}} so that we have a better idea of how many people are coming to Bitcamp 2026.
     \n\nSee you by the campfire! The Bitcamp Organizing Team`,
     HtmlPart: main_html,
   }
@@ -29,8 +29,8 @@ let main_template = {
 let minor_template = {
   Template: {
     TemplateName: "MinorTemplate",
-    SubjectPart: "Action Needed, Complete your Minor Application for Bitcamp 2025!",
-    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2025! 
+    SubjectPart: "Action Needed, Complete your Minor Application for Bitcamp 2026!",
+    TextPart: `Hey {{name}}, thanks for registering for Bitcamp 2026! 
     \n\nWe noticed that on your registration form you'll be under 18 by the time Bitcamp rolls around. For legal reasons, we'll need you to fill out 
     \n\nthis minors application https://forms.gle/6SS6oFnHFWBEdUYN8 to complete your registration.
     \n\nYou can also find this on our website at bit.camp! If you have any questions, contact us at hello@bit.camp and we'll be happy to help you out!
@@ -71,10 +71,10 @@ let minor_template = {
 
 // if you're 18 by the first day of bitcamp that means you were born <= Apr 8 2004
 // monthIndex for April is 3
-let cutoff = new Date(2004, 3, 8);
+let cutoff = new Date(2007, 3, 8);
 
 const scan_params = {
-  TableName: 'portal-prd-registration',
+  TableName: 'minor-dev-waiver-forms',
 };
 
 let main_emails = [];
@@ -89,7 +89,7 @@ function sleep(ms) {
 }
 
 const downloadRegistrations = async (stage) => {
-  const fullTableName = `portal-${stage}-registration`;
+  const fullTableName = `minor-${stage}-waiver-forms`;
   let params = {
     TableName: fullTableName,
   };
@@ -124,11 +124,11 @@ const mainFile = `./rsvp-users.csv`;
 const minorsFile = `./rsvp-minors-users.csv`;
 
 (async function () {
-  const result = await downloadRegistrations('prd');
+  const result = await downloadRegistrations('dev');
 
   let minor_set = new Set(old_minors.data.map((user) => user.Email));
 
-  // let temp = await downloadRegistrations('prd');
+  // let temp = await downloadRegistrations('dev');
   // temp.forEach(element => {
   //   console.log(new Date(element.birthday));
   // })

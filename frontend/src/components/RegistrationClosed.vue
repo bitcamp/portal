@@ -7,16 +7,19 @@
           <b-col md="1" />
           <b-col>
             <h1>
-              {{ type === 'hacker' ? 'Hacker' : type === 'volunteer' ? 'Volunteer' : type === 'mentor' ? 'Mentor' : 'Registration' }} 
-              registration for Bitcamp 2025 is now closed - See you April 11-13!
+              {{ type === 'hacker' ? 'Hacker' : type === 'volunteer' ? 'Volunteer' : type === 'mentor' ? 'Mentor' : 'Registration' }}
+              registration for Bitcamp 2026 is now closed - See you April 10-12!
             </h1>
-            <img style="width: 200px; height: 200px" src="@/assets/bitcamp.gif" />
+            <img
+              style="width: 200px; height: 200px"
+              src="@/assets/bitcamp.gif"
+            >
 
             <div class="py-3">
-                <p class="mb-4">
-                  If you have any questions, be sure to reach out to
-                  <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
-                </p>
+              <p class="mb-4">
+                If you have any questions, be sure to reach out to
+                <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
+              </p>
               <p>Follow us on social media to make sure you don't miss any updates from Bitcamp.</p>
               <!-- Social links -->
               <div class="pb-3">

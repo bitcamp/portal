@@ -1,21 +1,21 @@
 <template>
   <div class="about">
-    <b-container>
+    <b-container class="move">
       <b-card class="main-card mt-3 mt-md-5">
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>You're registered
+            <h1>You're registered for Bitcamp 2026!</h1>
 
-              <span v-if="type">
+            <!--               <span v-if="type">
                 as a {{ type }}
               </span>
               <span v-else>
                 for the waitlist
               </span>
-              for Bitcamp 2025!</h1>
+              for Bitcamp 2026!</h1> -->
 
-            <img style="width: 200px; height: 200px;" src="@/assets/bitcamp.gif" />
+            <img style="width: 20vh; height: 20vh" src="@/assets/marshy.svg" />
 
             <div class="py-3">
               <p class="mb-4">
@@ -26,6 +26,8 @@
                 <br />
                 If you have any questions, be sure to reach out to
                 <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
+                <br />
+                You may now close this tab.
               </p>
 
               <!-- <p class="mb-1">
@@ -66,11 +68,15 @@
                 <b-col md=1></b-col>
               </b-row> -->
 
-              <p>Follow us on social media to make sure you don't miss any updates from Bitcamp.</p>
+              <p class="mobile">
+                Follow us on social media to make sure you don't miss any updates from Bitcamp.
+              </p>
               <!-- Social links -->
               <div class="pb-3">
                 <social-links />
               </div>
+
+              <p class="orange-p">You may now close this tab</p>
             </div>
           </b-col>
           <b-col md="1" />
@@ -162,10 +168,26 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  .mb-4 {
+    font-size: 0.9rem;
+  }
+  .mobile {
+    font-size: 0.9rem;
+  }
+}
+
 .about {
   display: flex;
   height: 100vh;
   align-items: center;
+}
+
+.move {
+  width: 85%;
 }
 
 .card {
@@ -174,10 +196,23 @@ export default {
 
 h1 {
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 p {
   font-size: 1.05rem;
+}
+
+.orange-p {
+  font-family: Avenir;
+  font-weight: 800;
+  font-style: Heavy;
+  font-size: 24px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0.25px;
+  text-align: center;
+  color: #ff6f00;
 }
 
 .btn-cyan {

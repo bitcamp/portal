@@ -13,11 +13,13 @@ provider:
     PLATFORM_BASE_URL: ${file(./config/${self:provider.stage}.json):PLATFORM_BASE_URL}
     RESUMES_TABLE: ${file(./config/${self:provider.stage}.json):RESUMES_TABLE}
     REGISTRATION_TABLE: ${file(./config/${self:provider.stage}.json):REGISTRATION_TABLE}
+    MINOR_TABLE: ${file(./config/${self:provider.stage}.json):MINOR_TABLE}
     VOLUNTEER_TABLE: ${file(./config/${self:provider.stage}.json):VOLUNTEER_TABLE}
     MENTOR_TABLE: ${file(./config/${self:provider.stage}.json):MENTOR_TABLE}
     TRACKING_TABLE: ${file(./config/${self:provider.stage}.json):TRACKING_TABLE}
     STATISTICS_TABLE: ${file(./config/${self:provider.stage}.json):STATISTICS_TABLE}
     SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME: ${file(./config/${self:provider.stage}.json):SLACK_STAT_UPDATE_WEBHOOK_SECRET_NAME}
+    TEAM_MATCHING_TABLE: ${file(./config/${self:provider.stage}.json):TEAM_MATCHING_TABLE}
 
   iam:
     role:
@@ -83,6 +85,17 @@ functions:
     memorySize: 256
     timeout: 15
     provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
+  register_minor:
+    handler: minorHandler.registerMinor
+    description: Adds a new minor to the minor waiver form ddb
+    events:
+      - http:
+          path: register_minor
+          method: post
+          cors: true
+    memorySize: 256
+    timeout: 15
+    provisionedConcurrency: ${self:custom.provisionedConcurrency.${opt:stage}, self:custom.provisionedConcurrency.other}
   track:
     handler: handler.track
     description: Keeps track of various user actions
@@ -97,8 +110,8 @@ functions:
     description: Sends a stat update to Slack
     events:
       - schedule:
-          # rate: cron(0 0 * * ? *) # runs once a day at 12 am UTC (8pm eastern)
-          rate: cron(0 0 1 1 ? 2024) # date in the past, disables this function
+          rate: cron(0 0 * * ? *) # runs once a day at 12 am UTC (8pm eastern)
+          # rate: cron(0 0 1 1 ? 2024) # date in the past, disables this function
           enabled: ${self:custom.updateEnabled.${opt:stage}, self:custom.updateEnabled.other}
   upload_resume:
     handler: handler.upload_resume
