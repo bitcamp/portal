@@ -3,8 +3,8 @@
     <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
-      Questions? Chat with us in the bottom right hand corner or email
-      <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also learn more at
+      Questions? Email us at
+      <a href="mailto:hello@bit.camp">hello@bit.camp</a>. You can also chat with us through Bitbot at the bottom right corner on
       <a href="https://bit.camp" target="_blank" rel="noopener">bit.camp</a>!
     </p>
 
