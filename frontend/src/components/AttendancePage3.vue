@@ -105,11 +105,13 @@
             City
             <span v-if="optionalFieldsRequired.includes('city')" class="text-danger">*</span>
           </template>
-          <b-form-input
-            id="shipping-city"
+          <vue-bootstrap-autocomplete
             v-model="formData.city"
+            :data="citiesOptions"
+            :disabled="!selectedStateHasCities"
+            :input-class="city_class"
             placeholder="College Park"
-            :state="showState('city')"
+            no-results-info="No Results found"
             @input="touched.city = true"
           />
           <b-form-text class="helper-text"> e.g., "New York", "Los Angeles" </b-form-text>
@@ -123,14 +125,16 @@
             State
             <span v-if="optionalFieldsRequired.includes('state')" class="text-danger">*</span>
           </template>
-          <b-form-input
-            id="shipping-state"
+          <vue-bootstrap-autocomplete
             v-model="formData.state"
-            placeholder="MD"
-            :state="showState('state')"
+            :data="statesOptions"
+            :disabled="!selectedCountryHasStates"
+            :input-class="state_class"
+            placeholder="Maryland"
+            no-results-info="No Results found"
             @input="touched.state = true"
           />
-          <b-form-text class="helper-text"> e.g., "MD", "CA" </b-form-text>
+          <b-form-text class="helper-text"> e.g., "Maryland", "California" </b-form-text>
           <b-form-invalid-feedback :state="showState('state')">
             Please enter a valid state code
           </b-form-invalid-feedback>
@@ -139,7 +143,6 @@
         <b-form-group label-for="shipping-zip" class="col-md-3">
           <template #label>
             Zip Code
-            <span v-if="optionalFieldsRequired.includes('zip')" class="text-danger">*</span>
           </template>
           <b-form-input
             id="shipping-zip"
@@ -158,13 +161,20 @@
             Country
             <span v-if="optionalFieldsRequired.includes('country')" class="text-danger">*</span>
           </template>
-          <b-form-input
+          <vue-bootstrap-autocomplete
+            v-model="formData.country"
+            no-results-info="No Results found"
+            :input-class="country_class"
+            :data="countriesOptions"
+            @input="touched.country = true"
+          />
+          <!-- <b-form-input
             id="shipping-country"
             v-model="formData.country"
             placeholder="US"
             :state="showState('country')"
             @input="touched.country = true"
-          />
+          /> -->
           <b-form-text class="helper-text"> e.g., "US", "United States", "Canada" </b-form-text>
           <b-form-invalid-feedback :state="showState('country')">
             Please enter a valid country name or code
@@ -272,10 +282,13 @@
 <script>
 import { IconsPlugin } from "bootstrap-vue";
 import Vue from "vue";
-import { Country, State, City } from "country-state-city";
+import * as count_list from "../assets/countries+states+cities.json";
+import VueBootstrapAutocomplete from "@vue-bootstrap-components/vue-bootstrap-autocomplete";
 
+Vue.component("VueBootstrapAutocomplete", VueBootstrapAutocomplete);
 Vue.use(IconsPlugin);
 
+const countries_list = count_list.default;
 const no_transport_unis = ["The University of Maryland, College Park"];
 const thirdPageRequiredFields = ["tshirt_size", "diet"];
 const thirdPageOptionalFields = [
@@ -326,10 +339,59 @@ export default {
         { text: "Kosher", value: "kosher" },
         { text: "Halal", value: "halal" },
       ],
+      countriesOptions: countries_list.map((c) => c.name),
     };
   },
 
   computed: {
+    country_class() {
+      const state = this.showState("country");
+      if (state === true) return "typeahead is-valid";
+      if (state === false) return "typeahead is-invalid";
+      return "typeahead";
+    },
+    state_class() {
+      const state = this.showState("state");
+      if (state === true) return "typeahead is-valid";
+      if (state === false) return "typeahead is-invalid";
+      return "typeahead";
+    },
+    city_class() {
+      const state = this.showState("city");
+      if (state === true) return "typeahead is-valid";
+      if (state === false) return "typeahead is-invalid";
+      return "typeahead";
+    },
+    selectedCountryObj() {
+      if (!this.formData.country) return null;
+      return (
+        countries_list.find(
+          (c) => c.name.toLowerCase() === this.formData.country.trim().toLowerCase()
+        ) || null
+      );
+    },
+    statesOptions() {
+      if (!this.selectedCountryObj) return [];
+      return (this.selectedCountryObj.states || []).map((s) => s.name);
+    },
+    selectedCountryHasStates() {
+      return this.statesOptions.length > 0;
+    },
+    selectedStateObj() {
+      if (!this.selectedCountryObj || !this.formData.state) return null;
+      return (
+        (this.selectedCountryObj.states || []).find(
+          (s) => s.name.toLowerCase() === this.formData.state.trim().toLowerCase()
+        ) || null
+      );
+    },
+    citiesOptions() {
+      if (!this.selectedStateObj) return [];
+      return (this.selectedStateObj.cities || []).map((c) => c.name);
+    },
+    selectedStateHasCities() {
+      return this.citiesOptions.length > 0;
+    },
     currentPage() {
       return 3;
     },
@@ -343,28 +405,21 @@ export default {
 
       const isValidCountry = (country) => {
         if (!country) return false;
-        const allCountries = Country.getAllCountries();
-        return allCountries.some(
-          (c) =>
-            c.name.toLowerCase() === country.trim().toLowerCase() ||
-            c.isoCode.toLowerCase() === country.trim().toLowerCase()
-        );
+        return countries_list.some((c) => c.name.toLowerCase() === country.trim().toLowerCase());
       };
 
       const isValidState = (state) => {
-        if (!state) return false;
-        const allStates = State.getAllStates();
-        return allStates.some(
-          (s) =>
-            s.name.toLowerCase() === state.trim().toLowerCase() ||
-            s.isoCode.toLowerCase() === state.trim().toLowerCase()
+        if (!state || !this.selectedCountryObj) return false;
+        return (this.selectedCountryObj.states || []).some(
+          (s) => s.name.toLowerCase() === state.trim().toLowerCase()
         );
       };
 
       const isValidCity = (city) => {
-        if (!city) return false;
-        const allCities = City.getAllCities();
-        return allCities.some((c) => c.name.toLowerCase() === city.trim().toLowerCase());
+        if (!city || !this.selectedStateObj) return false;
+        return (this.selectedStateObj.cities || []).some(
+          (c) => c.name.toLowerCase() === city.trim().toLowerCase()
+        );
       };
 
       const createDietaryRestrictionString = () => {
@@ -382,16 +437,17 @@ export default {
       else if (this.formData.diet_other && !this.formData.diet_other_text.trim())
         isValidDiet = false;
 
-      const country = this.formData.country ? this.formData.country.trim().toLowerCase() : "";
-      const isUS = ["us", "usa", "united states", "united states of america"].includes(country);
-
       return {
         transport: this.formData.transport !== null && this.formData.transport !== undefined,
         tshirt_size: req(this.formData.tshirt_size),
         address1: req(this.formData.address1),
-        city: req(this.formData.city) && isValidCity(this.formData.city),
-        state: isUS ? req(this.formData.state) && isValidState(this.formData.state) : true,
-        zip: req(this.formData.zip) && isValidZip(this.formData.zip),
+        city: this.selectedStateHasCities
+          ? req(this.formData.city) && isValidCity(this.formData.city)
+          : true,
+        state: this.selectedCountryHasStates
+          ? req(this.formData.state) && isValidState(this.formData.state)
+          : true,
+        zip: isValidZip(this.formData.zip),
         country: req(this.formData.country) && isValidCountry(this.formData.country),
         diet: isValidDiet,
         diet_other_text: req(this.formData.diet_other_text),
@@ -408,16 +464,26 @@ export default {
       );
 
       if (anyAddressFilled) {
-        res.push("address1", "city", "zip", "country");
-        const country = this.formData.country ? this.formData.country.trim().toLowerCase() : "";
-        const isUS = ["us", "usa", "united states", "united states of america"].includes(country);
-
-        if (isUS) {
+        res.push("address1", "country");
+        if (this.selectedCountryHasStates) {
           res.push("state");
+        }
+        if (this.selectedStateHasCities) {
+          res.push("city");
         }
       }
 
       return res;
+    },
+  },
+
+  watch: {
+    selectedCountryObj() {
+      this.formData.state = "";
+      this.formData.city = "";
+    },
+    selectedStateObj() {
+      this.formData.city = "";
     },
   },
 
