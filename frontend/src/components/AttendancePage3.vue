@@ -100,23 +100,28 @@
       </b-form-row>
 
       <b-form-row>
-        <b-form-group label-for="shipping-city" class="col-md-3">
+        <b-form-group label-for="shipping-country" class="col-md-4">
           <template #label>
-            City
-            <span v-if="optionalFieldsRequired.includes('city')" class="text-danger">*</span>
+            Country
+            <span v-if="optionalFieldsRequired.includes('country')" class="text-danger">*</span>
           </template>
           <vue-bootstrap-autocomplete
-            v-model="formData.city"
-            :data="citiesOptions"
-            :disabled="!selectedStateHasCities"
-            :input-class="city_class"
-            placeholder="College Park"
+            v-model="formData.country"
             no-results-info="No Results found"
-            @input="touched.city = true"
+            :input-class="country_class"
+            :data="countriesOptions"
+            @input="touched.country = true"
           />
-          <b-form-text class="helper-text"> e.g., "New York", "Los Angeles" </b-form-text>
-          <b-form-invalid-feedback :state="showState('city')">
-            Please enter a valid city name
+          <!-- <b-form-input
+            id="shipping-country"
+            v-model="formData.country"
+            placeholder="US"
+            :state="showState('country')"
+            @input="touched.country = true"
+          /> -->
+          <b-form-text class="helper-text"> e.g., "United States", "Canada" </b-form-text>
+          <b-form-invalid-feedback :state="showState('country')">
+            Please enter a valid country name or code
           </b-form-invalid-feedback>
         </b-form-group>
 
@@ -140,10 +145,28 @@
           </b-form-invalid-feedback>
         </b-form-group>
 
-        <b-form-group label-for="shipping-zip" class="col-md-3">
+        <b-form-group label-for="shipping-city" class="col-md-3">
           <template #label>
-            Zip Code
+            City
+            <span v-if="optionalFieldsRequired.includes('city')" class="text-danger">*</span>
           </template>
+          <vue-bootstrap-autocomplete
+            v-model="formData.city"
+            :data="citiesOptions"
+            :disabled="!selectedStateHasCities"
+            :input-class="city_class"
+            placeholder="College Park"
+            no-results-info="No Results found"
+            @input="touched.city = true"
+          />
+          <b-form-text class="helper-text"> e.g., "New York", "Los Angeles" </b-form-text>
+          <b-form-invalid-feedback :state="showState('city')">
+            Please enter a valid city name
+          </b-form-invalid-feedback>
+        </b-form-group>
+
+        <b-form-group label-for="shipping-zip" class="col-md-3">
+          <template #label> Zip Code </template>
           <b-form-input
             id="shipping-zip"
             v-model="formData.zip"
@@ -153,31 +176,6 @@
           />
           <b-form-invalid-feedback :state="showState('zip')">
             Please enter a valid zip code
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group label-for="shipping-country" class="col-md-4">
-          <template #label>
-            Country
-            <span v-if="optionalFieldsRequired.includes('country')" class="text-danger">*</span>
-          </template>
-          <vue-bootstrap-autocomplete
-            v-model="formData.country"
-            no-results-info="No Results found"
-            :input-class="country_class"
-            :data="countriesOptions"
-            @input="touched.country = true"
-          />
-          <!-- <b-form-input
-            id="shipping-country"
-            v-model="formData.country"
-            placeholder="US"
-            :state="showState('country')"
-            @input="touched.country = true"
-          /> -->
-          <b-form-text class="helper-text"> e.g., "US", "United States", "Canada" </b-form-text>
-          <b-form-invalid-feedback :state="showState('country')">
-            Please enter a valid country name or code
           </b-form-invalid-feedback>
         </b-form-group>
       </b-form-row>
