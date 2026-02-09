@@ -1,7 +1,6 @@
 const AWS = require("aws-sdk");
 const UUID = require("uuid");
 const withSentry = require("serverless-sentry-lib");
-const { IncomingWebhook } = require("@slack/webhook");
 
 AWS.config.update({ region: "us-east-1" });
 
@@ -197,14 +196,12 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
     logStatistic(ddb, "registrations", 1),
     logStatistic(ddb, "minor-registrations", 1),
     logTeamMatchingOptIn(),
-    // Call DynamoDB to add the item to the table
     ddb.put(params).promise(),
-    // Send confirmation email
     sendConfirmationEmail(params.Item),
     registerTeamMatching(ddb, body),
   ]);
 
-  // Returns status code 200 and JSON string of 'result'
+
   return {
     statusCode: 200,
     body: JSON.stringify(params.Item),
@@ -212,10 +209,10 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
   };
 });
 
-// makeAddon generates a random string of `length`
+
 const makeAddon = (length) => {
   var result = [];
-  var chars = "abcdefghjkmnpqrstuvwxyz23456789"; // avoid i, l , o, 0, 1
+  var chars = "abcdefghjkmnpqrstuvwxyz23456789";
   for (var i = 0; i < length; i++) {
     result.push(chars.charAt(Math.floor(Math.random() * chars.length)));
   }
@@ -304,13 +301,13 @@ const logReferral = async (ddb, referred_by, referralName) => {
   return Promise.resolve();
 };
 
-// sendConfirmationEmail uses AWS SES to send a confirmation email to the user
+
 const sendConfirmationEmail = async (user) => {
   const ses = new AWS.SES();
 
   const reregisterLink = "https://register.bit.camp?redo=" + user.email;
 
-  // Capitalize track
+
   const track = user.track
     .split("_")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -348,7 +345,7 @@ const sendConfirmationEmail = async (user) => {
 
   const tShirtSize = user.tshirt_size.toUpperCase();
 
-  // Combine address fields
+
   const address = [
     user.address1,
     user.address2,
@@ -357,7 +354,7 @@ const sendConfirmationEmail = async (user) => {
     user.zip,
     user.country,
   ]
-    .filter(Boolean) // Remove empty/null values
+    .filter(Boolean)
     .join(", ");
 
   const params = {
@@ -393,9 +390,9 @@ const sendReferralNotificationEmail = async (
   return await ses.sendTemplatedEmail(params).promise();
 };
 
-// =============================================================================
 
-// POST /upload_resume - Uploads hacker resume to S3 bucket
+
+
 module.exports.upload_resume = withSentry(async (event) => {
   const body = JSON.parse(event.body);
 
@@ -430,7 +427,7 @@ module.exports.upload_resume = withSentry(async (event) => {
   };
 });
 
-// POST /upload_resume_text - Uploads text format of hacker resume to DynamoDB table
+
 module.exports.upload_resume_text = withSentry(async (event) => {
   const body = JSON.parse(event.body);
 
@@ -460,7 +457,7 @@ module.exports.upload_resume_text = withSentry(async (event) => {
   };
 });
 
-// POST /track - Keeps track of various user actions
+
 module.exports.track = withSentry(async (event) => {
   const body = JSON.parse(event.body);
   const ddb = new AWS.DynamoDB.DocumentClient();
@@ -473,19 +470,19 @@ module.exports.track = withSentry(async (event) => {
     };
   }
 
-  // Handle "how i found out about bitcamp"
+
   if (body.key.startsWith("hf")) {
     body.value = event.requestContext.identity.sourceIp;
     await logStatistic(ddb, body.key, 1);
   }
 
-  // Log user's ip
+
   if (body.key === "open-registration") {
     body.value = event.requestContext.identity.sourceIp;
     await logStatistic(ddb, "page-view", 1);
   }
 
-  // Append key:value pair to the user's row if random_id is provided
+
   if (body.random_id) {
     await ddb
       .update({
@@ -499,144 +496,9 @@ module.exports.track = withSentry(async (event) => {
       .promise();
   }
 
-  // Return success
+
   return {
     statusCode: 200,
     headers: HEADERS,
   };
-});
-
-// /update - Sends an update to slack
-module.exports.update = withSentry(async () => {
-  const ddb = new AWS.DynamoDB.DocumentClient();
-  const statsTable = process.env.STATISTICS_TABLE;
-  const registrationTable = process.env.REGISTRATION_TABLE;
-  const mentorTable = process.env.MENTOR_TABLE;
-  const minorTable = process.env.MINOR_TABLE;
-  const volunteerTable = process.env.VOLUNTEER_TABLE;
-
-  // Can't simply scan a table to get the count once it's over 1mb in size (~950 registrations)
-  // must use pagination instead, so the following doesn't work:
-
-  // const hackers = await ddb.scan({
-  //   TableName: registrationTable,
-  //   Select: "COUNT",
-  // }).promise();
-
-  const countTable = async (tableName) => {
-    let scanParams = {
-      TableName: tableName,
-      Select: "COUNT",
-    };
-
-    let statCount = 0;
-    let stat;
-
-    do {
-      stat = await ddb.scan(scanParams).promise();
-      statCount += stat.Count;
-      scanParams.ExclusiveStartKey = stat.LastEvaluatedKey;
-    } while (stat.LastEvaluatedKey);
-    return statCount;
-  };
-
-  const hackersCount = await countTable(registrationTable);
-  const minorsCount = await countTable(minorTable);
-
-  const mentors = await ddb
-    .scan({
-      TableName: mentorTable,
-      Select: "COUNT",
-    })
-    .promise();
-
-  const volunteers = await ddb
-    .scan({
-      TableName: volunteerTable,
-      Select: "COUNT",
-    })
-    .promise();
-
-  const params = {
-    TableName: statsTable,
-    Select: "ALL_ATTRIBUTES",
-  };
-
-  // Prepare the slack webhook
-  const webhookUrl =
-    "https://hooks.slack.com/services/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";
-  const webhook = new IncomingWebhook(webhookUrl);
-
-  // Collect statistic data
-  const trackArr = [];
-  const hfArr = [];
-  let registrations = 0;
-  let pageViews = 0;
-  let volunteerRegistrations = 0;
-  let mentorRegistrations = 0;
-
-  const stats = await ddb.scan(params).promise();
-  stats.Items.forEach((stat) => {
-    if (stat.statistic === "registrations") {
-      // save for later
-      registrations = hackersCount + minorsCount;
-      volunteerRegistrations = volunteers.Count;
-      mentorRegistrations = mentors.Count;
-    } else if (stat.statistic === "page-view") {
-      pageViews = stat.value;
-    } else if (stat.statistic.startsWith("track-")) {
-      let track = stat.statistic.replace("track-", "");
-
-      let waitlist = false;
-      if (track.startsWith("waitlist-")) {
-        waitlist = true;
-        track = track.replace("waitlist-", "");
-      }
-
-      track = track
-        .split("_")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-      if (waitlist) {
-        track = `Waitlist (${track})`;
-      }
-      trackArr.push(`${stat.value} ${track}`);
-    } else if (stat.statistic.startsWith("hf-")) {
-      let hf = stat.statistic.replace("hf-", "");
-      hf = hf.charAt(0).toUpperCase() + hf.slice(1);
-      hfArr.push(`${stat.value} ${hf}`);
-    }
-  });
-
-  // Sort strings ignoring the statistic value
-  const sortWithoutStatisticValue = (a, b) => {
-    a = a.replace(/[0-9]/g, "");
-    b = b.replace(/[0-9]/g, "");
-    return a.localeCompare(b);
-  };
-
-  // Format statistic update
-  let statArr = [];
-  statArr.push(`*${registrations} Hacker Registrations*`);
-  statArr.push(`*${hackersCount} Adult Hacker Registrations*`);
-  statArr.push(`*${minorsCount} Minor Hacker Registrations*`);
-  statArr.push(`*${mentorRegistrations} Mentor Registrations*`);
-  statArr.push(`*${volunteerRegistrations} Volunteer Registrations*`);
-  statArr.push("~~~~~~~~~~~");
-  statArr = statArr.concat(trackArr.sort(sortWithoutStatisticValue));
-  statArr.push("~~~~~~~~~~~");
-  statArr = statArr.concat(hfArr.sort(sortWithoutStatisticValue));
-  statArr.push(`${pageViews} Page Views`);
-
-  // Send the statistic update to slack
-  await webhook.send({
-    text:
-      `Registration update for ` +
-      `${new Date().toLocaleString("en-US", {
-        timeZone: "America/New_York",
-        dateStyle: "short",
-        timeStyle: "short",
-      })} ET:\n\n` +
-      `${Array.from(statArr).join("\n")}`,
-  });
 });
