@@ -83,8 +83,6 @@
           <b-form-input
             v-model="formData.phone"
             type="tel"
-            inputmode="numeric"
-            pattern="[0-9]*"
             :state="showState('phone')"
             @input="touched.phone = true"
             placeholder="+1 (301) 405-1000"
@@ -459,7 +457,6 @@ export default {
       universityOptions: [...university_list],
 
       countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
-
     };
   },
 
@@ -486,7 +483,11 @@ export default {
         major: req(this.formData.major),
         heard_from: this.formData.heard_from.length > 0,
         email: EmailValidator.validate(this.formData.email),
-        phone: req(this.formData.phone) && !this.phoneHasNonDigits && this.phoneDigits.length >= 4 && this.phoneDigits.length <= 15,
+        phone:
+          req(this.formData.phone) &&
+          !this.phoneHasNonDigits &&
+          this.phoneDigits.length >= 4 &&
+          this.phoneDigits.length <= 15,
         school: !this.formData.school_other_selected
           ? req(this.formData.school) && university_list.includes(this.formData.school)
           : true,
