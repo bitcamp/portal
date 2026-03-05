@@ -90,7 +90,7 @@
               touched.phone = true;
               phoneHasNonDigits = /[^0-9+\-()\s]/.test($event || '');
             "
-            placeholder="3014051000"
+            placeholder="+1 (301) 405-1000"
           />
           <b-form-invalid-feedback :state="showState('phone')">
             Please enter a valid phone number
