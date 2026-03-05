@@ -88,7 +88,7 @@
             :state="showState('phone')"
             @input="
               touched.phone = true;
-              phoneHasNonDigits = /\D/.test($event || '');
+              phoneHasNonDigits = /[^0-9+\-()\s]/.test($event || '');
             "
             placeholder="3014051000"
           />
