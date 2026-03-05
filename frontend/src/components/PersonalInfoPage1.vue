@@ -333,7 +333,7 @@ import * as majors_list from "../assets/college-majors.json";
 import * as univ_list from "../assets/university-list.json";
 import * as country_codes from "../assets/country-codes.json";
 import EmailValidator from "email-validator";
-import parsePhoneNumber from "libphonenumber-js";
+// import parsePhoneNumber from "libphonenumber-js";
 import VueBootstrapAutocomplete from "@vue-bootstrap-components/vue-bootstrap-autocomplete";
 import Vue from "vue";
 import { IconsPlugin } from "bootstrap-vue";
@@ -470,7 +470,7 @@ export default {
   computed: {
     validations() {
       const req = (v) => v && v.toString().trim().length > 0;
-      const phone = parsePhoneNumber(this.formData.phone || "", "US");
+      // const phone = parsePhoneNumber(this.formData.phone || "", "US");
 
       return {
         first_name: req(this.formData.first_name),
@@ -483,7 +483,7 @@ export default {
         major: req(this.formData.major),
         heard_from: this.formData.heard_from.length > 0,
         email: EmailValidator.validate(this.formData.email),
-        phone: !this.phoneHasNonDigits && phone && phone.isValid(),
+        phone: req(this.formData.phone) && !this.phoneHasNonDigits && this.formData.phone.length >= 4 && this.formData.phone.length <= 15,
         school: !this.formData.school_other_selected
           ? req(this.formData.school) && university_list.includes(this.formData.school)
           : true,
