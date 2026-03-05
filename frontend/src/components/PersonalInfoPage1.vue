@@ -86,10 +86,7 @@
             inputmode="numeric"
             pattern="[0-9]*"
             :state="showState('phone')"
-            @input="
-              touched.phone = true;
-              phoneHasNonDigits = /[^0-9+\-()\s]/.test($event || '');
-            "
+            @input="touched.phone = true"
             placeholder="+1 (301) 405-1000"
           />
           <b-form-invalid-feedback :state="showState('phone')">
@@ -463,14 +460,20 @@ export default {
 
       countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
 
-      phoneHasNonDigits: false,
     };
   },
 
   computed: {
+    phoneDigits() {
+      return (this.formData.phone || "").replace(/\D/g, "");
+    },
+
+    phoneHasNonDigits() {
+      return /[^0-9+\-()\s]/.test(this.formData.phone || "");
+    },
+
     validations() {
       const req = (v) => v && v.toString().trim().length > 0;
-      // const phone = parsePhoneNumber(this.formData.phone || "", "US");
 
       return {
         first_name: req(this.formData.first_name),
@@ -483,7 +486,7 @@ export default {
         major: req(this.formData.major),
         heard_from: this.formData.heard_from.length > 0,
         email: EmailValidator.validate(this.formData.email),
-        phone: req(this.formData.phone) && !this.phoneHasNonDigits && this.formData.phone.length >= 4 && this.formData.phone.length <= 15,
+        phone: req(this.formData.phone) && !this.phoneHasNonDigits && this.phoneDigits.length >= 4 && this.phoneDigits.length <= 15,
         school: !this.formData.school_other_selected
           ? req(this.formData.school) && university_list.includes(this.formData.school)
           : true,
