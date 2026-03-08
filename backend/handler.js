@@ -470,19 +470,16 @@ module.exports.update = withSentry(async () => {
   const minorTable = process.env.MINOR_TABLE;
   const volunteerTable = process.env.VOLUNTEER_TABLE;
 
-
-
-
-
-
-
-
-
-  const countTable = async (tableName) => {
+  const countTable = async (tableName, filterExpression, expressionAttributeValues) => {
     let scanParams = {
       TableName: tableName,
       Select: "COUNT",
     };
+
+    if (filterExpression) {
+      scanParams.FilterExpression = filterExpression;
+      scanParams.ExpressionAttributeValues = expressionAttributeValues;
+    }
 
     let statCount = 0;
     let stat;
@@ -498,19 +495,14 @@ module.exports.update = withSentry(async () => {
   const hackersCount = await countTable(registrationTable);
   const minorsCount = await countTable(minorTable);
 
-  const mentors = await ddb
-    .scan({
-      TableName: mentorTable,
-      Select: "COUNT",
-    })
-    .promise();
+  const UMDHackersCount = await countTable(
+    registrationTable,
+    "school = :schoolName",
+    { ":schoolName": "The University of Maryland, College Park" }
+  );
 
-  const volunteers = await ddb
-    .scan({
-      TableName: volunteerTable,
-      Select: "COUNT",
-    })
-    .promise();
+  const mentorsCount = await countTable(mentorTable);
+  const volunteersCount = await countTable(volunteerTable);
 
   const params = {
     TableName: statsTable,
@@ -530,6 +522,7 @@ module.exports.update = withSentry(async () => {
   let registrations = 0;
   let pageViews = 0;
   let volunteerRegistrations = 0;
+  let umdRegistrations = 0;
   let mentorRegistrations = 0;
   let teamMatchingOptIns = 0;
 
@@ -538,8 +531,9 @@ module.exports.update = withSentry(async () => {
     if (stat.statistic === "registrations") {
 
       registrations = hackersCount + minorsCount;
-      volunteerRegistrations = volunteers.Count;
-      mentorRegistrations = mentors.Count;
+      umdRegistrations = UMDHackersCount;
+      volunteerRegistrations = volunteersCount;
+      mentorRegistrations = mentorsCount;
     } else if (stat.statistic === "page-view") {
       pageViews = stat.value;
     } else if (stat.statistic === "team-matching-opt-in") {
@@ -580,6 +574,7 @@ module.exports.update = withSentry(async () => {
   statArr.push(`*${registrations} Hacker Registrations*`);
   statArr.push(`*${hackersCount} Adult Hacker Registrations*`);
   statArr.push(`*${minorsCount} Minor Hacker Registrations*`);
+  statArr.push(`*${umdRegistrations} UMD Registrations*`);
   statArr.push(`*${mentorRegistrations} Mentor Registrations*`);
   statArr.push(`*${volunteerRegistrations} Volunteer Registrations*`);
   statArr.push(`*${teamMatchingOptIns} Team Matching Opt-Ins*`);
