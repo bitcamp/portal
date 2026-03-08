@@ -42,4 +42,4 @@ jobs:
 
     # Finally, deploy the service to AWS
     - name: Deploy Lambda function in stage
-      run: sls deploy -s prd
+      run: sls deploy -s stg
