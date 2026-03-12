@@ -43,7 +43,6 @@
         <div
           ref="trackScroll"
           class="track-scroll"
-          @scroll="onTrackScroll"
         >
         <label class="track-card-wrapper">
           <input
@@ -166,7 +165,6 @@
         </label>
         </div>
         <p
-          v-if="showScrollHint"
           class="scroll-hint"
         >
           Scroll to see all tracks &#8594;
@@ -398,7 +396,6 @@ export default {
       ],
       isUploading: false,
       uploadError: null,
-      showScrollHint: true,
     };
   },
   computed: {
@@ -582,11 +579,6 @@ export default {
           noCloseButton: true,
           variant: "danger",
         });
-      }
-    },
-    onTrackScroll(e) {
-      if (e.target.scrollLeft > 20) {
-        this.showScrollHint = false;
       }
     },
     handlePrevious() {
