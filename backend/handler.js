@@ -492,8 +492,35 @@ module.exports.update = withSentry(async () => {
     return statCount;
   };
 
-  const hackersCount = await countTable(registrationTable);
-  const minorsCount = await countTable(minorTable);
+  const getDietaryCounts = async () => {
+    const known = new Set(["none", "vegan", "vegetarian", "gluten-free", "dairy-free", "nut-allergy", "kosher", "halal"]);
+    const counts = {};
+    let scanParams = {
+      TableName: registrationTable,
+      ProjectionExpression: "dietary_restrictions",
+    };
+    let result;
+    do {
+      result = await ddb.scan(scanParams).promise();
+      result.Items.forEach((item) => {
+        const val = item.dietary_restrictions || "";
+        val.split(",").forEach((r) => {
+          const restriction = r.trim();
+          if (!restriction) return;
+          const key = known.has(restriction) ? restriction : "other";
+          counts[key] = (counts[key] || 0) + 1;
+        });
+      });
+      scanParams.ExclusiveStartKey = result.LastEvaluatedKey;
+    } while (result.LastEvaluatedKey);
+    return counts;
+  };
+
+  const [hackersCount, minorsCount, dietaryCounts] = await Promise.all([
+    countTable(registrationTable),
+    countTable(minorTable),
+    getDietaryCounts(),
+  ]);
 
   const UMDHackersCount = await countTable(
     registrationTable,
@@ -583,6 +610,15 @@ module.exports.update = withSentry(async () => {
   statArr.push("~~~~~~~~~~~");
   statArr = statArr.concat(hfArr.sort(sortWithoutStatisticValue));
   statArr.push(`${pageViews} Page Views`);
+  statArr.push("~~~~~~~~~~~");
+  statArr.push("*Dietary Restrictions*");
+  const dietaryOrder = ["none", "vegan", "vegetarian", "gluten-free", "dairy-free", "nut-allergy", "kosher", "halal", "other"];
+  dietaryOrder.forEach((key) => {
+    if (dietaryCounts[key]) {
+      const label = key.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+      statArr.push(`${dietaryCounts[key]} ${label}`);
+    }
+  });
 
 
   await webhook.send({
