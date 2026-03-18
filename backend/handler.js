@@ -274,11 +274,15 @@ const sendConfirmationEmail = async (user) => {
 
   const tShirtSize = user.tshirt_size.toUpperCase();
 
+  const templateName = user.waitlist
+    ? "WaitlistInvite"
+    : "DetailedHackerRegistrationConfirmation";
+
   const params = {
     Destination: { ToAddresses: [user.email] },
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
-    Template: "DetailedHackerRegistrationConfirmation",
+    Template: templateName,
     TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${user.address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
   };
 
@@ -516,11 +520,29 @@ module.exports.update = withSentry(async () => {
     return counts;
   };
 
-  const [hackersCount, minorsCount, dietaryCounts] = await Promise.all([
+  const [
+    hackersCount,
+    minorsCount,
+    dietaryCounts,
+    hackerWaitlistCount,
+    minorWaitlistCount,
+  ] = await Promise.all([
     countTable(registrationTable),
     countTable(minorTable),
     getDietaryCounts(),
+    countTable(
+      registrationTable,
+      "waitlist = :isWaitlisted",
+      { ":isWaitlisted": true }
+    ),
+    countTable(
+      minorTable,
+      "waitlist = :isWaitlisted",
+      { ":isWaitlisted": true }
+    ),
   ]);
+
+  const waitlistCount = hackerWaitlistCount + minorWaitlistCount;
 
   const UMDHackersCount = await countTable(
     registrationTable,
@@ -604,6 +626,7 @@ module.exports.update = withSentry(async () => {
   statArr.push(`*${umdRegistrations} UMD Registrations*`);
   statArr.push(`*${mentorRegistrations} Mentor Registrations*`);
   statArr.push(`*${volunteerRegistrations} Volunteer Registrations*`);
+  statArr.push(`*${waitlistCount} Waitlist Registrations*`);
   statArr.push(`*${teamMatchingOptIns} Team Matching Opt-Ins*`);
   statArr.push("~~~~~~~~~~~");
   statArr = statArr.concat(trackArr.sort(sortWithoutStatisticValue));

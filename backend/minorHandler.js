@@ -357,11 +357,15 @@ const sendConfirmationEmail = async (user) => {
     .filter(Boolean)
     .join(", ");
 
+  const templateName = user.waitlist
+    ? "WaitlistInvite"
+    : "DetailedHackerRegistrationConfirmation";
+
   const params = {
     Destination: { ToAddresses: [user.email] },
     Source: "Bitcamp <hello@bit.camp>",
     ConfigurationSetName: "registration-2024",
-    Template: "DetailedHackerRegistrationConfirmation",
+    Template: templateName,
     TemplateData: `{\"firstName\":\"${user.first_name}\",\"reregisterLink\":\"${reregisterLink}\",\"email\":\"${user.email}\",\"name\":\"${user.name}\",\"age\":\"${user.age}\",\"track\":\"${track}\",\"phone\":\"${user.phone}\",\"school_type\":\"${schoolYear}\",\"school\":\"${user.school}\",\"address\":\"${address}\",\"tshirt_size\":\"${tShirtSize}\"}`,
   };
 

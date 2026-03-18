@@ -2392,7 +2392,13 @@ export default {
         this.isSending = false; // done submitting
 
         if (resp && resp.referral_id) {
-          this.$router.push({ path: "thanks", query: { r: resp.referral_id } });
+          this.$router.push({
+            path: "thanks",
+            query: {
+              r: resp.referral_id,
+              waitlist: resp.waitlist ? "1" : "0",
+            },
+          });
           this.track({
             random_id: this.random_id,
             key: "referral_id",

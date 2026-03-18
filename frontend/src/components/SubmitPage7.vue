@@ -192,7 +192,13 @@ export default {
           key: "referral_id",
           value: response.referral_id,
         });
-        this.$router.push({ path: "thanks", query: { r: response.referral_id } });
+        this.$router.push({
+          path: "thanks",
+          query: {
+            r: response.referral_id,
+            waitlist: response.waitlist ? "1" : "0",
+          },
+        });
       } else {
         this.$bvToast.toast("Something went wrong when submitting your registration", {
           toaster: "b-toaster-top-center",
