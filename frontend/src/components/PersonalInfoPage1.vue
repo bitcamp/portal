@@ -1,5 +1,12 @@
 <template>
   <div class="register-page">
+    <!-- uncomment me when waitlist is on -->
+    <b-alert variant="danger" show>
+      At the moment, you can still register to join the waitlist, but registration to
+      <b>guarantee</b> a spot for Bitcamp is <b>closed</b>. We will notify you on Friday night
+      (4/10) if you can attend. Historically, all hackers have been accepted off the waitlist, so we
+      still encourage you to register!
+    </b-alert>
     <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
