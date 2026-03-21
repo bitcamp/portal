@@ -144,24 +144,38 @@ module.exports.register = withSentry(withSentryOptions, async (event) => {
 
   const logWaitlistTrack = () => {
     if (body.waitlist_track_selected.length > 0) {
-      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1);
+      return logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1);
     }
+    return Promise.resolve();
   };
 
-  const logTeamMatchingOptIn = () => {
-    if (body.opt_in_team_matching === "yes") {
-      return logStatistic(ddb, "team-matching-opt-in", 1);
-    }
-  };
+
+  const dietaryStats = getDietaryStatKeys(params.Item.dietary_restrictions);
+  const isUMD =
+    params.Item.school === "The University of Maryland, College Park";
+  const isNewHacker = existingReg.Item == null;
 
   await Promise.all([
-    logStatistic(ddb, "track-" + body.track_selected, 1),
-    logWaitlistTrack(),
-    logStatistic(ddb, "registrations", 1),
-    logTeamMatchingOptIn(),
+    ...(isNewHacker
+      ? [
+        logStatistic(ddb, "registrations", 1),
+        logStatistic(ddb, "adult-hacker-registrations", 1),
+        ...(body.track_selected ? [logStatistic(ddb, "track-" + body.track_selected, 1)] : []),
+        logWaitlistTrack(),
+        ...(params.Item.waitlist
+          ? [logStatistic(ddb, "waitlist-registrations", 1)]
+          : []),
+        ...(isUMD
+          ? [logStatistic(ddb, "umd-registrations", 1)]
+          : []),
+        ...(body.opt_in_team_matching === "yes"
+          ? [logStatistic(ddb, "team-matching-opt-in", 1)]
+          : []),
+        ...dietaryStats.map((stat) => logStatistic(ddb, stat, 1)),
+      ]
+      : []),
 
     ddb.put(params).promise(),
-
     sendConfirmationEmail(params.Item),
     registerTeamMatching(ddb, body),
   ]);
@@ -392,7 +406,7 @@ module.exports.track = withSentry(async (event) => {
   }
 
 
-  if (body.key.startsWith("hf")) {
+  if (body.key.startsWith("hf-")) {
     body.value = event.requestContext.identity.sourceIp;
     await logStatistic(ddb, body.key, 1);
   }
@@ -424,7 +438,30 @@ module.exports.track = withSentry(async (event) => {
   };
 });
 
-const logStatistic = (ddb, stat) => {
+const KNOWN_DIETARY = new Set([
+  "none",
+  "vegan",
+  "vegetarian",
+  "gluten-free",
+  "dairy-free",
+  "nut-allergy",
+  "kosher",
+  "halal",
+]);
+
+const getDietaryStatKeys = (raw) => {
+  return (raw || "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .map((restriction) =>
+      KNOWN_DIETARY.has(restriction)
+        ? `dietary-${restriction}`
+        : "dietary-other"
+    );
+};
+
+const logStatistic = (ddb, stat, amount = 1) => {
   return ddb
     .update({
       TableName: process.env.STATISTICS_TABLE,
@@ -432,7 +469,7 @@ const logStatistic = (ddb, stat) => {
       ReturnValues: "NONE",
       UpdateExpression: "add #key :value",
       ExpressionAttributeNames: { "#key": "value" },
-      ExpressionAttributeValues: { ":value": 1 },
+      ExpressionAttributeValues: { ":value": amount },
     })
     .promise();
 };
@@ -469,89 +506,89 @@ const logReferral = async (ddb, referred_by, referralName) => {
 module.exports.update = withSentry(async () => {
   const ddb = new AWS.DynamoDB.DocumentClient();
   const statsTable = process.env.STATISTICS_TABLE;
-  const registrationTable = process.env.REGISTRATION_TABLE;
-  const mentorTable = process.env.MENTOR_TABLE;
-  const minorTable = process.env.MINOR_TABLE;
-  const volunteerTable = process.env.VOLUNTEER_TABLE;
+  // const registrationTable = process.env.REGISTRATION_TABLE;
+  // const mentorTable = process.env.MENTOR_TABLE;
+  // const minorTable = process.env.MINOR_TABLE;
+  // const volunteerTable = process.env.VOLUNTEER_TABLE;
 
-  const countTable = async (tableName, filterExpression, expressionAttributeValues) => {
-    let scanParams = {
-      TableName: tableName,
-      Select: "COUNT",
-    };
+  // const countTable = async (tableName, filterExpression, expressionAttributeValues) => {
+  //   let scanParams = {
+  //     TableName: tableName,
+  //     Select: "COUNT",
+  //   };
 
-    if (filterExpression) {
-      scanParams.FilterExpression = filterExpression;
-      scanParams.ExpressionAttributeValues = expressionAttributeValues;
-    }
+  //   if (filterExpression) {
+  //     scanParams.FilterExpression = filterExpression;
+  //     scanParams.ExpressionAttributeValues = expressionAttributeValues;
+  //   }
 
-    let statCount = 0;
-    let stat;
+  //   let statCount = 0;
+  //   let stat;
 
-    do {
-      stat = await ddb.scan(scanParams).promise();
-      statCount += stat.Count;
-      scanParams.ExclusiveStartKey = stat.LastEvaluatedKey;
-    } while (stat.LastEvaluatedKey);
-    return statCount;
-  };
+  //   do {
+  //     stat = await ddb.scan(scanParams).promise();
+  //     statCount += stat.Count;
+  //     scanParams.ExclusiveStartKey = stat.LastEvaluatedKey;
+  //   } while (stat.LastEvaluatedKey);
+  //   return statCount;
+  // };
 
-  const getDietaryCounts = async () => {
-    const known = new Set(["none", "vegan", "vegetarian", "gluten-free", "dairy-free", "nut-allergy", "kosher", "halal"]);
-    const counts = {};
-    let scanParams = {
-      TableName: registrationTable,
-      ProjectionExpression: "dietary_restrictions",
-    };
-    let result;
-    do {
-      result = await ddb.scan(scanParams).promise();
-      result.Items.forEach((item) => {
-        const val = item.dietary_restrictions || "";
-        val.split(",").forEach((r) => {
-          const restriction = r.trim();
-          if (!restriction) return;
-          const key = known.has(restriction) ? restriction : "other";
-          counts[key] = (counts[key] || 0) + 1;
-        });
-      });
-      scanParams.ExclusiveStartKey = result.LastEvaluatedKey;
-    } while (result.LastEvaluatedKey);
-    return counts;
-  };
+  // const getDietaryCounts = async () => {
+  //   const known = new Set(["none", "vegan", "vegetarian", "gluten-free", "dairy-free", "nut-allergy", "kosher", "halal"]);
+  //   const counts = {};
+  //   let scanParams = {
+  //     TableName: registrationTable,
+  //     ProjectionExpression: "dietary_restrictions",
+  //   };
+  //   let result;
+  //   do {
+  //     result = await ddb.scan(scanParams).promise();
+  //     result.Items.forEach((item) => {
+  //       const val = item.dietary_restrictions || "";
+  //       val.split(",").forEach((r) => {
+  //         const restriction = r.trim();
+  //         if (!restriction) return;
+  //         const key = known.has(restriction) ? restriction : "other";
+  //         counts[key] = (counts[key] || 0) + 1;
+  //       });
+  //     });
+  //     scanParams.ExclusiveStartKey = result.LastEvaluatedKey;
+  //   } while (result.LastEvaluatedKey);
+  //   return counts;
+  // };
 
-  const [
-    hackersCount,
-    minorsCount,
-    dietaryCounts,
-    hackerWaitlistCount,
-    minorWaitlistCount,
-  ] = await Promise.all([
-    countTable(registrationTable),
-    countTable(minorTable),
-    getDietaryCounts(),
-    countTable(
-      registrationTable,
-      "waitlist = :isWaitlisted",
-      { ":isWaitlisted": true }
-    ),
-    countTable(
-      minorTable,
-      "waitlist = :isWaitlisted",
-      { ":isWaitlisted": true }
-    ),
-  ]);
+  // const [
+  //   hackersCount,
+  //   minorsCount,
+  //   dietaryCounts,
+  //   hackerWaitlistCount,
+  //   minorWaitlistCount,
+  // ] = await Promise.all([
+  //   countTable(registrationTable),
+  //   countTable(minorTable),
+  //   getDietaryCounts(),
+  //   countTable(
+  //     registrationTable,
+  //     "waitlist = :isWaitlisted",
+  //     { ":isWaitlisted": true }
+  //   ),
+  //   countTable(
+  //     minorTable,
+  //     "waitlist = :isWaitlisted",
+  //     { ":isWaitlisted": true }
+  //   ),
+  // ]);
 
-  const waitlistCount = hackerWaitlistCount + minorWaitlistCount;
+  // const waitlistCount = hackerWaitlistCount + minorWaitlistCount;
 
-  const UMDHackersCount = await countTable(
-    registrationTable,
-    "school = :schoolName",
-    { ":schoolName": "The University of Maryland, College Park" }
-  );
+  // const UMDHackersCount = await countTable(
+  //   registrationTable,
+  //   "school = :schoolName",
+  //   { ":schoolName": "The University of Maryland, College Park" }
+  // );
 
-  const mentorsCount = await countTable(mentorTable);
-  const volunteersCount = await countTable(volunteerTable);
+  // const mentorsCount = await countTable(mentorTable);
+  // const volunteersCount = await countTable(volunteerTable);
 
   const params = {
     TableName: statsTable,
@@ -568,25 +605,32 @@ module.exports.update = withSentry(async () => {
 
   const trackArr = [];
   const hfArr = [];
-  let registrations = 0;
-  let pageViews = 0;
-  let volunteerRegistrations = 0;
-  let umdRegistrations = 0;
-  let mentorRegistrations = 0;
-  let teamMatchingOptIns = 0;
+  let statsStore = {
+    "registrations": 0,
+    "adult-hacker-registrations": 0,
+    "minor-hacker-registrations": 0,
+    "volunteer-registrations": 0,
+    "mentor-registrations": 0,
+    "umd-registrations": 0,
+    "waitlist-registrations": 0,
+    "page-view": 0,
+    "team-matching-opt-in": 0,
+    "dietary-none": 0,
+    "dietary-vegan": 0,
+    "dietary-vegetarian": 0,
+    "dietary-gluten-free": 0,
+    "dietary-dairy-free": 0,
+    "dietary-nut-allergy": 0,
+    "dietary-kosher": 0,
+    "dietary-halal": 0,
+    "dietary-other": 0,
+  };
+
 
   const stats = await ddb.scan(params).promise();
   stats.Items.forEach((stat) => {
-    if (stat.statistic === "registrations") {
-
-      registrations = hackersCount + minorsCount;
-      umdRegistrations = UMDHackersCount;
-      volunteerRegistrations = volunteersCount;
-      mentorRegistrations = mentorsCount;
-    } else if (stat.statistic === "page-view") {
-      pageViews = stat.value;
-    } else if (stat.statistic === "team-matching-opt-in") {
-      teamMatchingOptIns = stat.value;
+    if (stat.statistic in statsStore) {
+      statsStore[stat.statistic] = stat.value;
     } else if (stat.statistic.startsWith("track-")) {
       let track = stat.statistic.replace("track-", "");
 
@@ -611,6 +655,26 @@ module.exports.update = withSentry(async () => {
     }
   });
 
+  const registrations = statsStore["registrations"];
+  const hackersCount = statsStore["adult-hacker-registrations"];
+  const minorsCount = statsStore["minor-hacker-registrations"];
+  const volunteerRegistrations = statsStore["volunteer-registrations"];
+  const mentorRegistrations = statsStore["mentor-registrations"];
+  const umdRegistrations = statsStore["umd-registrations"];
+  const waitlistCount = statsStore["waitlist-registrations"];
+  const pageViews = statsStore["page-view"];
+  const teamMatchingOptIns = statsStore["team-matching-opt-in"];
+  const {
+    "dietary-none": dietaryNone,
+    "dietary-vegan": dietaryVegan,
+    "dietary-vegetarian": dietaryVegetarian,
+    "dietary-gluten-free": dietaryGlutenFree,
+    "dietary-dairy-free": dietaryDairyFree,
+    "dietary-nut-allergy": dietaryNutAllergy,
+    "dietary-kosher": dietaryKosher,
+    "dietary-halal": dietaryHalal,
+    "dietary-other": dietaryOther,
+  } = statsStore;
 
   const sortWithoutStatisticValue = (a, b) => {
     a = a.replace(/[0-9]/g, "");
@@ -620,7 +684,7 @@ module.exports.update = withSentry(async () => {
 
 
   let statArr = [];
-  statArr.push(`*${registrations} Hacker Registrations*`);
+  statArr.push(`*${hackersCount + minorsCount} Total Hacker Registrations*`);
   statArr.push(`*${hackersCount} Adult Hacker Registrations*`);
   statArr.push(`*${minorsCount} Minor Hacker Registrations*`);
   statArr.push(`*${umdRegistrations} UMD Registrations*`);
@@ -637,12 +701,21 @@ module.exports.update = withSentry(async () => {
   statArr.push("*Dietary Restrictions*");
   const dietaryOrder = ["none", "vegan", "vegetarian", "gluten-free", "dairy-free", "nut-allergy", "kosher", "halal", "other"];
   dietaryOrder.forEach((key) => {
-    if (dietaryCounts[key]) {
-      const label = key.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-      statArr.push(`${dietaryCounts[key]} ${label}`);
+    const value = statsStore[`dietary-${key}`] || 0;
+    if (value > 0) {
+      const label = key
+        .split("-")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+      statArr.push(`${value} ${label}`);
     }
   });
+  statArr.push("~~~~~~~~~~~");
+  statArr.push(`*${registrations} Total Registrations - Hacker, Mentor, Volunteer*`);
 
+
+  // if you wanna force test slack bot copy paste this in terminal (powershell)
+  // aws lambda invoke --region us-east-1 --function-name portal-backend-prd-update --invocation-type RequestResponse response.json; Get-Content response.json
 
   await webhook.send({
     text:

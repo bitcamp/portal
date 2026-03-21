@@ -20,6 +20,29 @@ const withSentryOptions = {
   captureTimeouts: true,
 };
 
+const KNOWN_DIETARY = new Set([
+  "none",
+  "vegan",
+  "vegetarian",
+  "gluten-free",
+  "dairy-free",
+  "nut-allergy",
+  "kosher",
+  "halal",
+]);
+
+const getDietaryStatKeys = (raw) => {
+  return (raw || "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .map((restriction) =>
+      KNOWN_DIETARY.has(restriction)
+        ? `dietary-${restriction}`
+        : "dietary-other"
+    );
+};
+
 module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
   const body = JSON.parse(event.body);
   const ddb = new AWS.DynamoDB.DocumentClient();
@@ -55,7 +78,6 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
       var resp = await ddb.query(referralQuery).promise();
     } while (resp.Count != 0);
   }
-
 
 
   var params = {
@@ -180,27 +202,47 @@ module.exports.registerMinor = withSentry(withSentryOptions, async (event) => {
 
   const logWaitlistTrack = () => {
     if (body.waitlist_track_selected.length > 0) {
-      logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1);
+      return logStatistic(ddb, "track-waitlist-" + body.waitlist_track_selected, 1);
     }
+    return Promise.resolve();
   };
 
-  const logTeamMatchingOptIn = () => {
-    if (body.opt_in_team_matching === "yes") {
-      return logStatistic(ddb, "team-matching-opt-in", 1);
-    }
-  };
+  // const logTeamMatchingOptIn = () => {
+  //   if (body.opt_in_team_matching === "yes") {
+  //     return logStatistic(ddb, "team-matching-opt-in", 1);
+  //   }
+  // };
+
+
+
+  const isNewMinor = existingReg.Item == null;
+  const dietaryStats = getDietaryStatKeys(params.Item.dietary_restrictions);
+  const isUMD =
+    params.Item.school === "The University of Maryland, College Park";
 
   await Promise.all([
-    logStatistic(ddb, "track-" + body.track_selected, 1),
-    logWaitlistTrack(),
-    logStatistic(ddb, "registrations", 1),
-    logStatistic(ddb, "minor-registrations", 1),
-    logTeamMatchingOptIn(),
+    ...(isNewMinor
+      ? [
+        logStatistic(ddb, "registrations", 1),
+        logStatistic(ddb, "minor-hacker-registrations", 1),
+        ...(body.track_selected ? [logStatistic(ddb, "track-" + body.track_selected, 1)] : []),
+        logWaitlistTrack(),
+        ...(params.Item.waitlist
+          ? [logStatistic(ddb, "waitlist-registrations", 1)]
+          : []),
+        ...(isUMD
+          ? [logStatistic(ddb, "umd-registrations", 1)]
+          : []),
+        ...(body.opt_in_team_matching === "yes"
+          ? [logStatistic(ddb, "team-matching-opt-in", 1)]
+          : []),
+        ...dietaryStats.map((stat) => logStatistic(ddb, stat, 1)),
+      ]
+      : []),
     ddb.put(params).promise(),
     sendConfirmationEmail(params.Item),
     registerTeamMatching(ddb, body),
   ]);
-
 
   return {
     statusCode: 200,
@@ -259,7 +301,7 @@ const registerTeamMatching = async (ddb, body) => {
   await ddb.put(params).promise();
 };
 
-const logStatistic = (ddb, stat) => {
+const logStatistic = (ddb, stat, amount = 1) => {
   return ddb
     .update({
       TableName: process.env.STATISTICS_TABLE,
@@ -267,7 +309,7 @@ const logStatistic = (ddb, stat) => {
       ReturnValues: "NONE",
       UpdateExpression: "add #key :value",
       ExpressionAttributeNames: { "#key": "value" },
-      ExpressionAttributeValues: { ":value": 1 },
+      ExpressionAttributeValues: { ":value": amount },
     })
     .promise();
 };
@@ -279,7 +321,7 @@ const normalizeReferral = (referred_by) => {
 
 const logReferral = async (ddb, referred_by, referralName) => {
   var referralQuery = {
-    TableName: process.env.REGISTRATION_TABLE,
+    TableName: process.env.MINOR_TABLE,
     IndexName: "referralsIndex",
     KeyConditionExpression: "referral_id = :v_refer",
     ExpressionAttributeValues: { ":v_refer": referred_by },
@@ -289,7 +331,7 @@ const logReferral = async (ddb, referred_by, referralName) => {
   if (resp.Items && resp.Items.length > 0) {
     return ddb
       .update({
-        TableName: process.env.REGISTRATION_TABLE,
+        TableName: process.env.MINOR_TABLE,
         Key: { email: resp.Items[0].email },
         ReturnValues: "NONE",
         UpdateExpression: "add #key :value",
