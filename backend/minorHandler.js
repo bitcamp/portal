@@ -4,7 +4,7 @@ const withSentry = require("serverless-sentry-lib");
 
 AWS.config.update({ region: "us-east-1" });
 
-const WAITLIST_ENABLED = false;
+const WAITLIST_ENABLED = true;
 
 const HEADERS = {
   "Access-Control-Allow-Origin": "*",
