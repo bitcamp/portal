@@ -30,12 +30,8 @@ module.exports.registerVolunteer = withSentry(withSentryOptions, async (event) =
     };
   }
 
-  const existingReg = await ddb.get({
-    TableName: process.env.VOLUNTEER_TABLE,
-    Key: {email: body.email.toLowerCase()}
-  }).promise()
 
-  
+
   var params = {
     TableName: process.env.VOLUNTEER_TABLE,
     Item: {
@@ -57,34 +53,68 @@ module.exports.registerVolunteer = withSentry(withSentryOptions, async (event) =
     },
   };
 
-  const logStatistic = (ddb, stat) => {
-  return ddb
-    .update({
-      TableName: process.env.STATISTICS_TABLE,
-      Key: { statistic: stat },
-      ReturnValues: "NONE",
-      UpdateExpression: "add #key :value",
-      ExpressionAttributeNames: { "#key": "value" },
-      ExpressionAttributeValues: { ":value": 1 },
-    })
-    .promise();
+  const logStatistic = (ddb, stat, amount = 1) => {
+    return ddb
+      .update({
+        TableName: process.env.STATISTICS_TABLE,
+        Key: { statistic: stat },
+        ReturnValues: "NONE",
+        UpdateExpression: "add #key :value",
+        ExpressionAttributeNames: { "#key": "value" },
+        ExpressionAttributeValues: { ":value": amount },
+      })
+      .promise();
   };
-    
+
+  const existingReg = await ddb.get({
+    TableName: process.env.VOLUNTEER_TABLE,
+    Key: { email: body.email.toLowerCase() }
+  }).promise();
+
+  const isNewVolunteer = existingReg.Item == null;
+  const dietaryStats = getDietaryStatKeys(params.Item.dietary_restrictions);
+
   await Promise.all([
-    // logStatistic(ddb, "volunteerRegistrations", 1),
-    // Call DynamoDB to add the item to the table
+    ...(isNewVolunteer
+      ? [
+        logStatistic(ddb, "registrations", 1),
+        logStatistic(ddb, "volunteer-registrations", 1),
+        ...dietaryStats.map((stat) => logStatistic(ddb, stat, 1)),
+      ]
+      : []),
     ddb.put(params).promise(),
-    // Send confirmation email
     sendConfirmationEmail(params.Item),
   ]);
 
-  // Returns status code 200 and JSON string of 'result'
   return {
     statusCode: 200,
     body: JSON.stringify(params.Item),
     headers: HEADERS,
   };
-}); 
+});
+
+const KNOWN_DIETARY = new Set([
+  "none",
+  "vegan",
+  "vegetarian",
+  "gluten-free",
+  "dairy-free",
+  "nut-allergy",
+  "kosher",
+  "halal",
+]);
+
+const getDietaryStatKeys = (raw) => {
+  return (raw || "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .map((restriction) =>
+      KNOWN_DIETARY.has(restriction)
+        ? `dietary-${restriction}`
+        : "dietary-other"
+    );
+};
 
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
 const sendConfirmationEmail = async (user) => {

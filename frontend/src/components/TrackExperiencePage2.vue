@@ -39,7 +39,11 @@
         opportunities.
       </p>
 
-      <div class="track-scroll">
+      <div class="track-scroll-wrap">
+        <div
+          ref="trackScroll"
+          class="track-scroll"
+        >
         <label class="track-card-wrapper">
           <input
             v-model="formData.track_selected"
@@ -159,6 +163,12 @@
             </p>
           </b-card>
         </label>
+        </div>
+        <p
+          class="scroll-hint"
+        >
+          Scroll to see all tracks &#8594;
+        </p>
       </div>
 
       <div v-if="formData.track_selected === 'quantum'" class="mt-4 form-group">
@@ -384,7 +394,6 @@ export default {
         { value: "no", text: "No" },
         { value: "maybe", text: "Maybe later" },
       ],
-      // NEW: label text for the resume upload UI
       isUploading: false,
       uploadError: null,
     };
@@ -458,14 +467,12 @@ export default {
       return this.touched[field] === true && this.validations[field] === false;
     },
 
-    // NEW: open the hidden file input
     triggerResumeFile() {
       if (this.$refs.resumeInput) {
         this.$refs.resumeInput.click();
       }
     },
 
-    // NEW: update label + bubble event to parent
     async onResumeChange(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -589,22 +596,18 @@ body,
   margin: 0;
 }
 
-/* full orange gradient */
 body {
   background-image: none !important;
   background: linear-gradient(135deg, #f97345 0%, #f9ad4b 55%, #f5a13e 100%) fixed;
 }
 
-/* center content, no big card */
 .register-page {
   max-width: 820px;
-  /* Slightly wider for labels */
   margin: 40px auto 80px;
   padding: 0 20px 40px;
   text-align: left;
 }
 
-/* titles / text (same vibe as page 1) */
 .page-title {
   font-size: 2.3rem;
   font-weight: 700;
@@ -644,7 +647,6 @@ body {
   margin-bottom: 18px;
 }
 
-/* --- UPDATED STEPPER STYLES --- */
 .stepper {
   display: flex !important;
   flex-direction: row !important;
@@ -673,16 +675,13 @@ body {
   content: "";
   position: absolute;
   top: 27px;
-  /* Starts the line 35px to the right of the circle center */
   left: calc(50% + 35px);
-  /* Subtracts 70px (35px for each side) to create the gap */
   width: calc(100% - 70px);
   height: 4px;
   background: #DEDEDE;
   z-index: -1;
 }
 
-/* Orange for completed lines */
 .stepper-item.completed:not(:last-child)::after {
   background: #f97345 !important;
 }
@@ -708,7 +707,6 @@ body {
   font-size: 0.75rem !important;
   font-weight: 600;
   color: #837d7d !important;
-  /* Force all labels to stay grey */
   text-align: center;
   line-height: 1.1;
   width: 65px;
@@ -718,10 +716,6 @@ body {
   margin-top: 8px;
 }
 
-/* Remove or comment out any color overrides for active/completed labels */
-/* .stepper-item.active .stepper-label { color: #000; }  <-- DELETE THIS */
-
-/* Orange for Active and Completed */
 .stepper-item.active .stepper-circle,
 .stepper-item.completed .stepper-circle {
   background: #f97345 !important;
@@ -729,7 +723,6 @@ body {
   box-shadow: 0 4px 10px rgba(249, 115, 69, 0.3);
 }
 
-/* Grey label for future steps */
 .stepper-item.inactive .stepper-label {
   color: #a0a0a0 !important;
 }
@@ -762,17 +755,19 @@ body {
   border: none !important;
 }
 
-/* HORIZONTAL SCROLL CONTAINER FOR TRACKS */
+.track-scroll-wrap {
+  position: relative;
+}
+
 .track-scroll {
   display: flex;
   gap: 18px;
   margin-top: 12px;
-  overflow-x: auto;
-  padding-bottom: 8px;
+  overflow-x: scroll;
+  padding-bottom: 12px;
   scroll-snap-type: x mandatory;
 }
 
-/* Each card in the scroll strip */
 .track-card-wrapper {
   flex: 0 0 280px;
   max-width: 320px;
@@ -780,12 +775,10 @@ body {
   cursor: pointer;
 }
 
-/* hide radios inside track cards */
 .track-card-wrapper input[type="radio"] {
   display: none;
 }
 
-/* DEFAULT STATE — all cards white background, black text */
 .track-card {
   height: 100%;
   border-radius: 8px;
@@ -801,7 +794,6 @@ body {
   color: #000000 !important;
 }
 
-/* CLICKED / ACTIVE — cards turn orange */
 .track-card--active {
   background: #f97345 !important;
   border-color: #f97345 !important;
@@ -813,13 +805,27 @@ body {
   color: #ffffff !important;
 }
 
+.scroll-hint {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #f97345;
+  font-weight: 600;
+  text-align: right;
+  letter-spacing: 0.01em;
+  animation: bounce-hint 1.2s ease-in-out infinite;
+}
+
+@keyframes bounce-hint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
 .track-title {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 6px;
 }
 
-/* Form typography */
 label.form-label {
   font-size: 0.9rem;
   color: #666;
@@ -841,7 +847,6 @@ label.form-label {
   box-shadow: 0 0 0 0.2rem rgba(249, 115, 69, 0.15);
 }
 
-/* Radio groups */
 .radio-inline-group {
   display: flex;
   gap: 20px;
@@ -860,7 +865,6 @@ label.form-label {
   margin: 0 6px 0 0;
 }
 
-/* Character counter */
 .char-counter {
   display: block;
   margin-top: 4px;
@@ -868,7 +872,6 @@ label.form-label {
   color: #777;
 }
 
-/* Custom Resume upload UI */
 .resume-upload {
   width: 100%;
   border: 1px solid #e3d7ca;
@@ -922,6 +925,45 @@ label.form-label {
   transform: translateY(-55%);
 }
 
+</style>
+
+<style>
+.track-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.track-scroll::-webkit-scrollbar-track {
+  background: #f0e8e0;
+  border-radius: 4px;
+}
+
+.track-scroll::-webkit-scrollbar-thumb {
+  background: #f97345;
+  border-radius: 4px;
+}
+
+.track-scroll::-webkit-scrollbar-thumb:hover {
+  background: #e05020;
+}
+
+.track-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #f97345 #f0e8e0;
+}
+
+.track-scroll-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: calc(100% - 20px);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.85));
+  pointer-events: none;
+}
+</style>
+
+<style scoped>
 @media (max-width: 768px) {
   .page-content {
     padding: 30px 20px;

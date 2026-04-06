@@ -32,7 +32,7 @@
     <hr />
 
     <b-form @submit.prevent="handleNext">
-      <div v-if="!atNoTransportUnis()">
+      <!-- <div v-if="!atNoTransportUnis()">
         <h4 class="section-title">Travel and Transportation</h4>
         <p class="info">
           Bitcamp is offering travel reimbursements through a rolling application this year. The
@@ -112,13 +112,6 @@
             :data="countriesOptions"
             @input="touched.country = true"
           />
-          <!-- <b-form-input
-            id="shipping-country"
-            v-model="formData.country"
-            placeholder="US"
-            :state="showState('country')"
-            @input="touched.country = true"
-          /> -->
           <b-form-text class="helper-text"> e.g., "United States", "Canada" </b-form-text>
           <b-form-invalid-feedback :state="showState('country')">
             Please enter a valid country name or code
@@ -180,7 +173,7 @@
         </b-form-group>
       </b-form-row>
 
-      <hr />
+      <hr /> -->
 
       <h4 class="section-title mb-2">Select a T-shirt size!</h4>
       <p class="info">
@@ -453,7 +446,7 @@ export default {
     },
     optionalFieldsRequired() {
       const res = [];
-      if (!this.atNoTransportUnis()) res.push("transport");
+      // if (!this.atNoTransportUnis()) res.push("transport");
       if (this.formData.diet_other) res.push("diet_other_text");
 
       const addressFields = ["address1", "city", "state", "zip", "country"];

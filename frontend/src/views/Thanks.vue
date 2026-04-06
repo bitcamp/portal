@@ -5,7 +5,12 @@
         <b-row>
           <b-col md="1" />
           <b-col>
-            <h1>You're registered for Bitcamp 2026!</h1>
+            <h1 v-if="isWaitlisted">You're on the waitlist for Bitcamp 2026!</h1>
+            <h1 v-else>You're registered for Bitcamp 2026!</h1>
+
+            <!--
+              <h1>You're registered for Bitcamp 2026!</h1>
+            -->
 
             <!--               <span v-if="type">
                 as a {{ type }}
@@ -18,7 +23,20 @@
             <img style="width: 20vh; height: 20vh" src="@/assets/marshy.svg" />
 
             <div class="py-3">
-              <p class="mb-4">
+              <p v-if="isWaitlisted" class="mb-4">
+                You'll get a confirmation email shortly. Please check your spam folder if you don't
+                see it.
+                <br />
+                You're currently on the waitlist, and we'll email you on Friday night if space
+                opens up.
+                <br />
+                If you have any questions, be sure to reach out to
+                <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
+                <br />
+                You may now close this tab.
+              </p>
+
+              <p v-else class="mb-4">
                 You'll get a confirmation email shortly. Please check your spam folder if you don't
                 see it.
                 <br />
@@ -29,6 +47,20 @@
                 <br />
                 You may now close this tab.
               </p>
+
+              <!--
+                <p class="mb-4">
+                  You'll get a confirmation email shortly. Please check your spam folder if you don't
+                  see it.
+                  <br />
+                  See you by the campfire!
+                  <br />
+                  If you have any questions, be sure to reach out to
+                  <a href="mailto:hello@bit.camp">hello@bit.camp</a>.
+                  <br />
+                  You may now close this tab.
+                </p>
+              -->
 
               <!-- <p class="mb-1">
                 Next, share your referral link with others to earn rewards.
@@ -114,6 +146,10 @@ export default {
   },
 
   computed: {
+    isWaitlisted() {
+      const waitlistFlag = this.$route.query.waitlist;
+      return waitlistFlag === "1" || waitlistFlag === "true";
+    },
     referralLink() {
       return `${document.location.origin}/${this.referralID}`;
     },

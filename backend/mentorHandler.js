@@ -18,6 +18,29 @@ const withSentryOptions = {
   captureTimeouts: true,
 };
 
+const KNOWN_DIETARY = new Set([
+  "none",
+  "vegan",
+  "vegetarian",
+  "gluten-free",
+  "dairy-free",
+  "nut-allergy",
+  "kosher",
+  "halal",
+]);
+
+const getDietaryStatKeys = (raw) => {
+  return (raw || "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .map((restriction) =>
+      KNOWN_DIETARY.has(restriction)
+        ? `dietary-${restriction}`
+        : "dietary-other"
+    );
+};
+
 // POST /registerMentor - Adds a new mentor registration to the database
 module.exports.registerMentor = withSentry(withSentryOptions, async (event) => {
   const body = JSON.parse(event.body);
@@ -33,10 +56,10 @@ module.exports.registerMentor = withSentry(withSentryOptions, async (event) => {
 
   const existingReg = await ddb.get({
     TableName: process.env.MENTOR_TABLE,
-    Key: {email: body.email.toLowerCase()}
+    Key: { email: body.email.toLowerCase() }
   }).promise()
 
-  
+
   var params = {
     TableName: process.env.MENTOR_TABLE,
     Item: {
@@ -63,11 +86,32 @@ module.exports.registerMentor = withSentry(withSentryOptions, async (event) => {
       languages: body.languages,
     },
   };
-    
+
+  const isNewMentor = existingReg.Item == null;
+  const dietaryStats = getDietaryStatKeys(params.Item.dietary_restrictions);
+
+  const logStatistic = (ddb, stat, amount = 1) => {
+    return ddb
+      .update({
+        TableName: process.env.STATISTICS_TABLE,
+        Key: { statistic: stat },
+        ReturnValues: "NONE",
+        UpdateExpression: "add #key :value",
+        ExpressionAttributeNames: { "#key": "value" },
+        ExpressionAttributeValues: { ":value": amount },
+      })
+      .promise();
+  };
+
   await Promise.all([
-    // Call DynamoDB to add the item to the table
+    ...(isNewMentor
+      ? [
+        logStatistic(ddb, "registrations", 1),
+        logStatistic(ddb, "mentor-registrations", 1),
+        ...dietaryStats.map((stat) => logStatistic(ddb, stat, 1)),
+      ]
+      : []),
     ddb.put(params).promise(),
-    // Send confirmation email
     sendConfirmationEmail(params.Item),
   ]);
 
@@ -77,7 +121,7 @@ module.exports.registerMentor = withSentry(withSentryOptions, async (event) => {
     body: JSON.stringify(params.Item),
     headers: HEADERS,
   };
-}); 
+});
 
 // sendConfirmationEmail uses AWS SES to send a confirmation email to the user
 const sendConfirmationEmail = async (user) => {

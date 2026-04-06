@@ -7,8 +7,8 @@
       <div class="image-container">
         <img v-if="svgImagePath" :src="require(`@/assets/${svgImagePath}`)" class="role-logo" />
       </div>
-      <div class="title-container" @click="redirectToRole">
-        <h2 class="role-title">
+      <div class="title-container">
+        <h2 class="role-title" @click="redirectToRole">
           {{ roleTitle }}
         </h2>
       </div>
@@ -106,7 +106,7 @@ export default {
 .title-container {
   display: flex;
   justify-content: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 4px 7px;
   border-radius: 10px;
   transition: all 0.3s ease;
@@ -117,6 +117,7 @@ export default {
 .role-title {
   font-size: 1.4rem;
   border-radius: 50px;
+  cursor: pointer;
   padding: 0.6em 1.5em;
   margin: 0;
   background: #ff6f3f;
@@ -131,8 +132,9 @@ export default {
 }
 
 .role-title:hover {
-  background-color: #ffb169;
-  color: #d1c2c1;
+  transform: scale(1.07);
+  box-shadow: 0 0 20px rgba(255, 111, 63, 0.5);
+  background-color: #ff8a5c;
 }
 
 .info-icon {

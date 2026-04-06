@@ -9,11 +9,16 @@
     </p>
 
     <div class="stepper">
-      <div v-for="step in steps" :key="step.number" class="stepper-item" :class="{
-        active: step.number === currentPage,
-        completed: step.number < currentPage,
-        inactive: step.number > currentPage,
-      }">
+      <div
+        v-for="step in steps"
+        :key="step.number"
+        class="stepper-item"
+        :class="{
+          active: step.number === currentPage,
+          completed: step.number < currentPage,
+          inactive: step.number > currentPage,
+        }"
+      >
         <div class="stepper-circle">
           <span v-if="step.number < currentPage" class="checkmark">✓</span>
           <span v-else>{{ step.number }}</span>
@@ -34,14 +39,21 @@
       </p>
 
       <div class="checkbox-wrapper">
-        <b-form-checkbox id="checkbox-1" v-model="formData.MLH_privacy" name="checkbox-1" class="checkbox mb-3"
-          :state="showState('MLH_privacy')" @change="touched.MLH_privacy = true">
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="formData.MLH_privacy"
+          name="checkbox-1"
+          class="checkbox mb-3"
+          :state="showState('MLH_privacy')"
+          @change="touched.MLH_privacy = true"
+        >
           I authorize you to share my application/registration information with Major League Hacking
           for event administration, ranking, and MLH administration in-line with the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>. I further agree
           to the terms of both the
-          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank">MLH Contest Terms and
-            Conditions</a>
+          <a href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md" target="_blank"
+            >MLH Contest Terms and Conditions</a
+          >
           and the
           <a href="https://mlh.io/privacy" target="_blank">MLH Privacy Policy</a>.
           <span class="text-danger">*</span>
@@ -50,25 +62,42 @@
           </div>
         </b-form-checkbox>
 
-        <b-form-checkbox id="checkbox-2" v-model="formData.MLH_conduct" name="checkbox-2"
-          :state="showState('MLH_conduct')" class="checkbox mb-3" style="padding-bottom: 1rem"
-          @change="touched.MLH_conduct = true">
+        <b-form-checkbox
+          id="checkbox-2"
+          v-model="formData.MLH_conduct"
+          name="checkbox-2"
+          :state="showState('MLH_conduct')"
+          class="checkbox mb-3"
+          style="padding-bottom: 1rem"
+          @change="touched.MLH_conduct = true"
+        >
           I have read and agree to the
-          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>. <span
-            class="text-danger">*</span>
+          <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank"
+            >MLH Code of Conduct</a
+          >. <span class="text-danger">*</span>
           <div v-if="showInvalid('MLH_conduct')" class="invalid-feedback d-block">
             Please agree to MLH's code of conduct
           </div>
         </b-form-checkbox>
 
-        <b-form-checkbox id="checkbox-3" v-model="formData.MLH_emails" name="checkbox-3" class="checkbox">
+        <b-form-checkbox
+          id="checkbox-3"
+          v-model="formData.MLH_emails"
+          name="checkbox-3"
+          class="checkbox"
+        >
           I authorize MLH to send me occasional emails about relevant events, career opportunities,
           and community announcements.
         </b-form-checkbox>
       </div>
 
       <div class="actions">
-        <b-button type="button" class="submit-btn prev-btn" :disabled="isSending" @click="handlePrevious">
+        <b-button
+          type="button"
+          class="submit-btn prev-btn"
+          :disabled="isSending"
+          @click="handlePrevious"
+        >
           <b-icon icon="arrow-left" class="mr-1" /> Previous
         </b-button>
         <b-button type="submit" class="submit-btn next-btn" :disabled="isSending">
@@ -192,7 +221,13 @@ export default {
           key: "referral_id",
           value: response.referral_id,
         });
-        this.$router.push({ path: "thanks", query: { r: response.referral_id } });
+        this.$router.push({
+          path: "thanks",
+          query: {
+            r: response.referral_id,
+            waitlist: response.waitlist ? "1" : "0",
+          },
+        });
       } else {
         this.$bvToast.toast("Something went wrong when submitting your registration", {
           toaster: "b-toaster-top-center",
@@ -226,7 +261,14 @@ export default {
         });
       }
 
-      for (const heardFrom of this.formData.heard_from) {
+      const heardFromSelections = Array.isArray(this.formData.heard_from)
+        ? this.formData.heard_from
+        : String(this.formData.heard_from || "")
+            .split(",")
+            .map((x) => x.trim())
+            .filter(Boolean);
+
+      for (const heardFrom of heardFromSelections) {
         this.track({ random_id: this.randomId, key: `hf-${heardFrom}`, value: 1 });
       }
 
@@ -439,7 +481,7 @@ export default {
   font-size: 0.9rem;
   opacity: 0.95;
   margin-bottom: 30px;
-  color:#555;
+  color: #555;
 }
 
 /* --- STEPPER STYLES --- */

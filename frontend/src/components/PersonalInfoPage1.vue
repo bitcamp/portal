@@ -1,5 +1,12 @@
 <template>
   <div class="register-page">
+    <!-- uncomment me when waitlist is on -->
+    <b-alert variant="danger" show>
+      At the moment, you can still register to join the waitlist, but registration to
+      <b>guarantee</b> a spot for Bitcamp is <b>closed</b>. We will notify you on Friday night
+      (4/10) if you can attend. Historically, all hackers have been accepted off the waitlist, so we
+      still encourage you to register!
+    </b-alert>
     <h1 class="page-title">Register for Bitcamp 2026</h1>
 
     <p class="page-subtitle">
@@ -83,14 +90,9 @@
           <b-form-input
             v-model="formData.phone"
             type="tel"
-            inputmode="numeric"
-            pattern="[0-9]*"
             :state="showState('phone')"
-            @input="
-              touched.phone = true;
-              phoneHasNonDigits = /\D/.test($event || '');
-            "
-            placeholder="3014051000"
+            @input="touched.phone = true"
+            placeholder="+1 (301) 405-1000"
           />
           <b-form-invalid-feedback :state="showState('phone')">
             Please enter a valid phone number
@@ -333,7 +335,7 @@ import * as majors_list from "../assets/college-majors.json";
 import * as univ_list from "../assets/university-list.json";
 import * as country_codes from "../assets/country-codes.json";
 import EmailValidator from "email-validator";
-import parsePhoneNumber from "libphonenumber-js";
+// import parsePhoneNumber from "libphonenumber-js";
 import VueBootstrapAutocomplete from "@vue-bootstrap-components/vue-bootstrap-autocomplete";
 import Vue from "vue";
 import { IconsPlugin } from "bootstrap-vue";
@@ -462,15 +464,20 @@ export default {
       universityOptions: [...university_list],
 
       countryOptions: [{ value: "", text: "Select one...", disabled: true }, ...country_list],
-
-      phoneHasNonDigits: false,
     };
   },
 
   computed: {
+    phoneDigits() {
+      return (this.formData.phone || "").replace(/\D/g, "");
+    },
+
+    phoneHasNonDigits() {
+      return /[^0-9+\-()\s]/.test(this.formData.phone || "");
+    },
+
     validations() {
       const req = (v) => v && v.toString().trim().length > 0;
-      const phone = parsePhoneNumber(this.formData.phone || "", "US");
 
       return {
         first_name: req(this.formData.first_name),
@@ -483,7 +490,11 @@ export default {
         major: req(this.formData.major),
         heard_from: this.formData.heard_from.length > 0,
         email: EmailValidator.validate(this.formData.email),
-        phone: !this.phoneHasNonDigits && phone && phone.isValid(),
+        phone:
+          req(this.formData.phone) &&
+          !this.phoneHasNonDigits &&
+          this.phoneDigits.length >= 4 &&
+          this.phoneDigits.length <= 15,
         school: !this.formData.school_other_selected
           ? req(this.formData.school) && university_list.includes(this.formData.school)
           : true,
