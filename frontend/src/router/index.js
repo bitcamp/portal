@@ -18,7 +18,8 @@ const routes = [
   {
     path: '/hacker',
     name: 'Register',
-    component: RegistrationFormParent,
+    // component: RegistrationFormParent,
+    component: RegistrationClosed,
     props: (route) => ({
       default_track: route.query.t,
       type: 'hacker'
@@ -35,8 +36,8 @@ const routes = [
   {
     path: '/mentor',
     name: 'MentorRegister',
-    // component: RegistrationClosed,
-    component: RegisterMentors,
+    component: RegistrationClosed,
+    // component: RegisterMentors,
     props: (route) => ({
       default_track: route.query.t,
       type: 'mentor'
@@ -45,8 +46,8 @@ const routes = [
   {
     path: '/volunteer',
     name: 'VolunteerRegister',
-    // component: RegistrationClosed,
-    component: RegisterVolunteer,
+    component: RegistrationClosed,
+    // component: RegisterVolunteer,
     props: (route) => ({
       default_track: route.query.t,
       type: 'volunteer'
